@@ -551,6 +551,361 @@
   .num-panel[data-lang="ur"] .nm-val-en{display:none}
   .num-title .nm-val-ur{text-align:center}
 
+  /* ================= CATEGORIES & EXPAND ON HOVER DIRECTORY ================= */
+  /* Nav Dropdown */
+  .nav-tab-wrapper{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+  }
+  .nav-tab-wrapper .nav-arrow{
+    font-size:10px;
+    margin-left:4px;
+    opacity:0.75;
+    transition:transform .25s ease;
+  }
+  .nav-tab-wrapper:hover .nav-arrow{
+    transform:rotate(180deg);
+  }
+  .nav-category-dropdown{
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    width:280px;
+    background:#ffffff;
+    border-radius:12px;
+    border:1.5px solid var(--border);
+    box-shadow:0 12px 36px rgba(61,40,29,.16), 0 2px 6px rgba(61,40,29,.05);
+    padding:8px;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(8px);
+    transition:opacity .22s cubic-bezier(.2,.8,.2,1), transform .22s cubic-bezier(.2,.8,.2,1), visibility .22s;
+    z-index:100;
+    pointer-events:none;
+  }
+  .nav-tab-wrapper:hover .nav-category-dropdown{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .nav-cat-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:6px 10px 8px;
+    border-bottom:1px solid var(--border);
+    font-size:11px;
+    font-weight:800;
+    color:var(--brown-dark);
+    text-transform:uppercase;
+    letter-spacing:.5px;
+  }
+  .nav-cat-total{
+    background:#f0e6d8;
+    color:var(--brown-dark);
+    padding:2px 7px;
+    border-radius:999px;
+    font-size:10.5px;
+    font-weight:800;
+  }
+  .nav-cat-list{
+    max-height:340px;
+    overflow-y:auto;
+    padding-top:4px;
+  }
+  .nav-cat-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--text);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .nav-cat-item:hover{
+    background:#f7efe4;
+    color:var(--brown-dark);
+    transform:translateX(3px);
+  }
+  .nav-cat-item .nav-ci-left{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    min-width:0;
+  }
+  .nav-cat-item .nav-ci-icon{
+    font-size:15px;
+    line-height:1;
+  }
+  .nav-cat-item .nav-ci-name{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .nav-cat-item .nav-ci-badge{
+    font-size:11px;
+    background:#ede3d5;
+    color:var(--brown-dark);
+    padding:1px 7px;
+    border-radius:999px;
+    font-weight:800;
+  }
+  .nav-cat-item:hover .nav-ci-badge{
+    background:var(--brown);
+    color:#fff;
+  }
+
+  /* Category Explorer in Patient Directory */
+  .category-explorer{
+    background:linear-gradient(135deg, #fbf7f1 0%, #f6ede0 100%);
+    padding:18px 22px;
+    border-radius:14px;
+    border:1.5px solid var(--border);
+    margin-bottom:22px;
+    box-shadow:0 2px 10px rgba(61,40,29,.03);
+  }
+  .category-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .cat-header-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    font-weight:800;
+    color:var(--brown-dark);
+    letter-spacing:.2px;
+  }
+  .cat-sparkle{
+    font-size:16px;
+  }
+  .cat-active-hint{
+    font-size:12px;
+    color:var(--muted);
+    font-weight:600;
+    background:rgba(255,255,255,.9);
+    padding:3px 10px;
+    border-radius:8px;
+    border:1px solid var(--border);
+  }
+  .category-pills-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .cat-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#ffffff;
+    border:1.5px solid var(--border);
+    border-radius:999px;
+    padding:7px 15px;
+    font-size:13px;
+    font-weight:700;
+    color:var(--brown-dark);
+    cursor:pointer;
+    white-space:nowrap;
+    box-shadow:0 1px 4px rgba(61,40,29,.03);
+    position:relative;
+    overflow:hidden;
+    /* Smooth expand on hover */
+    transition:all .28s cubic-bezier(.2,.8,.2,1);
+  }
+  .cat-pill:hover{
+    border-color:var(--brown);
+    background:#ffffff;
+    transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(124,83,57,.18);
+    padding-right:18px;
+  }
+  .cat-pill .cat-icon{
+    font-size:15px;
+    line-height:1;
+    transition:transform .2s ease;
+  }
+  .cat-pill:hover .cat-icon{
+    transform:scale(1.15);
+  }
+  .cat-pill .cat-name{
+    letter-spacing:.1px;
+  }
+  .cat-pill .cat-count{
+    background:#f0e6d8;
+    color:var(--brown-dark);
+    font-size:11px;
+    font-weight:800;
+    padding:2px 7px;
+    border-radius:999px;
+    transition:all .2s ease;
+  }
+  .cat-pill:hover .cat-count{
+    background:var(--brown);
+    color:#fff;
+    transform:scale(1.05);
+  }
+  .cat-pill .cat-expand-text{
+    max-width:0;
+    opacity:0;
+    overflow:hidden;
+    white-space:nowrap;
+    font-size:11.5px;
+    color:var(--brown);
+    font-weight:800;
+    transition:max-width .28s cubic-bezier(.2,.8,.2,1), opacity .2s ease, margin .2s ease;
+  }
+  .cat-pill:hover .cat-expand-text{
+    max-width:110px;
+    opacity:1;
+    margin-left:4px;
+  }
+  .cat-pill.active{
+    background:var(--brown);
+    color:#ffffff;
+    border-color:var(--brown-dark);
+    box-shadow:0 3px 12px rgba(124,83,57,.32);
+  }
+  .cat-pill.active .cat-count{
+    background:rgba(255,255,255,.25);
+    color:#ffffff;
+  }
+  .cat-pill.active .cat-expand-text{
+    color:rgba(255,255,255,.9);
+  }
+
+  /* Dashboard Categories Directory */
+  .cat-directory-card{
+    margin-bottom:26px;
+  }
+  .cat-card-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .cat-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:14px;
+  }
+  .cat-card{
+    background:#ffffff;
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(61,40,29,.03);
+    /* Expand on hover effect */
+    transition:all .28s cubic-bezier(.2,.8,.2,1);
+  }
+  .cat-card:hover{
+    border-color:var(--brown);
+    transform:translateY(-3px);
+    box-shadow:0 8px 24px rgba(124,83,57,.16);
+    background:#fffdf9;
+  }
+  .cat-card-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .cat-card-icon{
+    font-size:24px;
+    line-height:1;
+    transition:transform .25s ease;
+  }
+  .cat-card:hover .cat-card-icon{
+    transform:scale(1.15) rotate(4deg);
+  }
+  .cat-card-count{
+    font-size:11.5px;
+    font-weight:800;
+    color:var(--brown);
+    background:#f7eee2;
+    padding:3px 9px;
+    border-radius:999px;
+    border:1px solid var(--beige-dark);
+    transition:all .2s ease;
+  }
+  .cat-card:hover .cat-card-count{
+    background:var(--brown);
+    color:#fff;
+    border-color:var(--brown);
+  }
+  .cat-card-title{
+    font-size:14px;
+    font-weight:800;
+    color:var(--brown-dark);
+    line-height:1.3;
+    margin-top:2px;
+  }
+  .cat-card-desc{
+    font-size:11.5px;
+    color:var(--muted);
+    line-height:1.4;
+    /* Expand on hover */
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .3s cubic-bezier(.2,.8,.2,1), opacity .25s ease, margin .25s ease;
+  }
+  .cat-card:hover .cat-card-desc{
+    max-height:50px;
+    opacity:1;
+    margin-top:2px;
+  }
+  .cat-card-action{
+    font-size:12px;
+    font-weight:800;
+    color:var(--brown);
+    display:flex;
+    align-items:center;
+    gap:4px;
+    opacity:0;
+    transform:translateX(-6px);
+    transition:all .25s ease;
+    margin-top:2px;
+  }
+  .cat-card:hover .cat-card-action{
+    opacity:1;
+    transform:translateX(0);
+  }
+
+  /* Empty category state box */
+  .empty-cat-box{
+    padding:24px 16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .empty-cat-icon{
+    font-size:32px;
+    line-height:1;
+  }
+  .empty-cat-msg{
+    font-size:14px;
+    color:var(--muted);
+  }
+
   /* ---------- Toast ---------- */
   #toast{
     position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);
@@ -636,7 +991,16 @@
 <nav class="tabs">
   <button data-tab="dashboard" class="active">📊 Dashboard</button>
   <button data-tab="register">➕ Add Patient</button>
-  <button data-tab="patients">👥 Patient Directory</button>
+  <div class="nav-tab-wrapper">
+    <button data-tab="patients" id="navPatientsBtn">👥 Patient Directory <span class="nav-arrow">▾</span></button>
+    <div class="nav-category-dropdown">
+      <div class="nav-cat-head">
+        <span>Categories Directory</span>
+        <span class="nav-cat-total" id="navCatTotal">0 Total</span>
+      </div>
+      <div class="nav-cat-list" id="navCatList"></div>
+    </div>
+  </div>
   <button data-tab="appointments">📅 Appointments</button>
   <button data-tab="reports">🖨️ Reports & Data</button>
 </nav>
@@ -674,6 +1038,17 @@
       <div class="stat-card"><div class="ico">✅</div><div class="num" id="statCompleted">0</div><div class="label">Completed Sessions</div></div>
       <div class="stat-card"><div class="ico">💰</div><div class="num" id="statReceived" style="font-size:26px">Rs. 0</div><div class="label">Total Received</div></div>
       <div class="stat-card"><div class="ico">⚠️</div><div class="num" id="statBalance" style="font-size:26px;color:#c0392b">Rs. 0</div><div class="label">Outstanding Balance</div></div>
+    </div>
+
+    <div class="card cat-directory-card">
+      <div class="cat-card-header">
+        <div>
+          <h2 class="section-title" style="margin-bottom:2px">Categories Directory</h2>
+          <p class="muted-note" style="margin-top:0">Browse patient cases and spiritual guidance records grouped by category</p>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="selectCategory('')">View Full Directory &rarr;</button>
+      </div>
+      <div class="cat-grid" id="dashboardCatGrid"></div>
     </div>
 
     <div class="card">
@@ -785,7 +1160,20 @@
 
   <!-- ============ PATIENTS ============ -->
   <section class="page" id="patients">
-    <h2 class="section-title">Search Patient</h2>
+    <h2 class="section-title">Patient Directory</h2>
+
+    <!-- Expandable Categories Explorer -->
+    <div class="category-explorer" id="categoryExplorer">
+      <div class="category-header">
+        <div class="cat-header-title">
+          <span class="cat-sparkle">✨</span>
+          <span>Explore by Category</span>
+        </div>
+        <span class="cat-active-hint" id="catActiveHint">Showing all categories</span>
+      </div>
+      <div class="category-pills-row" id="categoryPillsRow"></div>
+    </div>
+
     <div class="card">
       <div class="search-bar">
         <div class="field">
@@ -1353,17 +1741,162 @@ function deletePatient(id){
   save(); toast('Patient deleted'); renderPatients(); renderDashboard();
 }
 
+
+/* ================= CATEGORIES SYSTEM & DIRECTORY ================= */
+const CATEGORIES = [
+  { id: '', name: 'All Categories', short: 'All Records', icon: '🌟', desc: 'Browse all registered patient records in the directory' },
+  { id: 'Jadu (Black Magic)', name: 'Jadu (Black Magic)', short: 'Jadu', icon: '🌙', desc: 'Patients receiving Ruqyah for black magic & arcane spells' },
+  { id: 'Nazar (Evil Eye)', name: 'Nazar (Evil Eye)', short: 'Nazar', icon: '🧿', desc: 'Spiritual protection & shielding from evil eye influences' },
+  { id: 'Jinn Possession', name: 'Jinn Possession', short: 'Jinn', icon: '🕊️', desc: 'Spiritual deliverance, clearing & entity release sessions' },
+  { id: 'Sihr (Sorcery)', name: 'Sihr (Sorcery)', short: 'Sihr', icon: '📜', desc: 'Deep therapeutic Ruqyah sessions addressing chronic sorcery' },
+  { id: 'Waswas (Whispers)', name: 'Waswas (Whispers)', short: 'Waswas', icon: '💭', desc: 'Obsessive whisperings, spiritual anxiety & peace of mind' },
+  { id: 'Marital Issue', name: 'Marital Issue', short: 'Marital', icon: '💍', desc: 'Spiritual harmony & conflict mediation for spouses/family' },
+  { id: 'Health / Physical', name: 'Health / Physical', short: 'Health', icon: '🌿', desc: 'Spiritual healing prayers complementing medical treatment' },
+  { id: 'Other', name: 'Other Consultations', short: 'Other', icon: '📁', desc: 'Miscellaneous spiritual consultations & guidance requests' }
+];
+
+let SELECTED_CATEGORY = '';
+
+function getCategoryCount(catId){
+  if(!catId) return DB.patients.length;
+  return DB.patients.filter(p => p.problem === catId).length;
+}
+
+function initCategoriesUI(){
+  // 1. Render Category Explorer Pills
+  const pillsRow = $('categoryPillsRow');
+  if(pillsRow){
+    pillsRow.innerHTML = CATEGORIES.map(c => {
+      const cnt = getCategoryCount(c.id);
+      const isAct = c.id === SELECTED_CATEGORY;
+      return `<button type="button" class="cat-pill ${isAct?'active':''}" data-cat="${esc(c.id)}" onclick="selectCategory('${esc(c.id)}')">
+        <span class="cat-icon">${c.icon}</span>
+        <span class="cat-name">${esc(c.name)}</span>
+        <span class="cat-count" id="pill-cnt-${esc(c.id)}">${cnt}</span>
+        <span class="cat-expand-text">Open Directory &rarr;</span>
+      </button>`;
+    }).join('');
+  }
+
+  // 2. Render Dashboard Category Cards
+  const dashGrid = $('dashboardCatGrid');
+  if(dashGrid){
+    dashGrid.innerHTML = CATEGORIES.filter(c => c.id !== '').map(c => {
+      const cnt = getCategoryCount(c.id);
+      return `<div class="cat-card" onclick="selectCategory('${esc(c.id)}')">
+        <div class="cat-card-top">
+          <div class="cat-card-icon">${c.icon}</div>
+          <span class="cat-card-count" id="dash-cnt-${esc(c.id)}">${cnt} case${cnt===1?'':'s'}</span>
+        </div>
+        <div class="cat-card-title">${esc(c.name)}</div>
+        <div class="cat-card-desc">${esc(c.desc)}</div>
+        <div class="cat-card-action">Open Directory &rarr;</div>
+      </div>`;
+    }).join('');
+  }
+
+  // 3. Render Navigation Dropdown Items
+  const navList = $('navCatList');
+  if(navList){
+    navList.innerHTML = CATEGORIES.map(c => {
+      const cnt = getCategoryCount(c.id);
+      return `<div class="nav-cat-item" onclick="selectCategory('${esc(c.id)}')">
+        <div class="nav-ci-left">
+          <span class="nav-ci-icon">${c.icon}</span>
+          <span class="nav-ci-name">${esc(c.name)}</span>
+        </div>
+        <span class="nav-ci-badge" id="nav-cnt-${esc(c.id)}">${cnt}</span>
+      </div>`;
+    }).join('');
+  }
+
+  // Total badge in nav
+  const navTotal = $('navCatTotal');
+  if(navTotal) navTotal.textContent = DB.patients.length + ' Total';
+}
+
+function updateCategoryBadges(){
+  CATEGORIES.forEach(c => {
+    const cnt = getCategoryCount(c.id);
+    const pill = $(`pill-cnt-${c.id}`);
+    if(pill) pill.textContent = cnt;
+    const dash = $(`dash-cnt-${c.id}`);
+    if(dash) dash.textContent = cnt + ' case' + (cnt===1?'':'s');
+    const nav = $(`nav-cnt-${c.id}`);
+    if(nav) nav.textContent = cnt;
+  });
+  const navTotal = $('navCatTotal');
+  if(navTotal) navTotal.textContent = DB.patients.length + ' Total';
+}
+
+function selectCategory(catId){
+  SELECTED_CATEGORY = catId;
+  if($('patFilter')) $('patFilter').value = catId;
+
+  // Update pills active state
+  document.querySelectorAll('.cat-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === catId);
+  });
+
+  // Update hint text
+  const hint = $('catActiveHint');
+  if(hint){
+    if(catId){
+      const catObj = CATEGORIES.find(c => c.id === catId);
+      const icon = catObj ? catObj.icon + ' ' : '';
+      const cnt = getCategoryCount(catId);
+      hint.innerHTML = `Showing directory for: <strong>${icon}${esc(catId)}</strong> (${cnt} patient${cnt===1?'':'s'}) &middot; <a href="javascript:void(0)" onclick="selectCategory('')" style="color:var(--brown);font-weight:700">Show All &times;</a>`;
+    } else {
+      hint.textContent = `Showing all categories (${DB.patients.length} patients)`;
+    }
+  }
+
+  // If not on patients tab, navigate there
+  goTab('patients');
+  renderPatients();
+}
+
+function openNewPatientForCategory(catId){
+  goTab('register');
+  resetPatientForm();
+  if(catId && $('pProblem')) $('pProblem').value = catId;
+  const pName = $('pName');
+  if(pName) pName.focus();
+}
+
 /* ================= PATIENTS LIST + SEARCH ================= */
 function renderPatients(){
   const q=$('patSearch').value.trim().toLowerCase();
   const f=$('patFilter').value;
+  SELECTED_CATEGORY = f;
+
+  // Sync category pills state
+  document.querySelectorAll('.cat-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === f);
+  });
+  updateCategoryBadges();
+
   let list=DB.patients.filter(p=>{
     const matchQ=!q || p.name.toLowerCase().includes(q) || (p.mobile||'').toLowerCase().includes(q) || p.id.toLowerCase().includes(q) || (p.father||'').toLowerCase().includes(q);
     const matchF=!f || p.problem===f;
     return matchQ && matchF;
   });
   const tb=$('patientsTable');
-  if(!list.length){ tb.innerHTML='<tr><td colspan="9" class="empty">No patients found.</td></tr>'; return; }
+  if(!list.length){
+    if(f){
+      const catObj = CATEGORIES.find(c => c.id === f) || { icon: '📁', name: f };
+      tb.innerHTML = `<tr><td colspan="9" class="empty">
+        <div class="empty-cat-box">
+          <div class="empty-cat-icon">${catObj.icon}</div>
+          <div class="empty-cat-msg">No patients registered under category <strong>${esc(f)}</strong> yet.</div>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openNewPatientForCategory('${esc(f)}')">＋ Register Patient for this Category</button>
+        </div>
+      </td></tr>`;
+    } else {
+      tb.innerHTML='<tr><td colspan="9" class="empty">No patients found.</td></tr>';
+    }
+    return;
+  }
   tb.innerHTML=list.map(p=>{
     const lp = p.dob ? (NUM.lifePath(p.dob)||{}).reduced : null;
     const age = ageFromDob(p.dob);
@@ -2049,6 +2582,7 @@ function clearAllData(){
 /* ================= INIT ================= */
 resetPatientForm();
 renderDashboard();
+initCategoriesUI();
 
 /* ================= UHD REACTIVE SMOKE EFFECT ================= */
 (function initSmokeEffect(){
