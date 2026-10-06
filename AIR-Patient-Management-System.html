@@ -71,15 +71,85 @@
     50%{transform:translate(35px,25px) scale(1.05)}
     100%{transform:translate(-25px,40px) scale(0.96)}
   }
-  /* ---------- Header ---------- */
+  /* ---------- Header & Brand ---------- */
   header.app-header{
     background:linear-gradient(135deg, #fbf7f0 0%, #eee3d5 100%);
     color:var(--text);
-    padding:14px 24px;
+    padding:12px 24px;
     display:flex;align-items:center;gap:16px;
     border-bottom:1.5px solid var(--border);
     box-shadow:0 3px 14px rgba(61,40,29,.06);
     position:sticky;top:0;z-index:50;
+  }
+  .brand-header-wrap{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  /* UHD Reactive Smoke & Emblem Aura */
+  .logo-smoke-container{
+    position:relative;
+    width:56px;
+    height:56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 56px;
+    user-select:none;
+    cursor:pointer;
+  }
+  .smoke-canvas{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:150px;
+    height:150px;
+    pointer-events:none;
+    z-index:1;
+  }
+  .logo-aura{
+    position:absolute;
+    inset:-4px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(212,175,55,.32) 0%, rgba(164,117,81,.14) 45%, transparent 70%);
+    filter:blur(6px);
+    pointer-events:none;
+    z-index:0;
+    animation:auraPulse 4s ease-in-out infinite alternate;
+  }
+  @keyframes auraPulse{
+    0%{transform:scale(0.96);opacity:0.6}
+    100%{transform:scale(1.08);opacity:0.95}
+  }
+  .logo-orb{
+    position:relative;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    overflow:hidden;
+    border:2px solid rgba(212,175,55,.75);
+    box-shadow:0 3px 14px rgba(61,40,29,.22), 0 0 12px rgba(212,175,55,.35);
+    z-index:2;
+    transition:transform .2s cubic-bezier(.2,.8,.3,1), box-shadow .25s ease, border-color .25s ease;
+    transform-style:preserve-3d;
+    background:#252525;
+  }
+  .logo-orb:hover{
+    border-color:rgba(245,215,130,.98);
+    box-shadow:0 6px 22px rgba(61,40,29,.28), 0 0 20px rgba(212,175,55,.6);
+  }
+  .logo-orb:active{
+    transform:scale(0.95) !important;
+  }
+  .brand-logo-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    border-radius:50%;
+    user-select:none;
+    -webkit-user-drag:none;
   }
   header.app-header .header-top-row{
     display:flex;align-items:center;gap:10px;flex-wrap:wrap;
@@ -521,8 +591,12 @@
     @page{margin:16mm}
   }
   @media(max-width:600px){
-    header.app-header{padding:12px 16px}
-    header.app-header .titles h1{font-size:16px}
+    header.app-header{padding:10px 14px}
+    .brand-header-wrap{gap:12px}
+    .logo-smoke-container{width:46px;height:46px;flex:0 0 46px}
+    .logo-orb{width:46px;height:46px}
+    .smoke-canvas{width:120px;height:120px}
+    header.app-header h1{font-size:16px}
     header.app-header .clock{display:none}
     nav.tabs{top:66px}
   }
@@ -537,12 +611,21 @@
 </div>
 
 <header class="app-header">
-  <div class="brand-group">
-    <div class="header-top-row">
-      <h1>SHIFA-RUQIYAH CENTRE</h1>
-      <span class="admin-pill">Admin Portal</span>
+  <div class="brand-header-wrap">
+    <div class="logo-smoke-container" id="logoSmokeContainer" title="Shifa-Ruqiyah Centre - Interactive smoke effect">
+      <canvas id="smokeCanvas" class="smoke-canvas" width="150" height="150" aria-hidden="true"></canvas>
+      <div class="logo-aura" aria-hidden="true"></div>
+      <div class="logo-orb" id="logoOrb">
+        <img src="logo/src-logo.webp" onerror="this.onerror=null;this.src='logo/src-logo-256.png'" alt="Shifa-Ruqiyah Centre Logo" class="brand-logo-img">
+      </div>
     </div>
-    <p class="header-sub">Patient Management System &middot; Spiritual Guidance</p>
+    <div class="brand-group">
+      <div class="header-top-row">
+        <h1>SHIFA-RUQIYAH CENTRE</h1>
+        <span class="admin-pill">Admin Portal</span>
+      </div>
+      <p class="header-sub">Patient Management System &middot; Spiritual Guidance</p>
+    </div>
   </div>
   <div class="spacer"></div>
   <div class="header-right">
@@ -1781,7 +1864,11 @@ const letterCSS=`
   </style>`;
 
 function letterHead(){
-  return `<div class="pr-head"><h1>SHIFA-RUQIYAH CENTRE</h1><div class="sub">SPIRITUAL GUIDANCE</div></div>`;
+  return `<div class="pr-head">
+    <img src="logo/src-logo-256.png" style="width:50px;height:50px;border-radius:50%;margin-bottom:6px;display:inline-block" alt="Logo">
+    <h1>SHIFA-RUQIYAH CENTRE</h1>
+    <div class="sub">SPIRITUAL GUIDANCE</div>
+  </div>`;
 }
 
 /* ---- Appointment Letter ---- */
@@ -1962,6 +2049,195 @@ function clearAllData(){
 /* ================= INIT ================= */
 resetPatientForm();
 renderDashboard();
+
+/* ================= UHD REACTIVE SMOKE EFFECT ================= */
+(function initSmokeEffect(){
+  const canvas = document.getElementById('smokeCanvas');
+  const container = document.getElementById('logoSmokeContainer');
+  const orb = document.getElementById('logoOrb');
+  if(!canvas || !container || !orb) return;
+
+  const ctx = canvas.getContext('2d');
+  if(!ctx) return;
+
+  // UHD / Retina DPI scaling for crystal clear rendering
+  const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+  const CSS_SIZE = 150;
+  canvas.width = Math.round(CSS_SIZE * dpr);
+  canvas.height = Math.round(CSS_SIZE * dpr);
+  ctx.scale(dpr, dpr);
+
+  const cx = CSS_SIZE / 2;
+  const cy = CSS_SIZE / 2;
+  const orbRadius = 28;
+
+  // Interaction State
+  let mouse = { x: cx, y: cy, active: false };
+  let particles = [];
+  const MAX_PARTICLES = 30;
+
+  // Offscreen pre-rendered smoke puff sprite (soft feathered radial gradient)
+  const spriteSize = 64;
+  const spriteCanvas = document.createElement('canvas');
+  spriteCanvas.width = spriteSize;
+  spriteCanvas.height = spriteSize;
+  const sctx = spriteCanvas.getContext('2d');
+  const scx = spriteSize / 2;
+  const scy = spriteSize / 2;
+  const sGrad = sctx.createRadialGradient(scx, scy, 0, scx, scy, scx);
+  // Spiritual oud/incense & warm amber palette
+  sGrad.addColorStop(0, 'rgba(248, 235, 205, 0.45)');
+  sGrad.addColorStop(0.2, 'rgba(224, 195, 130, 0.32)');
+  sGrad.addColorStop(0.5, 'rgba(195, 150, 95, 0.16)');
+  sGrad.addColorStop(0.8, 'rgba(150, 105, 65, 0.05)');
+  sGrad.addColorStop(1, 'rgba(120, 80, 50, 0)');
+  sctx.fillStyle = sGrad;
+  sctx.beginPath();
+  sctx.arc(scx, scy, scx, 0, Math.PI * 2);
+  sctx.fill();
+
+  class SmokeParticle {
+    constructor(forcedX, forcedY, isBurst = false){
+      this.reset(forcedX, forcedY, isBurst);
+    }
+    reset(forcedX, forcedY, isBurst = false){
+      // Spawn around the orb perimeter with natural dispersion
+      const angle = isBurst
+        ? Math.random() * Math.PI * 2
+        : (Math.random() * Math.PI * 1.5 + 0.25 * Math.PI); // bottom & sides
+      const spawnDist = orbRadius * (0.85 + Math.random() * 0.3);
+
+      this.x = forcedX != null ? forcedX : cx + Math.cos(angle) * spawnDist;
+      this.y = forcedY != null ? forcedY : cy + Math.sin(angle) * spawnDist;
+
+      // Velocities: gentle upward buoyancy + organic spread
+      const speed = isBurst ? (0.6 + Math.random() * 1.1) : (0.2 + Math.random() * 0.35);
+      this.vx = isBurst ? Math.cos(angle) * speed : (Math.random() - 0.5) * 0.35;
+      this.vy = isBurst ? Math.sin(angle) * speed : (-0.35 - Math.random() * 0.35);
+
+      this.size = 14 + Math.random() * 10;
+      this.maxSize = this.size * (2.0 + Math.random() * 1.2);
+      this.rotation = Math.random() * Math.PI * 2;
+      this.rotSpeed = (Math.random() - 0.5) * 0.012;
+
+      this.age = 0;
+      this.lifespan = isBurst ? (45 + Math.random() * 25) : (65 + Math.random() * 45);
+      this.maxAlpha = isBurst ? (0.35 + Math.random() * 0.15) : (0.18 + Math.random() * 0.12);
+      this.swayFreq = 0.03 + Math.random() * 0.03;
+      this.swayPhase = Math.random() * Math.PI * 2;
+      this.swayAmp = 0.25 + Math.random() * 0.35;
+    }
+    update(){
+      this.age++;
+      if(this.age >= this.lifespan){
+        this.reset();
+        return;
+      }
+
+      // Gentle curling & upward drift
+      this.x += this.vx + Math.sin(this.age * this.swayFreq + this.swayPhase) * this.swayAmp;
+      this.y += this.vy;
+      this.vy *= 0.992;
+      this.rotation += this.rotSpeed;
+
+      // Mouse reactivity (curl away from cursor or spiral)
+      if(mouse.active){
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const dist = Math.hypot(dx, dy);
+        if(dist < 46 && dist > 1){
+          const force = (1 - dist / 46) * 0.5;
+          this.vx += (dx / dist) * force;
+          this.vy += (dy / dist) * force;
+        }
+      }
+    }
+    draw(){
+      const progress = this.age / this.lifespan;
+      const alpha = Math.sin(progress * Math.PI) * this.maxAlpha;
+      if(alpha <= 0.005) return;
+
+      const currentSize = this.size + (this.maxSize - this.size) * progress;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      ctx.drawImage(spriteCanvas, -currentSize / 2, -currentSize / 2, currentSize, currentSize);
+      ctx.restore();
+    }
+  }
+
+  // Pre-populate particles staggered across life cycles
+  for(let i = 0; i < MAX_PARTICLES; i++){
+    const p = new SmokeParticle();
+    p.age = Math.floor(Math.random() * p.lifespan);
+    particles.push(p);
+  }
+
+  // Mouse interaction handlers
+  container.addEventListener('mousemove', e => {
+    const rect = container.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    mouse.x = (mx / rect.width) * CSS_SIZE;
+    mouse.y = (my / rect.height) * CSS_SIZE;
+    mouse.active = true;
+
+    // 3D perspective tilt on logo orb
+    const tiltX = -((mouse.y - cy) / cy) * 9;
+    const tiltY = ((mouse.x - cx) / cx) * 9;
+    orb.style.transform = `perspective(300px) rotateX(${tiltX.toFixed(1)}deg) rotateY(${tiltY.toFixed(1)}deg) scale(1.05)`;
+
+    // Spawn gentle trailing wisps on cursor movement
+    if(Math.random() < 0.35 && particles.length < MAX_PARTICLES + 8){
+      particles.push(new SmokeParticle(mouse.x, mouse.y, false));
+    }
+  });
+
+  container.addEventListener('mouseleave', () => {
+    mouse.active = false;
+    orb.style.transform = 'perspective(300px) rotateX(0deg) rotateY(0deg) scale(1)';
+  });
+
+  // Click burst wave
+  function triggerBurst(){
+    for(let i = 0; i < 10; i++){
+      particles.push(new SmokeParticle(cx, cy, true));
+    }
+    orb.style.transform = 'perspective(300px) scale(0.95)';
+    setTimeout(() => {
+      orb.style.transform = 'perspective(300px) scale(1.03)';
+      setTimeout(() => {
+        orb.style.transform = 'perspective(300px) rotateX(0deg) rotateY(0deg) scale(1)';
+      }, 180);
+    }, 120);
+  }
+  container.addEventListener('click', triggerBurst);
+
+  // Animation Loop
+  function render(){
+    if(document.hidden){
+      requestAnimationFrame(render);
+      return;
+    }
+
+    ctx.clearRect(0, 0, CSS_SIZE, CSS_SIZE);
+
+    for(let i = particles.length - 1; i >= 0; i--){
+      const p = particles[i];
+      p.update();
+      p.draw();
+      if(p.age >= p.lifespan && particles.length > MAX_PARTICLES){
+        particles.splice(i, 1);
+      }
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
+})();
 
 </script>
 </body>
