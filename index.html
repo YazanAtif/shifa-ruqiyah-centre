@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shifa-Ruqiyah Centre - Patient Management System</title>
+<style>
+  :root{
+    --brown-dark:#3d281d;
+    --brown:#7c5339;
+    --brown-light:#ab7d58;
+    --beige-dark:#ded2c3;
+    --beige:#eee5d8;
+    --cream:#faf5ee;
+    --bg:#f6f1eb;
+    --card:#ffffff;
+    --text:#2b211b;
+    --muted:#786a60;
+    --border:#e2d7c9;
+    --shadow:0 3px 12px rgba(61,40,29,.07);
+    --radius:14px;
+
+    /* Semantic & compatibility aliases */
+    --green-dark:var(--brown-dark);
+    --green:var(--brown);
+    --green-light:var(--brown-light);
+    --blue:#84583c;
+  }
+  /* Remove number input spinners across all browsers */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin:0;
+  }
+  input[type="number"]{
+    -moz-appearance:textfield;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',Tahoma,system-ui,-apple-system,sans-serif;
+    background:linear-gradient(135deg,#f6f1eb 0%,#fbf8f3 40%,#eee4d6 75%,#f7f2ec 100%);
+    background-size:250% 250%;
+    animation:subtleGradient 30s ease-in-out infinite alternate;
+    color:var(--text);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  @keyframes subtleGradient{
+    0%{background-position:0% 30%}
+    50%{background-position:100% 70%}
+    100%{background-position:30% 100%}
+  }
+  /* Subtle ambient background glow */
+  .bg-glow{
+    position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+  }
+  .glow-orb{
+    position:absolute;border-radius:50%;filter:blur(80px);opacity:.42;
+    animation:floatOrb 28s ease-in-out infinite alternate;
+  }
+  .orb-1{
+    width:420px;height:420px;background:#e5d6c5;top:-100px;left:-60px;
+  }
+  .orb-2{
+    width:480px;height:480px;background:#f3e5d3;bottom:-120px;right:-80px;
+    animation-duration:36s;animation-delay:-10s;
+  }
+  @keyframes floatOrb{
+    0%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(35px,25px) scale(1.05)}
+    100%{transform:translate(-25px,40px) scale(0.96)}
+  }
+  /* ---------- Header ---------- */
+  header.app-header{
+    background:linear-gradient(135deg, #fbf7f0 0%, #eee3d5 100%);
+    color:var(--text);
+    padding:14px 24px;
+    display:flex;align-items:center;gap:16px;
+    border-bottom:1.5px solid var(--border);
+    box-shadow:0 3px 14px rgba(61,40,29,.06);
+    position:sticky;top:0;z-index:50;
+  }
+  header.app-header .header-top-row{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  header.app-header h1{
+    font-size:20px;font-weight:800;color:var(--brown-dark);letter-spacing:.4px;line-height:1.2;
+  }
+  .admin-pill{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;
+    background:var(--brown);color:#ffffff;padding:2px 10px;border-radius:20px;
+    box-shadow:0 2px 6px rgba(124,83,57,.22);
+  }
+  header.app-header .header-sub{
+    font-size:12.5px;color:var(--brown);font-weight:600;letter-spacing:.2px;margin-top:2px;
+  }
+  header.app-header .spacer{flex:1}
+  header.app-header .clock{
+    font-size:13px;font-weight:600;text-align:right;color:var(--brown-dark);
+    background:rgba(255,255,255,.85);padding:6px 14px;border-radius:8px;
+    border:1px solid var(--border);box-shadow:0 1px 4px rgba(61,40,29,.04);line-height:1.35;
+  }
+  /* ---------- Nav ---------- */
+  nav.tabs{
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    display:flex;gap:6px;padding:8px 18px;
+    border-bottom:1.5px solid var(--border);
+    position:sticky;top:72px;z-index:40;
+    overflow-x:auto;
+  }
+  nav.tabs button{
+    border:none;background:transparent;
+    padding:10px 18px;font-size:14px;font-weight:700;
+    color:var(--muted);cursor:pointer;border-radius:9px;
+    white-space:nowrap;transition:all .15s ease;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  nav.tabs button:hover{background:#f3eae0;color:var(--brown-dark)}
+  nav.tabs button.active{background:var(--brown);color:#fff;box-shadow:0 3px 10px rgba(124,83,57,.28)}
+  /* ---------- Layout ---------- */
+  main{max-width:1150px;margin:0 auto;padding:22px 18px 60px}
+  .page{display:none;animation:fade .25s ease}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.section-title{
+    font-size:20px;
+    font-weight:800;
+    color:var(--brown-dark);
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    letter-spacing:-.2px;
+  }
+  h2.section-title::before{
+    content:"";
+    width:5px;
+    height:22px;
+    background:var(--brown);
+    border-radius:4px;
+    display:inline-block;
+  }
+  /* ---------- Admin Quick Actions ---------- */
+  .admin-quick-bar{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:24px;
+  }
+  .admin-quick-btn{
+    background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
+    padding:16px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;
+    cursor:pointer;transition:all .15s ease;text-align:left;box-shadow:0 2px 8px rgba(61,40,29,.03);
+  }
+  .admin-quick-btn:hover{
+    border-color:var(--brown);transform:translateY(-2px);box-shadow:0 6px 16px rgba(124,83,57,.12);background:#fffdfa;
+  }
+  .admin-quick-btn .aq-icon{font-size:22px;margin-bottom:4px}
+  .admin-quick-btn .aq-title{font-size:14.5px;font-weight:800;color:var(--brown-dark)}
+  .admin-quick-btn .aq-desc{font-size:12px;color:var(--muted);font-weight:500}
+  /* ---------- Dashboard cards ---------- */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:16px;margin-bottom:26px}
+  .stat-card{
+    background:var(--card);border-radius:var(--radius);padding:20px 22px;
+    box-shadow:0 3px 12px rgba(61,40,29,.05);border:1px solid var(--border);
+    display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .stat-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(61,40,29,.08)}
+  .stat-card::after{content:"";position:absolute;right:-18px;top:-18px;width:72px;height:72px;border-radius:50%;background:var(--beige);opacity:.6;pointer-events:none}
+  .stat-card .num{font-size:30px;font-weight:800;color:var(--brown-dark);position:relative;line-height:1.2}
+  .stat-card .label{font-size:12.5px;color:var(--muted);font-weight:700;position:relative;text-transform:uppercase;letter-spacing:.4px}
+  .stat-card .ico{font-size:22px;position:relative}
+  /* ---------- Forms & Inputs ---------- */
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:24px 26px;
+    box-shadow:0 3px 14px rgba(61,40,29,.05);
+    border:1px solid var(--border);
+    margin-bottom:24px;
+  }
+  .form-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:18px 20px;
+    align-items:start;
+  }
+  @media(max-width:1024px){
+    .form-grid{grid-template-columns:repeat(2, 1fr)}
+    .field.col-span-2{grid-column:span 2}
+  }
+  @media(max-width:640px){
+    .form-grid{grid-template-columns:1fr}
+    .field.col-span-2,.field.col-full{grid-column:1 / -1 !important}
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-width:0;
+  }
+  .field.col-span-2{grid-column:span 2}
+  .field.col-full{grid-column:1 / -1}
+  .field label{
+    font-size:13px;
+    font-weight:700;
+    color:var(--brown-dark);
+    letter-spacing:.2px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:6px;
+    min-height:20px;
+    line-height:1.3;
+  }
+  .field label .lbl-title{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .req{
+    color:#c0392b;
+    font-weight:800;
+    font-size:14px;
+  }
+  .field-tag{
+    font-size:11px;
+    font-weight:700;
+    color:var(--muted);
+    background:rgba(61,40,29,.06);
+    padding:1px 6px;
+    border-radius:4px;
+    line-height:1.2;
+  }
+  .field-hint{
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--brown);
+    background:#f7ede0;
+    padding:2px 7px;
+    border-radius:6px;
+    border:1px solid var(--beige-dark);
+    line-height:1.2;
+    white-space:nowrap;
+  }
+  .field-hint:empty{display:none}
+  .field-hint.warn{color:#c0392b;background:#fdf2f0;border-color:#f0c5be}
+  .field input:not([type="checkbox"]):not([type="radio"]),
+  .field select,
+  .dob-in{
+    width:100%;
+    height:42px;
+    padding:0 14px;
+    border:1.5px solid var(--border);
+    border-radius:9px;
+    font-size:14px;
+    font-family:inherit;
+    background:#ffffff;
+    color:var(--text);
+    line-height:normal;
+    box-sizing:border-box;
+    transition:border-color .15s ease,box-shadow .15s ease,background-color .15s ease;
+  }
+  .field input[type="time"]{
+    padding:0 12px;
+  }
+  .field select,select.dob-in{
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    padding-right:34px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237c5339' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    cursor:pointer;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus,.dob-in:focus{
+    outline:none;
+    border-color:var(--brown);
+    background:#ffffff;
+    box-shadow:0 0 0 3px rgba(124,83,57,.14);
+  }
+  .field input[readonly]{
+    background:#f6eee4;
+    color:#5c4436;
+    border-color:#ded2c3;
+    font-weight:700;
+    cursor:not-allowed;
+  }
+  .field textarea{
+    width:100%;
+    padding:10px 14px;
+    resize:vertical;
+    min-height:80px;
+    line-height:1.5;
+    border:1.5px solid var(--border);
+    border-radius:9px;
+    font-size:14px;
+    font-family:inherit;
+    background:#ffffff;
+    color:var(--text);
+    box-sizing:border-box;
+    transition:border-color .15s ease,box-shadow .15s ease;
+  }
+  .dob-row{display:flex;gap:8px;width:100%;align-items:center}
+  #pDobD{flex:1;min-width:0;text-align:center;padding:0 8px}
+  #pDobM{flex:1.5;min-width:0;padding-left:10px;padding-right:28px;background-position:right 8px center}
+  #pDobY{flex:1.2;min-width:0;text-align:center;padding:0 8px}
+
+  /* Buttons */
+  .btn{
+    border:none;border-radius:9px;height:42px;padding:0 22px;font-size:14px;font-weight:700;
+    cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;justify-content:center;
+    gap:8px;box-sizing:border-box;white-space:nowrap;user-select:none;
+  }
+  .btn-primary{background:var(--brown);color:#fff;box-shadow:0 2px 8px rgba(124,83,57,.2)}
+  .btn-primary:hover{background:var(--brown-dark);box-shadow:0 4px 12px rgba(61,40,29,.25);transform:translateY(-1px)}
+  .btn-blue{background:#8c5838;color:#fff}
+  .btn-blue:hover{background:#694025;transform:translateY(-1px)}
+  .btn-outline{background:#fff;color:var(--brown-dark);border:1.5px solid var(--border)}
+  .btn-outline:hover{background:#f8f3eb;border-color:var(--brown-light);transform:translateY(-1px)}
+  .btn-danger{background:#c0392b;color:#fff}
+  .btn-danger:hover{background:#96271b;transform:translateY(-1px)}
+  .btn-send{background:#6e462d;color:#fff}
+  .btn-send:hover{background:#54321d}
+  .btn-sm{height:32px;padding:0 12px;font-size:12.5px;border-radius:7px}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;padding-top:16px;border-top:1px solid var(--border)}
+
+  /* Search & Filters */
+  .search-bar{
+    display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;margin-bottom:22px;
+    background:#faf6f0;padding:16px 20px;border-radius:12px;border:1.5px solid var(--border);
+    box-shadow:0 2px 6px rgba(61,40,29,.02);
+  }
+  .search-bar .field{flex:1;min-width:220px}
+  .search-bar .field.flex-auto{flex:0 0 auto;min-width:190px}
+  .search-bar .field label{font-size:12.5px;font-weight:700;color:var(--brown-dark);min-height:auto;margin-bottom:2px}
+  .input-with-icon{position:relative;width:100%}
+  .input-with-icon .input-icon{
+    position:absolute;left:13px;top:50%;transform:translateY(-50%);
+    color:var(--brown-light);font-size:14px;pointer-events:none;
+  }
+  .input-with-icon input{padding-left:38px !important}
+  .search-actions{margin-top:auto}
+  .search-actions .btn{height:42px}
+
+  /* Table quick status dropdown */
+  .table-status-select{
+    height:32px;padding:0 26px 0 10px;border-radius:7px;border:1.5px solid var(--border);
+    font-weight:700;font-size:12px;background:#ffffff;color:var(--brown-dark);
+    appearance:none;-webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237c5339' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 8px center;
+    cursor:pointer;box-sizing:border-box;transition:border-color .15s ease,box-shadow .15s ease;
+  }
+  .table-status-select:focus{outline:none;border-color:var(--brown);box-shadow:0 0 0 2px rgba(124,83,57,.15)}
+
+  /* Send modal */
+  .send-preview-label{font-weight:700;color:var(--brown-dark);font-size:13.5px;margin:14px 0 6px}
+  .send-textarea{width:100%;min-height:190px;padding:12px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:inherit;font-size:13px;line-height:1.55;background:#ffffff;resize:vertical;color:var(--text);box-sizing:border-box}
+  .send-textarea:focus{outline:none;border-color:var(--brown);box-shadow:0 0 0 3px rgba(124,83,57,.14)}
+  .send-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .wa-country-row{
+    margin-top:16px;font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;
+    gap:10px;flex-wrap:wrap;background:#faf6f0;padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);
+  }
+  .wa-country-row input{
+    height:36px;width:64px;text-align:center;padding:0 8px;border:1.5px solid var(--border);
+    border-radius:8px;font-weight:700;font-size:14px;background:#fff;color:var(--brown-dark);box-sizing:border-box;
+  }
+  .wa-country-row input:focus{outline:none;border-color:var(--brown);box-shadow:0 0 0 3px rgba(124,83,57,.14)}
+  /* ---------- Table ---------- */
+  .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(61,40,29,.03)}
+  table{width:100%;border-collapse:collapse;background:var(--card);font-size:13.5px}
+  thead th{
+    background:var(--brown-dark);color:#fff;padding:12px 14px;text-align:left;font-weight:700;
+    white-space:nowrap;font-size:12.5px;letter-spacing:.3px;text-transform:uppercase;
+  }
+  tbody td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+  tbody tr:hover{background:#fbf8f4}
+  tbody tr:last-child td{border-bottom:none}
+  .empty{text-align:center;color:var(--muted);padding:34px;font-style:italic}
+  /* ---------- Badge ---------- */
+  .badge{padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;display:inline-block;letter-spacing:.2px}
+  .b-pending{background:#faebd7;color:#845229}
+  .b-confirmed{background:#e7ddd1;color:#473121}
+  .b-completed{background:#dfd3c3;color:#4f331f}
+  .b-cancelled{background:#f5dedb;color:#912c24}
+  /* payment badges */
+  .p-paid{background:#dfd3c3;color:#4f331f}
+  .p-partial{background:#faebd7;color:#845229}
+  .p-unpaid{background:#f5dedb;color:#912c24}
+  .pay-status-preview{margin-top:18px}
+  .pay-status-preview:empty{display:none}
+  .pay-status-preview .money-row{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;padding:14px 18px;
+    background:#faf6f0;border:1.5px solid var(--border);border-radius:12px;
+  }
+  .pay-status-preview .money-row div{display:flex;flex-direction:column;gap:3px}
+  .pay-status-preview .money-row .lbl{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+  .pay-status-preview .money-row .amt{font-size:18px;font-weight:800;color:var(--brown-dark)}
+  .pay-status-preview .money-row .amt.bal{color:#c0392b}
+  .pay-status-preview .money-row .amt.done{color:var(--brown)}
+  /* ---------- Numerology ---------- */
+  .num-panel{margin:18px 0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#faf6f0,#fff)}
+  .num-panel-head{background:linear-gradient(135deg,var(--brown-dark),var(--brown));color:#fff;padding:11px 16px;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
+  .num-panel-head .num-note{font-size:11px;font-weight:500;opacity:.8;margin-left:auto}
+  .num-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:11px;padding:16px}
+  .num-tile{background:#fff;border:1.5px solid var(--border);border-radius:11px;padding:13px 10px;text-align:center;position:relative;transition:.15s}
+  .num-tile.clickable{cursor:pointer}
+  .num-tile:hover{border-color:var(--brown-light);box-shadow:0 3px 10px rgba(171,125,88,.15);transform:translateY(-2px)}
+  .num-tile.sel{border-color:var(--brown);border-width:2px;box-shadow:0 4px 14px rgba(124,83,57,.25);background:#f6eee4}
+  .num-tap{font-size:9.5px;color:var(--brown-light);font-weight:700;margin-top:6px;opacity:.8}
+  .num-tile:hover .num-tap{opacity:1}
+  .num-tile.num-master{border-color:#b5832b;background:linear-gradient(180deg,#fcf8ec,#fff)}
+  .num-tile.num-master::after{content:"★ Master";position:absolute;top:5px;right:6px;font-size:8.5px;color:#a3721e;font-weight:700}
+  .num-tap-hint{text-align:center;font-size:12px;color:var(--muted);font-weight:600;padding:0 16px 6px;font-style:italic}
+  .num-detail-area{padding:0 16px}
+  .num-detail-area:empty{padding:0}
+  /* big detail card */
+  .num-meaning.big{border:2px solid var(--brown);border-radius:12px;padding:0;margin:4px 0 16px;background:#fff;overflow:hidden;box-shadow:0 4px 16px rgba(124,83,57,.15);animation:ncpop .2s ease}
+  @keyframes ncpop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+  .nm-head-big{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--brown-dark),var(--brown));color:#fff;padding:14px 16px}
+  .nm-num-big{background:#fff;color:var(--brown-dark);width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:28px;flex:0 0 auto}
+  .nm-heading{font-size:12px;opacity:.85;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+  .nm-title-big{font-size:19px;font-weight:800}
+  .nm-close{margin-left:auto;background:rgba(255,255,255,.2);border:none;color:#fff;width:30px;height:30px;border-radius:8px;font-size:20px;cursor:pointer;line-height:1;flex:0 0 auto}
+  .nm-close:hover{background:rgba(255,255,255,.35)}
+  .nm-desc{padding:12px 16px;font-size:13px;color:var(--text);background:#f7f2eb;border-bottom:1px solid var(--border);line-height:1.55}
+  .nm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:14px 16px}
+  .nm-box{border:1px solid var(--border);border-radius:9px;padding:10px 12px;background:#fdfcf9}
+  .nm-box-lbl{font-size:11px;font-weight:800;color:var(--brown-dark);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+  .nm-box>div:last-child{font-size:13px;color:var(--text);line-height:1.4}
+  .num-big{font-size:32px;font-weight:800;color:var(--brown-dark);line-height:1}
+  .num-tile.num-master .num-big{color:#a3721e}
+  .num-lbl{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:5px}
+  .num-title{font-size:12px;color:var(--brown);font-weight:600;margin-top:3px}
+  .num-sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .num-compat{padding:0 16px 14px}
+  .nc-title{font-size:12.5px;font-weight:700;color:var(--brown-dark);margin-bottom:6px}
+  .nc-bar{height:12px;background:#ede4d8;border-radius:8px;overflow:hidden}
+  .nc-fill{height:100%;background:linear-gradient(90deg,var(--brown-light),var(--brown-dark));border-radius:8px;transition:width .5s}
+  .nc-info{font-size:12.5px;margin-top:6px;color:var(--text)}
+  .num-details{padding:0 16px 16px}
+  .num-details summary{cursor:pointer;font-weight:700;color:var(--brown);font-size:13.5px;padding:8px 0}
+  .num-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+  .num-table th{background:var(--brown-dark);color:#fff;padding:8px 10px;text-align:left}
+  .num-table td{padding:7px 10px;border-bottom:1px solid var(--border)}
+  .num-table td .muted-note{font-size:11px}
+  .num-meaning{border:1px solid var(--border);border-radius:9px;padding:11px 13px;margin-top:11px;background:#fdfcf9}
+  .nm-head{font-size:14px;color:var(--brown-dark);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .nm-num{background:var(--brown);color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .nm-row{font-size:12.5px;margin:3px 0;color:var(--text)}
+  .nm-row span{font-weight:700;color:var(--muted)}
+  /* Urdu text styling (RTL) */
+  .nm-title-ur,.nm-lbl-ur,.nm-val-ur,.nm-desc-ur,.nm-only-ur{font-family:'Jameel Noori Nastaleeq','Noto Nastaliq Urdu','Urdu Typesetting',Tahoma,sans-serif;direction:rtl;unicode-bidi:isolate}
+  .nm-title-ur{display:inline-block;font-size:14px;font-weight:400;opacity:.92;margin-right:4px}
+  .nm-lbl-ur{font-weight:700;font-size:11px;margin-right:4px}
+  .nm-val-ur{display:block;font-size:13.5px;color:#3d281d;margin-top:3px;text-align:right;line-height:1.7}
+  .nm-desc-ur{font-size:14px;color:var(--text);margin-top:6px;text-align:right;line-height:1.8}
+  .num-meaning .nm-val-ur{color:#3d281d}
+  .nm-only-ur{font-size:15px}
+  /* Language toggle */
+  .lang-toggle{margin-left:auto;display:flex;gap:3px;background:rgba(255,255,255,.18);padding:3px;border-radius:8px}
+  .lang-btn{border:none;background:transparent;color:#fff;padding:4px 11px;font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;font-family:inherit;transition:.15s}
+  .lang-btn:hover{background:rgba(255,255,255,.15)}
+  .lang-btn.active{background:#fff;color:var(--brown-dark)}
+  .lang-btn[data-lang="ur"]{font-family:'Jameel Noori Nastaleeq','Noto Nastaliq Urdu',Tahoma,sans-serif;font-size:14px}
+  /* Language visibility control */
+  .num-panel[data-lang="en"] .nm-title-ur,
+  .num-panel[data-lang="en"] .nm-lbl-ur,
+  .num-panel[data-lang="en"] .nm-val-ur,
+  .num-panel[data-lang="en"] .nm-desc-ur,
+  .num-panel[data-lang="en"] .nm-only-ur{display:none}
+  .num-panel[data-lang="ur"] .nm-en,
+  .num-panel[data-lang="ur"] .nm-val-en{display:none}
+  .num-title .nm-val-ur{text-align:center}
+
+  /* ---------- Toast ---------- */
+  #toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);
+    background:var(--brown-dark);color:#fff;padding:13px 22px;border-radius:11px;
+    font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(61,40,29,.3);z-index:200;
+    transition:transform .3s cubic-bezier(.2,.9,.3,1);max-width:90%;
+  }
+  #toast.show{transform:translateX(-50%) translateY(0)}
+  #toast.err{background:#c0392b}
+  /* ---------- Modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(43,33,27,.6);display:none;
+    align-items:center;justify-content:center;z-index:150;padding:18px;
+    backdrop-filter:blur(2px);
+  }
+  .modal-overlay.show{display:flex}
+  .modal{
+    background:#fff;border-radius:var(--radius);max-width:560px;width:100%;
+    max-height:90vh;overflow:auto;box-shadow:0 20px 50px rgba(43,33,27,.35);
+  }
+  .modal-head{background:linear-gradient(135deg,var(--brown-dark),var(--brown));color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+  .modal-head h3{font-size:17px}
+  .modal-head .x{cursor:pointer;font-size:24px;line-height:1;background:none;border:none;color:#fff;opacity:.85}
+  .modal-body{padding:20px}
+  .detail-row{display:flex;padding:8px 0;border-bottom:1px dashed var(--border);font-size:14px}
+  .detail-row .k{width:150px;font-weight:700;color:var(--brown-dark);flex:0 0 auto}
+  .detail-row .v{color:var(--text)}
+  .muted-note{font-size:12.5px;color:var(--muted);margin-top:8px}
+  .inline-actions{display:flex;gap:6px;flex-wrap:wrap}
+  /* ---------- Footer ---------- */
+  footer{text-align:center;padding:18px;color:var(--muted);font-size:12.5px}
+  /* ---------- Print letter (hidden on screen) ---------- */
+  #printArea{display:none}
+  @media print{
+    body *{visibility:hidden}
+    #printArea,#printArea *{visibility:visible}
+    #printArea{display:block;position:absolute;left:0;top:0;width:100%}
+    @page{margin:16mm}
+  }
+  @media(max-width:600px){
+    header.app-header{padding:12px 16px}
+    header.app-header .titles h1{font-size:16px}
+    header.app-header .clock{display:none}
+    nav.tabs{top:66px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Subtle ambient background glow -->
+<div class="bg-glow" aria-hidden="true">
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+</div>
+
+<header class="app-header">
+  <div class="brand-group">
+    <div class="header-top-row">
+      <h1>SHIFA-RUQIYAH CENTRE</h1>
+      <span class="admin-pill">Admin Portal</span>
+    </div>
+    <p class="header-sub">Patient Management System &middot; Spiritual Guidance</p>
+  </div>
+  <div class="spacer"></div>
+  <div class="header-right">
+    <div class="clock" id="clock"></div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button data-tab="dashboard" class="active">📊 Dashboard</button>
+  <button data-tab="register">➕ Add Patient</button>
+  <button data-tab="patients">👥 Patient Directory</button>
+  <button data-tab="appointments">📅 Appointments</button>
+  <button data-tab="reports">🖨️ Reports & Data</button>
+</nav>
+
+<main>
+  <!-- ============ DASHBOARD ============ -->
+  <section class="page active" id="dashboard">
+    <h2 class="section-title">Admin Dashboard</h2>
+    <div class="admin-quick-bar">
+      <button type="button" class="admin-quick-btn" onclick="goTab('register')">
+        <span class="aq-icon">➕</span>
+        <span class="aq-title">Add Patient</span>
+        <span class="aq-desc">Register new record</span>
+      </button>
+      <button type="button" class="admin-quick-btn" onclick="goTab('appointments')">
+        <span class="aq-icon">📅</span>
+        <span class="aq-title">Book Session</span>
+        <span class="aq-desc">Schedule appointment</span>
+      </button>
+      <button type="button" class="admin-quick-btn" onclick="goTab('patients')">
+        <span class="aq-icon">👥</span>
+        <span class="aq-title">Patient Directory</span>
+        <span class="aq-desc">Search & manage patients</span>
+      </button>
+      <button type="button" class="admin-quick-btn" onclick="goTab('reports')">
+        <span class="aq-icon">🖨️</span>
+        <span class="aq-title">Reports & Backup</span>
+        <span class="aq-desc">Print list & export data</span>
+      </button>
+    </div>
+    <div class="stats">
+      <div class="stat-card"><div class="ico">👥</div><div class="num" id="statTotal">0</div><div class="label">Total Patients</div></div>
+      <div class="stat-card"><div class="ico">📅</div><div class="num" id="statAppts">0</div><div class="label">Total Appointments</div></div>
+      <div class="stat-card"><div class="ico">⏳</div><div class="num" id="statPending">0</div><div class="label">Pending Appointments</div></div>
+      <div class="stat-card"><div class="ico">✅</div><div class="num" id="statCompleted">0</div><div class="label">Completed Sessions</div></div>
+      <div class="stat-card"><div class="ico">💰</div><div class="num" id="statReceived" style="font-size:26px">Rs. 0</div><div class="label">Total Received</div></div>
+      <div class="stat-card"><div class="ico">⚠️</div><div class="num" id="statBalance" style="font-size:26px;color:#c0392b">Rs. 0</div><div class="label">Outstanding Balance</div></div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Recent Appointments</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Patient</th><th>Time</th><th>Problem</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="todayTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Recent Registrations</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Mobile</th><th>Problem</th><th>Registered</th></tr></thead>
+          <tbody id="recentTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REGISTER ============ -->
+  <section class="page" id="register">
+    <h2 class="section-title">Patient Registration</h2>
+    <div class="card">
+      <form id="patientForm">
+        <div class="form-grid">
+          <div class="field">
+            <label><span class="lbl-title">Patient ID</span><span class="field-tag">Auto</span></label>
+            <input type="text" id="pId" readonly>
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Registration Date</span><span class="field-tag">Today</span></label>
+            <input type="text" id="pDate" readonly>
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Patient Name <span class="req">*</span></span></label>
+            <input type="text" id="pName" placeholder="Enter patient full name" required autocomplete="off">
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Father Name</span></label>
+            <input type="text" id="pFather" placeholder="Enter father name" autocomplete="off">
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Mobile (WhatsApp) <span class="req">*</span></span></label>
+            <input type="tel" id="pMobile" placeholder="e.g. 03001234567" required autocomplete="off">
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Country</span><span id="pCurHint" class="field-hint"></span></label>
+            <input type="text" id="pCountry" list="countryList" placeholder="Pakistan" value="Pakistan" autocomplete="off">
+            <datalist id="countryList"></datalist>
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Date of Birth</span><span id="pAgeHint" class="field-hint"></span></label>
+            <div class="dob-row">
+              <input type="number" id="pDobD" class="dob-in" placeholder="Day" min="1" max="31" inputmode="numeric">
+              <select id="pDobM" class="dob-in">
+                <option value="">Month</option>
+                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+              </select>
+              <input type="number" id="pDobY" class="dob-in dob-year" placeholder="Year" min="1900" max="2100" inputmode="numeric">
+            </div>
+            <input type="hidden" id="pDob">
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Gender</span></label>
+            <select id="pGender">
+              <option value="">Select Gender...</option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+          <div class="field col-span-2">
+            <label><span class="lbl-title">Problem / Issue</span></label>
+            <select id="pProblem">
+              <option value="">Select Problem / Issue...</option>
+              <option>Jadu (Black Magic)</option>
+              <option>Nazar (Evil Eye)</option>
+              <option>Jinn Possession</option>
+              <option>Sihr (Sorcery)</option>
+              <option>Waswas (Whispers)</option>
+              <option>Marital Issue</option>
+              <option>Health / Physical</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field col-full">
+            <label><span class="lbl-title">Address</span></label>
+            <textarea id="pAddress" placeholder="Enter complete residential address"></textarea>
+          </div>
+          <div class="field col-full">
+            <label><span class="lbl-title">Spiritual / Clinical Notes (optional)</span></label>
+            <textarea id="pNotes" placeholder="Additional observations, symptoms, or guidance notes"></textarea>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-primary">💾 Save Patient Record</button>
+          <button type="reset" class="btn btn-outline" id="clearBtn">↺ Clear Form</button>
+        </div>
+        <input type="hidden" id="editId">
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ PATIENTS ============ -->
+  <section class="page" id="patients">
+    <h2 class="section-title">Search Patient</h2>
+    <div class="card">
+      <div class="search-bar">
+        <div class="field">
+          <label><span class="lbl-title">Search Patient Records</span></label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="patSearch" placeholder="Search by name, mobile, or patient ID...">
+          </div>
+        </div>
+        <div class="field flex-auto">
+          <label><span class="lbl-title">Filter by Problem</span></label>
+          <select id="patFilter">
+            <option value="">All Problems</option>
+            <option>Jadu (Black Magic)</option>
+            <option>Nazar (Evil Eye)</option>
+            <option>Jinn Possession</option>
+            <option>Sihr (Sorcery)</option>
+            <option>Waswas (Whispers)</option>
+            <option>Marital Issue</option>
+            <option>Health / Physical</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Father</th><th>Mobile</th><th>Age</th><th>Life Path</th><th>Problem</th><th>Registered</th><th>Actions</th></tr></thead>
+          <tbody id="patientsTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APPOINTMENTS ============ -->
+  <section class="page" id="appointments">
+    <h2 class="section-title">New Appointment</h2>
+    <div class="card">
+      <form id="apptForm">
+        <div class="form-grid">
+          <div class="field col-span-2">
+            <label><span class="lbl-title">Select Patient <span class="req">*</span></span></label>
+            <select id="aPatient" required></select>
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Start Time <span class="req">*</span></span></label>
+            <input type="time" id="aStart" value="10:00" required>
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">End Time <span class="req">*</span></span></label>
+            <input type="time" id="aEnd" value="11:00" required>
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Session Status</span></label>
+            <select id="aStatus">
+              <option>Pending</option>
+              <option>Confirmed</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Total Fee (<span class="cur-lbl">Rs.</span>)</span></label>
+            <input type="number" id="aFee" placeholder="0" min="0" step="1">
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Paid Amount (<span class="cur-lbl">Rs.</span>)</span></label>
+            <input type="number" id="aPaid" placeholder="0" min="0" step="1">
+          </div>
+          <div class="field">
+            <label><span class="lbl-title">Balance Due (<span class="cur-lbl">Rs.</span>)</span><span class="field-tag">Calc</span></label>
+            <input type="text" id="aBalance" readonly placeholder="0">
+          </div>
+          <div class="field col-span-2">
+            <label><span class="lbl-title">Payment Method</span></label>
+            <select id="aPayMethod">
+              <option value="">Select Payment Method...</option>
+              <option>Cash</option>
+              <option>JazzCash</option>
+              <option>EasyPaisa</option>
+              <option>Bank Transfer</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="pay-status-preview" id="payPreview"></div>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-primary">📅 Book Appointment</button>
+          <button type="reset" class="btn btn-outline">↺ Clear Form</button>
+        </div>
+        <input type="hidden" id="editApptId">
+      </form>
+    </div>
+
+    <h2 class="section-title">All Appointments</h2>
+    <div class="card">
+      <div class="search-bar">
+        <div class="field">
+          <label><span class="lbl-title">Search Appointments</span></label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="apptSearch" placeholder="Search by patient name, mobile, or ID...">
+          </div>
+        </div>
+        <div class="field flex-auto">
+          <label><span class="lbl-title">Filter by Status</span></label>
+          <select id="apptStatusFilter">
+            <option value="">All Statuses</option>
+            <option>Pending</option>
+            <option>Confirmed</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Patient</th><th>Time</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead>
+          <tbody id="apptTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REPORTS ============ -->
+  <section class="page" id="reports">
+    <h2 class="section-title">Reports & Backup</h2>
+    <div class="card">
+      <h3 style="color:var(--green-dark);margin-bottom:6px">🖨️ Print Appointment List</h3>
+      <p class="muted-note" style="margin-bottom:12px">Print all appointments, or filter by status first.</p>
+      <div class="search-bar">
+        <div class="field flex-auto">
+          <label><span class="lbl-title">Filter by Status (Optional)</span></label>
+          <select id="repStatus">
+            <option value="">All Appointments</option>
+            <option>Pending</option>
+            <option>Confirmed</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+        <div class="search-actions">
+          <button class="btn btn-blue" onclick="printAppointmentList()">🖨️ Print Appointment List</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--green-dark);margin-bottom:6px">💾 Backup Database</h3>
+      <p class="muted-note" style="margin-bottom:12px">Save all patients & appointments to a file, or restore from a backup.</p>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn btn-primary" onclick="exportBackup()">⬇️ Download Backup</button>
+        <button class="btn btn-outline" onclick="document.getElementById('restoreFile').click()">⬆️ Restore Backup</button>
+        <input type="file" id="restoreFile" accept=".json" style="display:none">
+        <button class="btn btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--green-dark);margin-bottom:6px">📊 Summary</h3>
+      <div class="detail-row"><div class="k">Total Patients</div><div class="v" id="repTotalPatients">0</div></div>
+      <div class="detail-row"><div class="k">Total Appointments</div><div class="v" id="repTotalAppts">0</div></div>
+      <div class="detail-row"><div class="k">Completed Sessions</div><div class="v" id="repCompleted">0</div></div>
+      <div class="detail-row"><div class="k">Total Fees</div><div class="v" id="repFees">Rs. 0</div></div>
+      <div class="detail-row"><div class="k">Total Received</div><div class="v" id="repPaid" style="color:var(--brown);font-weight:700">Rs. 0</div></div>
+      <div class="detail-row"><div class="k">Outstanding Balance</div><div class="v" id="repBalance" style="color:#c0392b;font-weight:700">Rs. 0</div></div>
+    </div>
+  </section>
+</main>
+
+<footer>Shifa-Ruqiyah Centre &copy; <span id="year"></span> &middot; Spiritual Guidance</footer>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Patient detail modal -->
+<div class="modal-overlay" id="patientModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Patient Record</h3><button class="x" onclick="closeModal('patientModal')">&times;</button></div>
+    <div class="modal-body" id="patientModalBody"></div>
+  </div>
+</div>
+
+<!-- Send appointment modal -->
+<div class="modal-overlay" id="sendModal">
+  <div class="modal">
+    <div class="modal-head"><h3>📤 Send Appointment to Patient</h3><button class="x" onclick="closeModal('sendModal')">&times;</button></div>
+    <div class="modal-body" id="sendModalBody"></div>
+  </div>
+</div>
+
+<!-- Print area -->
+<div id="printArea"></div>
+
+<script>
+/* ================= Shifa-Ruqiyah Centre - App Logic ================= */
+
+/* ---------- Storage ---------- */
+// Default WhatsApp country code for locally-typed numbers (Pakistan = 92)
+let AIR_COUNTRY = localStorage.getItem('air_country') || '92';
+const DB = {
+  patients: JSON.parse(localStorage.getItem('air_patients') || '[]'),
+  appts: JSON.parse(localStorage.getItem('air_appts') || '[]'),
+  counter: parseInt(localStorage.getItem('air_counter') || '0', 10)
+};
+// Migrate older appointments (from before dates were removed) so ordering stays stable
+(function migrate(){
+  let seq=1, changed=false;
+  DB.appts.forEach(a=>{
+    if(a.created==null){
+      // derive an ordering key from old date if it existed, else a small increment
+      a.created = a.date ? new Date(a.date+'T'+(a.start||'00:00')).getTime() : seq++;
+      changed=true;
+    }
+  });
+  if(changed) localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+})();
+function save(){
+  localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+  localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+  localStorage.setItem('air_counter', String(DB.counter));
+}
+
+/* ---------- Helpers ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(msg, err){
+  const t=$('toast'); t.textContent=msg; t.className = err?'show err':'show';
+  clearTimeout(t._t); t._t=setTimeout(()=>t.className='',2600);
+}
+function todayISO(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function fmtDate(iso){ if(!iso) return ''; const p=iso.split('-'); if(p.length!==3) return iso; return parseInt(p[2])+' '+MONTHS[parseInt(p[1])-1]+' '+p[0]; }
+function fmtTime(t){ if(!t) return ''; let [h,m]=t.split(':').map(Number); const ap=h>=12?'PM':'AM'; h=h%12||12; return h+':'+String(m).padStart(2,'0')+' '+ap; }
+function nextId(){ DB.counter++; return String(DB.counter).padStart(4,'0'); }
+function patientById(id){ return DB.patients.find(p=>p.id===id); }
+function badge(status){ const c={Pending:'b-pending',Confirmed:'b-confirmed',Completed:'b-completed',Cancelled:'b-cancelled'}[status]||'b-pending'; return '<span class="badge '+c+'">'+esc(status)+'</span>'; }
+
+/* ================= NUMEROLOGY ENGINE ================= */
+/* Note: For spiritual guidance & insight only — not medical or predictive certainty. */
+const NUM = (function(){
+  // Pythagorean: A=1..I=9, J=1.. (mod 9)
+  const PYTH = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
+  // Chaldean: 1-8 only (9 sacred, not assigned to letters)
+  const CHAL = {A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7};
+  const VOWELS = "AEIOU";
+
+  function isMaster(n){ return n===11||n===22||n===33; }
+  // reduce to single digit but keep master numbers 11/22/33
+  function reduce(n, keepMaster=true){
+    n = Math.abs(parseInt(n)||0);
+    while(n>9 && !(keepMaster && isMaster(n))){
+      n = String(n).split('').reduce((s,d)=>s+parseInt(d),0);
+    }
+    return n;
+  }
+  function lettersOf(str){ return (str||'').toUpperCase().replace(/[^A-Z]/g,''); }
+
+  // Name / Destiny (all letters), plus Soul Urge (vowels) & Personality (consonants)
+  function nameNumber(name, map){
+    let sum=0;
+    for(const ch of lettersOf(name)) sum += map[ch]||0;
+    return { total:sum, reduced:reduce(sum) };
+  }
+  function soulUrge(name, map){
+    let sum=0;
+    for(const ch of lettersOf(name)) if(VOWELS.includes(ch)) sum += map[ch]||0;
+    return reduce(sum);
+  }
+  function personality(name, map){
+    let sum=0;
+    for(const ch of lettersOf(name)) if(!VOWELS.includes(ch)) sum += map[ch]||0;
+    return reduce(sum);
+  }
+
+  // Life Path from date of birth (YYYY-MM-DD)
+  function lifePath(dob){
+    if(!dob) return null;
+    const [y,m,d] = dob.split('-').map(Number);
+    if(!y||!m||!d) return null;
+    const rd = reduce(d), rm = reduce(m), ry = reduce(y);
+    const total = rd+rm+ry;
+    return { day:d, month:m, year:y, parts:{d:rd,m:rm,y:ry}, reduced:reduce(total) };
+  }
+  // Birthday number = the day (reduced, keep master)
+  function birthdayNumber(dob){
+    if(!dob) return null;
+    const d = Number(dob.split('-')[2]);
+    if(!d) return null;
+    return { day:d, reduced:reduce(d) };
+  }
+  // Lucky number: blend of life path & name (simple, deterministic)
+  function luckyNumber(dob, name, map){
+    const lp = lifePath(dob); const nn = nameNumber(name, map);
+    let base = (lp? (Number(String(dob).replaceAll('-',''))%9||9) : nn.reduced);
+    const lucky = reduce((lp?lp.reduced:0) + nn.reduced, false); // single digit
+    return lucky===0?9:lucky;
+  }
+  // Compatibility between name number and life path (0-100 friendliness)
+  function compatibility(lifePathN, nameN){
+    if(!lifePathN) return null;
+    const a=reduce(lifePathN,false), b=reduce(nameN,false);
+    // harmonic groups
+    const groups=[[1,5,7],[2,4,8],[3,6,9]];
+    let score;
+    if(a===b) score=95;
+    else if(groups.some(g=>g.includes(a)&&g.includes(b))) score=80;
+    else if((a+b)%2===0) score=60;
+    else score=45;
+    const diff=Math.abs(a-b);
+    score=Math.max(35,Math.min(98,score - diff)); 
+    let label = score>=80?'Very Harmonious' : score>=60?'Harmonious' : score>=48?'Balanced' : 'Needs Effort';
+    return { score, label, name:a, path:b };
+  }
+
+  // ---- Meaning database ----
+  const MEAN = {
+    1:{title:"The Leader",traits:"Independent, pioneering, ambitious, strong-willed",strength:"Leadership, originality, determination",watch:"Ego, stubbornness, impatience",color:"Red / Gold",day:"Sunday",
+       title_ur:"قائد / رہنما",traits_ur:"خود مختار، پہل کرنے والا، بلند حوصلہ، مضبوط ارادہ",strength_ur:"قیادت، انفرادیت، عزم",watch_ur:"انا، ضد، بے صبری",color_ur:"سرخ / سنہری",day_ur:"اتوار"},
+    2:{title:"The Peacemaker",traits:"Cooperative, sensitive, diplomatic, caring",strength:"Harmony, intuition, partnership",watch:"Over-sensitivity, indecision",color:"White / Cream",day:"Monday",
+       title_ur:"صلح جو / امن پسند",traits_ur:"تعاون کرنے والا، حساس، سفارت کار، خیال رکھنے والا",strength_ur:"ہم آہنگی، بصیرت، شراکت داری",watch_ur:"حد سے زیادہ حساسیت، بے یقینی",color_ur:"سفید / کریم",day_ur:"پیر"},
+    3:{title:"The Communicator",traits:"Creative, expressive, joyful, social",strength:"Creativity, optimism, communication",watch:"Scattered focus, over-talkative",color:"Yellow",day:"Thursday",
+       title_ur:"بات چیت کرنے والا / اظہار پسند",traits_ur:"تخلیقی، اظہار خیال کرنے والا، خوش مزاج، ملنسار",strength_ur:"تخلیقی صلاحیت، رجائیت، گفتگو",watch_ur:"بکھری توجہ، حد سے زیادہ بولنا",color_ur:"پیلا",day_ur:"جمعرات"},
+    4:{title:"The Builder",traits:"Practical, disciplined, hardworking, reliable",strength:"Stability, order, dedication",watch:"Rigidity, over-work, stubbornness",color:"Green / Grey",day:"Saturday",
+       title_ur:"معمار / بنانے والا",traits_ur:"عملی، نظم و ضبط والا، محنتی، قابل اعتماد",strength_ur:"استحکام، ترتیب، لگن",watch_ur:"سختی، حد سے زیادہ کام، ضد",color_ur:"سبز / سرمئی",day_ur:"ہفتہ"},
+    5:{title:"The Free Spirit",traits:"Adventurous, versatile, curious, energetic",strength:"Freedom, adaptability, change",watch:"Restlessness, excess, impulsiveness",color:"Light Blue",day:"Wednesday",
+       title_ur:"آزاد طبیعت",traits_ur:"مہم جو، ہمہ جہت، متجسس، پُرجوش",strength_ur:"آزادی، لچک، تبدیلی",watch_ur:"بے چینی، زیادتی، جلد بازی",color_ur:"ہلکا نیلا",day_ur:"بدھ"},
+    6:{title:"The Nurturer",traits:"Responsible, loving, protective, home-oriented",strength:"Care, healing, responsibility",watch:"Over-giving, worry, interference",color:"Blue / Pink",day:"Friday",
+       title_ur:"پرورش کرنے والا / نگہبان",traits_ur:"ذمہ دار، محبت کرنے والا، حفاظت کرنے والا، گھریلو",strength_ur:"خیال رکھنا، شفا، ذمہ داری",watch_ur:"حد سے زیادہ دینا، فکر، مداخلت",color_ur:"نیلا / گلابی",day_ur:"جمعہ"},
+    7:{title:"The Seeker",traits:"Analytical, spiritual, wise, introspective",strength:"Wisdom, faith, deep thinking",watch:"Isolation, over-thinking, aloofness",color:"Purple / Violet",day:"Monday",
+       title_ur:"متلاشی / طالبِ حق",traits_ur:"تجزیہ کرنے والا، روحانی، دانا، خود شناس",strength_ur:"حکمت، ایمان، گہری سوچ",watch_ur:"تنہائی، حد سے زیادہ سوچنا، لاتعلقی",color_ur:"جامنی / بنفشی",day_ur:"پیر"},
+    8:{title:"The Achiever",traits:"Ambitious, powerful, goal-driven, authoritative",strength:"Success, management, strength",watch:"Materialism, control, stress",color:"Dark Blue / Black",day:"Saturday",
+       title_ur:"کامیاب / حاصل کرنے والا",traits_ur:"بلند حوصلہ، طاقتور، مقصد کی طرف بڑھنے والا، بااختیار",strength_ur:"کامیابی، انتظام، طاقت",watch_ur:"مادیت پرستی، قابو، تناؤ",color_ur:"گہرا نیلا / کالا",day_ur:"ہفتہ"},
+    9:{title:"The Humanitarian",traits:"Compassionate, generous, idealistic, wise",strength:"Service, forgiveness, universal love",watch:"Over-sacrifice, moodiness",color:"Crimson / Gold",day:"Tuesday",
+       title_ur:"انسان دوست / ہمدرد",traits_ur:"رحم دل، سخی، مثالی سوچ والا، دانا",strength_ur:"خدمت، معافی، عالمگیر محبت",watch_ur:"حد سے زیادہ قربانی، طبیعت کا بدلنا",color_ur:"گہرا سرخ / سنہری",day_ur:"منگل"},
+    11:{title:"The Intuitive (Master)",traits:"Visionary, inspired, highly intuitive, spiritual",strength:"Illumination, inspiration, insight",watch:"Nervous tension, extremes",color:"Silver",day:"Monday",
+       title_ur:"صاحبِ بصیرت (ماسٹر)",traits_ur:"دور اندیش، الہامی، نہایت بصیرت والا، روحانی",strength_ur:"روشنی، الہام، بصیرت",watch_ur:"اعصابی تناؤ، انتہا پسندی",color_ur:"چاندی",day_ur:"پیر"},
+    22:{title:"The Master Builder",traits:"Practical visionary, capable of great things",strength:"Building big dreams into reality",watch:"Pressure, self-doubt",color:"Coral",day:"Saturday",
+       title_ur:"ماسٹر معمار",traits_ur:"عملی دور اندیش، بڑے کام کرنے کے قابل",strength_ur:"بڑے خوابوں کو حقیقت بنانا",watch_ur:"دباؤ، خود پر شک",color_ur:"مرجانی (کورل)",day_ur:"ہفتہ"},
+    33:{title:"The Master Teacher",traits:"Selfless, healing, deeply compassionate",strength:"Healing, guidance, upliftment",watch:"Self-neglect, burden of others",color:"Turquoise",day:"Friday",
+       title_ur:"ماسٹر معلم / استاد",traits_ur:"بے غرض، شفا دینے والا، نہایت رحم دل",strength_ur:"شفا، رہنمائی، بلندی",watch_ur:"خود کو نظر انداز کرنا، دوسروں کا بوجھ",color_ur:"فیروزی",day_ur:"جمعہ"}
+  };
+  function meaning(n){ return MEAN[n] || MEAN[reduce(n)] || null; }
+
+  // Full profile for a patient
+  function profile(name, dob){
+    const out = { name, dob, systems:{} };
+    const maps = {Pythagorean:PYTH, Chaldean:CHAL};
+    const lp = lifePath(dob);           // life path is date-based (system-independent)
+    const bd = birthdayNumber(dob);
+    out.lifePath = lp;
+    out.birthday = bd;
+    for(const sys of Object.keys(maps)){
+      const map = maps[sys];
+      const nn = nameNumber(name, map);
+      out.systems[sys] = {
+        name: nn,
+        soulUrge: soulUrge(name, map),
+        personality: personality(name, map),
+        lucky: luckyNumber(dob, name, map),
+        compatibility: compatibility(lp?lp.reduced:null, nn.reduced)
+      };
+    }
+    return out;
+  }
+
+  return { PYTH, CHAL, reduce, isMaster, nameNumber, soulUrge, personality, lifePath, birthdayNumber, luckyNumber, compatibility, meaning, profile };
+})();
+
+// age helper from dob
+function ageFromDob(dob){
+  if(!dob) return null;
+  const b=new Date(dob), n=new Date();
+  let a=n.getFullYear()-b.getFullYear();
+  const mm=n.getMonth()-b.getMonth();
+  if(mm<0 || (mm===0 && n.getDate()<b.getDate())) a--;
+  return a>=0?a:null;
+}
+
+/* ============ COUNTRY / CURRENCY ============ */
+// Common countries with WhatsApp dial codes (used for suggestions + auto country code)
+const COUNTRIES=[
+  {n:'Pakistan',d:'92'},{n:'India',d:'91'},{n:'Bangladesh',d:'880'},{n:'United Kingdom',d:'44'},
+  {n:'United States',d:'1'},{n:'Canada',d:'1'},{n:'Saudi Arabia',d:'966'},{n:'United Arab Emirates',d:'971'},
+  {n:'Qatar',d:'974'},{n:'Kuwait',d:'965'},{n:'Bahrain',d:'973'},{n:'Oman',d:'968'},
+  {n:'Australia',d:'61'},{n:'Germany',d:'49'},{n:'France',d:'33'},{n:'Italy',d:'39'},
+  {n:'Spain',d:'34'},{n:'Turkey',d:'90'},{n:'Malaysia',d:'60'},{n:'Indonesia',d:'62'},
+  {n:'South Africa',d:'27'},{n:'Afghanistan',d:'93'},{n:'Iran',d:'98'},{n:'China',d:'86'},
+  {n:'Japan',d:'81'},{n:'Norway',d:'47'},{n:'Sweden',d:'46'},{n:'Netherlands',d:'31'},
+  {n:'Belgium',d:'32'},{n:'Switzerland',d:'41'},{n:'New Zealand',d:'64'},{n:'Kenya',d:'254'},
+  {n:'Nigeria',d:'234'},{n:'Egypt',d:'20'}
+];
+function normCountry(c){ return (c||'').trim().toLowerCase(); }
+// Currency for a country: Pakistan -> PKR (Rs.), everything else -> USD ($). Empty -> PKR (default local).
+function currencyFor(country){
+  const c=normCountry(country);
+  if(!c || c==='pakistan' || c==='pak' || c==='pk') return {code:'PKR', sym:'Rs.'};
+  return {code:'USD', sym:'$'};
+}
+// format money with the correct symbol for a patient's country
+function money(amount, country){
+  const cur=currencyFor(country);
+  const n=parseFloat(amount)||0;
+  return cur.sym+' '+n;
+}
+// dial code for a typed country name (for WhatsApp)
+function dialFor(country){
+  const c=normCountry(country);
+  const hit=COUNTRIES.find(x=>x.n.toLowerCase()===c);
+  return hit?hit.d:null;
+}
+// country of the patient tied to an appointment
+function apptCountry(a){ const p=patientById(a.patientId); return p?p.country:''; }
+// Sum paid & balance separately for each currency across all appointments
+function totalsByCurrency(){
+  const t={ PKR:{paid:0,bal:0,fee:0}, USD:{paid:0,bal:0,fee:0} };
+  DB.appts.forEach(a=>{
+    const code=currencyFor(apptCountry(a)).code;
+    const fee=parseFloat(a.fee)||0, paid=parseFloat(a.paid)||0;
+    t[code].fee+=fee; t[code].paid+=paid; t[code].bal+=Math.max(0,fee-paid);
+  });
+  return t;
+}
+// Format a "Rs. X + $ Y" style string, hiding a currency that is zero (unless both zero -> show Rs. 0)
+function fmtDualMoney(pkr, usd){
+  const parts=[];
+  if(pkr>0) parts.push('Rs. '+pkr);
+  if(usd>0) parts.push('$ '+usd);
+  if(!parts.length) return 'Rs. 0';
+  return parts.join(' + ');
+}
+
+
+/* ---------- Navigation ---------- */
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    $(btn.dataset.tab).classList.add('active');
+    if(btn.dataset.tab==='register' && !$('editId').value) resetPatientForm();
+    if(btn.dataset.tab==='dashboard') renderDashboard();
+    if(btn.dataset.tab==='patients') renderPatients();
+    if(btn.dataset.tab==='appointments'){ fillPatientSelect(); renderAppts(); }
+    if(btn.dataset.tab==='reports') renderReports();
+    window.scrollTo(0,0);
+  });
+});
+function goTab(name){ document.querySelector('nav.tabs button[data-tab="'+name+'"]').click(); }
+
+/* ---------- Clock ---------- */
+function tick(){
+  const d=new Date();
+  $('clock').innerHTML = d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})
+    +'<br>'+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
+setInterval(tick,1000); tick();
+$('year').textContent = new Date().getFullYear();
+
+/* populate country suggestions */
+$('countryList').innerHTML = COUNTRIES.map(c=>`<option value="${c.n}">`).join('');
+/* live currency hint under country + auto WhatsApp code */
+function updateCountryHint(){
+  const c=$('pCountry').value.trim();
+  const cur=currencyFor(c);
+  const el=$('pCurHint');
+  el.classList.remove('warn');
+  if(cur.code==='PKR'){ el.textContent='PKR (Rs.)'; }
+  else { el.textContent='USD ($) Intl'; }
+  // auto-set WhatsApp country code from the typed country (only when a known match)
+  const dc=dialFor(c);
+  if(dc){ AIR_COUNTRY=dc; localStorage.setItem('air_country',dc); }
+}
+$('pCountry').addEventListener('input',updateCountryHint);
+$('pCountry').addEventListener('change',updateCountryHint);
+
+/* ================= PATIENT REGISTRATION ================= */
+function resetPatientForm(){
+  $('patientForm').reset();
+  $('editId').value='';
+  $('pId').value = String(DB.counter+1).padStart(4,'0');
+  $('pDate').value = fmtDate(todayISO());
+  setDobBoxes('');
+  $('pCountry').value='Pakistan'; updateCountryHint();
+  document.querySelector('#patientForm button[type=submit]').textContent = '💾 Save Patient Record';
+}
+/* Build hidden pDob (YYYY-MM-DD) from the 3 Day/Month/Year boxes + live age */
+function syncDob(){
+  const d=parseInt($('pDobD').value,10);
+  const m=parseInt($('pDobM').value,10);
+  const y=parseInt($('pDobY').value,10);
+  const el=$('pAgeHint');
+  // nothing entered yet
+  if(!d && !m && !y){ $('pDob').value=''; el.textContent=''; el.classList.remove('warn'); return; }
+  // partially filled
+  if(!d || !m || !y || String(y).length<4){ $('pDob').value=''; el.textContent='Enter D/M/YYYY'; el.classList.add('warn'); return; }
+  // validate real calendar date (e.g. reject 31 Feb)
+  const dt=new Date(y, m-1, d);
+  if(dt.getFullYear()!==y || dt.getMonth()!==m-1 || dt.getDate()!==d){
+    $('pDob').value=''; el.textContent='⚠ Invalid Date'; el.classList.add('warn'); return;
+  }
+  const iso=y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+  $('pDob').value=iso;
+  updateAgeHint();
+}
+function updateAgeHint(){
+  const dob=$('pDob').value;
+  const el=$('pAgeHint');
+  if(!dob){ return; } // hint handled by syncDob
+  if(dob > todayISO()){ el.textContent='⚠ Future Date'; el.classList.add('warn'); return; }
+  const age=ageFromDob(dob);
+  el.classList.remove('warn');
+  el.textContent = age!=null ? ('Age: '+age+' yrs') : '';
+}
+['pDobD','pDobM','pDobY'].forEach(id=>{
+  $(id).addEventListener('input',syncDob);
+  $(id).addEventListener('change',syncDob);
+});
+/* set the 3 boxes from an ISO date (for edit) */
+function setDobBoxes(iso){
+  if(iso && /^\d{4}-\d{2}-\d{2}$/.test(iso)){
+    const [y,m,d]=iso.split('-').map(Number);
+    $('pDobD').value=d; $('pDobM').value=m; $('pDobY').value=y;
+  }else{
+    $('pDobD').value=''; $('pDobM').value=''; $('pDobY').value='';
+  }
+  syncDob();
+}
+$('patientForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=$('pName').value.trim(), mobile=$('pMobile').value.trim();
+  if(!name){ toast('Patient name is required',true); return; }
+  if(!mobile){ toast('Mobile number is required',true); return; }
+  // if DOB boxes partially/invalidly filled, block save
+  const dobTouched = $('pDobD').value || $('pDobM').value || $('pDobY').value;
+  if(dobTouched && !$('pDob').value){ toast('Please complete the Date of Birth (day, month & 4-digit year) or clear it',true); return; }
+  const editId=$('editId').value;
+  if(editId){
+    const p=patientById(editId);
+    Object.assign(p,{name,father:$('pFather').value.trim(),mobile,country:$('pCountry').value.trim(),dob:$('pDob').value,gender:$('pGender').value,problem:$('pProblem').value,address:$('pAddress').value.trim(),notes:$('pNotes').value.trim()});
+    save(); toast('Patient updated ✓'); resetPatientForm(); goTab('patients');
+  }else{
+    const id=nextId();
+    DB.patients.unshift({id,name,father:$('pFather').value.trim(),mobile,country:$('pCountry').value.trim(),dob:$('pDob').value,gender:$('pGender').value,problem:$('pProblem').value,address:$('pAddress').value.trim(),notes:$('pNotes').value.trim(),registered:todayISO()});
+    save(); toast('Patient saved: '+id+' ✓'); resetPatientForm();
+    renderDashboard();
+  }
+});
+$('clearBtn').addEventListener('click',()=>setTimeout(resetPatientForm,0));
+
+function editPatient(id){
+  const p=patientById(id); if(!p) return;
+  goTab('register');
+  $('editId').value=p.id; $('pId').value=p.id; $('pDate').value=fmtDate(p.registered);
+  $('pName').value=p.name; $('pFather').value=p.father||''; $('pMobile').value=p.mobile;
+  $('pCountry').value=p.country||''; updateCountryHint();
+  setDobBoxes(p.dob||''); $('pGender').value=p.gender||'';
+  $('pProblem').value=p.problem||''; $('pAddress').value=p.address||''; $('pNotes').value=p.notes||'';
+  document.querySelector('#patientForm button[type=submit]').textContent = '💾 Update Patient Record';
+}
+function deletePatient(id){
+  const p=patientById(id); if(!p) return;
+  if(!confirm('Delete patient "'+p.name+'"?\nThis will also remove their appointments.')) return;
+  DB.patients=DB.patients.filter(x=>x.id!==id);
+  DB.appts=DB.appts.filter(a=>a.patientId!==id);
+  save(); toast('Patient deleted'); renderPatients(); renderDashboard();
+}
+
+/* ================= PATIENTS LIST + SEARCH ================= */
+function renderPatients(){
+  const q=$('patSearch').value.trim().toLowerCase();
+  const f=$('patFilter').value;
+  let list=DB.patients.filter(p=>{
+    const matchQ=!q || p.name.toLowerCase().includes(q) || (p.mobile||'').toLowerCase().includes(q) || p.id.toLowerCase().includes(q) || (p.father||'').toLowerCase().includes(q);
+    const matchF=!f || p.problem===f;
+    return matchQ && matchF;
+  });
+  const tb=$('patientsTable');
+  if(!list.length){ tb.innerHTML='<tr><td colspan="9" class="empty">No patients found.</td></tr>'; return; }
+  tb.innerHTML=list.map(p=>{
+    const lp = p.dob ? (NUM.lifePath(p.dob)||{}).reduced : null;
+    const age = ageFromDob(p.dob);
+    return `<tr>
+    <td><strong>${esc(p.id)}</strong></td>
+    <td>${esc(p.name)}</td>
+    <td>${esc(p.father||'-')}</td>
+    <td>${esc(p.mobile)}</td>
+    <td>${age!=null?age+' yrs':'<span style="color:var(--muted)">-</span>'}</td>
+    <td>${lp!=null?`<span class="badge b-completed">${lp}</span>`:'<span style="color:var(--muted)">-</span>'}</td>
+    <td>${esc(p.problem||'-')}</td>
+    <td>${fmtDate(p.registered)}</td>
+    <td><div class="inline-actions">
+      <button class="btn btn-outline btn-sm" onclick="viewPatient('${p.id}')">View</button>
+      <button class="btn btn-outline btn-sm" onclick="editPatient('${p.id}')">Edit</button>
+      <button class="btn btn-danger btn-sm" onclick="deletePatient('${p.id}')">Del</button>
+    </div></td></tr>`;
+  }).join('');
+}
+$('patSearch').addEventListener('input',renderPatients);
+$('patFilter').addEventListener('change',renderPatients);
+
+function viewPatient(id){
+  const p=patientById(id); if(!p) return;
+  const appts=DB.appts.filter(a=>a.patientId===id).sort((a,b)=>(b.created||0)-(a.created||0));
+  const age=ageFromDob(p.dob);
+  let html=`
+    <div class="detail-row"><div class="k">Patient ID</div><div class="v">${esc(p.id)}</div></div>
+    <div class="detail-row"><div class="k">Name</div><div class="v">${esc(p.name)}</div></div>
+    <div class="detail-row"><div class="k">Father Name</div><div class="v">${esc(p.father||'-')}</div></div>
+    <div class="detail-row"><div class="k">Mobile</div><div class="v">${esc(p.mobile)}</div></div>
+    <div class="detail-row"><div class="k">Country</div><div class="v">${esc(p.country||'Pakistan')} <span class="badge ${currencyFor(p.country).code==='USD'?'b-confirmed':'b-completed'}">${currencyFor(p.country).sym} ${currencyFor(p.country).code}</span></div></div>
+    <div class="detail-row"><div class="k">Date of Birth</div><div class="v">${p.dob?fmtDate(p.dob)+(age!=null?' ('+age+' yrs)':''):'-'}</div></div>
+    ${p.gender?`<div class="detail-row"><div class="k">Gender</div><div class="v">${esc(p.gender)}</div></div>`:''}
+    <div class="detail-row"><div class="k">Problem</div><div class="v">${esc(p.problem||'-')}</div></div>
+    <div class="detail-row"><div class="k">Address</div><div class="v">${esc(p.address||'-')}</div></div>
+    <div class="detail-row"><div class="k">Registered</div><div class="v">${fmtDate(p.registered)}</div></div>
+    ${p.notes?`<div class="detail-row"><div class="k">Notes</div><div class="v">${esc(p.notes)}</div></div>`:''}
+    ${renderNumerology(p)}
+    <h4 style="margin:16px 0 8px;color:var(--green-dark)">History (${appts.length} appointment${appts.length!==1?'s':''})</h4>`;
+  if(appts.length){
+    html+='<div class="table-wrap"><table><thead><tr><th>#</th><th>Time</th><th>Status</th></tr></thead><tbody>'+
+      appts.map((a,i)=>`<tr><td>${i+1}</td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${badge(a.status)}</td></tr>`).join('')+
+      '</tbody></table></div>';
+  }else{ html+='<p class="muted-note">No appointments yet.</p>'; }
+  html+=`<div class="btn-row"><button class="btn btn-blue" onclick="printPatientRecord('${p.id}')">🖨️ Print Record</button><button class="btn btn-outline" onclick="closeModal('patientModal')">Close</button></div>`;
+  $('patientModalBody').innerHTML=html;
+  openModal('patientModal');
+}
+
+
+/* ---------- Numerology display panel ---------- */
+function numTile(label, num, sub){
+  const m = NUM.meaning(num);
+  const master = NUM.isMaster(num) ? ' num-master':'';
+  // clickable tile -> opens detail for this number+label
+  return `<div class="num-tile clickable${master}" onclick="showNumDetail(${num}, ${JSON.stringify(label).replace(/"/g,'&quot;')}, this)" title="Click to see full details">
+    <div class="num-big">${num}</div>
+    <div class="num-lbl">${esc(label)}</div>
+    ${m?`<div class="num-title"><span class="nm-en">${esc(m.title)}</span><span class="nm-val-ur" style="margin-top:0">${esc(m.title_ur||'')}</span></div>`:''}
+    ${sub?`<div class="num-sub">${esc(sub)}</div>`:''}
+    <div class="num-tap">👆 details</div>
+  </div>`;
+}
+// Show a number's full meaning in the shared detail area under the grid
+function showNumDetail(num, label, tileEl){
+  const panel = tileEl.closest('.num-panel');
+  const area = panel.querySelector('.num-detail-area');
+  // toggle: if same tile clicked again, close
+  panel.querySelectorAll('.num-tile').forEach(t=>t.classList.remove('sel'));
+  if(area.dataset.open === label+':'+num){
+    area.innerHTML=''; area.dataset.open=''; return;
+  }
+  tileEl.classList.add('sel');
+  area.dataset.open = label+':'+num;
+  area.innerHTML = meaningCard(num, label, true);
+  // smooth scroll the detail into view within the modal
+  area.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+// What each numerology position means (English + Urdu), shown in the detail card
+const NUM_POS_DESC = {
+  'Life Path':{en:'Your main life number, from your date of birth. It describes your overall journey, purpose and the lessons of your life.',ur:'آپ کا بنیادی زندگی نمبر، جو آپ کی تاریخِ پیدائش سے بنتا ہے۔ یہ آپ کے مجموعی سفر، مقصد اور زندگی کے اسباق کو بیان کرتا ہے۔'},
+  'Birthday':{en:'The day of the month you were born. It shows a special talent or gift you naturally carry.',ur:'مہینے کا وہ دن جس میں آپ پیدا ہوئے۔ یہ آپ کی کسی خاص صلاحیت یا فطری خوبی کو ظاہر کرتا ہے۔'},
+  'Name (Pyth)':{en:'Your Destiny number from your full name (Pythagorean system). It shows your goals and what you are here to achieve.',ur:'آپ کے پورے نام سے بننے والا تقدیر (ڈیسٹنی) نمبر (پائتھاگورین طریقہ)۔ یہ آپ کے مقاصد اور آپ کے کرنے کے کام ظاہر کرتا ہے۔'},
+  'Name (Chaldean)':{en:'Your Destiny number from your full name (Chaldean/ancient system). Another view of your purpose and outward expression.',ur:'آپ کے پورے نام سے بننے والا تقدیر نمبر (کلدانی/قدیم طریقہ)۔ یہ آپ کے مقصد اور اظہار کا ایک اور رخ دکھاتا ہے۔'},
+  'Soul Urge':{en:'From the vowels of your name. It reveals your inner desire — what your heart truly wants.',ur:'آپ کے نام کے حروفِ علت (vowels) سے۔ یہ آپ کی باطنی خواہش ظاہر کرتا ہے — جو آپ کا دل واقعی چاہتا ہے۔'},
+  'Personality':{en:'From the consonants of your name. It shows the outer self — how others first see you.',ur:'آپ کے نام کے حروفِ صحیح (consonants) سے۔ یہ ظاہری شخصیت دکھاتا ہے — لوگ آپ کو پہلی نظر میں کیسا دیکھتے ہیں۔'},
+  'Lucky No.':{en:'A guiding number blended from your name and birth date, considered supportive for you.',ur:'آپ کے نام اور تاریخِ پیدائش کے امتزاج سے بننے والا رہنما نمبر، جو آپ کے لیے مددگار سمجھا جاتا ہے۔'}
+};
+function meaningCard(num, heading, big){
+  const m = NUM.meaning(num); if(!m) return '';
+  const desc = NUM_POS_DESC[heading] || {en:'',ur:''};
+  if(big){
+    const box=(icon,lblEn,lblUr,valEn,valUr)=>`<div class="nm-box">
+        <div class="nm-box-lbl">${icon} <span class="nm-en">${lblEn}</span> <span class="nm-lbl-ur">${lblUr}</span></div>
+        <div class="nm-val-en">${esc(valEn)}</div>
+        <div class="nm-val-ur">${esc(valUr)}</div>
+      </div>`;
+    return `<div class="num-meaning big">
+      <div class="nm-head-big">
+        <span class="nm-num-big">${num}</span>
+        <div><div class="nm-heading">${esc(heading)}</div><div class="nm-title-big"><span class="nm-en">${esc(m.title)}</span> <span class="nm-title-ur">${esc(m.title_ur||'')}</span></div></div>
+        <button class="nm-close" onclick="closeNumDetail(this)" title="Close / بند کریں">&times;</button>
+      </div>
+      ${desc.en?`<div class="nm-desc"><div class="nm-val-en">${esc(desc.en)}</div><div class="nm-desc-ur">${esc(desc.ur)}</div></div>`:''}
+      <div class="nm-grid">
+        ${box('✨','Traits','خصوصیات',m.traits,m.traits_ur||'')}
+        ${box('💪','Strengths','خوبیاں',m.strength,m.strength_ur||'')}
+        ${box('⚠️','Watch out for','کن باتوں سے بچیں',m.watch,m.watch_ur||'')}
+        ${box('🎨','Lucky colour','خوش قسمت رنگ',m.color,m.color_ur||'')}
+        ${box('📅','Lucky day','خوش قسمت دن',m.day,m.day_ur||'')}
+        ${NUM.isMaster(num)?`<div class="nm-box" style="border-color:#b8860b"><div class="nm-box-lbl" style="color:#b8860b"><span class="nm-en">★ Master Number</span> <span class="nm-lbl-ur" style="color:#b8860b">ماسٹر نمبر</span></div><div class="nm-val-en">A rare, powerful number with high spiritual potential.</div><div class="nm-val-ur">ایک نایاب، طاقتور نمبر جس میں اعلیٰ روحانی صلاحیت ہوتی ہے۔</div></div>`:''}
+      </div>
+    </div>`;
+  }
+  return `<div class="num-meaning">
+    <div class="nm-head"><span class="nm-num">${num}</span> <b>${esc(heading)} — ${esc(m.title)} <span class="nm-title-ur">${esc(m.title_ur||'')}</span></b></div>
+    <div class="nm-row"><span>Traits / خصوصیات:</span> ${esc(m.traits)} <span class="nm-val-ur">${esc(m.traits_ur||'')}</span></div>
+    <div class="nm-row"><span>Strengths / خوبیاں:</span> ${esc(m.strength)} <span class="nm-val-ur">${esc(m.strength_ur||'')}</span></div>
+    <div class="nm-row"><span>Watch out / بچیں:</span> ${esc(m.watch)} <span class="nm-val-ur">${esc(m.watch_ur||'')}</span></div>
+    <div class="nm-row"><span>Lucky colour / رنگ:</span> ${esc(m.color)} (${esc(m.color_ur||'')}) &nbsp; <span>Lucky day / دن:</span> ${esc(m.day)} (${esc(m.day_ur||'')})</div>
+  </div>`;
+}
+// Switch numerology language display: 'en' | 'ur' | 'both'
+function setNumLang(btn, lang){
+  const panel = btn.closest('.num-panel');
+  panel.dataset.lang = lang;
+  panel.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  try{ localStorage.setItem('air_numlang', lang); }catch(e){}
+}
+function closeNumDetail(btn){
+  const panel = btn.closest('.num-panel');
+  const area = panel.querySelector('.num-detail-area');
+  panel.querySelectorAll('.num-tile').forEach(t=>t.classList.remove('sel'));
+  area.innerHTML=''; area.dataset.open='';
+}
+function renderNumerology(p){
+  if(!p.dob && !(p.name||'').trim()) return '';
+  const prof = NUM.profile(p.name||'', p.dob||'');
+  const lp = prof.lifePath ? prof.lifePath.reduced : null;
+  const bd = prof.birthday ? prof.birthday.reduced : null;
+  const py = prof.systems.Pythagorean;
+  const ch = prof.systems.Chaldean;
+
+  let tiles = '<div class="num-grid">';
+  if(lp!=null) tiles += numTile('Life Path', lp, p.dob?fmtDate(p.dob):'');
+  if(bd!=null) tiles += numTile('Birthday', bd, 'Day '+prof.birthday.day);
+  tiles += numTile('Name (Pyth)', py.name.reduced, 'Destiny');
+  tiles += numTile('Name (Chaldean)', ch.name.reduced, 'Destiny');
+  tiles += numTile('Soul Urge', py.soulUrge, 'Inner desire');
+  tiles += numTile('Personality', py.personality, 'Outer self');
+  tiles += numTile('Lucky No.', py.lucky, '');
+  tiles += '</div>';
+  tiles += '<div class="num-tap-hint">👆 <span class="nm-en">Tap any number above to see its full meaning</span> <span class="nm-val-ur" style="display:inline;margin-right:6px">اوپر کسی بھی نمبر پر کلک کریں</span></div>';
+  tiles += '<div class="num-detail-area" data-open=""></div>';
+
+  // systems comparison table
+  let table = `<table class="num-table"><thead><tr><th>Number</th><th>Pythagorean</th><th>Chaldean</th></tr></thead><tbody>
+    <tr><td>Name / Destiny</td><td>${py.name.reduced} <span class="muted-note">(sum ${py.name.total})</span></td><td>${ch.name.reduced} <span class="muted-note">(sum ${ch.name.total})</span></td></tr>
+    <tr><td>Soul Urge (vowels)</td><td>${py.soulUrge}</td><td>${ch.soulUrge}</td></tr>
+    <tr><td>Personality (consonants)</td><td>${py.personality}</td><td>${ch.personality}</td></tr>
+    <tr><td>Lucky Number</td><td>${py.lucky}</td><td>${ch.lucky}</td></tr>
+  </tbody></table>`;
+
+  // compatibility (name vs life path)
+  let compat = '';
+  const c = py.compatibility;
+  if(c){
+    compat = `<div class="num-compat">
+      <div class="nc-title">Name &harr; Life Path Compatibility</div>
+      <div class="nc-bar"><div class="nc-fill" style="width:${c.score}%"></div></div>
+      <div class="nc-info"><b>${c.score}%</b> · ${esc(c.label)} <span class="muted-note">(Name ${c.name} with Life Path ${c.path})</span></div>
+    </div>`;
+  }
+
+  // detailed meanings for key numbers (dedup)
+  const shown = new Set(); let meanings='';
+  const add=(n,h)=>{ if(n!=null && !shown.has(n)){ shown.add(n); meanings+=meaningCard(n,h); } };
+  if(lp!=null) add(lp,'Life Path');
+  add(py.name.reduced,'Name (Pythagorean)');
+  if(ch.name.reduced!==py.name.reduced) add(ch.name.reduced,'Name (Chaldean)');
+
+  let savedLang='both'; try{ savedLang=localStorage.getItem('air_numlang')||'both'; }catch(e){}
+  return `<div class="num-panel" data-lang="${savedLang}">
+    <div class="num-panel-head">🔢 <span class="nm-en">Numerology Profile</span> <span class="nm-only-ur">عددی پروفائل</span>
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn${savedLang==='en'?' active':''}" data-lang="en" onclick="setNumLang(this,'en')">English</button>
+        <button type="button" class="lang-btn${savedLang==='ur'?' active':''}" data-lang="ur" onclick="setNumLang(this,'ur')">اردو</button>
+        <button type="button" class="lang-btn${savedLang==='both'?' active':''}" data-lang="both" onclick="setNumLang(this,'both')">Both</button>
+      </div>
+    </div>
+    ${tiles}
+    ${compat}
+    <details class="num-details"><summary>Full number table & meanings / مکمل نمبر ٹیبل اور تفصیلات</summary>
+      ${table}
+      ${meanings}
+      <p class="muted-note" style="margin-top:10px"><span class="nm-en">Note: Numerology is provided as spiritual guidance and insight only. It is not medical advice or a guaranteed prediction.</span><span class="nm-val-ur" style="display:inline">نوٹ: عددی علم صرف روحانی رہنمائی اور بصیرت کے لیے ہے۔ یہ طبی مشورہ یا یقینی پیشین گوئی نہیں ہے۔</span></p>
+    </details>
+  </div>`;
+}
+
+/* ================= APPOINTMENTS ================= */
+function fillPatientSelect(){
+  const sel=$('aPatient');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">Select patient...</option>'+
+    DB.patients.map(p=>`<option value="${p.id}">${esc(p.name)} — ${esc(p.mobile)} (${esc(p.id)})</option>`).join('');
+  if(cur) sel.value=cur;
+  updateApptCurrency();
+}
+/* currency symbol for the patient currently selected in the appointment form */
+function apptCurSym(){
+  const p=patientById($('aPatient').value);
+  return currencyFor(p?p.country:'').sym;
+}
+/* update the (Rs./$) labels on the appointment form to match selected patient */
+function updateApptCurrency(){
+  const sym=apptCurSym();
+  document.querySelectorAll('#apptForm .cur-lbl').forEach(el=>el.textContent=sym);
+  updateBalancePreview();
+}
+$('aPatient').addEventListener('change',updateApptCurrency);
+$('apptForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const pid=$('aPatient').value;
+  if(!pid){ toast('Please select a patient. Register one first if none listed.',true); return; }
+  if($('aEnd').value <= $('aStart').value){ toast('End time must be after start time',true); return; }
+  const editId=$('editApptId').value;
+  const fee=parseFloat($('aFee').value)||0;
+  const paid=parseFloat($('aPaid').value)||0;
+  if(paid>fee){ toast('Paid amount cannot be more than total fee',true); return; }
+  const data={patientId:pid,start:$('aStart').value,end:$('aEnd').value,status:$('aStatus').value,fee:fee,paid:paid,payMethod:$('aPayMethod').value};
+  if(editId){
+    const a=DB.appts.find(x=>x.id===editId); Object.assign(a,data);
+    save(); toast('Appointment updated ✓');
+  }else{
+    data.id='APT-'+Date.now().toString(36).toUpperCase();
+    data.created=Date.now();
+    DB.appts.unshift(data);
+    save(); toast('Appointment booked ✓');
+  }
+  $('apptForm').reset(); $('editApptId').value=''; $('aStart').value='10:00'; $('aEnd').value='11:00';
+  updateBalancePreview();
+  document.querySelector('#apptForm button[type=submit]').textContent='📅 Book Appointment';
+  renderAppts(); renderDashboard();
+});
+
+/* live balance calculation on the appointment form */
+function updateBalancePreview(){
+  const fee=parseFloat($('aFee').value)||0;
+  const paid=parseFloat($('aPaid').value)||0;
+  const bal=Math.max(0,fee-paid);
+  const sym=apptCurSym();
+  $('aBalance').value=bal;
+  let ps=paymentStatus(fee,paid);
+  if(fee===0 && paid===0){ $('payPreview').innerHTML=''; return; }
+  $('payPreview').innerHTML=`<div class="money-row">
+    <div><span class="lbl">Total Fee</span><span class="amt">${sym} ${fee}</span></div>
+    <div><span class="lbl">Paid</span><span class="amt done">${sym} ${paid}</span></div>
+    <div><span class="lbl">Balance</span><span class="amt ${bal>0?'bal':'done'}">${sym} ${bal}</span></div>
+    <div><span class="lbl">Status</span><span>${payBadge(ps)}</span></div>
+  </div>`;
+}
+$('aFee').addEventListener('input',updateBalancePreview);
+$('aPaid').addEventListener('input',updateBalancePreview);
+
+function paymentStatus(fee,paid){
+  fee=parseFloat(fee)||0; paid=parseFloat(paid)||0;
+  if(fee===0) return 'No Fee';
+  if(paid>=fee) return 'Paid';
+  if(paid>0) return 'Partial';
+  return 'Unpaid';
+}
+function payBadge(status){
+  const c={'Paid':'p-paid','Partial':'p-partial','Unpaid':'p-unpaid','No Fee':'b-confirmed'}[status]||'p-unpaid';
+  return '<span class="badge '+c+'">'+esc(status)+'</span>';
+}
+function apptBalance(a){ return Math.max(0,(parseFloat(a.fee)||0)-(parseFloat(a.paid)||0)); }
+
+function renderAppts(){
+  const q=$('apptSearch').value.trim().toLowerCase();
+  const sf=$('apptStatusFilter').value;
+  let list=DB.appts.map(a=>({...a,pt:patientById(a.patientId)})).filter(a=>a.pt);
+  list=list.filter(a=>{
+    const matchQ=!q || a.pt.name.toLowerCase().includes(q) || (a.pt.mobile||'').toLowerCase().includes(q) || a.pt.id.toLowerCase().includes(q);
+    const matchS=!sf || a.status===sf;
+    return matchQ && matchS;
+  }).sort((a,b)=>(b.created||0)-(a.created||0));
+  const tb=$('apptTable');
+  if(!list.length){ tb.innerHTML='<tr><td colspan="5" class="empty">No appointments found.</td></tr>'; return; }
+  tb.innerHTML=list.map(a=>{
+    const bal=apptBalance(a); const ps=paymentStatus(a.fee,a.paid);
+    const sym=currencyFor(a.pt.country).sym;
+    const payCell=(a.fee||a.paid)
+      ? `${payBadge(ps)}<br><span style="font-size:11.5px;color:var(--muted)">Paid ${sym}${a.paid||0} / ${sym}${a.fee||0}${bal>0?` · <b style="color:#c0392b">Bal ${sym}${bal}</b>`:''}</span>`
+      : '<span style="color:var(--muted);font-size:12px">—</span>';
+    return `<tr>
+    <td><strong>${esc(a.pt.name)}</strong><br><span style="color:var(--muted);font-size:12px">${esc(a.pt.mobile)}</span></td>
+    <td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td>
+    <td>${statusSelect(a)}</td>
+    <td>${payCell}</td>
+    <td><div class="inline-actions">
+      ${bal>0?`<button class="btn btn-primary btn-sm" onclick="addPayment('${a.id}')">＋Pay</button>`:''}
+      <button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button>
+      <button class="btn btn-blue btn-sm" onclick="printLetter('${a.id}')">Letter</button>
+      <button class="btn btn-outline btn-sm" onclick="editAppt('${a.id}')">Edit</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteAppt('${a.id}')">Del</button>
+    </div></td></tr>`;
+  }).join('');
+}
+/* quick add-payment (for partial/unpaid) */
+function addPayment(id){
+  const a=DB.appts.find(x=>x.id===id); if(!a) return;
+  const bal=apptBalance(a);
+  const sym=currencyFor(apptCountry(a)).sym;
+  const input=prompt('Balance remaining: '+sym+' '+bal+'\nEnter amount received now ('+sym+'):', bal);
+  if(input===null) return;
+  const amt=parseFloat(input);
+  if(isNaN(amt)||amt<=0){ toast('Enter a valid amount',true); return; }
+  if(amt>bal){ toast('Amount is more than the remaining balance',true); return; }
+  a.paid=(parseFloat(a.paid)||0)+amt;
+  save(); toast('Payment recorded: '+sym+' '+amt+' ✓');
+  renderAppts(); renderDashboard(); renderReports();
+}
+function statusSelect(a){
+  const opts=['Pending','Confirmed','Completed','Cancelled'].map(s=>`<option ${s===a.status?'selected':''}>${s}</option>`).join('');
+  return `<select onchange="quickStatus('${a.id}',this.value)" class="table-status-select">${opts}</select>`;
+}
+
+/* ============ SEND TO PATIENT (WhatsApp) ============ */
+// Build the appointment message text for a given appointment
+function buildApptMessage(a, p){
+  const bal=apptBalance(a);
+  const lines=[];
+  lines.push('*SHIFA-RUQIYAH CENTRE*');
+  lines.push('Dam Session Appointment');
+  lines.push('');
+  lines.push('Assalam-o-Alaikum '+p.name+',');
+  lines.push('Your Ruqyah (Dam) session appointment details:');
+  lines.push('');
+  lines.push('👤 Patient: '+p.name);
+  lines.push('🆔 ID: '+p.id);
+  lines.push('⏰ Time: '+fmtTime(a.start)+' to '+fmtTime(a.end));
+  lines.push('📌 Status: '+a.status);
+  if(a.fee||a.paid){
+    const sym=currencyFor(p.country).sym;
+    lines.push('');
+    lines.push('💰 Total Fee: '+sym+' '+(a.fee||0));
+    lines.push('✅ Paid: '+sym+' '+(a.paid||0));
+    if(bal>0) lines.push('⚠ Balance Due: '+sym+' '+bal);
+  }
+  lines.push('');
+  lines.push('Note: Time punctuality is strictly mandatory. If the allotted time expires, a new appointment will be required.');
+  lines.push('');
+  lines.push('JazakAllah Khair,');
+  lines.push('Shifa-Ruqiyah Centre');
+  return lines.join('\n');
+}
+// Pick the right dial code: explicit override → patient's country → global default
+function codeFor(country, override){
+  if(override) return (''+override).replace(/[^0-9]/g,'');
+  const dc=dialFor(country);
+  return dc || AIR_COUNTRY;
+}
+// Normalise a local phone number into international digits for wa.me
+function waNumber(mobile, country, override){
+  const code=codeFor(country, override);
+  let d=(mobile||'').replace(/[^0-9+]/g,'');
+  if(d.startsWith('+')) return d.slice(1);       // already international
+  if(d.startsWith('00')) return d.slice(2);      // 00 prefix
+  if(d.startsWith('0')) return code + d.slice(1); // local 03xx -> <code> 3xx
+  if(d.startsWith(code)) return d;                // already has country code
+  return d; // fallback: send as-is
+}
+// Open the send options modal
+function sendAppt(id){
+  const a=DB.appts.find(x=>x.id===id); if(!a) return;
+  const p=patientById(a.patientId); if(!p){ toast('Patient not found',true); return; }
+  const msg=buildApptMessage(a,p);
+  const dcode=codeFor(p.country);
+  const waNum=waNumber(p.mobile, p.country);
+  const body=`
+    <div class="detail-row"><div class="k">Patient</div><div class="v">${esc(p.name)}</div></div>
+    <div class="detail-row"><div class="k">Mobile</div><div class="v">${esc(p.mobile)||'-'}</div></div>
+    <div class="detail-row"><div class="k">Country</div><div class="v">${esc(p.country||'Pakistan')}</div></div>
+    <div class="send-preview-label">Message preview:</div>
+    <textarea id="sendMsgText" class="send-textarea">${esc(msg)}</textarea>
+    <p class="muted-note">You can edit the message above before sending. It will open WhatsApp with this text — you just press Send there.</p>
+    <div class="send-btn-row">
+      <button class="btn btn-primary" onclick="doSendWhatsApp('${p.id}')">🟢 Send via WhatsApp</button>
+      <button class="btn btn-outline" onclick="copySendMsg()">📋 Copy Text</button>
+    </div>
+    <div class="wa-country-row">
+      WhatsApp country code: <input type="text" id="waCountryInp" value="${esc(dcode)}" style="width:60px;padding:5px 8px;border:1.5px solid var(--border);border-radius:7px;text-align:center" oninput="updateWaNumPreview('${p.id}')">
+      <span class="muted-note" id="waNumPreview">(number: +${esc(waNum)})</span>
+    </div>`;
+  $('sendModalBody').innerHTML=body;
+  openModal('sendModal');
+}
+function updateWaNumPreview(pid){
+  const p=patientById(pid); if(!p) return;
+  const ov=$('waCountryInp').value;
+  $('waNumPreview').textContent='(number: +'+waNumber(p.mobile, p.country, ov)+')';
+}
+function currentSendMsg(){ const t=$('sendMsgText'); return t?t.value:''; }
+function doSendWhatsApp(pid){
+  const p=patientById(pid); if(!p) return;
+  if(!p.mobile){ toast('No mobile number for this patient',true); return; }
+  const ov=$('waCountryInp')?$('waCountryInp').value:'';
+  const num=waNumber(p.mobile, p.country, ov);
+  const url='https://wa.me/'+num+'?text='+encodeURIComponent(currentSendMsg());
+  window.open(url,'_blank');
+  toast('Opening WhatsApp...');
+}
+function copySendMsg(){
+  const t=$('sendMsgText'); if(!t) return;
+  t.select();
+  navigator.clipboard.writeText(t.value).then(()=>toast('Message copied ✓')).catch(()=>{ document.execCommand('copy'); toast('Message copied ✓'); });
+}
+function quickStatus(id,val){
+  const a=DB.appts.find(x=>x.id===id); if(!a) return;
+  a.status=val; save(); toast('Status: '+val); renderAppts(); renderDashboard();
+}
+$('apptSearch').addEventListener('input',renderAppts);
+$('apptStatusFilter').addEventListener('change',renderAppts);
+
+function editAppt(id){
+  const a=DB.appts.find(x=>x.id===id); if(!a) return;
+  goTab('appointments');
+  fillPatientSelect();
+  $('editApptId').value=a.id; $('aPatient').value=a.patientId;
+  $('aStart').value=a.start; $('aEnd').value=a.end; $('aStatus').value=a.status;
+  $('aFee').value=a.fee||''; $('aPaid').value=a.paid||''; $('aPayMethod').value=a.payMethod||'';
+  updateApptCurrency();
+  document.querySelector('#apptForm button[type=submit]').textContent='💾 Update Appointment';
+  window.scrollTo(0,0);
+}
+function deleteAppt(id){
+  if(!confirm('Delete this appointment?')) return;
+  DB.appts=DB.appts.filter(x=>x.id!==id);
+  save(); toast('Appointment deleted'); renderAppts(); renderDashboard();
+}
+
+/* ================= DASHBOARD ================= */
+function renderDashboard(){
+  $('statTotal').textContent=DB.patients.length;
+  $('statAppts').textContent=DB.appts.filter(a=>a.status!=='Cancelled').length;
+  $('statPending').textContent=DB.appts.filter(a=>a.status==='Pending'||a.status==='Confirmed').length;
+  $('statCompleted').textContent=DB.appts.filter(a=>a.status==='Completed').length;
+  const t=totalsByCurrency();
+  $('statReceived').textContent=fmtDualMoney(t.PKR.paid, t.USD.paid);
+  $('statBalance').textContent=fmtDualMoney(t.PKR.bal, t.USD.bal);
+  // shrink font if long
+  $('statReceived').style.fontSize = $('statReceived').textContent.length>10?'20px':'26px';
+  $('statBalance').style.fontSize = $('statBalance').textContent.length>10?'20px':'26px';
+
+  const recentAppts=DB.appts.map(a=>({...a,pt:patientById(a.patientId)})).filter(a=>a.pt).sort((a,b)=>(b.created||0)-(a.created||0)).slice(0,6);
+  $('todayTable').innerHTML = recentAppts.length
+    ? recentAppts.map(a=>`<tr><td><strong>${esc(a.pt.name)}</strong></td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${esc(a.pt.problem||'-')}</td><td>${badge(a.status)}</td>
+      <td><div class="inline-actions"><button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button><button class="btn btn-blue btn-sm" onclick="printLetter('${a.id}')">Letter</button></div></td></tr>`).join('')
+    : '<tr><td colspan="5" class="empty">No appointments yet.</td></tr>';
+
+  const recent=DB.patients.slice(0,5);
+  $('recentTable').innerHTML = recent.length
+    ? recent.map(p=>`<tr><td><strong>${esc(p.id)}</strong></td><td>${esc(p.name)}</td><td>${esc(p.mobile)}</td><td>${esc(p.problem||'-')}</td><td>${fmtDate(p.registered)}</td></tr>`).join('')
+    : '<tr><td colspan="5" class="empty">No patients registered yet.</td></tr>';
+}
+
+/* ---------- Modal ---------- */
+function openModal(id){ $(id).classList.add('show'); }
+function closeModal(id){ $(id).classList.remove('show'); }
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('show'); }));
+
+/* ================= PRINTING ================= */
+function doPrint(html){
+  $('printArea').innerHTML=html;
+  window.print();
+}
+const letterCSS=`
+  <style>
+    .pr-wrap{font-family:'Segoe UI',Tahoma,serif;color:#2b211b;max-width:720px;margin:0 auto}
+    .pr-head{text-align:center;border-bottom:3px double #3d281d;padding-bottom:14px;margin-bottom:8px}
+    .pr-head h1{font-size:22px;color:#3d281d;letter-spacing:1px;margin:6px 0 2px}
+    .pr-head .sub{font-size:13px;color:#7c5339;font-weight:600;letter-spacing:2px}
+    .pr-title{text-align:center;font-size:17px;font-weight:700;letter-spacing:2px;margin:18px 0;color:#3d281d;text-decoration:underline}
+    .pr-line{font-size:15px;margin:9px 0}
+    .pr-line b{display:inline-block;min-width:150px;color:#3d281d}
+    .pr-box{border:2px solid #7c5339;border-radius:8px;padding:14px 18px;margin:16px 0;background:#faf6f0}
+    .pr-important{border:1.5px dashed #c0392b;border-radius:8px;padding:12px 16px;margin:18px 0;font-size:13.5px;color:#7a1a10;background:#fdf3f2}
+    .pr-important b{color:#c0392b}
+    .pr-sign{margin-top:48px;text-align:right}
+    .pr-sign .ln{border-top:1.5px solid #333;width:230px;display:inline-block;margin-bottom:4px}
+    .pr-sign .who{font-weight:700;color:#3d281d}
+    .pr-foot{text-align:center;font-size:11px;color:#666;margin-top:22px;border-top:1px solid #ccc;padding-top:8px}
+    table.pr-tbl{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+    table.pr-tbl th{background:#3d281d;color:#fff;padding:8px 10px;text-align:left}
+    table.pr-tbl td{padding:7px 10px;border-bottom:1px solid #ccc}
+  </style>`;
+
+function letterHead(){
+  return `<div class="pr-head"><h1>SHIFA-RUQIYAH CENTRE</h1><div class="sub">SPIRITUAL GUIDANCE</div></div>`;
+}
+
+/* ---- Appointment Letter ---- */
+function printLetter(apptId){
+  const a=DB.appts.find(x=>x.id===apptId); if(!a){ toast('Appointment not found',true); return; }
+  const p=patientById(a.patientId); if(!p){ toast('Patient not found',true); return; }
+  const html=`${letterCSS}<div class="pr-wrap">
+    ${letterHead()}
+    <div class="pr-title">DAM SESSION APPOINTMENT</div>
+    <div class="pr-box">
+      <div class="pr-line"><b>Patient ID:</b> ${esc(p.id)}</div>
+      <div class="pr-line"><b>Patient Name:</b> ${esc(p.name)}</div>
+      ${p.father?`<div class="pr-line"><b>Father Name:</b> ${esc(p.father)}</div>`:''}
+      <div class="pr-line"><b>Address:</b> ${esc(p.address||'-')}</div>
+      ${p.problem?`<div class="pr-line"><b>Problem:</b> ${esc(p.problem)}</div>`:''}
+    </div>
+    <div class="pr-line"><b>Time:</b> ${fmtTime(a.start)} to ${fmtTime(a.end)}</div>
+    ${(a.fee||a.paid)?`<div class="pr-box" style="margin-top:14px">
+      <div class="pr-line"><b>Total Fee:</b> ${currencyFor(p.country).sym} ${a.fee||0}</div>
+      <div class="pr-line"><b>Paid Amount:</b> ${currencyFor(p.country).sym} ${a.paid||0}${a.payMethod?' ('+esc(a.payMethod)+')':''}</div>
+      <div class="pr-line"><b>Balance Due:</b> ${currencyFor(p.country).sym} ${apptBalance(a)}</div>
+      <div class="pr-line"><b>Payment Status:</b> ${paymentStatus(a.fee,a.paid)}</div>
+    </div>`:''}
+    <div class="pr-important">
+      <b>Important:</b><br>
+      Time punctuality is strictly mandatory. If the allotted time expires, a new appointment will be required.
+    </div>
+    <div class="pr-sign">
+      <div class="ln"></div><br>
+      <span class="who">Authorized By</span><br>
+      <span>Shifa-Ruqiyah Centre</span>
+    </div>
+    <div class="pr-foot">This is a computer-generated appointment letter. Please bring it with you on the session day.</div>
+  </div>`;
+  doPrint(html);
+}
+
+/* ---- Patient Record ---- */
+function numerologyPrintBlock(p){
+  if(!p.dob && !(p.name||'').trim()) return '';
+  const prof=NUM.profile(p.name||'',p.dob||'');
+  const lp=prof.lifePath?prof.lifePath.reduced:null;
+  const bd=prof.birthday?prof.birthday.reduced:null;
+  const py=prof.systems.Pythagorean, ch=prof.systems.Chaldean;
+  const c=py.compatibility;
+  let rows='';
+  const mrow=(lbl,n)=>{ const m=NUM.meaning(n); return `<tr><td><b>${lbl}</b></td><td style="text-align:center;font-weight:700">${n}</td><td>${m?esc(m.title):''}</td></tr>`; };
+  if(lp!=null) rows+=mrow('Life Path',lp);
+  if(bd!=null) rows+=mrow('Birthday',bd);
+  rows+=mrow('Name (Pythagorean)',py.name.reduced);
+  rows+=mrow('Name (Chaldean)',ch.name.reduced);
+  rows+=mrow('Soul Urge',py.soulUrge);
+  rows+=mrow('Personality',py.personality);
+  rows+=mrow('Lucky Number',py.lucky);
+  const lpm=lp!=null?NUM.meaning(lp):null;
+  return `<h3 style="color:#3d281d;margin-top:16px">Numerology Profile</h3>
+    <table class="pr-tbl"><thead><tr><th>Number</th><th style="text-align:center">Value</th><th>Meaning</th></tr></thead><tbody>${rows}</tbody></table>
+    ${c?`<div class="pr-line" style="margin-top:8px"><b>Name–Life Path Compatibility:</b> ${c.score}% (${esc(c.label)})</div>`:''}
+    ${lpm?`<div class="pr-box" style="margin-top:8px;font-size:12.5px">
+      <div class="pr-line" style="font-size:12.5px"><b>Life Path ${lp} — ${esc(lpm.title)}</b></div>
+      <div class="pr-line" style="font-size:12.5px">Traits: ${esc(lpm.traits)}</div>
+      <div class="pr-line" style="font-size:12.5px">Strengths: ${esc(lpm.strength)} · Lucky colour: ${esc(lpm.color)} · Lucky day: ${esc(lpm.day)}</div>
+    </div>`:''}
+    <div style="font-size:10.5px;color:#666;margin-top:6px;font-style:italic">Numerology is for spiritual guidance and insight only — not medical advice or a guaranteed prediction.</div>`;
+}
+function printPatientRecord(id){
+  const p=patientById(id); if(!p) return;
+  const appts=DB.appts.filter(a=>a.patientId===id).sort((a,b)=>(a.created||0)-(b.created||0));
+  let tbl='';
+  if(appts.length){
+    const sym=currencyFor(p.country).sym;
+    const tFee=appts.reduce((s,a)=>s+(parseFloat(a.fee)||0),0);
+    const tPaid=appts.reduce((s,a)=>s+(parseFloat(a.paid)||0),0);
+    const tBal=Math.max(0,tFee-tPaid);
+    tbl=`<h3 style="color:#3d281d;margin-top:18px">Appointment History (${currencyFor(p.country).code})</h3>
+      <table class="pr-tbl"><thead><tr><th>#</th><th>Time</th><th>Status</th><th>Fee (${sym})</th><th>Paid (${sym})</th><th>Balance (${sym})</th></tr></thead><tbody>`+
+      appts.map((a,i)=>`<tr><td>${i+1}</td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${esc(a.status)}</td><td>${a.fee||0}</td><td>${a.paid||0}</td><td>${apptBalance(a)}</td></tr>`).join('')+
+      `<tr style="font-weight:700;background:#f4ece2"><td colspan="3" style="text-align:right">TOTAL</td><td>${tFee}</td><td>${tPaid}</td><td style="color:${tBal>0?'#c0392b':'#7c5339'}">${tBal}</td></tr>`+
+      `</tbody></table>`;
+  }
+  const html=`${letterCSS}<div class="pr-wrap">
+    ${letterHead()}
+    <div class="pr-title">PATIENT RECORD</div>
+    <div class="pr-box">
+      <div class="pr-line"><b>Patient ID:</b> ${esc(p.id)}</div>
+      <div class="pr-line"><b>Name:</b> ${esc(p.name)}</div>
+      <div class="pr-line"><b>Father Name:</b> ${esc(p.father||'-')}</div>
+      <div class="pr-line"><b>Mobile:</b> ${esc(p.mobile)}</div>
+      <div class="pr-line"><b>Country:</b> ${esc(p.country||'Pakistan')} (${currencyFor(p.country).code})</div>
+      <div class="pr-line"><b>Date of Birth:</b> ${p.dob?fmtDate(p.dob)+(ageFromDob(p.dob)!=null?' ('+ageFromDob(p.dob)+' yrs)':''):'-'}</div>
+      ${p.gender?`<div class="pr-line"><b>Gender:</b> ${esc(p.gender)}</div>`:''}
+      <div class="pr-line"><b>Problem:</b> ${esc(p.problem||'-')}</div>
+      <div class="pr-line"><b>Address:</b> ${esc(p.address||'-')}</div>
+      <div class="pr-line"><b>Registered:</b> ${fmtDate(p.registered)}</div>
+      ${p.notes?`<div class="pr-line"><b>Notes:</b> ${esc(p.notes)}</div>`:''}
+    </div>
+    ${numerologyPrintBlock(p)}
+    ${tbl}
+    <div class="pr-sign"><div class="ln"></div><br><span class="who">Shifa-Ruqiyah Centre</span></div>
+    <div class="pr-foot">Printed on ${fmtDate(todayISO())}</div>
+  </div>`;
+  doPrint(html);
+}
+
+/* ---- Appointment List ---- */
+function printAppointmentList(){
+  const st=$('repStatus').value;
+  let list=DB.appts.map(a=>({...a,pt:patientById(a.patientId)})).filter(a=>a.pt);
+  if(st) list=list.filter(a=>a.status===st);
+  list.sort((a,b)=>(a.created||0)-(b.created||0));
+  if(!list.length){ toast('No appointments to print',true); return; }
+  const range = st ? ('Status: '+st) : 'All Appointments';
+  const html=`${letterCSS}<div class="pr-wrap">
+    ${letterHead()}
+    <div class="pr-title">APPOINTMENT LIST</div>
+    <div class="pr-line" style="text-align:center;color:#555">${range}</div>
+    <table class="pr-tbl"><thead><tr><th>#</th><th>Patient</th><th>Mobile</th><th>Cur</th><th>Time</th><th>Status</th><th>Fee</th><th>Paid</th><th>Bal</th></tr></thead><tbody>`+
+    list.map((a,i)=>`<tr><td>${i+1}</td><td>${esc(a.pt.name)}</td><td>${esc(a.pt.mobile)}</td><td>${currencyFor(a.pt.country).sym}</td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${esc(a.status)}</td><td>${a.fee||0}</td><td>${a.paid||0}</td><td>${apptBalance(a)}</td></tr>`).join('')+
+    (function(){
+      const sum=(code,f)=>list.filter(a=>currencyFor(a.pt.country).code===code).reduce((s,a)=>s+f(a),0);
+      const rows=[];
+      [['PKR','Rs.'],['USD','$']].forEach(([code,sym])=>{
+        const fee=sum(code,a=>parseFloat(a.fee)||0), paid=sum(code,a=>parseFloat(a.paid)||0), bal=sum(code,a=>apptBalance(a));
+        if(fee||paid) rows.push(`<tr style="font-weight:700;background:#f4ece2"><td colspan="6" style="text-align:right">TOTAL (${sym})</td><td>${fee}</td><td>${paid}</td><td>${bal}</td></tr>`);
+      });
+      return rows.join('');
+    })()+
+    `</tbody></table>
+    <div class="pr-line" style="margin-top:14px"><b>Total:</b> ${list.length} appointment${list.length!==1?'s':''}</div>
+    <div class="pr-foot">Printed on ${fmtDate(todayISO())} · Shifa-Ruqiyah Centre</div>
+  </div>`;
+  doPrint(html);
+}
+
+/* ================= REPORTS / BACKUP ================= */
+function renderReports(){
+  $('repTotalPatients').textContent=DB.patients.length;
+  $('repTotalAppts').textContent=DB.appts.length;
+  $('repCompleted').textContent=DB.appts.filter(a=>a.status==='Completed').length;
+  const t=totalsByCurrency();
+  $('repFees').textContent=fmtDualMoney(t.PKR.fee, t.USD.fee);
+  $('repPaid').textContent=fmtDualMoney(t.PKR.paid, t.USD.paid);
+  $('repBalance').textContent=fmtDualMoney(t.PKR.bal, t.USD.bal);
+}
+function exportBackup(){
+  const data={version:1,exported:new Date().toISOString(),patients:DB.patients,appts:DB.appts,counter:DB.counter};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download='SRC-backup-'+todayISO()+'.json'; a.click();
+  URL.revokeObjectURL(url);
+  toast('Backup downloaded ✓');
+}
+$('restoreFile').addEventListener('change',e=>{
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(!Array.isArray(d.patients)||!Array.isArray(d.appts)) throw new Error('bad');
+      if(!confirm('Restore backup? This will REPLACE all current data.')){ e.target.value=''; return; }
+      DB.patients=d.patients; DB.appts=d.appts; DB.counter=d.counter||d.patients.length;
+      save(); toast('Backup restored ✓');
+      renderDashboard(); renderPatients(); renderAppts(); renderReports();
+    }catch(err){ toast('Invalid backup file',true); }
+    e.target.value='';
+  };
+  reader.readAsText(file);
+});
+function clearAllData(){
+  if(!confirm('⚠️ Delete ALL patients and appointments permanently?')) return;
+  if(!confirm('Are you absolutely sure? This cannot be undone.')) return;
+  DB.patients=[]; DB.appts=[]; DB.counter=0;
+  save(); toast('All data cleared');
+  renderDashboard(); renderPatients(); renderAppts(); renderReports();
+}
+
+/* ================= INIT ================= */
+resetPatientForm();
+renderDashboard();
+
+</script>
+</body>
+</html>

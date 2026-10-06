@@ -1,0 +1,5 @@
+.vercel
+*.bak
+*.before_admin_fix
+*.log
+.DS_Store

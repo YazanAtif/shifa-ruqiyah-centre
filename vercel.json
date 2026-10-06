@@ -1,0 +1,9 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/shifa-ruqiyah-center", "destination": "/index.html" },
+    { "source": "/shifa-ruqiyah-centre", "destination": "/index.html" },
+    { "source": "/air-patient-management-system", "destination": "/index.html" },
+    { "source": "/Air-patient-management-system.html", "destination": "/index.html" }
+  ]
+}
