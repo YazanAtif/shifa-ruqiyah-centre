@@ -2365,7 +2365,7 @@
   }
   .ras-layout-grid {
     display: grid;
-    grid-template-columns: 310px 1fr;
+    grid-template-columns: minmax(0, 316px) minmax(0, 1fr);
     gap: 20px;
     align-items: start;
   }
@@ -2375,31 +2375,34 @@
     background: #ffffff;
     border: 1.5px solid #ebdccb;
     border-radius: 16px;
-    padding: 16px 18px;
+    padding: 16px 14px;
     box-shadow: 0 4px 18px rgba(61, 40, 29, 0.04);
     box-sizing: border-box;
     width: 100%;
+    max-width: 100%;
+    overflow: hidden;
     transition: all 0.25s ease;
   }
   .ras-cal-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     padding-bottom: 10px;
     border-bottom: 1px solid #f2e7db;
   }
   .ras-cal-month-title {
     font-family: 'Cinzel', Georgia, serif;
-    font-size: 14.5px;
+    font-size: 14px;
     font-weight: 800;
     color: var(--brown-dark);
-    letter-spacing: 0.6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
   }
   .ras-cal-nav-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
     border: 1.5px solid #ebdccb;
     background: #faf6f0;
     color: var(--brown-dark);
@@ -2420,32 +2423,40 @@
   }
   .ras-cal-weekdays {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 5px;
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .ras-cal-weekdays span {
     font-size: 11px;
     font-weight: 800;
     color: var(--brown);
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.6px;
     height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0.85;
+    padding: 0;
+    margin: 0;
   }
   .ras-cal-days-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .ras-day-cell {
-    height: 38px;
-    min-height: 38px;
+    height: 36px;
+    min-height: 36px;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     border-radius: 9px;
     display: flex;
     flex-direction: column;
@@ -2459,9 +2470,12 @@
     transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
     user-select: none;
     box-sizing: border-box;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden;
   }
   .ras-day-num {
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 750;
     color: var(--brown-dark);
     line-height: 1;
@@ -2469,14 +2483,16 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    padding: 0;
+    margin: 0;
   }
-  .ras-day-cell:hover:not(.empty) {
+  .ras-day-cell:hover:not(.ras-empty-day):not(.empty) {
     background: #ffffff;
     border-color: var(--brown);
     transform: translateY(-1.5px);
     box-shadow: 0 4px 10px rgba(124, 83, 57, 0.12);
   }
-  .ras-day-cell:hover:not(.empty) .ras-day-num {
+  .ras-day-cell:hover:not(.ras-empty-day):not(.empty) .ras-day-num {
     color: var(--brown);
   }
   .ras-day-cell.today {
@@ -2512,17 +2528,24 @@
   .ras-day-cell.selected::after {
     background: #ffffff;
   }
+  .ras-day-cell.ras-empty-day,
   .ras-day-cell.empty {
-    background: transparent;
-    border: 1px dashed rgba(235, 220, 203, 0.6);
-    box-shadow: none;
-    cursor: default;
-    pointer-events: none;
-    opacity: 0.4;
+    background: transparent !important;
+    border: 1px dashed rgba(235, 220, 203, 0.45) !important;
+    box-shadow: none !important;
+    cursor: default !important;
+    pointer-events: none !important;
+    opacity: 0.3 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 36px !important;
+    width: 100% !important;
   }
   .ras-day-dot {
-    width: 4.5px;
-    height: 4.5px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     background: #d47a45;
     position: absolute;
@@ -2536,15 +2559,17 @@
 
   .ras-cal-presets {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 6px;
     margin-top: 14px;
     padding-top: 12px;
     border-top: 1px solid #f2e7db;
+    width: 100%;
+    box-sizing: border-box;
   }
   .ras-preset-btn {
     height: 32px;
-    padding: 0 6px;
+    padding: 0 4px;
     border-radius: 8px;
     border: 1.5px solid #ebdccb;
     background: #faf6f0;
@@ -2560,6 +2585,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0;
+    box-sizing: border-box;
   }
   .ras-preset-btn:hover {
     background: #ffffff;
@@ -2692,12 +2719,12 @@
     border: 1px solid #ebdccb;
   }
 
-  @media(max-width: 860px) {
+  @media(max-width: 920px) {
     .ras-layout-grid {
       grid-template-columns: 1fr;
     }
     .ras-calendar-box {
-      max-width: 380px;
+      max-width: 360px;
       margin: 0 auto;
     }
     .ras-form-fields-grid {
@@ -2708,18 +2735,24 @@
     .ras-calendar-box {
       padding: 12px 10px;
     }
+    .ras-cal-weekdays,
     .ras-cal-days-grid {
       gap: 3.5px;
     }
     .ras-day-cell {
-      height: 34px;
-      min-height: 34px;
+      height: 33px;
+      min-height: 33px;
+      border-radius: 7px;
+    }
+    .ras-day-cell.ras-empty-day,
+    .ras-day-cell.empty {
+      height: 33px !important;
     }
     .ras-day-num {
-      font-size: 12px;
+      font-size: 11.5px;
     }
     .ras-cal-presets {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 6px;
     }
     .ras-form-fields-grid {
@@ -3955,6 +3988,7 @@ let REG_CAL_MONTH = new Date().getMonth(); // 0-11
 let REG_SELECTED_DATE = todayISO(); // YYYY-MM-DD
 
 function initRegCalendar(){
+  renderRegCalendar();
   setRegCalendarPreset(0, document.querySelector('.ras-preset-btn'));
   updateRegApptCurrency();
 }
@@ -3975,9 +4009,9 @@ function renderRegCalendar(){
   const todayStr = todayISO();
   let html = '';
 
-  // Blank padding cells
+  // Blank padding cells at start
   for(let i = 0; i < dayOffset; i++){
-    html += '<div class="ras-day-cell empty"></div>';
+    html += '<div class="ras-day-cell ras-empty-day" aria-hidden="true"></div>';
   }
 
   // Days in month
@@ -3990,7 +4024,7 @@ function renderRegCalendar(){
     const isSelected = isoDate === REG_SELECTED_DATE;
 
     // Check if any appointments exist on this date
-    const apptsOnDate = DB.appts.filter(a => a.date === isoDate);
+    const apptsOnDate = (typeof DB !== 'undefined' && DB.appts) ? DB.appts.filter(a => a.date === isoDate) : [];
     const hasAppts = apptsOnDate.length > 0;
 
     html += `<div class="ras-day-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}" 
@@ -4003,6 +4037,13 @@ function renderRegCalendar(){
       <span class="ras-day-num">${d}</span>
       ${hasAppts ? '<span class="ras-day-dot"></span>' : ''}
     </div>`;
+  }
+
+  // Trailing empty cells to keep complete 7-day row
+  const totalRendered = dayOffset + totalDays;
+  const trailingCount = (7 - (totalRendered % 7)) % 7;
+  for(let i = 0; i < trailingCount; i++){
+    html += '<div class="ras-day-cell ras-empty-day" aria-hidden="true"></div>';
   }
 
   grid.innerHTML = html;
@@ -4024,9 +4065,20 @@ function navRegCalendar(delta){
 function selectRegCalendarDate(isoDate, cellEl){
   REG_SELECTED_DATE = isoDate;
   if($('regApptDate')) $('regApptDate').value = isoDate;
-  
-  // Highlight cell immediately without full re-render jump
-  document.querySelectorAll('.ras-day-cell').forEach(c => {
+
+  // If calendar grid is not rendered or belongs to different month/year, render it
+  const parts = isoDate.split('-');
+  const y = parseInt(parts[0], 10);
+  const m = parseInt(parts[1], 10) - 1;
+  const cells = document.querySelectorAll('.ras-day-cell[data-date]');
+  if(cells.length === 0 || REG_CAL_YEAR !== y || REG_CAL_MONTH !== m){
+    REG_CAL_YEAR = y;
+    REG_CAL_MONTH = m;
+    renderRegCalendar();
+  }
+
+  // Highlight cell
+  document.querySelectorAll('.ras-day-cell[data-date]').forEach(c => {
     const isSel = c.dataset.date === isoDate;
     c.classList.toggle('selected', isSel);
     c.setAttribute('aria-selected', isSel ? 'true' : 'false');
@@ -4115,6 +4167,7 @@ function setRegCalendarPreset(preset, btnEl){
 
   REG_CAL_YEAR = target.getFullYear();
   REG_CAL_MONTH = target.getMonth();
+  renderRegCalendar();
   selectRegCalendarDate(iso);
 
   // Sync preset buttons active state
