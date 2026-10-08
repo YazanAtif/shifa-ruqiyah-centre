@@ -2787,13 +2787,18 @@
   }
 
   /* Header Timer shortcut button */
+  .header-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
   .header-timer-btn{
-    background:rgba(124,83,57,.08);
-    border:1.5px solid var(--border);
-    color:var(--brown-dark);
+    background:#1e6b37;
+    border:1.5px solid #144e26;
+    color:#ffffff;
     border-radius:9999px;
-    padding:5px 13px;
-    font-size:12.5px;
+    padding:6px 14px;
+    font-size:13px;
     font-weight:700;
     display:inline-flex;
     align-items:center;
@@ -2801,13 +2806,14 @@
     cursor:pointer;
     transition:all .18s ease;
     user-select:none;
-    margin-right:10px;
+    box-shadow:0 2px 8px rgba(30,107,55,.3);
+    white-space:nowrap;
   }
   .header-timer-btn:hover{
-    background:var(--brown);
+    background:#144e26;
     color:#fff;
-    border-color:var(--brown);
     transform:translateY(-1px);
+    box-shadow:0 4px 12px rgba(20,78,38,.4);
   }
   .header-timer-btn.active{
     background:#1e6b37;
@@ -3287,6 +3293,13 @@
               <span class="dir-sub">Patients &amp; sessions stats</span>
             </div>
           </div>
+          <div class="card-dir-item" onclick="event.stopPropagation(); openTimerModal()">
+            <span class="dir-icon">⏱️</span>
+            <div class="dir-text">
+              <span class="dir-title">Session Timer</span>
+              <span class="dir-sub">Live stopwatch & countdown</span>
+            </div>
+          </div>
           <div class="card-dir-item" onclick="event.stopPropagation(); jumpToSection('dashboard', 'todayTable')">
             <span class="dir-icon">🕒</span>
             <div class="dir-text">
@@ -3405,6 +3418,13 @@
           </button>
         </div>
         <div class="card-directories-grid">
+          <div class="card-dir-item" onclick="event.stopPropagation(); openTimerModal()">
+            <span class="dir-icon">⏱️</span>
+            <div class="dir-text">
+              <span class="dir-title">Session Timer</span>
+              <span class="dir-sub">Live stopwatch & countdown</span>
+            </div>
+          </div>
           <div class="card-dir-item" onclick="event.stopPropagation(); openBookSessionDirect()">
             <span class="dir-icon">➕</span>
             <div class="dir-text">
@@ -3545,7 +3565,10 @@
     </div>
 
     <div class="card">
-      <h2 class="section-title">Recent Appointments</h2>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <h2 class="section-title" style="margin-bottom:0;">Recent Appointments</h2>
+        <button type="button" class="btn btn-timer btn-sm" onclick="openTimerModal()">⏱️ Open Session Timer</button>
+      </div>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Patient</th><th>Time</th><th>Problem</th><th>Status</th><th>Action</th></tr></thead>
@@ -3886,7 +3909,10 @@
       </form>
     </div>
 
-    <h2 class="section-title">All Appointments</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+      <h2 class="section-title" style="margin-bottom:0;">All Appointments</h2>
+      <button type="button" class="btn btn-timer btn-sm" onclick="openTimerModal()">⏱️ Open Session Timer</button>
+    </div>
     <div class="card">
       <div class="search-bar">
         <div class="field">
@@ -5800,7 +5826,7 @@ function renderAppts(){
     return matchQ && matchS;
   }).sort((a,b)=>(b.created||0)-(a.created||0));
   const tb=$('apptTable');
-  if(!list.length){ tb.innerHTML='<tr><td colspan="5" class="empty">No appointments found.</td></tr>'; return; }
+  if(!list.length){ tb.innerHTML='<tr><td colspan="5" class="empty">No appointments found. <button type="button" class="btn btn-timer btn-sm" style="margin-left:10px;vertical-align:middle;" onclick="openTimerModal()">⏱️ Open Session Timer</button></td></tr>'; return; }
   tb.innerHTML=list.map(a=>{
     const bal=apptBalance(a); const ps=paymentStatus(a.fee,a.paid);
     const sym=currencyFor(a.pt.country).sym;
@@ -5972,7 +5998,7 @@ function renderDashboard(){
   $('todayTable').innerHTML = recentAppts.length
     ? recentAppts.map(a=>`<tr><td><strong>${esc(a.pt.name)}</strong></td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${esc(a.pt.problem||'-')}</td><td>${badge(a.status)}</td>
       <td><div class="inline-actions"><button class="btn btn-timer btn-sm" onclick="startApptSession('${a.id}')" title="Start appointment session timer">⏱️ Start</button><button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button><button class="btn btn-blue btn-sm" onclick="printLetter('${a.id}')">Letter</button></div></td></tr>`).join('')
-    : '<tr><td colspan="5" class="empty">No appointments yet.</td></tr>';
+    : '<tr><td colspan="5" class="empty">No appointments yet. <button type="button" class="btn btn-timer btn-sm" style="margin-left:10px;vertical-align:middle;" onclick="openTimerModal()">⏱️ Open Session Timer</button></td></tr>';
 
   const recent=DB.patients.slice(0,5);
   $('recentTable').innerHTML = recent.length
