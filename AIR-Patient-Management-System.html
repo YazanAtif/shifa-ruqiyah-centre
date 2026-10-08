@@ -2767,6 +2767,432 @@
       padding: 16px 14px;
     }
   }
+
+  /* ================= APPOINTMENT SESSION TIMER & REEL STOPWATCH ================= */
+  .btn-timer{
+    background:#1e6b37;
+    color:#fff;
+    font-weight:700;
+    border:none;
+    box-shadow:0 2px 6px rgba(30,107,55,.25);
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    transition:all .15s ease;
+  }
+  .btn-timer:hover{
+    background:#144e26;
+    transform:translateY(-1px);
+    box-shadow:0 4px 10px rgba(30,107,55,.35);
+  }
+
+  /* Header Timer shortcut button */
+  .header-timer-btn{
+    background:rgba(124,83,57,.08);
+    border:1.5px solid var(--border);
+    color:var(--brown-dark);
+    border-radius:9999px;
+    padding:5px 13px;
+    font-size:12.5px;
+    font-weight:700;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    transition:all .18s ease;
+    user-select:none;
+    margin-right:10px;
+  }
+  .header-timer-btn:hover{
+    background:var(--brown);
+    color:#fff;
+    border-color:var(--brown);
+    transform:translateY(-1px);
+  }
+  .header-timer-btn.active{
+    background:#1e6b37;
+    color:#fff;
+    border-color:#1e6b37;
+    box-shadow:0 2px 8px rgba(30,107,55,.25);
+  }
+
+  /* Modal window specifics */
+  .timer-modal-window{
+    max-width:440px;
+    border-radius:24px;
+    overflow:hidden;
+    background:#ffffff;
+    box-shadow:0 25px 60px rgba(43,33,27,.4);
+  }
+  .timer-modal-header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .timer-min-btn{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:rgba(255,255,255,.18);
+    border:none;
+    color:#ffffff;
+    font-size:18px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .timer-min-btn:hover{
+    background:rgba(255,255,255,.32);
+  }
+
+  /* Patient context bar above the timer */
+  .timer-appt-header{
+    width:100%;
+    max-width:380px;
+    background:linear-gradient(135deg, #fbf7f0 0%, #f4eae0 100%);
+    border:1.5px solid var(--border);
+    border-radius:16px;
+    padding:12px 16px;
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    box-sizing:border-box;
+  }
+  .t-appt-lead{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+  }
+  .t-appt-icon{
+    font-size:22px;
+    flex:0 0 auto;
+  }
+  .t-appt-name{
+    font-size:14px;
+    font-weight:800;
+    color:var(--brown-dark);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .t-appt-meta{
+    font-size:11.5px;
+    color:var(--muted);
+    font-weight:600;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* Standalone appointment selector dropdown */
+  .timer-select-dropdown{
+    width:100%;
+    height:38px;
+    border-radius:9px;
+    border:1.5px solid var(--border);
+    padding:0 10px;
+    font-size:13px;
+    font-family:inherit;
+    background:#ffffff;
+    color:var(--text);
+  }
+
+  /* Main Timer Card Widget (Exact Match to User Specs) */
+  .timer-card-box{
+    width:100%;
+    max-width:380px;
+    border-radius:24px;
+    background:#F6F6F6;
+    border:1px solid #E5E5E5;
+    box-shadow:0 4px 18px rgba(0,0,0,.04);
+    padding:28px 20px 24px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+    min-height:350px;
+    user-select:none;
+    box-sizing:border-box;
+    position:relative;
+  }
+
+  /* Mode selector pill container */
+  .timer-mode-wrap{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    background:#EBEBEB;
+    padding:4px;
+    border-radius:9999px;
+    font-size:12px;
+    font-weight:500;
+    color:#525252;
+    margin-bottom:8px;
+    box-sizing:border-box;
+  }
+  .timer-mode-btn{
+    padding:5px 12px;
+    border-radius:9999px;
+    background:transparent;
+    color:#737373;
+    font-size:11.5px;
+    font-weight:600;
+    border:none;
+    cursor:pointer;
+    transition:all .18s ease;
+    white-space:nowrap;
+    line-height:1.2;
+    user-select:none;
+  }
+  .timer-mode-btn:hover{
+    color:#000000;
+  }
+  .timer-mode-btn.active{
+    background:#ffffff;
+    color:#000000;
+    font-weight:700;
+    box-shadow:0 1px 3px rgba(0,0,0,.12);
+  }
+
+  /* M:SS Digit display */
+  .timer-numbers-display{
+    margin:auto 0;
+    padding:16px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    letter-spacing:-0.04em;
+    color:#000000;
+    font-size:clamp(3.8rem, 14vw, 5.5rem);
+    font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height:1;
+  }
+
+  /* Digit reel mask */
+  .digit-reel {
+    display: inline-block;
+    height: 1.15em;
+    line-height: 1.15em;
+    position: relative;
+    overflow: hidden;
+    font-variant-numeric: tabular-nums;
+    width: 0.62em;
+  }
+
+  /* Vertical rolling column driven by CSS variable --current */
+  .digit-column {
+    display: flex;
+    flex-direction: column;
+    transform: translateY(calc(var(--current, 0) * -1.15em));
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .digit__num {
+    height: 1.15em;
+    line-height: 1.15em;
+    text-align: center;
+    user-select: none;
+  }
+
+  /* Square colon matching reference design */
+  .colon-square {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.22em;
+    height: 1.15em;
+    padding: 0 0.12em;
+  }
+
+  .colon-square span {
+    width: 0.16em;
+    height: 0.16em;
+    background-color: #000;
+    border-radius: 1px;
+  }
+
+  /* Play / Pause / Reset controls */
+  .timer-controls-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin-top:10px;
+  }
+  .timer-play-btn{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:#FF3B30;
+    color:#ffffff;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 4px 14px rgba(255,59,48,.38);
+    transition:transform .12s ease, background-color .15s ease, box-shadow .15s ease;
+  }
+  .timer-play-btn:hover{
+    background:#E03126;
+    box-shadow:0 6px 18px rgba(255,59,48,.45);
+  }
+  .timer-play-btn:active{
+    transform:scale(0.95);
+  }
+  .timer-reset-btn{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:#ffffff;
+    color:#FF3B30;
+    border:1px solid rgba(229,231,235,.8);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(0,0,0,.06);
+    transition:transform .12s ease, background-color .15s ease;
+  }
+  .timer-reset-btn:hover{
+    background:#fcfcfc;
+  }
+  .timer-reset-btn:active{
+    transform:scale(0.95);
+  }
+
+  /* Time-up Banner */
+  .timer-finished-banner{
+    width:100%;
+    background:#fee2e2;
+    border:1px solid #fca5a5;
+    color:#991b1b;
+    border-radius:12px;
+    padding:8px 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-size:12.5px;
+    font-weight:700;
+    margin-bottom:8px;
+    animation:fadeInBanner .3s ease;
+  }
+  @keyframes fadeInBanner{
+    from{opacity:0;transform:translateY(-6px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* Bottom completion & minimize buttons */
+  .timer-bottom-actions{
+    width:100%;
+    max-width:380px;
+    display:flex;
+    gap:10px;
+    margin-top:16px;
+  }
+  .timer-bottom-actions .btn{
+    flex:1;
+    height:40px;
+    font-size:13px;
+    font-weight:700;
+    justify-content:center;
+  }
+
+  /* Floating persistent mini timer widget */
+  .floating-timer-widget{
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    z-index:9999;
+    background:#1e1610;
+    color:#ffffff;
+    border:1.5px solid #d4af37;
+    border-radius:9999px;
+    padding:8px 14px 8px 12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 12px 32px rgba(30,22,16,.45);
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+    user-select:none;
+  }
+  .floating-timer-widget:hover{
+    transform:translateY(-2px);
+    box-shadow:0 16px 36px rgba(30,22,16,.55);
+  }
+  .floating-pulse{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 0 0 rgba(34,197,94,.7);
+    animation:floatPulse 1.8s infinite;
+    flex:0 0 auto;
+  }
+  @keyframes floatPulse{
+    0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}
+    70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}
+    100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
+  }
+  .floating-info{
+    display:flex;
+    flex-direction:column;
+    line-height:1.2;
+  }
+  .floating-title{
+    font-size:11px;
+    color:#e5d6c5;
+    font-weight:600;
+    max-width:130px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .floating-time{
+    font-size:14px;
+    font-weight:800;
+    color:#ffffff;
+    font-variant-numeric:tabular-nums;
+  }
+  .floating-play-btn{
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:#FF3B30;
+    color:#ffffff;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    flex:0 0 auto;
+  }
+  .floating-expand-btn{
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:rgba(255,255,255,.15);
+    color:#ffffff;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    flex:0 0 auto;
+  }
 </style>
 </head>
 <body>
@@ -2818,6 +3244,7 @@
   </div>
   <div class="spacer"></div>
   <div class="header-right">
+    <button type="button" class="header-timer-btn" id="headerTimerBtn" onclick="openTimerModal()" title="Open Session Timer">⏱️ <span id="headerTimerTxt">Timer</span></button>
     <div class="clock" id="clock"></div>
   </div>
 </header>
@@ -3080,6 +3507,11 @@
         <span class="aq-icon">📅</span>
         <span class="aq-title">Book Session</span>
         <span class="aq-desc">Schedule appointment</span>
+      </button>
+      <button type="button" class="admin-quick-btn" onclick="openTimerModal()">
+        <span class="aq-icon">⏱️</span>
+        <span class="aq-title">Session Timer</span>
+        <span class="aq-desc">Live appointment stopwatch</span>
       </button>
       <button type="button" class="admin-quick-btn" onclick="goTab('patients')">
         <span class="aq-icon">👥</span>
@@ -3550,6 +3982,130 @@
     <div class="modal-body" id="sendModalBody"></div>
   </div>
 </div>
+
+<!-- Appointment Session Timer Modal -->
+<div class="modal-overlay" id="timerModal">
+  <div class="modal timer-modal-window">
+    <div class="modal-head">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">⏱️</span>
+        <div>
+          <h3 style="margin:0;font-size:16px;">Appointment Session Timer</h3>
+          <span style="font-size:11px;opacity:0.85;">Live Ruqyah &amp; Consultation Stopwatch</span>
+        </div>
+      </div>
+      <div class="timer-modal-header-actions">
+        <button type="button" class="timer-min-btn" onclick="minimizeTimerModal()" title="Minimize to floating pill">&minus;</button>
+        <button type="button" class="x" onclick="closeTimerModal()" title="Close">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" style="padding:20px;display:flex;flex-direction:column;align-items:center;">
+      <!-- Patient Information Header -->
+      <div class="timer-appt-header" id="timerApptHeader">
+        <div class="t-appt-lead">
+          <div class="t-appt-icon">👤</div>
+          <div style="min-width:0;">
+            <div class="t-appt-name" id="timerPatientName">General Clinic Session</div>
+            <div class="t-appt-meta" id="timerApptMeta">No appointment selected &middot; Standalone mode</div>
+          </div>
+        </div>
+        <div id="timerApptBadge" class="badge b-confirmed">Active</div>
+      </div>
+
+      <!-- Quick appointment selector (for standalone mode) -->
+      <div id="timerSelectWrapper" style="width:100%;max-width:380px;margin-bottom:12px;display:none;">
+        <label style="font-size:11.5px;font-weight:700;color:var(--brown-dark);display:block;margin-bottom:4px;">Link to Patient Appointment:</label>
+        <select id="timerApptSelect" class="timer-select-dropdown" onchange="onTimerSelectAppt(this.value)">
+          <option value="">-- Standalone Timer (No Appointment) --</option>
+        </select>
+      </div>
+
+      <!-- Main Timer Card (The User's Exact Widget) -->
+      <div class="timer-card-box">
+        
+        <!-- Mode Toggle: Count Up vs Session vs 0:59 Timer -->
+        <div class="timer-mode-wrap">
+          <button type="button" id="mode-countup" class="timer-mode-btn">Count Up</button>
+          <button type="button" id="mode-session" class="timer-mode-btn active">30m Session</button>
+          <button type="button" id="mode-countdown" class="timer-mode-btn">0:59 Timer</button>
+        </div>
+
+        <!-- M:SS Digit Display with Rolling Reels -->
+        <div class="timer-numbers-display">
+          <!-- Minutes (Tens & Units) -->
+          <span class="digit-reel" id="reel-m1" style="display:none;"><span id="m1" class="digit-column" style="--current: 0;"></span></span>
+          <span class="digit-reel"><span id="m" class="digit-column" style="--current: 0;"></span></span>
+
+          <!-- Square Dot Colon -->
+          <div class="colon-square">
+            <span></span>
+            <span></span>
+          </div>
+
+          <!-- Seconds (Tens & Units) -->
+          <span class="digit-reel"><span id="s1" class="digit-column" style="--current: 5;"></span></span>
+          <span class="digit-reel"><span id="s2" class="digit-column" style="--current: 9;"></span></span>
+        </div>
+
+        <!-- Completion Alert Banner -->
+        <div id="timerFinishedBanner" class="timer-finished-banner" style="display:none;">
+          <span class="t-fin-icon">🔔</span>
+          <span class="t-fin-text">Time is up! Session completed.</span>
+        </div>
+
+        <!-- Play/Pause and Reset Buttons -->
+        <div class="timer-controls-row">
+          <!-- Red Play / Pause Button -->
+          <button type="button" id="play-pause-btn" class="timer-play-btn" aria-label="Play or Pause">
+            <!-- Play Icon -->
+            <svg id="play-icon" style="width:24px;height:24px;transform:translateX(1.5px);fill:currentColor;" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <!-- Pause Icon -->
+            <svg id="pause-icon" style="width:24px;height:24px;fill:currentColor;display:none;" viewBox="0 0 24 24">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+
+          <!-- White Reset Button (X) -->
+          <button type="button" id="reset-btn" class="timer-reset-btn" aria-label="Reset Timer">
+            <svg style="width:16px;height:16px;stroke:#FF3B30;stroke-width:2.5;" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Bottom Session Action Buttons -->
+      <div class="timer-bottom-actions">
+        <button type="button" class="btn btn-primary" id="timerCompleteBtn" onclick="completeApptFromTimer()">
+          ✓ Complete Session &amp; Mark Done
+        </button>
+        <button type="button" class="btn btn-outline" onclick="minimizeTimerModal()">
+          🗗 Minimize
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Mini Timer Pill -->
+<div id="floatingTimerWidget" class="floating-timer-widget" style="display:none;" onclick="openTimerModal()">
+  <span class="floating-pulse"></span>
+  <span style="font-size:16px;">⏱️</span>
+  <div class="floating-info">
+    <span class="floating-title" id="floatingPtName">Active Session</span>
+    <span class="floating-time" id="floatingTimeDisplay">0:59</span>
+  </div>
+  <button type="button" class="floating-play-btn" id="floatingPlayBtn" onclick="event.stopPropagation(); toggleTimerPlay()" title="Play or Pause">
+    <svg id="floatingPlayIcon" style="width:12px;height:12px;transform:translateX(1px);fill:#fff;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="floatingPauseIcon" style="width:12px;height:12px;fill:#fff;display:none;" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+  <button type="button" class="floating-expand-btn" title="Expand Timer">↗</button>
+</div>
+
 
 <!-- Print area -->
 <div id="printArea"></div>
@@ -4996,8 +5552,8 @@ function viewPatient(id){
     ${renderNumerology(p)}
     <h4 style="margin:16px 0 8px;color:var(--green-dark)">History (${appts.length} appointment${appts.length!==1?'s':''})</h4>`;
   if(appts.length){
-    html+='<div class="table-wrap"><table><thead><tr><th>#</th><th>Time</th><th>Status</th></tr></thead><tbody>'+
-      appts.map((a,i)=>`<tr><td>${i+1}</td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${badge(a.status)}</td></tr>`).join('')+
+    html+='<div class="table-wrap"><table><thead><tr><th>#</th><th>Time</th><th>Status</th><th>Session</th></tr></thead><tbody>'+
+      appts.map((a,i)=>`<tr><td>${i+1}</td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${badge(a.status)}</td><td><button class="btn btn-timer btn-sm" onclick="closeModal('patientModal');startApptSession('${a.id}')">⏱️ Start</button></td></tr>`).join('')+
       '</tbody></table></div>';
   }else{ html+='<p class="muted-note">No appointments yet.</p>'; }
   html+=`<div class="btn-row"><button class="btn btn-blue" onclick="printPatientRecord('${p.id}')">🖨️ Print Record</button><button class="btn btn-outline" onclick="closeModal('patientModal')">Close</button></div>`;
@@ -5257,6 +5813,7 @@ function renderAppts(){
     <td>${statusSelect(a)}</td>
     <td>${payCell}</td>
     <td><div class="inline-actions">
+      <button class="btn btn-timer btn-sm" onclick="startApptSession('${a.id}')" title="Start appointment session timer">⏱️ Start</button>
       ${bal>0?`<button class="btn btn-primary btn-sm" onclick="addPayment('${a.id}')">＋Pay</button>`:''}
       <button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button>
       <button class="btn btn-blue btn-sm" onclick="printLetter('${a.id}')">Letter</button>
@@ -5414,7 +5971,7 @@ function renderDashboard(){
   const recentAppts=DB.appts.map(a=>({...a,pt:patientById(a.patientId)})).filter(a=>a.pt).sort((a,b)=>(b.created||0)-(a.created||0)).slice(0,6);
   $('todayTable').innerHTML = recentAppts.length
     ? recentAppts.map(a=>`<tr><td><strong>${esc(a.pt.name)}</strong></td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${esc(a.pt.problem||'-')}</td><td>${badge(a.status)}</td>
-      <td><div class="inline-actions"><button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button><button class="btn btn-blue btn-sm" onclick="printLetter('${a.id}')">Letter</button></div></td></tr>`).join('')
+      <td><div class="inline-actions"><button class="btn btn-timer btn-sm" onclick="startApptSession('${a.id}')" title="Start appointment session timer">⏱️ Start</button><button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button><button class="btn btn-blue btn-sm" onclick="printLetter('${a.id}')">Letter</button></div></td></tr>`).join('')
     : '<tr><td colspan="5" class="empty">No appointments yet.</td></tr>';
 
   const recent=DB.patients.slice(0,5);
@@ -5637,12 +6194,411 @@ function clearAllData(){
   renderDashboard(); renderPatients(); renderAppts(); renderReports();
 }
 
+
+/* ================= APPOINTMENT SESSION TIMER ENGINE ================= */
+let timerCurrentApptId = null;
+let timerIsCountDown = true;
+let timerSeconds = 59;
+let timerInitialSeconds = 59;
+let timerIsRunning = false;
+let timerInterval = null;
+let timerActiveSessionMins = 30;
+let timerIsDoubleDigitPreset = false;
+
+function initTimerEngine() {
+  const colM1 = document.getElementById('m1');
+  const colM = document.getElementById('m');
+  const colS1 = document.getElementById('s1');
+  const colS2 = document.getElementById('s2');
+
+  [colM1, colM, colS1, colS2].forEach(col => {
+    if (!col) return;
+    col.innerHTML = '';
+    for (let i = 0; i <= 9; i++) {
+      const span = document.createElement('span');
+      span.className = 'digit__num';
+      span.textContent = i;
+      col.appendChild(span);
+    }
+  });
+
+  const playPauseBtn = document.getElementById('play-pause-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const countUpBtn = document.getElementById('mode-countup');
+  const sessionBtn = document.getElementById('mode-session');
+  const countDownBtn = document.getElementById('mode-countdown');
+
+  if (playPauseBtn) playPauseBtn.addEventListener('click', toggleTimerPlay);
+  if (resetBtn) resetBtn.addEventListener('click', resetTimerState);
+  if (countUpBtn) countUpBtn.addEventListener('click', () => setTimerMode('countup'));
+  if (sessionBtn) sessionBtn.addEventListener('click', () => setTimerMode('session'));
+  if (countDownBtn) countDownBtn.addEventListener('click', () => setTimerMode('countdown'));
+
+  // If user clicks overlay to close modal, minimize to floating pill if running
+  const timerOverlay = document.getElementById('timerModal');
+  if (timerOverlay) {
+    timerOverlay.addEventListener('click', (e) => {
+      if (e.target === timerOverlay && timerIsRunning) {
+        showFloatingWidget();
+      }
+    });
+  }
+
+  // Initial render at 0:59
+  renderTimerDisplay();
+}
+
+function updateTimerReel(col, val) {
+  if (!col) return;
+  col.style.setProperty('--current', val);
+  const children = col.children;
+  for (let i = 0; i < children.length; i++) {
+    if (i === val) {
+      children[i].removeAttribute('inert');
+    } else {
+      children[i].setAttribute('inert', '');
+    }
+  }
+}
+
+function renderTimerDisplay() {
+  const colM1 = document.getElementById('m1');
+  const colM = document.getElementById('m');
+  const colS1 = document.getElementById('s1');
+  const colS2 = document.getElementById('s2');
+  const reelM1 = document.getElementById('reel-m1');
+
+  const totalMins = Math.floor(timerSeconds / 60);
+  const m1 = Math.floor(totalMins / 10);
+  const m2 = totalMins % 10;
+  const secs = timerSeconds % 60;
+  const sTens = Math.floor(secs / 10);
+  const sUnits = secs % 10;
+
+  if (reelM1) {
+    if (totalMins >= 10 || timerIsDoubleDigitPreset) {
+      reelM1.style.display = 'inline-block';
+      updateTimerReel(colM1, m1 % 10);
+    } else {
+      reelM1.style.display = 'none';
+    }
+  }
+
+  updateTimerReel(colM, m2);
+  updateTimerReel(colS1, sTens);
+  updateTimerReel(colS2, sUnits);
+
+  const formattedTime = (totalMins >= 10 || timerIsDoubleDigitPreset ? String(totalMins).padStart(2,'0') : totalMins) + ':' + String(secs).padStart(2, '0');
+  const floatingTime = document.getElementById('floatingTimeDisplay');
+  if (floatingTime) floatingTime.textContent = formattedTime;
+
+  const headerTimerTxt = document.getElementById('headerTimerTxt');
+  if (headerTimerTxt) {
+    headerTimerTxt.textContent = timerIsRunning ? formattedTime : 'Timer';
+  }
+}
+
+function startTimer() {
+  if (timerIsRunning) return;
+  timerIsRunning = true;
+  updateTimerIcons(true);
+  hideTimerFinishedBanner();
+
+  timerInterval = setInterval(() => {
+    if (timerIsCountDown) {
+      if (timerSeconds > 0) {
+        timerSeconds--;
+        renderTimerDisplay();
+      } else {
+        pauseTimer();
+        playTimerAudioChime();
+        showTimerFinishedBanner();
+        toast('🔔 Appointment session time is complete!');
+      }
+    } else {
+      timerSeconds++;
+      renderTimerDisplay();
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  timerIsRunning = false;
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  updateTimerIcons(false);
+}
+
+function toggleTimerPlay() {
+  timerIsRunning ? pauseTimer() : startTimer();
+}
+
+function resetTimerState() {
+  pauseTimer();
+  timerSeconds = timerIsCountDown ? timerInitialSeconds : 0;
+  hideTimerFinishedBanner();
+  renderTimerDisplay();
+}
+
+function updateTimerIcons(running) {
+  const playIcon = document.getElementById('play-icon');
+  const pauseIcon = document.getElementById('pause-icon');
+  const floatPlayIcon = document.getElementById('floatingPlayIcon');
+  const floatPauseIcon = document.getElementById('floatingPauseIcon');
+  const headerBtn = document.getElementById('headerTimerBtn');
+
+  if (playIcon) playIcon.style.display = running ? 'none' : 'block';
+  if (pauseIcon) pauseIcon.style.display = running ? 'block' : 'none';
+  if (floatPlayIcon) floatPlayIcon.style.display = running ? 'none' : 'block';
+  if (floatPauseIcon) floatPauseIcon.style.display = running ? 'block' : 'none';
+  if (headerBtn) {
+    headerBtn.classList.toggle('active', running);
+  }
+}
+
+function setTimerMode(mode) {
+  pauseTimer();
+  hideTimerFinishedBanner();
+
+  const countUpBtn = document.getElementById('mode-countup');
+  const sessionBtn = document.getElementById('mode-session');
+  const countDownBtn = document.getElementById('mode-countdown');
+
+  [countUpBtn, sessionBtn, countDownBtn].forEach(btn => {
+    if (btn) btn.className = 'timer-mode-btn';
+  });
+
+  if (mode === 'countup') {
+    timerIsCountDown = false;
+    timerSeconds = 0;
+    timerInitialSeconds = 0;
+    timerIsDoubleDigitPreset = false;
+    if (countUpBtn) countUpBtn.className = 'timer-mode-btn active';
+  } else if (mode === 'session') {
+    timerIsCountDown = true;
+    timerSeconds = timerActiveSessionMins * 60;
+    timerInitialSeconds = timerSeconds;
+    timerIsDoubleDigitPreset = timerActiveSessionMins >= 10;
+    if (sessionBtn) sessionBtn.className = 'timer-mode-btn active';
+  } else if (mode === 'countdown') {
+    timerIsCountDown = true;
+    timerSeconds = 59;
+    timerInitialSeconds = 59;
+    timerIsDoubleDigitPreset = false;
+    if (countDownBtn) countDownBtn.className = 'timer-mode-btn active';
+  }
+
+  renderTimerDisplay();
+}
+
+function calcApptDuration(start, end) {
+  if (!start || !end) return 30;
+  const [sh, sm] = start.split(':').map(Number);
+  const [eh, em] = end.split(':').map(Number);
+  const diff = (eh * 60 + em) - (sh * 60 + sm);
+  return (diff > 0 && diff <= 480) ? diff : 30;
+}
+
+function startApptSession(apptId) {
+  timerCurrentApptId = apptId || null;
+  populateTimerApptContext(apptId);
+  openModal('timerModal');
+  hideFloatingWidget();
+
+  if (apptId) {
+    const a = DB.appts.find(x => x.id === apptId);
+    if (a) {
+      if (a.status === 'Pending') {
+        a.status = 'Confirmed';
+        save();
+        renderAppts();
+        renderDashboard();
+      }
+      const dur = calcApptDuration(a.start, a.end);
+      timerActiveSessionMins = dur;
+      const sessionBtn = document.getElementById('mode-session');
+      if (sessionBtn) sessionBtn.textContent = dur + 'm Session';
+      setTimerMode('session');
+      startTimer();
+      toast('⏱️ Session timer started for ' + ((patientById(a.patientId)||{}).name || 'Patient'));
+      return;
+    }
+  }
+
+  // Standalone mode:
+  const sessionBtn = document.getElementById('mode-session');
+  if (sessionBtn) sessionBtn.textContent = '30m Session';
+  timerActiveSessionMins = 30;
+  setTimerMode('countdown');
+}
+
+function populateTimerApptContext(apptId) {
+  const nameEl = document.getElementById('timerPatientName');
+  const metaEl = document.getElementById('timerApptMeta');
+  const badgeEl = document.getElementById('timerApptBadge');
+  const floatNameEl = document.getElementById('floatingPtName');
+  const selectWrap = document.getElementById('timerSelectWrapper');
+  const selectEl = document.getElementById('timerApptSelect');
+  const completeBtn = document.getElementById('timerCompleteBtn');
+
+  if (selectEl) {
+    selectEl.innerHTML = '<option value="">-- Standalone Stopwatch / Timer --</option>';
+    DB.appts.forEach(a => {
+      const p = patientById(a.patientId);
+      const opt = document.createElement('option');
+      opt.value = a.id;
+      opt.textContent = `${p ? p.name : 'Unknown'} (${fmtTime(a.start)} - ${fmtTime(a.end)}) [${a.status}]`;
+      if (a.id === apptId) opt.selected = true;
+      selectEl.appendChild(opt);
+    });
+  }
+
+  if (apptId) {
+    const a = DB.appts.find(x => x.id === apptId);
+    if (a) {
+      const p = patientById(a.patientId);
+      const pName = p ? p.name : 'Patient';
+      const pId = p ? p.id : '-';
+      const prob = (p && p.problem) ? p.problem : 'Ruqyah Session';
+      const dur = calcApptDuration(a.start, a.end);
+
+      if (nameEl) nameEl.textContent = `${pName} (${pId})`;
+      if (metaEl) metaEl.textContent = `${fmtTime(a.start)} - ${fmtTime(a.end)} (${dur} mins) · ${prob}`;
+      if (badgeEl) {
+        badgeEl.textContent = a.status;
+        badgeEl.className = 'badge ' + (badgeClass(a.status));
+      }
+      if (floatNameEl) floatNameEl.textContent = pName;
+      if (selectWrap) selectWrap.style.display = 'none';
+      if (completeBtn) {
+        completeBtn.style.display = 'inline-flex';
+        completeBtn.innerHTML = '✓ Complete Session &amp; Mark Done';
+      }
+      return;
+    }
+  }
+
+  // Standalone fallback
+  if (nameEl) nameEl.textContent = 'General Clinic Session';
+  if (metaEl) metaEl.textContent = 'Select an appointment or run stopwatch';
+  if (badgeEl) {
+    badgeEl.textContent = 'Active';
+    badgeEl.className = 'badge b-confirmed';
+  }
+  if (floatNameEl) floatNameEl.textContent = 'Active Session';
+  if (selectWrap) selectWrap.style.display = 'block';
+  if (completeBtn) {
+    completeBtn.style.display = 'inline-flex';
+    completeBtn.innerHTML = '✓ Finish Session';
+  }
+}
+
+function onTimerSelectAppt(val) {
+  if (val) {
+    startApptSession(val);
+  } else {
+    timerCurrentApptId = null;
+    populateTimerApptContext(null);
+  }
+}
+
+function closeTimerModal() {
+  closeModal('timerModal');
+  if (timerIsRunning) {
+    showFloatingWidget();
+  } else {
+    hideFloatingWidget();
+  }
+}
+
+function minimizeTimerModal() {
+  closeModal('timerModal');
+  showFloatingWidget();
+}
+
+function openTimerModal() {
+  hideFloatingWidget();
+  populateTimerApptContext(timerCurrentApptId);
+  openModal('timerModal');
+}
+
+function showFloatingWidget() {
+  const fw = document.getElementById('floatingTimerWidget');
+  if (fw) fw.style.display = 'flex';
+}
+
+function hideFloatingWidget() {
+  const fw = document.getElementById('floatingTimerWidget');
+  if (fw) fw.style.display = 'none';
+}
+
+function showTimerFinishedBanner() {
+  const b = document.getElementById('timerFinishedBanner');
+  if (b) b.style.display = 'flex';
+}
+
+function hideTimerFinishedBanner() {
+  const b = document.getElementById('timerFinishedBanner');
+  if (b) b.style.display = 'none';
+}
+
+function playTimerAudioChime() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+
+    function playTone(freq, time, dur) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, time);
+      gain.gain.setValueAtTime(0.22, time);
+      gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(time);
+      osc.stop(time + dur);
+    }
+
+    const t = ctx.currentTime;
+    playTone(587.33, t, 0.55);      // D5
+    playTone(880.00, t + 0.16, 0.7); // A5
+    playTone(1174.66, t + 0.32, 1.1); // D6
+  } catch (e) {
+    console.warn('Audio chime notice:', e);
+  }
+}
+
+function completeApptFromTimer() {
+  if (timerCurrentApptId) {
+    const a = DB.appts.find(x => x.id === timerCurrentApptId);
+    if (a) {
+      a.status = 'Completed';
+      save();
+      renderAppts();
+      renderDashboard();
+      renderReports();
+      const p = patientById(a.patientId);
+      toast('✓ Session completed for ' + (p ? p.name : 'patient'));
+    }
+  } else {
+    toast('✓ Session marked complete');
+  }
+  pauseTimer();
+  closeTimerModal();
+  hideFloatingWidget();
+}
+
 /* ================= INIT ================= */
 resetPatientForm();
 renderDashboard();
 initCategoriesUI();
 initExpandNavEngine();
 initRegCalendar();
+initTimerEngine();
 
 /* ================= UHD REACTIVE SMOKE EFFECT ================= */
 (function initSmokeEffect(){

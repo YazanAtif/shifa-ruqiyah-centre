@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timer Stopwatch - Shifa-Ruqiyah Centre</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Digit reel mask */
+    .digit-reel {
+      display: inline-block;
+      height: 1.15em;
+      line-height: 1.15em;
+      position: relative;
+      overflow: hidden;
+      font-variant-numeric: tabular-nums;
+      width: 0.62em;
+    }
+
+    /* Vertical rolling column driven by CSS variable --current */
+    .digit-column {
+      display: flex;
+      flex-direction: column;
+      transform: translateY(calc(var(--current, 0) * -1.15em));
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    .digit__num {
+      height: 1.15em;
+      line-height: 1.15em;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* Square colon matching reference design */
+    .colon-square {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.22em;
+      height: 1.15em;
+      padding: 0 0.12em;
+    }
+
+    .colon-square span {
+      width: 0.16em;
+      height: 0.16em;
+      background-color: #000;
+      border-radius: 1px;
+    }
+  </style>
+</head>
+<body class="bg-neutral-100 flex items-center justify-center min-h-screen p-4">
+
+  <!-- Main Container -->
+  <div class="w-full max-w-sm rounded-3xl bg-[#F6F6F6] border border-[#E5E5E5] shadow-sm py-10 px-6 flex flex-col items-center justify-between min-h-[360px] select-none">
+    
+    <!-- Mode Toggle: Count Up vs 0:59 Timer -->
+    <div class="flex items-center gap-2 bg-[#EBEBEB] p-1 rounded-full text-xs font-medium text-neutral-600 mb-2">
+      <button id="mode-countup" class="px-3 py-1 rounded-full bg-white text-black font-semibold transition-all shadow-sm">Count Up</button>
+      <button id="mode-countdown" class="px-3 py-1 rounded-full text-neutral-500 hover:text-black transition-all">0:59 Timer</button>
+    </div>
+
+    <!-- M:SS Digit Display -->
+    <div class="my-auto py-4 flex items-center justify-center font-bold tracking-tight text-black text-8xl font-sans">
+      <!-- Minutes -->
+      <span class="digit-reel"><span id="m" class="digit-column" style="--current: 0;"></span></span>
+
+      <!-- Square Dot Colon -->
+      <div class="colon-square">
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- Seconds (Tens & Units) -->
+      <span class="digit-reel"><span id="s1" class="digit-column" style="--current: 5;"></span></span>
+      <span class="digit-reel"><span id="s2" class="digit-column" style="--current: 9;"></span></span>
+    </div>
+
+    <!-- Play/Pause and Reset Buttons -->
+    <div class="flex items-center justify-center gap-4 mt-2">
+      <!-- Red Play / Pause Button -->
+      <button id="play-pause-btn" class="w-14 h-14 rounded-full bg-[#FF3B30] hover:bg-[#E03126] active:scale-95 text-white flex items-center justify-center shadow-md transition-all">
+        <!-- Play Icon -->
+        <svg id="play-icon" class="w-6 h-6 translate-x-0.5 fill-current" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <!-- Pause Icon -->
+        <svg id="pause-icon" class="w-6 h-6 fill-current hidden" viewBox="0 0 24 24">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+
+      <!-- White Reset Button (X) -->
+      <button id="reset-btn" class="w-11 h-11 rounded-full bg-white hover:bg-neutral-50 active:scale-95 text-[#FF3B30] flex items-center justify-center border border-neutral-200/60 shadow-sm transition-all">
+        <svg class="w-4 h-4 stroke-[#FF3B30] stroke-[2.5]" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const colM = document.getElementById('m');
+    const colS1 = document.getElementById('s1');
+    const colS2 = document.getElementById('s2');
+
+    // Build 0-9 strip inside each digit column
+    [colM, colS1, colS2].forEach(col => {
+      for (let i = 0; i <= 9; i++) {
+        const span = document.createElement('span');
+        span.className = 'digit__num';
+        span.textContent = i;
+        col.appendChild(span);
+      }
+    });
+
+    let isCountDown = false;
+    let seconds = 59; // Starts at 0:59 as in the screenshot
+    let isRunning = false;
+    let timerInterval = null;
+
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const playIcon = document.getElementById('play-icon');
+    const pauseIcon = document.getElementById('pause-icon');
+    const resetBtn = document.getElementById('reset-btn');
+    const countUpBtn = document.getElementById('mode-countup');
+    const countDownBtn = document.getElementById('mode-countdown');
+
+    function updateReel(col, val) {
+      col.style.setProperty('--current', val);
+      const children = col.children;
+      for (let i = 0; i < children.length; i++) {
+        if (i === val) {
+          children[i].removeAttribute('inert');
+        } else {
+          children[i].setAttribute('inert', '');
+        }
+      }
+    }
+
+    function renderDisplay() {
+      const mins = Math.floor(seconds / 60) % 10;
+      const secs = seconds % 60;
+      const sTens = Math.floor(secs / 10);
+      const sUnits = secs % 10;
+
+      updateReel(colM, mins);
+      updateReel(colS1, sTens);
+      updateReel(colS2, sUnits);
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+      isRunning = true;
+      playIcon.classList.add('hidden');
+      pauseIcon.classList.remove('hidden');
+
+      timerInterval = setInterval(() => {
+        if (isCountDown) {
+          if (seconds > 0) {
+            seconds--;
+            renderDisplay();
+          } else {
+            pauseTimer();
+          }
+        } else {
+          seconds++;
+          renderDisplay();
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      isRunning = false;
+      clearInterval(timerInterval);
+      playIcon.classList.remove('hidden');
+      pauseIcon.classList.add('hidden');
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+      isRunning ? pauseTimer() : startTimer();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      pauseTimer();
+      seconds = isCountDown ? 59 : 0;
+      renderDisplay();
+    });
+
+    countUpBtn.addEventListener('click', () => {
+      pauseTimer();
+      isCountDown = false;
+      countUpBtn.className = 'px-3 py-1 rounded-full bg-white text-black font-semibold transition-all shadow-sm';
+      countDownBtn.className = 'px-3 py-1 rounded-full text-neutral-500 hover:text-black transition-all';
+      seconds = 0;
+      renderDisplay();
+    });
+
+    countDownBtn.addEventListener('click', () => {
+      pauseTimer();
+      isCountDown = true;
+      countDownBtn.className = 'px-3 py-1 rounded-full bg-white text-black font-semibold transition-all shadow-sm';
+      countUpBtn.className = 'px-3 py-1 rounded-full text-neutral-500 hover:text-black transition-all';
+      seconds = 59;
+      renderDisplay();
+    });
+
+    // Render initial 0:59
+    renderDisplay();
+  </script>
+</body>
+</html>
