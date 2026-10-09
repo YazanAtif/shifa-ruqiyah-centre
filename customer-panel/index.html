@@ -1038,17 +1038,339 @@
  }
  .modal-close-btn:hover { background: var(--beige); color: var(--brown-dark); }
 
- /* Responsive adjustments */
- @media (max-width: 768px) {
- .nav-tabs-desktop { display: none; }
- nav.mobile-bottom-nav { display: flex; }
- main.portal-main { padding-bottom: 95px; }
- .hero-banner { padding: 26px 20px; }
- .hero-title { font-size: 1.6rem; }
- .brand-titles h1 { font-size: 1rem; }
- .brand-titles p { font-size: 0.65rem; }
- .sec-head h2 { font-size: 1.25rem; }
- }
+  /* ================= COMPREHENSIVE SMOOTH MOBILE RESPONSIVE SYSTEM ================= */
+  @media (max-width: 768px) {
+    /* 1. Header & Brand */
+    .portal-header {
+      padding: 8px 12px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .header-inner {
+      gap: 8px;
+    }
+    .brand-wrap {
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+    }
+    .brand-logo-frame {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+    }
+    .brand-titles h1 {
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-titles p {
+      font-size: 0.62rem;
+      gap: 4px;
+    }
+    .brand-titles p span:first-child {
+      display: none;
+    }
+    .brand-titles p span.portal-pill {
+      font-size: 0.6rem;
+      padding: 0 6px;
+    }
+    .nav-tabs-desktop {
+      display: none;
+    }
+    .header-actions {
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .client-status-chip {
+      padding: 4px 9px;
+      font-size: 0.72rem;
+      gap: 5px;
+    }
+    .client-status-chip #clientChipName {
+      max-width: 95px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .admin-switch-btn {
+      padding: 4px 8px;
+      font-size: 0.7rem;
+    }
+    .chip-patient-text {
+      display: none !important;
+    }
+
+    /* 2. Main Portal & Spacing */
+    main.portal-main {
+      padding: 14px 12px 105px;
+    }
+    .sec-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .sec-head h2 {
+      font-size: 1.2rem;
+    }
+    .sec-head p {
+      font-size: 0.76rem;
+    }
+
+    /* 3. Hero Banner */
+    .hero-banner {
+      padding: 20px 16px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+    }
+    .hero-bismillah {
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+    }
+    .hero-title {
+      font-size: 1.35rem;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .hero-lead {
+      font-size: 0.82rem;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+      gap: 8px;
+    }
+    .hero-actions .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 11px 16px;
+      font-size: 0.84rem;
+    }
+
+    /* 4. Features Grid */
+    .features-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .feature-card {
+      padding: 16px;
+    }
+    .feature-card h3 {
+      font-size: 1.05rem;
+    }
+
+    /* 5. Booking Step 1: Services Deck */
+    .service-deck {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .service-box {
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+    }
+    .service-box-header {
+      margin-bottom: 4px;
+      gap: 8px;
+    }
+    .service-box-icon {
+      font-size: 1.3rem;
+    }
+    .service-box-title {
+      font-size: 0.98rem;
+    }
+    .service-box-desc {
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+    .service-box-meta {
+      margin-top: 8px;
+      padding-top: 6px;
+      font-size: 0.74rem;
+    }
+
+    /* 6. Booking Step 2: Calendar & Slots */
+    .calendar-container {
+      padding: 14px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 18px;
+    }
+    .cal-header {
+      margin-bottom: 12px;
+    }
+    .cal-month-title {
+      font-size: 0.96rem;
+    }
+    .cal-grid-weekdays {
+      font-size: 0.68rem;
+      margin-bottom: 6px;
+    }
+    .cal-grid-days {
+      gap: 4px;
+    }
+    .cal-day-cell {
+      min-height: 36px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+    }
+    .time-slots-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .slot-btn {
+      padding: 9px 8px;
+      font-size: 0.78rem;
+    }
+
+    /* 7. Booking Step 3: Forms & Inputs */
+    .form-grid-2, .form-grid-3 {
+      grid-template-columns: 1fr !important;
+      gap: 12px;
+    }
+    .form-input, .form-select, .form-textarea {
+      font-size: 16px !important; /* Prevents auto-zoom in mobile Safari */
+      padding: 10px 12px;
+    }
+    .dob-boxes {
+      grid-template-columns: 1fr 1fr 1.2fr;
+      gap: 6px;
+    }
+    .fee-summary-card {
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+    .fee-row {
+      font-size: 0.82rem;
+    }
+    .fee-total-row {
+      font-size: 0.95rem;
+    }
+
+    /* 8. Adhkar Filter & Deck on Mobile */
+    .adhkar-filter-bar {
+      gap: 6px;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+    .adhkar-filter-pill {
+      padding: 6px 13px;
+      font-size: 0.74rem;
+    }
+    .expand-card-strip {
+      padding: 11px 14px;
+      min-height: 50px;
+      gap: 10px;
+    }
+    .strip-code-badge {
+      font-size: 0.68rem;
+      padding: 2px 7px;
+    }
+    .strip-title {
+      font-size: 0.86rem;
+    }
+    .strip-cat-tag {
+      font-size: 0.65rem;
+    }
+    .expand-body-pad {
+      padding: 16px 14px 18px;
+    }
+    .expand-arabic-frame {
+      padding: 16px 14px;
+    }
+    .expand-arabic-text {
+      font-size: 1.35rem;
+      line-height: 1.95;
+    }
+    .expand-translit-text {
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .expand-translations-box {
+      padding: 12px 14px;
+    }
+    .trans-en-text, .trans-ur-text {
+      font-size: 0.82rem;
+    }
+    .expand-virtue-box {
+      font-size: 0.78rem;
+      padding: 10px 12px;
+    }
+    .expand-actions-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+    .action-btns-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .btn-audio-play, .btn-copy-card {
+      flex: 1 1 calc(50% - 4px);
+      justify-content: center;
+      padding: 9px 10px;
+      font-size: 0.74rem;
+    }
+
+    /* 9. Numerology Deck on Mobile */
+    .num-cards-deck {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .num-tile-card {
+      padding: 12px 10px;
+    }
+    .num-tile-val {
+      font-size: 1.6rem;
+    }
+    .num-detail-display {
+      padding: 16px 14px;
+    }
+
+    /* 10. Bottom Navigation Bar */
+    nav.mobile-bottom-nav {
+      display: flex;
+      padding: 6px 10px max(8px, env(safe-area-inset-bottom));
+      background: rgba(252, 249, 244, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 20px rgba(48, 31, 22, 0.08);
+    }
+    .m-nav-item {
+      flex: 1;
+      padding: 5px 4px;
+      gap: 2px;
+      font-size: 0.66rem;
+      border-radius: 12px;
+    }
+    .m-nav-item svg {
+      width: 19px;
+      height: 19px;
+    }
+    .m-nav-item.active {
+      background: rgba(197, 155, 39, 0.12);
+      color: var(--brown-dark);
+    }
+
+    /* 11. Modals on Mobile */
+    .modal-content, .waiting-room-content, .tasbeeh-modal-box {
+      max-width: 95vw;
+      width: 95vw;
+      max-height: 88vh;
+      padding: 20px 16px;
+      margin: auto;
+      border-radius: var(--radius);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
  </style>
 </head>
 <body>
@@ -1090,7 +1412,7 @@
  <div class="header-actions">
  <div class="client-status-chip" id="clientChip" onclick="promptClientLogin()" title="Switch or View Patient Account">
  <span class="client-avatar-dot" id="clientDot"></span>
- <span id="clientChipName">Lookup Patient</span>
+ <span id="clientChipName">Lookup<span class="chip-patient-text"> Patient</span></span>
  </div>
  <a href="../index.html" class="admin-switch-btn" title="Open Practitioner Management System">
  <span>Admin</span> ↗
@@ -1401,10 +1723,10 @@
  <div class="lookup-input-row">
  <input type="text" id="trackerSearchInput" class="form-input" placeholder="e.g. 03001234567 or 0001" onkeydown="if(event.key==='Enter') executeTrackerLookup()" />
  <button type="button" class="btn btn-primary" onclick="executeTrackerLookup()">
- <span>🔍</span> Find Records
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Records
  </button>
  <button type="button" class="btn btn-outline" onclick="clearTrackerLookup()" title="Clear and switch">
- ↺ Reset
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Reset
  </button>
  </div>
  </div>
@@ -1412,12 +1734,12 @@
  <!-- Results Container -->
  <div id="trackerResults">
  <div class="card" style="text-align: center; padding: 48px 20px;">
- <div style="font-size: 3rem; margin-bottom: 12px;">📋</div>
+ <div style="display:flex; justify-content:center; margin-bottom:14px;"><div style="width:64px; height:64px; border-radius:50%; background:var(--card-muted); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--gold-dark);"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div></div>
  <h3 style="font-family: 'Playfair Display', serif; color: var(--brown-dark); margin-bottom: 6px;">No Record Loaded</h3>
  <p style="font-size: 0.85rem; color: var(--muted); max-width: 440px; margin: 0 auto 20px;">
  Please enter your registered mobile number or Patient ID above to view your upcoming and past consultations.
  </p>
- <button class="btn btn-gold btn-sm" onclick="switchTab('book')">📅 Book a New Session</button>
+ <button class="btn btn-gold btn-sm" onclick="switchTab('book')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Book a New Session</button>
  </div>
  </div>
  </section>
@@ -1483,7 +1805,7 @@
  <p>Hover or tap any card to smoothly expand full calligraphy, transliteration, audio, and virtues</p>
  </div>
  <button class="btn btn-gold btn-sm" onclick="openTasbeehModal()">
- <span>📿</span> Open Dhikr Counter
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.75" cy="7.75" r="2"/><circle cx="16.25" cy="16.25" r="2"/><circle cx="7.75" cy="16.25" r="2"/><circle cx="16.25" cy="7.75" r="2"/></svg> Open Dhikr Counter
  </button>
  </div>
 
@@ -1675,7 +1997,7 @@
  {
  id: "ruqyah-general",
  name: "Ruqyah Shari'ah Diagnosis",
- icon: "🛡️",
+ icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
  desc: "Comprehensive diagnostic assessment for physical and spiritual afflictions according to the Sunnah.",
  duration: "60 mins",
  feePKR: 3000,
@@ -1684,7 +2006,7 @@
  {
  id: "sihr-jadu",
  name: "Sihr & Jadu Removal",
- icon: "🗡️",
+ icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
  desc: "Intensive spiritual treatment and Quranic neutralizing sessions for black magic and sorcery.",
  duration: "75 mins",
  feePKR: 4500,
@@ -1693,7 +2015,7 @@
  {
  id: "nazar-hasad",
  name: "Nazar & Evil Eye Cleansing",
- icon: "👁️",
+ icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
  desc: "Specific spiritual healing and Quranic recitation for severe evil eye, envy, and unexplained heavy blockages.",
  duration: "45 mins",
  feePKR: 2500,
@@ -1702,7 +2024,7 @@
  {
  id: "jinn-possession",
  name: "Jinn & Waswas Relief",
- icon: "🕊️",
+ icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>',
  desc: "Direct Quranic expulsion and psychological/spiritual stabilization for severe whisperings or touch.",
  duration: "60 mins",
  feePKR: 4000,
@@ -1711,7 +2033,7 @@
  {
  id: "spiritual-numerology",
  name: "Spiritual Numerology Deep Session",
- icon: "🔢",
+ icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><circle cx="16" cy="8" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="8" cy="16" r="1.5"/><circle cx="16" cy="16" r="1.5"/></svg>',
  desc: "Detailed personal numerology study analyzing Life Path, Destiny, and harmonic alignments.",
  duration: "45 mins",
  feePKR: 3500,
@@ -2135,8 +2457,8 @@
  </div>
  <div class="service-box-desc">${esc(s.desc)}</div>
  <div class="service-box-meta">
- <span>⏱️ ${s.duration}</span>
- <span>💰 ${fee}</span>
+ <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${s.duration}</span>
+ <span style="display:inline-flex;align-items:center;gap:4px;font-weight:700;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> ${fee}</span>
  </div>
  `;
  box.onclick = () => {
@@ -2331,14 +2653,15 @@
  }
 
  function updateClientChipUI(){
- if(ACTIVE_CLIENT){
- $('clientChipName').textContent = ACTIVE_CLIENT.name + ` (#${ACTIVE_CLIENT.id})`;
- $('clientDot').style.background = 'var(--green)';
- } else {
- $('clientChipName').textContent = 'Lookup Patient';
- $('clientDot').style.background = 'var(--gold)';
- }
- renderActiveApptBanner();
+   if(ACTIVE_CLIENT){
+     const shortName = ACTIVE_CLIENT.name.split(' ')[0] || ACTIVE_CLIENT.name;
+     $('clientChipName').textContent = window.innerWidth <= 600 ? shortName : ACTIVE_CLIENT.name + ` (#${ACTIVE_CLIENT.id})`;
+     $('clientDot').style.background = 'var(--green)';
+   } else {
+     $('clientChipName').textContent = window.innerWidth <= 600 ? 'Lookup' : 'Lookup Patient';
+     $('clientDot').style.background = 'var(--gold)';
+   }
+   renderActiveApptBanner();
  }
 
  function executeTrackerLookup(query){
@@ -2384,12 +2707,12 @@
  updateClientChipUI();
  $('trackerResults').innerHTML = `
  <div class="card" style="text-align: center; padding: 48px 20px;">
- <div style="font-size: 3rem; margin-bottom: 12px;">📋</div>
+ <div style="display:flex; justify-content:center; margin-bottom:14px;"><div style="width:64px; height:64px; border-radius:50%; background:var(--card-muted); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--gold-dark);"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div></div>
  <h3 style="font-family: 'Playfair Display', serif; color: var(--brown-dark); margin-bottom: 6px;">No Record Loaded</h3>
  <p style="font-size: 0.85rem; color: var(--muted); max-width: 440px; margin: 0 auto 20px;">
  Please enter your registered mobile number or Patient ID above to view your upcoming and past consultations.
  </p>
- <button class="btn btn-gold btn-sm" onclick="switchTab('book')">📅 Book a New Session</button>
+ <button class="btn btn-gold btn-sm" onclick="switchTab('book')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Book a New Session</button>
  </div>
  `;
  }
