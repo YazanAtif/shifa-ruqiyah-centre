@@ -1,0 +1,2577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shifa-Ruqiyah Centre | Customer & Patient Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brown-dark: #301f16;
+      --brown: #6e4832;
+      --brown-light: #9e724f;
+      --gold: #c59b27;
+      --gold-light: #f7eecf;
+      --gold-dark: #8c6a11;
+      --gold-border: rgba(197, 155, 39, 0.35);
+      --beige-dark: #ded2c3;
+      --beige: #eee5d8;
+      --cream: #faf6f0;
+      --bg: #f7f2eb;
+      --card: #ffffff;
+      --card-muted: #fbf8f4;
+      --text: #2a1f18;
+      --muted: #73655b;
+      --border: #e6dbcd;
+      --border-light: #f0e7dc;
+      --shadow-sm: 0 2px 8px rgba(48, 31, 22, 0.05);
+      --shadow: 0 8px 24px rgba(48, 31, 22, 0.08);
+      --shadow-lg: 0 16px 40px rgba(48, 31, 22, 0.12);
+      --radius-sm: 10px;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --green: #2d7a4d;
+      --green-light: #e6f4ec;
+      --red: #a83232;
+      --red-light: #fde8e8;
+      --blue: #27628c;
+      --blue-light: #e5f1f9;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+      background: linear-gradient(135deg, #f7f2eb 0%, #fbf8f3 35%, #efe5d7 70%, #f8f3ec 100%);
+      background-size: 250% 250%;
+      animation: ambientGradient 30s ease-in-out infinite alternate;
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @keyframes ambientGradient {
+      0% { background-position: 0% 25%; }
+      50% { background-position: 100% 75%; }
+      100% { background-position: 0% 25%; }
+    }
+
+    /* Ambient background ornamentation */
+    .bg-mesh {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(197, 155, 39, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(110, 72, 50, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(222, 210, 195, 0.15) 0%, transparent 60%);
+    }
+
+    /* Top Navigation Header */
+    header.portal-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250, 246, 240, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      transition: all 0.3s ease;
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-wrap {
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none; color: inherit;
+    }
+    .brand-logo-frame {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(145deg, #ffffff, var(--beige));
+      border: 2px solid var(--gold);
+      box-shadow: 0 4px 12px rgba(197, 155, 39, 0.2);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .brand-logo-frame img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .brand-titles h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em;
+      color: var(--brown-dark); line-height: 1.15;
+    }
+    .brand-titles p {
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--gold-dark);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .brand-titles p span.portal-pill {
+      background: var(--gold-light); color: var(--gold-dark);
+      padding: 1px 7px; border-radius: 20px; font-size: 0.65rem;
+      border: 1px solid var(--gold-border);
+    }
+
+    /* Desktop Navigation Tabs */
+    .nav-tabs-desktop {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(238, 229, 216, 0.55);
+      padding: 4px; border-radius: 30px;
+      border: 1px solid var(--border);
+    }
+    .tab-btn {
+      background: transparent; border: none; outline: none;
+      font-family: inherit; font-size: 0.82rem; font-weight: 600;
+      color: var(--muted); padding: 8px 16px; border-radius: 24px;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: var(--brown-dark); background: rgba(255, 255, 255, 0.4);
+    }
+    .tab-btn.active {
+      color: #ffffff; background: linear-gradient(135deg, var(--brown-dark), var(--brown));
+      box-shadow: 0 4px 12px rgba(48, 31, 22, 0.2);
+    }
+    .tab-btn.active .tab-icon { transform: scale(1.1); }
+    .tab-icon { font-size: 0.95rem; transition: transform 0.2s; }
+
+    /* Header Actions */
+    .header-actions {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .client-status-chip {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 30px; padding: 5px 12px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 600; color: var(--brown-dark);
+      cursor: pointer; transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .client-status-chip:hover {
+      border-color: var(--gold); background: #ffffff;
+    }
+    .client-avatar-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+    }
+    .admin-switch-btn {
+      background: transparent; border: 1px solid var(--border);
+      padding: 7px 13px; border-radius: 20px;
+      font-size: 0.76rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      transition: all 0.2s;
+    }
+    .admin-switch-btn:hover {
+      background: #ffffff; color: var(--brown-dark); border-color: var(--brown-light);
+    }
+
+    /* Main Container */
+    main.portal-main {
+      flex: 1; max-width: 1200px; width: 100%; margin: 0 auto;
+      padding: 24px 20px 90px; position: relative; z-index: 1;
+    }
+
+    /* Views container */
+    .view-panel { display: none; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.3s ease; }
+    .view-panel.active { display: block; opacity: 1; transform: translateY(0); }
+
+    /* Cards & Containers */
+    .card {
+      background: var(--card); border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 24px; margin-bottom: 24px;
+      position: relative; overflow: hidden;
+    }
+    .card-gold-edge {
+      border: 1px solid var(--gold-border);
+      position: relative;
+    }
+    .card-gold-edge::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-light));
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #382418 0%, #4f3322 50%, #2b1a11 100%);
+      color: #ffffff; border-radius: var(--radius-lg);
+      padding: 36px 32px; margin-bottom: 28px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 16px 40px rgba(48, 31, 22, 0.22);
+      border: 1px solid rgba(197, 155, 39, 0.3);
+    }
+    .hero-bg-arabic {
+      position: absolute; right: -20px; bottom: -30px;
+      font-family: 'Amiri', serif; font-size: 8rem; line-height: 1;
+      color: rgba(255, 255, 255, 0.04); pointer-events: none;
+      user-select: none;
+    }
+    .hero-bismillah {
+      font-family: 'Amiri', serif; font-size: 1.7rem;
+      color: var(--gold-light); margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem; font-weight: 700; line-height: 1.2;
+      margin-bottom: 10px; color: #ffffff;
+    }
+    .hero-subtitle {
+      font-size: 0.95rem; color: #ded2c3; max-width: 620px;
+      margin-bottom: 24px; line-height: 1.6;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: inherit; font-size: 0.88rem; font-weight: 600;
+      padding: 11px 22px; border-radius: 30px; cursor: pointer;
+      text-decoration: none; border: none; outline: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #d8ac32, #b88b1b);
+      color: #2b1f14; font-weight: 700;
+      box-shadow: 0 4px 16px rgba(197, 155, 39, 0.35);
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #e3b83d, #c59620);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(197, 155, 39, 0.45);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brown-dark), var(--brown));
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(48, 31, 22, 0.25);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #442d20, var(--brown-dark));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(48, 31, 22, 0.35);
+    }
+    .btn-outline-white {
+      background: rgba(255, 255, 255, 0.1); color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(4px);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255, 255, 255, 0.2); border-color: #ffffff;
+    }
+    .btn-outline {
+      background: transparent; color: var(--brown-dark);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover {
+      background: var(--beige); border-color: var(--brown-light);
+    }
+    .btn-whatsapp {
+      background: #25D366; color: #ffffff; font-weight: 700;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+    }
+    .btn-whatsapp:hover {
+      background: #20ba5a; transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+    .btn-sm {
+      padding: 7px 14px; font-size: 0.78rem; border-radius: 20px;
+    }
+
+    /* Section Headers */
+    .sec-head {
+      margin-bottom: 20px; display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .sec-head h2 {
+      font-family: 'Cinzel', serif; font-size: 1.45rem; font-weight: 700;
+      color: var(--brown-dark); line-height: 1.2;
+    }
+    .sec-head p {
+      font-size: 0.85rem; color: var(--muted); margin-top: 4px;
+    }
+
+    /* Feature Grid on Home */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px; margin-bottom: 28px;
+    }
+    .feature-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+      cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px); border-color: var(--gold);
+      box-shadow: var(--shadow-lg);
+    }
+    .feature-icon-badge {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--cream); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 14px;
+      transition: transform 0.2s;
+    }
+    .feature-card:hover .feature-icon-badge {
+      transform: scale(1.1); background: var(--gold-light); border-color: var(--gold-border);
+    }
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--brown-dark); margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.5; margin-bottom: 16px;
+    }
+    .feature-card .card-cta {
+      font-size: 0.78rem; font-weight: 700; color: var(--gold-dark);
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    /* Client Active Appointment Banner */
+    .active-appt-banner {
+      background: linear-gradient(135deg, #ffffff 0%, var(--card-muted) 100%);
+      border: 1.5px solid var(--gold-border);
+      border-radius: var(--radius); padding: 20px 24px;
+      margin-bottom: 24px; box-shadow: var(--shadow);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .active-appt-lead {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .active-pulse-circle {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--green-light); color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; position: relative; flex-shrink: 0;
+    }
+    .active-pulse-circle::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 50%;
+      border: 2px solid var(--green); opacity: 0.4;
+      animation: pulseAnim 2s infinite;
+    }
+    @keyframes pulseAnim {
+      0% { transform: scale(0.95); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 0; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+    .active-appt-info h4 {
+      font-size: 1.05rem; font-weight: 700; color: var(--brown-dark);
+    }
+    .active-appt-info p {
+      font-size: 0.82rem; color: var(--muted); margin-top: 2px;
+    }
+    .active-countdown-tag {
+      background: var(--gold-light); color: var(--gold-dark);
+      font-weight: 700; font-size: 0.75rem; padding: 4px 10px;
+      border-radius: 20px; border: 1px solid var(--gold-border);
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
+    }
+
+    /* Service Selection Deck in Booking */
+    .service-deck {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px; margin-bottom: 24px;
+    }
+    .service-box {
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px;
+      cursor: pointer; transition: all 0.25s ease;
+      position: relative;
+    }
+    .service-box:hover {
+      border-color: var(--brown-light); background: var(--card-muted);
+    }
+    .service-box.selected {
+      border-color: var(--gold); background: #fffcf5;
+      box-shadow: 0 4px 16px rgba(197, 155, 39, 0.15);
+    }
+    .service-box.selected::after {
+      content: '✓'; position: absolute; top: 12px; right: 12px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--gold); color: #fff;
+      font-size: 0.75rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .service-box-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+    }
+    .service-box-icon { font-size: 1.4rem; }
+    .service-box-title {
+      font-family: 'Playfair Display', serif; font-size: 1.05rem;
+      font-weight: 700; color: var(--brown-dark);
+    }
+    .service-box-desc {
+      font-size: 0.78rem; color: var(--muted); line-height: 1.45;
+    }
+    .service-box-meta {
+      margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.72rem; color: var(--gold-dark); font-weight: 600;
+    }
+
+    /* Interactive Calendar in Booking */
+    .calendar-container {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; margin-bottom: 24px;
+    }
+    .cal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .cal-month-title {
+      font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--brown-dark);
+    }
+    .cal-nav-btn {
+      background: var(--cream); border: 1px solid var(--border);
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 0.95rem; color: var(--brown-dark);
+      transition: all 0.2s;
+    }
+    .cal-nav-btn:hover { background: var(--beige); border-color: var(--brown-light); }
+    .cal-grid-weekdays {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      text-align: center; font-size: 0.74rem; font-weight: 700;
+      color: var(--muted); margin-bottom: 8px; text-transform: uppercase;
+    }
+    .cal-grid-days {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .cal-day-cell {
+      aspect-ratio: 1; border-radius: var(--radius-sm);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      border: 1px solid transparent; transition: all 0.2s;
+      position: relative;
+    }
+    .cal-day-cell:hover:not(.disabled) {
+      background: var(--beige); border-color: var(--border);
+    }
+    .cal-day-cell.today {
+      border-color: var(--gold); color: var(--gold-dark); font-weight: 800;
+    }
+    .cal-day-cell.selected {
+      background: linear-gradient(135deg, var(--brown-dark), var(--brown)) !important;
+      color: #ffffff !important; font-weight: 700;
+      box-shadow: 0 4px 12px rgba(48, 31, 22, 0.25);
+    }
+    .cal-day-cell.disabled {
+      color: #c4b8aa; cursor: not-allowed; opacity: 0.45;
+    }
+    .cal-day-cell.empty { pointer-events: none; }
+    .cal-slot-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--green); position: absolute; bottom: 4px;
+    }
+
+    /* Time Slots Selector */
+    .slots-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+      gap: 10px; margin-top: 14px;
+    }
+    .time-slot-btn {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 10px 8px; border-radius: var(--radius-sm);
+      font-size: 0.82rem; font-weight: 600; text-align: center;
+      cursor: pointer; transition: all 0.2s; outline: none;
+      color: var(--brown-dark);
+    }
+    .time-slot-btn:hover:not(.booked) {
+      border-color: var(--brown-light); background: var(--beige);
+    }
+    .time-slot-btn.selected {
+      background: var(--gold-light); border-color: var(--gold);
+      color: var(--gold-dark); font-weight: 800;
+      box-shadow: 0 2px 8px rgba(197, 155, 39, 0.2);
+    }
+    .time-slot-btn.booked {
+      background: #f1ede8; color: #a99e93; border-color: #e5ddd3;
+      cursor: not-allowed; text-decoration: line-through;
+    }
+
+    /* Form Fields Styling */
+    .form-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px; margin-bottom: 20px;
+    }
+    .form-group {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .form-group.col-full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--brown-dark);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .form-label span.req { color: var(--red); margin-left: 3px; }
+    .form-label span.hint { font-size: 0.7rem; color: var(--muted); text-transform: none; font-weight: 500; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 11px 14px;
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); font-family: inherit;
+      font-size: 0.88rem; color: var(--text); outline: none;
+      transition: all 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold); background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.15);
+    }
+    .dob-boxes {
+      display: grid; grid-template-columns: 2fr 3fr 2.5fr; gap: 8px;
+    }
+
+    /* Live Age & Numerology pill on registration */
+    .live-preview-box {
+      background: var(--card-muted); border: 1px dashed var(--gold-border);
+      border-radius: var(--radius-sm); padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; margin-top: 10px;
+      font-size: 0.78rem;
+    }
+    .live-preview-box b { color: var(--brown-dark); }
+    .live-pill {
+      background: var(--gold-light); color: var(--gold-dark);
+      padding: 3px 10px; border-radius: 20px; font-weight: 700;
+    }
+
+    /* Fee & Payment summary box */
+    .fee-summary-card {
+      background: linear-gradient(135deg, var(--cream) 0%, var(--card) 100%);
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 20px; margin: 20px 0;
+    }
+    .fee-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.85rem; color: var(--muted); margin-bottom: 8px;
+    }
+    .fee-row.total {
+      font-size: 1.15rem; font-weight: 800; color: var(--brown-dark);
+      border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px;
+    }
+    .currency-switcher {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--beige); padding: 3px; border-radius: 20px;
+    }
+    .currency-btn {
+      border: none; background: transparent; font-size: 0.72rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 16px; cursor: pointer; color: var(--muted);
+      transition: all 0.2s;
+    }
+    .currency-btn.active {
+      background: var(--brown-dark); color: #fff;
+    }
+
+    /* Lookup / Search Bar in Tracker */
+    .tracker-lookup-card {
+      background: linear-gradient(135deg, #ffffff 0%, var(--cream) 100%);
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-sm);
+    }
+    .lookup-input-row {
+      display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;
+    }
+    .lookup-input-row input {
+      flex: 1; min-width: 220px;
+    }
+
+    /* Appointment Cards in Tracker */
+    .appt-list { display: flex; flex-direction: column; gap: 16px; }
+    .appt-item-card {
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      box-shadow: var(--shadow-sm); transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .appt-item-card:hover {
+      box-shadow: var(--shadow); border-color: var(--brown-light);
+    }
+    .appt-status-ribbon {
+      position: absolute; top: 0; left: 0; bottom: 0; width: 6px;
+    }
+    .status-confirmed .appt-status-ribbon { background: var(--green); }
+    .status-pending .appt-status-ribbon { background: var(--gold); }
+    .status-completed .appt-status-ribbon { background: var(--blue); }
+    .status-cancelled .appt-status-ribbon { background: var(--red); }
+
+    .appt-item-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 12px; margin-bottom: 14px;
+    }
+    .appt-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; border-radius: 20px; font-size: 0.74rem; font-weight: 700;
+    }
+    .badge-confirmed { background: var(--green-light); color: var(--green); }
+    .badge-pending { background: var(--gold-light); color: var(--gold-dark); }
+    .badge-completed { background: var(--blue-light); color: var(--blue); }
+    .badge-cancelled { background: var(--red-light); color: var(--red); }
+
+    .appt-details-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px; margin-bottom: 16px; background: var(--card-muted);
+      padding: 12px 16px; border-radius: var(--radius-sm);
+    }
+    .appt-detail-item {
+      display: flex; flex-direction: column; font-size: 0.78rem;
+    }
+    .appt-detail-item span.lbl { color: var(--muted); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+    .appt-detail-item span.val { color: var(--brown-dark); font-weight: 700; margin-top: 2px; }
+
+    .appt-actions-bar {
+      display: flex; align-items: center; justify-content: flex-end;
+      flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--border-light);
+      padding-top: 12px;
+    }
+
+    /* Waiting Room & Session Live Mode */
+    .waiting-room-modal {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(30, 20, 14, 0.75); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .waiting-room-modal.active { display: flex; }
+    .waiting-room-content {
+      background: #ffffff; border-radius: var(--radius-lg);
+      max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto;
+      border: 1.5px solid var(--gold-border); box-shadow: var(--shadow-lg);
+      padding: 28px; position: relative; text-align: center;
+    }
+
+    /* Spiritual Numerology Panel */
+    .num-cards-deck {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin-bottom: 24px;
+    }
+    .num-card-tile {
+      background: linear-gradient(145deg, #ffffff, var(--card-muted));
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 20px; text-align: center; cursor: pointer;
+      transition: all 0.25s; position: relative;
+    }
+    .num-card-tile:hover {
+      border-color: var(--gold); transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+    .num-card-tile.selected {
+      border-color: var(--gold); background: #fffcf5;
+      box-shadow: 0 4px 16px rgba(197, 155, 39, 0.2);
+    }
+    .num-big-digit {
+      font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 800;
+      color: var(--brown-dark); line-height: 1; margin: 10px 0 6px;
+    }
+    .num-badge-title {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--gold-dark);
+    }
+    .num-sub-meaning {
+      font-size: 0.8rem; color: var(--muted); font-weight: 500;
+    }
+
+    /* Numerology Detail Box */
+    .num-detail-display {
+      background: var(--card); border: 1.5px solid var(--gold-border);
+      border-radius: var(--radius); padding: 24px; margin-bottom: 28px;
+    }
+    .num-detail-header {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px; margin-bottom: 16px;
+      border-bottom: 1px solid var(--border); padding-bottom: 14px;
+    }
+    .lang-toggle-bar {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--beige); padding: 3px; border-radius: 20px;
+    }
+    .lang-toggle-btn {
+      border: none; background: transparent; font-size: 0.74rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 16px; cursor: pointer; color: var(--muted);
+      transition: all 0.2s;
+    }
+    .lang-toggle-btn.active {
+      background: var(--brown-dark); color: #fff;
+    }
+
+    /* Ruqyah & Adhkar Prescription List */
+    .adhkar-accordion {
+      display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;
+    }
+    .adhkar-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      transition: all 0.2s;
+    }
+    .adhkar-card:hover { border-color: var(--brown-light); }
+    .adhkar-arabic {
+      font-family: 'Amiri', serif; font-size: 1.45rem; line-height: 1.9;
+      color: var(--brown-dark); text-align: right; direction: rtl;
+      margin: 10px 0 14px; padding: 12px 16px; background: var(--cream);
+      border-radius: var(--radius-sm); border-right: 4px solid var(--gold);
+    }
+    .adhkar-translit {
+      font-style: italic; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px;
+    }
+    .adhkar-meaning {
+      font-size: 0.85rem; color: var(--text); line-height: 1.5; margin-bottom: 10px;
+    }
+    .adhkar-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; font-size: 0.74rem; font-weight: 700;
+      color: var(--gold-dark); border-top: 1px dashed var(--border);
+      padding-top: 10px;
+    }
+
+    /* Interactive Digital Tasbeeh / Dhikr Counter */
+    .tasbeeh-widget {
+      background: linear-gradient(145deg, #ffffff, var(--cream));
+      border: 1.5px solid var(--gold-border); border-radius: var(--radius-lg);
+      padding: 30px 24px; text-align: center; max-width: 420px; margin: 0 auto 28px;
+      box-shadow: var(--shadow); position: relative;
+    }
+    .tasbeeh-dhikr-select {
+      margin-bottom: 18px;
+    }
+    .tasbeeh-counter-display {
+      width: 140px; height: 140px; border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 40%, var(--beige) 100%);
+      border: 3px solid var(--gold);
+      box-shadow: 0 8px 24px rgba(197, 155, 39, 0.25);
+      margin: 0 auto 20px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      cursor: pointer; user-select: none; transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .tasbeeh-counter-display:active {
+      transform: scale(0.94); box-shadow: 0 4px 12px rgba(197, 155, 39, 0.4);
+    }
+    .tasbeeh-count-num {
+      font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 800;
+      color: var(--brown-dark); line-height: 1;
+    }
+    .tasbeeh-count-sub {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--gold-dark); margin-top: 4px;
+    }
+    .tasbeeh-target-presets {
+      display: flex; justify-content: center; gap: 8px; margin-bottom: 16px;
+    }
+    .target-preset-btn {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 4px 12px; border-radius: 16px; font-size: 0.74rem; font-weight: 700;
+      color: var(--muted); cursor: pointer; transition: all 0.2s;
+    }
+    .target-preset-btn.active {
+      background: var(--brown-dark); color: #fff; border-color: var(--brown-dark);
+    }
+
+    /* Print Slip Styles */
+    @media print {
+      body { background: #fff !important; }
+      header.portal-header, nav.mobile-bottom-nav, .btn, .bg-mesh, .nav-tabs-desktop { display: none !important; }
+      main.portal-main { padding: 0 !important; max-width: 100% !important; }
+      .card { box-shadow: none !important; border: 1px solid #ccc !important; }
+      .print-area { display: block !important; }
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: rgba(48, 31, 22, 0.94); color: #ffffff;
+      padding: 11px 22px; border-radius: 30px; font-size: 0.84rem; font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(197, 155, 39, 0.4);
+      opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 9999; display: flex; align-items: center; gap: 8px;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    #toast.err { background: rgba(168, 50, 50, 0.95); }
+
+    /* Mobile Bottom Navigation Dock */
+    nav.mobile-bottom-nav {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 990;
+      background: rgba(250, 246, 240, 0.96);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      padding: 10px 12px max(10px, env(safe-area-inset-bottom)); justify-content: space-around;
+      box-shadow: 0 -4px 16px rgba(48, 31, 22, 0.08);
+    }
+    .m-nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      background: transparent; border: none; font-family: inherit;
+      font-size: 0.68rem; font-weight: 600; color: var(--muted);
+      cursor: pointer; padding: 4px 8px; border-radius: 12px;
+      transition: all 0.2s;
+    }
+    .m-nav-item .m-icon { font-size: 1.25rem; }
+    .m-nav-item.active {
+      color: var(--brown-dark); font-weight: 800;
+    }
+    .m-nav-item.active .m-icon {
+      transform: translateY(-2px); filter: drop-shadow(0 2px 4px rgba(197, 155, 39, 0.4));
+    }
+
+    /* Modal general */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(30, 20, 14, 0.65); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: #ffffff; border-radius: var(--radius-lg);
+      max-width: 540px; width: 100%; max-height: 90vh; overflow-y: auto;
+      border: 1.5px solid var(--gold-border); box-shadow: var(--shadow-lg);
+      padding: 28px; position: relative;
+    }
+    .modal-close-btn {
+      position: absolute; top: 16px; right: 16px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--cream); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; color: var(--muted);
+      transition: all 0.2s;
+    }
+    .modal-close-btn:hover { background: var(--beige); color: var(--brown-dark); }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .nav-tabs-desktop { display: none; }
+      nav.mobile-bottom-nav { display: flex; }
+      main.portal-main { padding-bottom: 95px; }
+      .hero-banner { padding: 26px 20px; }
+      .hero-title { font-size: 1.6rem; }
+      .brand-titles h1 { font-size: 1rem; }
+      .brand-titles p { font-size: 0.65rem; }
+      .sec-head h2 { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh" aria-hidden="true"></div>
+
+  <!-- Top Header -->
+  <header class="portal-header">
+    <div class="header-inner">
+      <a href="#home" class="brand-wrap" onclick="switchTab('home')">
+        <div class="brand-logo-frame">
+          <img src="../logo/src-logo.webp" onerror="this.onerror=null;this.src='../logo/src-logo-256.png'" alt="Shifa-Ruqiyah Centre Emblem">
+        </div>
+        <div class="brand-titles">
+          <h1>SHIFA-RUQIYAH CENTRE</h1>
+          <p>
+            <span>Al-Qur'an &amp; Sunnah</span>
+            <span class="portal-pill">Patient Portal</span>
+          </p>
+        </div>
+      </a>
+
+      <!-- Desktop Tabs Navigation -->
+      <nav class="nav-tabs-desktop" role="tablist">
+        <button class="tab-btn active" id="tab-btn-home" onclick="switchTab('home')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Overview
+        </button>
+        <button class="tab-btn" id="tab-btn-book" onclick="switchTab('book')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Book Session
+        </button>
+        <button class="tab-btn" id="tab-btn-tracker" onclick="switchTab('tracker')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> My Appointments
+        </button>
+        <button class="tab-btn" id="tab-btn-profile" onclick="switchTab('profile')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Spiritual &amp; Adhkar
+        </button>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="header-actions">
+        <div class="client-status-chip" id="clientChip" onclick="promptClientLogin()" title="Switch or View Patient Account">
+          <span class="client-avatar-dot" id="clientDot"></span>
+          <span id="clientChipName">Lookup Patient</span>
+        </div>
+        <a href="../index.html" class="admin-switch-btn" title="Open Practitioner Management System">
+          <span>Admin</span> ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Portal Content -->
+  <main class="portal-main">
+
+    <!-- ================= VIEW 1: HOME / PORTAL OVERVIEW ================= -->
+    <section class="view-panel active" id="view-home">
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-bg-arabic" aria-hidden="true">شِفَاء</div>
+        <div class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <h2 class="hero-title">Shifa &amp; Ruqyah Patient Portal</h2>
+        <p class="hero-subtitle">
+          Welcome to Shifa-Ruqiyah Centre's dedicated customer platform. Schedule your Ruqyah Shari'ah sessions, track appointment statuses, explore your spiritual numerology, and access personalized healing adhkar.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-gold" onclick="switchTab('book')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Schedule Appointment
+          </button>
+          <button class="btn btn-outline-white" onclick="switchTab('tracker')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Track My Booking
+          </button>
+          <a href="https://wa.me/923000000000" id="heroWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-whatsapp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp Hotline
+          </a>
+        </div>
+      </div>
+
+      <!-- Active Booking Alert if Patient has an upcoming session -->
+      <div id="activeApptBannerContainer"></div>
+
+      <!-- Feature Highlights Deck -->
+      <div class="sec-head">
+        <div>
+          <h2>Direct Services &amp; Tools</h2>
+          <p>Quick access to all spiritual guidance and booking facilities</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card card-gold-edge" onclick="switchTab('book')">
+          <div class="feature-icon-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-dark);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Book Ruqyah Consultation</h3>
+          <p>Schedule a specialized Ruqyah Shari'ah session for Jadu, Nazar, Jinn, or spiritual assessment with date &amp; time slot selection.</p>
+          <div class="card-cta">Proceed to Booking →</div>
+        </div>
+
+        <div class="feature-card" onclick="switchTab('tracker')">
+          <div class="feature-icon-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-dark);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Appointment Status &amp; Slip</h3>
+          <p>Look up your booked appointment by mobile number or Patient ID. View live countdowns and download your printable session slip.</p>
+          <div class="card-cta">Check Booking Status →</div>
+        </div>
+
+        <div class="feature-card" onclick="switchTab('profile')">
+          <div class="feature-icon-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-dark);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Spiritual Numerology Report</h3>
+          <p>Instant Pythagorean &amp; Chaldean profile for your name and date of birth with bilingual (English &amp; Urdu) spiritual insights.</p>
+          <div class="card-cta">Calculate Profile →</div>
+        </div>
+
+        <div class="feature-card" onclick="openTasbeehModal()">
+          <div class="feature-icon-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-dark);"><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="7.75" cy="7.75" r="2.5"/><circle cx="16.25" cy="16.25" r="2.5"/><circle cx="7.75" cy="16.25" r="2.5"/><circle cx="16.25" cy="7.75" r="2.5"/></svg>
+          </div>
+          <h3>Digital Tasbeeh &amp; Adhkar</h3>
+          <p>Interactive dhikr counter with vibration feedback, preset targets (33, 100), and recommended daily protection du'as.</p>
+          <div class="card-cta">Open Tasbeeh Counter →</div>
+        </div>
+      </div>
+
+      <!-- Center Guidelines & Preparation Notice -->
+      <div class="card">
+        <div class="sec-head" style="margin-bottom: 12px;">
+          <div>
+            <h2>Clinic Consultation Guidelines</h2>
+            <p>Important instructions before attending your Ruqyah session</p>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; font-size: 0.85rem; color: var(--muted);">
+          <div style="background: var(--card-muted); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid var(--gold);">
+            <strong style="color: var(--brown-dark);">1. State of Purity (Wudu)</strong>
+            <p style="margin-top: 4px;">Please arrive or join in a state of ablution (Wudu) with clean clothing and modest attire.</p>
+          </div>
+          <div style="background: var(--card-muted); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid var(--gold);">
+            <strong style="color: var(--brown-dark);">2. Punctuality is Mandatory</strong>
+            <p style="margin-top: 4px;">Sessions run strictly to time. Please arrive or connect 10 minutes prior to your allocated slot.</p>
+          </div>
+          <div style="background: var(--card-muted); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid var(--gold);">
+            <strong style="color: var(--brown-dark);">3. Bring Fresh Water &amp; Oil</strong>
+            <p style="margin-top: 4px;">For personalized recitation, keep a sealed bottle of drinking water and pure olive oil ready.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= VIEW 2: INTERACTIVE APPOINTMENT BOOKING ================= -->
+    <section class="view-panel" id="view-book">
+      <div class="sec-head">
+        <div>
+          <h2>Book a Consultation Session</h2>
+          <p>Choose your session type, pick your date &amp; time, and receive instant confirmation</p>
+        </div>
+        <div class="currency-switcher">
+          <button class="currency-btn active" id="curBtnPKR" onclick="setCurrency('PKR')">PKR (Rs)</button>
+          <button class="currency-btn" id="curBtnUSD" onclick="setCurrency('USD')">USD ($ Intl)</button>
+        </div>
+      </div>
+
+      <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+        <!-- Step 1: Service Type Selection -->
+        <div class="card card-gold-edge">
+          <div class="form-label" style="margin-bottom: 14px;">
+            <span>Step 1: Select Consultation / Session Type <span class="req">*</span></span>
+            <span class="hint">Click to choose</span>
+          </div>
+
+          <div class="service-deck" id="serviceDeck">
+            <!-- Services injected by JS -->
+          </div>
+          <input type="hidden" id="selectedService" value="Ruqyah Shari'ah Diagnosis" required />
+        </div>
+
+        <!-- Step 2: Date & Time Slot Picker -->
+        <div class="card">
+          <div class="form-label" style="margin-bottom: 14px;">
+            <span>Step 2: Choose Appointment Date &amp; Time Slot <span class="req">*</span></span>
+            <span class="hint">Select date from calendar below</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px;">
+            <!-- Calendar Grid Component -->
+            <div class="calendar-container">
+              <div class="cal-header">
+                <button type="button" class="cal-nav-btn" onclick="prevMonth()">‹</button>
+                <div class="cal-month-title" id="calMonthTitle">October 2026</div>
+                <button type="button" class="cal-nav-btn" onclick="nextMonth()">›</button>
+              </div>
+              <div class="cal-grid-weekdays">
+                <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+              </div>
+              <div class="cal-grid-days" id="calDaysGrid"></div>
+            </div>
+
+            <!-- Time Slots Component -->
+            <div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px;">
+                Available Slots for <span id="selectedDateDisplay" style="color: var(--gold-dark);">Today</span>:
+              </div>
+              <p style="font-size: 0.76rem; color: var(--muted); margin-bottom: 12px;">
+                Standard session length: 60 minutes. Booked slots are crossed out.
+              </p>
+              <div class="slots-grid" id="slotsGrid">
+                <!-- Time slots injected by JS -->
+              </div>
+              <input type="hidden" id="selectedTimeStart" value="10:00" required />
+              <input type="hidden" id="selectedTimeEnd" value="11:00" required />
+              <input type="hidden" id="selectedDate" value="" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Patient Information -->
+        <div class="card">
+          <div class="form-label" style="margin-bottom: 14px;">
+            <span>Step 3: Patient Information &amp; Contact Details <span class="req">*</span></span>
+            <span class="hint">Required for spiritual consultation record</span>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Patient Full Name <span class="req">*</span></label>
+              <input type="text" id="custName" class="form-input" placeholder="e.g. Muhammad Farooq" required oninput="handleNameDobChange()" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Father's / Guardian's Name <span class="req">*</span></label>
+              <input type="text" id="custFather" class="form-input" placeholder="e.g. Abdul Rehman" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Country / Location <span class="req">*</span></label>
+              <input type="text" id="custCountry" class="form-input" placeholder="e.g. Pakistan, UK, USA, UAE" value="Pakistan" oninput="handleCountryInput()" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span>WhatsApp / Mobile Number <span class="req">*</span></span>
+                <span class="hint" id="dialCodeHint">+92</span>
+              </label>
+              <input type="tel" id="custMobile" class="form-input" placeholder="e.g. 03001234567 or +92300..." required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Gender <span class="req">*</span></label>
+              <select id="custGender" class="form-select">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span>Date of Birth</span>
+                <span class="hint">Day / Month / Year</span>
+              </label>
+              <div class="dob-boxes">
+                <input type="number" id="custDobD" class="form-input" placeholder="DD" min="1" max="31" oninput="handleNameDobChange()" />
+                <select id="custDobM" class="form-select" onchange="handleNameDobChange()">
+                  <option value="">Month</option>
+                  <option value="01">Jan (01)</option>
+                  <option value="02">Feb (02)</option>
+                  <option value="03">Mar (03)</option>
+                  <option value="04">Apr (04)</option>
+                  <option value="05">May (05)</option>
+                  <option value="06">Jun (06)</option>
+                  <option value="07">Jul (07)</option>
+                  <option value="08">Aug (08)</option>
+                  <option value="09">Sep (09)</option>
+                  <option value="10">Oct (10)</option>
+                  <option value="11">Nov (11)</option>
+                  <option value="12">Dec (12)</option>
+                </select>
+                <input type="number" id="custDobY" class="form-input" placeholder="YYYY" min="1900" max="2026" oninput="handleNameDobChange()" />
+              </div>
+            </div>
+
+            <div class="form-group col-full">
+              <div class="live-preview-box" id="livePreviewBox" style="display: none;">
+                <div>
+                  Calculated Age: <b id="liveAgeText">-</b>
+                </div>
+                <div>
+                  Spiritual Life Path: <span class="live-pill" id="liveLifePathText">-</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-full">
+              <label class="form-label">Brief Description of Concern / Symptoms</label>
+              <textarea id="custNotes" class="form-textarea" rows="3" placeholder="Please describe any dreams, sudden sickness, unexplainable physical discomfort, heaviness during recitation, or concerns..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Summary & Submit -->
+        <div class="card card-gold-edge">
+          <div class="fee-summary-card">
+            <div class="fee-row">
+              <span>Selected Consultation:</span>
+              <b id="summaryServiceName" style="color: var(--brown-dark);">Ruqyah Shari'ah Diagnosis</b>
+            </div>
+            <div class="fee-row">
+              <span>Scheduled Date &amp; Time:</span>
+              <span id="summaryDateTime">Today at 10:00 AM</span>
+            </div>
+            <div class="fee-row">
+              <span>Consultation Mode:</span>
+              <span>In-Person / Online Audio Session</span>
+            </div>
+            <div class="fee-row total">
+              <span>Estimated Session Fee:</span>
+              <span id="summaryFeeAmount">Rs. 3,000</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
+            <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1rem; padding: 14px;">
+              <span>💾</span> Confirm &amp; Request Appointment
+            </button>
+            <p style="font-size: 0.74rem; text-align: center; color: var(--muted);">
+              An instant WhatsApp confirmation message will be prepared for immediate dispatch to the clinic reception.
+            </p>
+          </div>
+        </div>
+      </form>
+    </section>
+
+
+    <!-- ================= VIEW 3: APPOINTMENT TRACKER & WAITING ROOM ================= -->
+    <section class="view-panel" id="view-tracker">
+      <div class="sec-head">
+        <div>
+          <h2>My Appointments &amp; Status Tracker</h2>
+          <p>Track your scheduled sessions, view practitioner notes, and enter live waiting mode</p>
+        </div>
+      </div>
+
+      <!-- Lookup Box -->
+      <div class="tracker-lookup-card">
+        <label class="form-label" style="margin-bottom: 6px;">Find Your Record</label>
+        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 10px;">
+          Enter your registered Mobile Number or 4-digit Patient ID (e.g. <code>0001</code>) to retrieve your consultations:
+        </p>
+        <div class="lookup-input-row">
+          <input type="text" id="trackerSearchInput" class="form-input" placeholder="e.g. 03001234567 or 0001" onkeydown="if(event.key==='Enter') executeTrackerLookup()" />
+          <button type="button" class="btn btn-primary" onclick="executeTrackerLookup()">
+            <span>🔍</span> Find Records
+          </button>
+          <button type="button" class="btn btn-outline" onclick="clearTrackerLookup()" title="Clear and switch">
+            ↺ Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Container -->
+      <div id="trackerResults">
+        <div class="card" style="text-align: center; padding: 48px 20px;">
+          <div style="font-size: 3rem; margin-bottom: 12px;">📋</div>
+          <h3 style="font-family: 'Playfair Display', serif; color: var(--brown-dark); margin-bottom: 6px;">No Record Loaded</h3>
+          <p style="font-size: 0.85rem; color: var(--muted); max-width: 440px; margin: 0 auto 20px;">
+            Please enter your registered mobile number or Patient ID above to view your upcoming and past consultations.
+          </p>
+          <button class="btn btn-gold btn-sm" onclick="switchTab('book')">📅 Book a New Session</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= VIEW 4: SPIRITUAL NUMEROLOGY & ADHKAR ================= -->
+    <section class="view-panel" id="view-profile">
+      <div class="sec-head">
+        <div>
+          <h2>Spiritual Numerology &amp; Healing Adhkar</h2>
+          <p>Personalized Pythagorean &amp; Chaldean profile with bilingual insights &amp; prescribed Du'as</p>
+        </div>
+      </div>
+
+      <!-- Interactive Calculator Input -->
+      <div class="card">
+        <div class="form-label" style="margin-bottom: 12px;">Generate Numerology Profile</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="numCalcName" class="form-input" placeholder="e.g. Muhammad Farooq" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date of Birth (YYYY-MM-DD)</label>
+            <input type="date" id="numCalcDob" class="form-input" />
+          </div>
+          <div class="form-group" style="justify-content: flex-end;">
+            <button type="button" class="btn btn-primary" onclick="runNumerologyCalculation()">
+              <span>✨</span> Calculate Profile
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Numerology Tile Cards -->
+      <div id="numerologyReportContainer" style="display: none;">
+        <div class="num-cards-deck" id="numTilesDeck">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Detail Explanation Box with English / Urdu Toggle -->
+        <div class="num-detail-display" id="numDetailBox">
+          <div class="num-detail-header">
+            <div>
+              <h3 id="numDetailTitle" style="font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--brown-dark);">Life Path Meaning</h3>
+              <p id="numDetailSub" style="font-size: 0.78rem; color: var(--muted);">Click any card above to explore full traits</p>
+            </div>
+            <div class="lang-toggle-bar">
+              <button class="lang-toggle-btn active" id="btnLangEn" onclick="setNumLang('en')">English</button>
+              <button class="lang-toggle-btn" id="btnLangUr" onclick="setNumLang('ur')">اردو (Urdu)</button>
+            </div>
+          </div>
+          <div id="numDetailBody" style="font-size: 0.9rem; line-height: 1.7; color: var(--text);">
+            <!-- Body inserted by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Prescribed Ruqyah Duas & Adhkar Section -->
+      <div class="sec-head" style="margin-top: 32px;">
+        <div>
+          <h2>Prescribed Ruqyah &amp; Protection Du'as</h2>
+          <p>Authentic Adhkar from the Sunnah for physical and spiritual healing</p>
+        </div>
+        <button class="btn btn-gold btn-sm" onclick="openTasbeehModal()">
+          <span>📿</span> Open Dhikr Counter
+        </button>
+      </div>
+
+      <div class="adhkar-accordion" id="adhkarDeck">
+        <!-- Adhkar cards injected by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FLOATING / MODAL COMPONENTS ================= -->
+
+  <!-- 1. Digital Tasbeeh Counter Modal -->
+  <div class="modal-overlay" id="tasbeehModal" onclick="if(event.target===this) closeTasbeehModal()">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeTasbeehModal()">✕</button>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--brown-dark);">Digital Tasbeeh</h3>
+        <p style="font-size: 0.78rem; color: var(--muted);">Tap the circle to count your daily Adhkar</p>
+      </div>
+
+      <div class="tasbeeh-widget" style="box-shadow: none; padding: 10px 0; border: none; background: transparent;">
+        <div class="tasbeeh-dhikr-select">
+          <select id="tasbeehDhikrSelect" class="form-select" onchange="handleTasbeehDhikrChange()">
+            <option value="Astaghfirullah">أَسْتَغْفِرُ اللَّهَ (Astaghfirullah)</option>
+            <option value="SubhanAllah">سُبْحَانَ اللَّهِ (SubhanAllah)</option>
+            <option value="Alhamdulillah">الْحَمْدُ لِلَّهِ (Alhamdulillah)</option>
+            <option value="Allahu Akbar">اللَّهُ أَكْبَرُ (Allahu Akbar)</option>
+            <option value="La hawla wa la quwwata illa billah">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</option>
+            <option value="HasbunAllahu wa ni'mal wakeel">حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ</option>
+            <option value="Salawat">اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ</option>
+          </select>
+        </div>
+
+        <div class="tasbeeh-target-presets">
+          <button class="target-preset-btn active" id="preset33" onclick="setTasbeehTarget(33)">33</button>
+          <button class="target-preset-btn" id="preset100" onclick="setTasbeehTarget(100)">100</button>
+          <button class="target-preset-btn" id="presetFree" onclick="setTasbeehTarget(0)">Free Count</button>
+        </div>
+
+        <div class="tasbeeh-counter-display" id="tasbeehCounterBtn" onclick="incrementTasbeeh()">
+          <div class="tasbeeh-count-num" id="tasbeehCountNum">0</div>
+          <div class="tasbeeh-count-sub" id="tasbeehCountSub">Target: 33</div>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 14px;">
+          <button class="btn btn-outline btn-sm" onclick="resetTasbeeh()">↺ Reset Count</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Live Consultation Waiting Room Modal -->
+  <div class="waiting-room-modal" id="waitingRoomModal">
+    <div class="waiting-room-content">
+      <button class="modal-close-btn" onclick="closeWaitingRoom()">✕</button>
+      <div style="font-size: 2.5rem; margin-bottom: 8px;">🕊️</div>
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--brown-dark); margin-bottom: 6px;">
+        Consultation Room
+      </h3>
+      <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 18px;">
+        Appointment: <b id="waitRoomApptId">-</b> &middot; <span id="waitRoomPatientName">-</span>
+      </p>
+
+      <div style="background: var(--cream); border-radius: var(--radius); padding: 18px; margin-bottom: 20px; border: 1px solid var(--border);">
+        <div style="font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--gold-dark); letter-spacing: 0.06em;">
+          Time Remaining Until Session
+        </div>
+        <div id="waitRoomCountdown" style="font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 800; color: var(--brown-dark); margin: 8px 0;">
+          Calculating...
+        </div>
+        <p style="font-size: 0.78rem; color: var(--muted);">
+          Please ensure you have performed ablution (Wudu) and have drinking water at hand.
+        </p>
+      </div>
+
+      <div style="text-align: left; background: var(--card-muted); padding: 16px; border-radius: var(--radius-sm); margin-bottom: 20px; font-size: 0.8rem;">
+        <strong style="color: var(--brown-dark);">Checklist for Ruqyah:</strong>
+        <ul style="margin-left: 20px; margin-top: 6px; line-height: 1.6; color: var(--muted);">
+          <li>Perform 2 Raka'at Salatul Hajah if possible.</li>
+          <li>Find a quiet, clean room with minimal distractions.</li>
+          <li>Have a bottle of drinking water ready for Quranic recitation.</li>
+        </ul>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn btn-whatsapp" onclick="openClinicWhatsAppChat()">
+          <span>💬</span> Message Clinic Reception
+        </button>
+        <button class="btn btn-outline" onclick="closeWaitingRoom()">
+          Close Room
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Booking Confirmation Success Modal -->
+  <div class="modal-overlay" id="bookingSuccessModal">
+    <div class="modal-card" style="text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 10px;">🎉</div>
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--brown-dark); margin-bottom: 6px;">
+        Appointment Request Submitted!
+      </h3>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 18px;">
+        Your consultation has been recorded. To confirm your scheduled slot instantly, click below to send your pre-filled details to the Shifa-Ruqiyah Centre WhatsApp hotline:
+      </p>
+
+      <div style="background: var(--card-muted); border-radius: var(--radius-sm); padding: 14px; text-align: left; font-size: 0.8rem; margin-bottom: 20px; border-left: 3px solid var(--gold);">
+        <div>👤 <b>Patient:</b> <span id="succName">-</span> (ID: <span id="succPid">-</span>)</div>
+        <div>📅 <b>Date &amp; Time:</b> <span id="succDateTime">-</span></div>
+        <div>🛡️ <b>Session:</b> <span id="succService">-</span></div>
+        <div>💰 <b>Fee:</b> <span id="succFee">-</span></div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <a href="#" id="succWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-whatsapp" style="padding: 13px;">
+          <span>💬</span> Confirm via WhatsApp Now
+        </a>
+        <button type="button" class="btn btn-outline" onclick="dismissBookingSuccess()">
+          View in My Appointments
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-bottom-nav">
+    <button class="m-nav-item active" id="m-nav-home" onclick="switchTab('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="m-nav-item" id="m-nav-book" onclick="switchTab('book')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Book</span>
+    </button>
+    <button class="m-nav-item" id="m-nav-tracker" onclick="switchTab('tracker')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Tracker</span>
+    </button>
+    <button class="m-nav-item" id="m-nav-profile" onclick="switchTab('profile')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span>Spiritual</span>
+    </button>
+  </nav>
+
+  <!-- Toast Element -->
+  <div id="toast" role="alert"></div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* ================= 1. DATABASE & STORAGE INTEGRATION ================= */
+    // Synchronized with main PMS keys: 'air_patients', 'air_appts', 'air_counter'
+    const DB = {
+      patients: JSON.parse(localStorage.getItem('air_patients') || '[]'),
+      appts: JSON.parse(localStorage.getItem('air_appts') || '[]'),
+      counter: parseInt(localStorage.getItem('air_counter') || '0', 10)
+    };
+
+    function saveDB() {
+      localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+      localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+      localStorage.setItem('air_counter', String(DB.counter));
+    }
+
+    function reloadDB() {
+      DB.patients = JSON.parse(localStorage.getItem('air_patients') || '[]');
+      DB.appts = JSON.parse(localStorage.getItem('air_appts') || '[]');
+      DB.counter = parseInt(localStorage.getItem('air_counter') || '0', 10);
+    }
+
+    // Client session memory (remembers current phone/patient)
+    let ACTIVE_CLIENT = JSON.parse(localStorage.getItem('src_client_session') || 'null');
+    let ACTIVE_CURRENCY = localStorage.getItem('src_currency') || 'PKR';
+    let NUM_LANG = localStorage.getItem('air_numlang') || 'en';
+
+    /* ================= 2. SERVICES LIST ================= */
+    const SERVICES = [
+      {
+        id: "ruqyah-general",
+        name: "Ruqyah Shari'ah Diagnosis",
+        icon: "🛡️",
+        desc: "Comprehensive diagnostic assessment for physical and spiritual afflictions according to the Sunnah.",
+        duration: "60 mins",
+        feePKR: 3000,
+        feeUSD: 50
+      },
+      {
+        id: "sihr-jadu",
+        name: "Sihr & Jadu Removal",
+        icon: "🗡️",
+        desc: "Intensive spiritual treatment and Quranic neutralizing sessions for black magic and sorcery.",
+        duration: "75 mins",
+        feePKR: 4500,
+        feeUSD: 70
+      },
+      {
+        id: "nazar-hasad",
+        name: "Nazar & Evil Eye Cleansing",
+        icon: "👁️",
+        desc: "Specific spiritual healing and Quranic recitation for severe evil eye, envy, and unexplained heavy blockages.",
+        duration: "45 mins",
+        feePKR: 2500,
+        feeUSD: 40
+      },
+      {
+        id: "jinn-possession",
+        name: "Jinn & Waswas Relief",
+        icon: "🕊️",
+        desc: "Direct Quranic expulsion and psychological/spiritual stabilization for severe whisperings or touch.",
+        duration: "60 mins",
+        feePKR: 4000,
+        feeUSD: 65
+      },
+      {
+        id: "spiritual-numerology",
+        name: "Spiritual Numerology Deep Session",
+        icon: "🔢",
+        desc: "Detailed personal numerology study analyzing Life Path, Destiny, and harmonic alignments.",
+        duration: "45 mins",
+        feePKR: 3500,
+        feeUSD: 55
+      },
+      {
+        id: "relationship-healing",
+        name: "Marital & Relationship Guidance",
+        icon: "💍",
+        desc: "Spiritual evaluation and Istikhara guidance for household harmony, marital tension, and peace.",
+        duration: "60 mins",
+        feePKR: 3500,
+        feeUSD: 55
+      }
+    ];
+
+    /* ================= 3. NUMEROLOGY CORE ENGINE ================= */
+    const NUM = (function(){
+      const PYTH = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
+      const CHAL = {A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7};
+      const VOWELS = "AEIOU";
+
+      function isMaster(n){ return n===11||n===22||n===33; }
+      function reduce(n, keepMaster=true){
+        n = Math.abs(parseInt(n)||0);
+        while(n>9 && !(keepMaster && isMaster(n))){
+          n = String(n).split('').reduce((s,d)=>s+parseInt(d),0);
+        }
+        return n;
+      }
+      function lettersOf(str){ return (str||'').toUpperCase().replace(/[^A-Z]/g,''); }
+
+      function nameNumber(name, map){
+        let sum=0;
+        for(const ch of lettersOf(name)) sum += map[ch]||0;
+        return { total:sum, reduced:reduce(sum) };
+      }
+      function soulUrge(name, map){
+        let sum=0;
+        for(const ch of lettersOf(name)) if(VOWELS.includes(ch)) sum += map[ch]||0;
+        return reduce(sum);
+      }
+      function personality(name, map){
+        let sum=0;
+        for(const ch of lettersOf(name)) if(!VOWELS.includes(ch)) sum += map[ch]||0;
+        return reduce(sum);
+      }
+      function lifePath(dob){
+        if(!dob) return null;
+        const [y,m,d] = dob.split('-').map(Number);
+        if(!y||!m||!d) return null;
+        const rd = reduce(d), rm = reduce(m), ry = reduce(y);
+        const total = rd+rm+ry;
+        return { day:d, month:m, year:y, parts:{d:rd,m:rm,y:ry}, reduced:reduce(total) };
+      }
+      function birthdayNumber(dob){
+        if(!dob) return null;
+        const d = Number(dob.split('-')[2]);
+        if(!d) return null;
+        return { day:d, reduced:reduce(d) };
+      }
+
+      const MEAN = {
+        1:{title:"The Leader",traits:"Independent, pioneering, ambitious, strong-willed",strength:"Leadership, originality, determination",watch:"Ego, stubbornness, impatience",color:"Red / Gold",day:"Sunday",
+           title_ur:"قائد / رہنما",traits_ur:"خود مختار، پہل کرنے والا، بلند حوصلہ، مضبوط ارادہ",strength_ur:"قیادت، انفرادیت، عزم",watch_ur:"انا، ضد، بے صبری",color_ur:"سرخ / سنہری",day_ur:"اتوار"},
+        2:{title:"The Peacemaker",traits:"Cooperative, sensitive, diplomatic, caring",strength:"Harmony, intuition, partnership",watch:"Over-sensitivity, indecision",color:"White / Cream",day:"Monday",
+           title_ur:"صلح جو / امن پسند",traits_ur:"تعاون کرنے والا، حساس، سفارت کار، خیال رکھنے والا",strength_ur:"ہم آہنگی، بصیرت، شراکت داری",watch_ur:"حد سے زیادہ حساسیت، بے یقینی",color_ur:"سفید / کریم",day_ur:"پیر"},
+        3:{title:"The Communicator",traits:"Creative, expressive, joyful, social",strength:"Creativity, optimism, communication",watch:"Scattered focus, over-talkative",color:"Yellow",day:"Thursday",
+           title_ur:"بات چیت کرنے والا / اظہار پسند",traits_ur:"تخلیقی، اظہار خیال کرنے والا، خوش مزاج، ملنسار",strength_ur:"تخلیقی صلاحیت، رجائیت، گفتگو",watch_ur:"بکھری توجہ، حد سے زیادہ بولنا",color_ur:"پیلا",day_ur:"جمعرات"},
+        4:{title:"The Builder",traits:"Practical, disciplined, hardworking, reliable",strength:"Stability, order, dedication",watch:"Rigidity, over-work, stubbornness",color:"Green / Grey",day:"Saturday",
+           title_ur:"معمار / بنانے والا",traits_ur:"عملی، نظم و ضبط والا، محنتی، قابل اعتماد",strength_ur:"استحکام، ترتیب، لگن",watch_ur:"سختی، حد سے زیادہ کام، ضد",color_ur:"سبز / سرمئی",day_ur:"ہفتہ"},
+        5:{title:"The Free Spirit",traits:"Adventurous, versatile, curious, energetic",strength:"Freedom, adaptability, change",watch:"Restlessness, excess, impulsiveness",color:"Light Blue",day:"Wednesday",
+           title_ur:"آزاد طبیعت",traits_ur:"مہم جو، ہمہ جہت، متجسس، پُرجوش",strength_ur:"آزادی، لچک، تبدیلی",watch_ur:"بے چینی، زیادتی، جلد بازی",color_ur:"ہلکا نیلا",day_ur:"بدھ"},
+        6:{title:"The Nurturer",traits:"Responsible, loving, protective, home-oriented",strength:"Care, healing, responsibility",watch:"Over-giving, worry, interference",color:"Blue / Pink",day:"Friday",
+           title_ur:"پرورش کرنے والا / نگہبان",traits_ur:"ذمہ دار، محبت کرنے والا، حفاظت کرنے والا، گھریلو",strength_ur:"خیال رکھنا، شفا، ذمہ داری",watch_ur:"حد سے زیادہ دینا، فکر، مداخلت",color_ur:"نیلا / گلابی",day_ur:"جمعہ"},
+        7:{title:"The Seeker",traits:"Analytical, spiritual, wise, introspective",strength:"Wisdom, faith, deep thinking",watch:"Isolation, over-thinking, aloofness",color:"Purple / Violet",day:"Monday",
+           title_ur:"متلاشی / طالبِ حق",traits_ur:"تجزیہ کرنے والا، روحانی، دانا، خود شناس",strength_ur:"حکمت، ایمان، گہری سوچ",watch_ur:"تنہائی، حد سے زیادہ سوچنا، لاتعلقی",color_ur:"جامنی / بنفشی",day_ur:"پیر"},
+        8:{title:"The Achiever",traits:"Ambitious, powerful, goal-driven, authoritative",strength:"Success, management, strength",watch:"Materialism, control, stress",color:"Dark Blue / Black",day:"Saturday",
+           title_ur:"کامیاب / حاصل کرنے والا",traits_ur:"بلند حوصلہ، طاقتور، مقصد کی طرف بڑھنے والا، بااختیار",strength_ur:"کامیابی، انتظام، طاقت",watch_ur:"مادیت پرستی، قابو، تناؤ",color_ur:"گہرا نیلا / کالا",day_ur:"ہفتہ"},
+        9:{title:"The Humanitarian",traits:"Compassionate, generous, idealistic, wise",strength:"Service, forgiveness, universal love",watch:"Over-sacrifice, moodiness",color:"Crimson / Gold",day:"Tuesday",
+           title_ur:"انسان دوست / ہمدرد",traits_ur:"رحم دل، سخی، مثالی سوچ والا، دانا",strength_ur:"خدمت، معافی، عالمگیر محبت",watch_ur:"حد سے زیادہ قربانی، طبیعت کا بدلنا",color_ur:"گہرا سرخ / سنہری",day_ur:"منگل"},
+        11:{title:"The Intuitive (Master)",traits:"Visionary, inspired, highly intuitive, spiritual",strength:"Illumination, inspiration, insight",watch:"Nervous tension, extremes",color:"Silver",day:"Monday",
+           title_ur:"صاحبِ بصیرت (ماسٹر)",traits_ur:"دور اندیش، الہامی، نہایت بصیرت والا، روحانی",strength_ur:"روشنی، الہام، بصیرت",watch_ur:"اعصابی تناؤ، انتہا پسندی",color_ur:"چاندی",day_ur:"پیر"},
+        22:{title:"The Master Builder",traits:"Practical visionary, capable of great things",strength:"Building big dreams into reality",watch:"Pressure, self-doubt",color:"Coral",day:"Saturday",
+           title_ur:"ماسٹر معمار",traits_ur:"عملی دور اندیش، بڑے کام کرنے کے قابل",strength_ur:"بڑے خوابوں کو حقیقت بنانا",watch_ur:"دباؤ، خود پر شک",color_ur:"مرجانی (کورل)",day_ur:"ہفتہ"},
+        33:{title:"The Master Teacher",traits:"Selfless, healing, deeply compassionate",strength:"Healing, guidance, upliftment",watch:"Self-neglect, burden of others",color:"Turquoise",day:"Friday",
+           title_ur:"ماسٹر معلم / استاد",traits_ur:"بے غرض، شفا دینے والا، نہایت رحم دل",strength_ur:"شفا، رہنمائی، بلندی",watch_ur:"خود کو نظر انداز کرنا، دوسروں کا بوجھ",color_ur:"فیروزی",day_ur:"جمعہ"}
+      };
+
+      function meaning(n){ return MEAN[n] || MEAN[reduce(n)] || null; }
+
+      return { PYTH, CHAL, reduce, isMaster, nameNumber, soulUrge, personality, lifePath, birthdayNumber, meaning };
+    })();
+
+    /* ================= 4. AUTHENTIC ADHKAR LIST ================= */
+    const ADHKAR_LIST = [
+      {
+        title: "Ayat al-Kursi (The Throne Verse)",
+        category: "Supreme Protection",
+        arabic: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+        translit: "Allahu la ilaha illa Huwa, Al-Hayyul-Qayyum...",
+        meaning: "Allah! There is no deity except Him, the Ever-Living, the Sustainer of all existence. Neither drowsiness overtakes Him nor sleep...",
+        benefit: "Recite after every obligatory prayer and before sleeping for continuous angelic guardianship."
+      },
+      {
+        title: "Al-Mu'awwidhat (Surah Al-Ikhlas, Al-Falaq, An-Nas)",
+        category: "Daily Shifa & Shield",
+        arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ قُلْ أَعُوذُ بِرَبِّ النَّاسِ",
+        translit: "Qul Huwa Allahu Ahad... Qul A'udhu bi Rabbil-Falaq... Qul A'udhu bi Rabbin-Nas",
+        meaning: "Say: He is Allah, [who is] One... Say: I seek refuge in the Lord of daybreak... Say: I seek refuge in the Lord of mankind...",
+        benefit: "Recite 3 times morning and evening, cupping the hands, blowing, and wiping over the body."
+      },
+      {
+        title: "Du'a of Jibreel (A.S.) for Sickness & Evil Eye",
+        category: "Ruqyah Remedy",
+        arabic: "بِسْمِ اللَّهِ أَرْقِيكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيكَ، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ",
+        translit: "Bismillahi arqeek, min kulli shay'in yu'dheek, min sharri kulli nafsin aw 'ayni hasid, Allahu yashfeek, Bismillahi arqeek.",
+        meaning: "In the name of Allah I perform Ruqyah upon you, from everything that harms you, from the evil of every soul or envious eye. May Allah heal you.",
+        benefit: "Recited by Archangel Jibreel over Prophet Muhammad (ﷺ). Repeat 3 or 7 times over drinking water or olive oil."
+      },
+      {
+        title: "Complete Words of Allah against Shayateen",
+        category: "Black Magic Shield",
+        arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+        translit: "A'udhu bi kalimatil-lahit-tammati min sharri ma khalaq.",
+        meaning: "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+        benefit: "Whoever recites this 3 times in the evening will not be harmed by any poison, stings, or evil creations until morning."
+      }
+    ];
+
+    /* ================= 5. HELPER UTILITIES ================= */
+    const $ = id => document.getElementById(id);
+    const esc = s => (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    function toast(msg, isErr=false){
+      const t = $('toast');
+      t.textContent = msg;
+      t.className = isErr ? 'show err' : 'show';
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.className = '', 3000);
+    }
+
+    function todayISO(){
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    }
+
+    function fmtTime(t){
+      if(!t) return '';
+      const [h,m] = t.split(':').map(Number);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const h12 = h % 12 || 12;
+      return h12 + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+    }
+
+    function fmtDate(iso){
+      if(!iso) return '';
+      const parts = iso.split('-');
+      if(parts.length !== 3) return iso;
+      const d = new Date(parts[0], parts[1]-1, parts[2]);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function dialForCountry(name){
+      if(!name) return '92';
+      const low = name.toLowerCase().trim();
+      if(low.includes('pakistan')) return '92';
+      if(low.includes('united kingdom') || low === 'uk' || low.includes('britain')) return '44';
+      if(low.includes('united states') || low === 'usa' || low === 'us' || low.includes('canada')) return '1';
+      if(low.includes('emirates') || low === 'uae' || low.includes('dubai')) return '971';
+      if(low.includes('saudi')) return '966';
+      if(low.includes('india')) return '91';
+      return '92';
+    }
+
+    /* ================= 6. NAVIGATION & TABS ================= */
+    function switchTab(tabId){
+      document.querySelectorAll('.view-panel').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.m-nav-item').forEach(b => b.classList.remove('active'));
+
+      const target = $('view-' + tabId);
+      if(target) target.classList.add('active');
+
+      const dtBtn = $('tab-btn-' + tabId);
+      if(dtBtn) dtBtn.classList.add('active');
+
+      const mBtn = $('m-nav-' + tabId);
+      if(mBtn) mBtn.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if(tabId === 'tracker' && ACTIVE_CLIENT){
+        executeTrackerLookup(ACTIVE_CLIENT.mobile || ACTIVE_CLIENT.id);
+      }
+    }
+
+    /* ================= 7. BOOKING CALENDAR & SLOTS ================= */
+    let CAL_YEAR = new Date().getFullYear();
+    let CAL_MONTH = new Date().getMonth();
+    let SELECTED_DATE = todayISO();
+    const TIME_SLOTS = [
+      { start: "10:00", end: "11:00" },
+      { start: "11:30", end: "12:30" },
+      { start: "14:00", end: "15:00" },
+      { start: "15:30", end: "16:30" },
+      { start: "17:00", end: "18:00" },
+      { start: "18:30", end: "19:30" },
+      { start: "20:00", end: "21:00" }
+    ];
+
+    function initCalendar(){
+      renderCalendar();
+      selectDate(todayISO());
+    }
+
+    function prevMonth(){
+      CAL_MONTH--;
+      if(CAL_MONTH < 0){ CAL_MONTH = 11; CAL_YEAR--; }
+      renderCalendar();
+    }
+
+    function nextMonth(){
+      CAL_MONTH++;
+      if(CAL_MONTH > 11){ CAL_MONTH = 0; CAL_YEAR++; }
+      renderCalendar();
+    }
+
+    function renderCalendar(){
+      const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      $('calMonthTitle').textContent = months[CAL_MONTH] + ' ' + CAL_YEAR;
+
+      const firstDay = new Date(CAL_YEAR, CAL_MONTH, 1).getDay();
+      const totalDays = new Date(CAL_YEAR, CAL_MONTH + 1, 0).getDate();
+      const grid = $('calDaysGrid');
+      grid.innerHTML = '';
+
+      for(let i=0; i<firstDay; i++){
+        const empty = document.createElement('div');
+        empty.className = 'cal-day-cell empty';
+        grid.appendChild(empty);
+      }
+
+      const today = todayISO();
+
+      for(let d=1; d<=totalDays; d++){
+        const cell = document.createElement('div');
+        const iso = CAL_YEAR + '-' + String(CAL_MONTH+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+        cell.className = 'cal-day-cell';
+        cell.textContent = d;
+
+        if(iso < today){
+          cell.classList.add('disabled');
+        } else {
+          if(iso === today) cell.classList.add('today');
+          if(iso === SELECTED_DATE) cell.classList.add('selected');
+          cell.onclick = () => selectDate(iso);
+        }
+        grid.appendChild(cell);
+      }
+    }
+
+    function selectDate(iso){
+      SELECTED_DATE = iso;
+      $('selectedDate').value = iso;
+      const dObj = new Date(iso + 'T00:00:00');
+      $('selectedDateDisplay').textContent = dObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      renderCalendar();
+      renderTimeSlots(iso);
+      updateSummaryPreview();
+    }
+
+    function renderTimeSlots(dateIso){
+      reloadDB();
+      const grid = $('slotsGrid');
+      grid.innerHTML = '';
+
+      const bookedStarts = DB.appts
+        .filter(a => a.date === dateIso && a.status !== 'Cancelled')
+        .map(a => a.start);
+
+      let firstAvailable = null;
+
+      TIME_SLOTS.forEach((slot, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'time-slot-btn';
+        btn.textContent = fmtTime(slot.start);
+
+        const isBooked = bookedStarts.includes(slot.start);
+        if(isBooked){
+          btn.classList.add('booked');
+          btn.title = 'Slot already booked';
+        } else {
+          if(!firstAvailable) firstAvailable = slot;
+          if($('selectedTimeStart').value === slot.start){
+            btn.classList.add('selected');
+          }
+          btn.onclick = () => {
+            document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            $('selectedTimeStart').value = slot.start;
+            $('selectedTimeEnd').value = slot.end;
+            updateSummaryPreview();
+          };
+        }
+        grid.appendChild(btn);
+      });
+
+      // Default select first available if currently selected is booked
+      if(bookedStarts.includes($('selectedTimeStart').value) && firstAvailable){
+        $('selectedTimeStart').value = firstAvailable.start;
+        $('selectedTimeEnd').value = firstAvailable.end;
+        renderTimeSlots(dateIso);
+      }
+    }
+
+    /* ================= 8. SERVICES & SUMMARY ================= */
+    function renderServicesDeck(){
+      const deck = $('serviceDeck');
+      deck.innerHTML = '';
+
+      SERVICES.forEach(s => {
+        const box = document.createElement('div');
+        box.className = 'service-box' + (s.name === $('selectedService').value ? ' selected' : '');
+        const fee = ACTIVE_CURRENCY === 'USD' ? '$' + s.feeUSD : 'Rs. ' + s.feePKR.toLocaleString();
+
+        box.innerHTML = `
+          <div class="service-box-header">
+            <span class="service-box-icon">${s.icon}</span>
+            <div class="service-box-title">${esc(s.name)}</div>
+          </div>
+          <div class="service-box-desc">${esc(s.desc)}</div>
+          <div class="service-box-meta">
+            <span>⏱️ ${s.duration}</span>
+            <span>💰 ${fee}</span>
+          </div>
+        `;
+        box.onclick = () => {
+          document.querySelectorAll('.service-box').forEach(b => b.classList.remove('selected'));
+          box.classList.add('selected');
+          $('selectedService').value = s.name;
+          updateSummaryPreview();
+        };
+        deck.appendChild(box);
+      });
+    }
+
+    function setCurrency(cur){
+      ACTIVE_CURRENCY = cur;
+      localStorage.setItem('src_currency', cur);
+      $('curBtnPKR').classList.toggle('active', cur === 'PKR');
+      $('curBtnUSD').classList.toggle('active', cur === 'USD');
+      renderServicesDeck();
+      updateSummaryPreview();
+    }
+
+    function updateSummaryPreview(){
+      const sName = $('selectedService').value;
+      const sObj = SERVICES.find(x => x.name === sName) || SERVICES[0];
+      $('summaryServiceName').textContent = sObj.name;
+
+      const timeStr = fmtTime($('selectedTimeStart').value);
+      const dateStr = fmtDate($('selectedDate').value || todayISO());
+      $('summaryDateTime').textContent = dateStr + ' at ' + timeStr;
+
+      const fee = ACTIVE_CURRENCY === 'USD' ? '$' + sObj.feeUSD : 'Rs. ' + sObj.feePKR.toLocaleString();
+      $('summaryFeeAmount').textContent = fee;
+    }
+
+    function handleCountryInput(){
+      const val = $('custCountry').value;
+      const dial = dialForCountry(val);
+      $('dialCodeHint').textContent = '+' + dial;
+      if(val && !val.toLowerCase().includes('pakistan') && ACTIVE_CURRENCY === 'PKR'){
+        setCurrency('USD');
+      }
+    }
+
+    function handleNameDobChange(){
+      const name = $('custName').value.trim();
+      const d = $('custDobD').value.padStart(2,'0');
+      const m = $('custDobM').value;
+      const y = $('custDobY').value;
+
+      if(d && m && y && y.length === 4){
+        const iso = `${y}-${m}-${d}`;
+        const b = new Date(iso), n = new Date();
+        let age = n.getFullYear() - b.getFullYear();
+        if(n.getMonth() < b.getMonth() || (n.getMonth() === b.getMonth() && n.getDate() < b.getDate())) age--;
+
+        const lp = NUM.lifePath(iso);
+        $('liveAgeText').textContent = age + ' years old';
+        $('liveLifePathText').textContent = lp ? 'Path ' + lp.reduced : '-';
+        $('livePreviewBox').style.display = 'flex';
+      } else {
+        $('livePreviewBox').style.display = 'none';
+      }
+    }
+
+    /* ================= 9. BOOKING SUBMISSION & WHATSAPP ================= */
+    function handleBookingSubmit(e){
+      e.preventDefault();
+      const name = $('custName').value.trim();
+      const father = $('custFather').value.trim();
+      const mobile = $('custMobile').value.trim();
+      const country = $('custCountry').value.trim() || 'Pakistan';
+      const gender = $('custGender').value;
+      const notes = $('custNotes').value.trim();
+
+      const d = $('custDobD').value.padStart(2,'0');
+      const m = $('custDobM').value;
+      const y = $('custDobY').value;
+      const dob = (d && m && y && y.length===4) ? `${y}-${m}-${d}` : '';
+
+      const service = $('selectedService').value;
+      const sObj = SERVICES.find(x => x.name === service) || SERVICES[0];
+      const date = $('selectedDate').value || todayISO();
+      const start = $('selectedTimeStart').value || '10:00';
+      const end = $('selectedTimeEnd').value || '11:00';
+
+      if(!name || !mobile){
+        toast('Name and mobile number are required', true);
+        return;
+      }
+
+      reloadDB();
+
+      // Check slot clash
+      const clash = DB.appts.find(a => a.date === date && a.start === start && a.status !== 'Cancelled');
+      if(clash){
+        toast('Selected time slot was just booked. Please pick another slot.', true);
+        renderTimeSlots(date);
+        return;
+      }
+
+      // Check if patient exists by mobile or create new
+      let p = DB.patients.find(x => x.mobile.replace(/\D/g,'') === mobile.replace(/\D/g,''));
+      if(!p){
+        DB.counter++;
+        const newId = String(DB.counter).padStart(4,'0');
+        p = {
+          id: newId,
+          name: name,
+          father: father,
+          mobile: mobile,
+          country: country,
+          dob: dob,
+          gender: gender,
+          problem: service,
+          notes: notes,
+          registered: todayISO()
+        };
+        DB.patients.unshift(p);
+      } else {
+        // update basic fields
+        p.name = name;
+        if(father) p.father = father;
+        if(dob) p.dob = dob;
+      }
+
+      // Create appointment record
+      const fee = ACTIVE_CURRENCY === 'USD' ? sObj.feeUSD : sObj.feePKR;
+      const newApptId = 'APT-' + Date.now().toString(36).toUpperCase();
+      const newAppt = {
+        id: newApptId,
+        patientId: p.id,
+        date: date,
+        start: start,
+        end: end,
+        status: 'Confirmed',
+        fee: fee,
+        paid: 0,
+        payMethod: 'Cash / Direct',
+        notes: service + (notes ? ': ' + notes : ''),
+        created: Date.now()
+      };
+      DB.appts.unshift(newAppt);
+      saveDB();
+
+      // Save client session
+      ACTIVE_CLIENT = { id: p.id, name: p.name, mobile: p.mobile };
+      localStorage.setItem('src_client_session', JSON.stringify(ACTIVE_CLIENT));
+      updateClientChipUI();
+
+      // Formulate formatted WhatsApp text
+      const waText = encodeURIComponent(
+        `*SHIFA-RUQIYAH CENTRE - APPOINTMENT BOOKING*\n\n` +
+        `Assalam-o-Alaikum,\nI have scheduled a consultation on the SRC Patient Portal:\n\n` +
+        `👤 *Patient:* ${p.name}\n` +
+        `🆔 *Patient ID:* #${p.id}\n` +
+        `🛡️ *Service:* ${service}\n` +
+        `📅 *Date:* ${fmtDate(date)}\n` +
+        `⏰ *Time Slot:* ${fmtTime(start)} to ${fmtTime(end)}\n` +
+        `📍 *Country:* ${country}\n` +
+        `💰 *Estimated Fee:* ${ACTIVE_CURRENCY === 'USD' ? '$' + fee : 'Rs. ' + fee}\n` +
+        (notes ? `📝 *Concern:* ${notes}\n` : '') +
+        `\nPlease confirm reception and session preparation instructions. JazakAllah Khair.`
+      );
+
+      const clinicWaNumber = '923000000000'; // Clinic reception hotline
+      const waUrl = `https://wa.me/${clinicWaNumber}?text=${waText}`;
+
+      // Populate Success Modal
+      $('succName').textContent = p.name;
+      $('succPid').textContent = p.id;
+      $('succDateTime').textContent = `${fmtDate(date)} at ${fmtTime(start)}`;
+      $('succService').textContent = service;
+      $('succFee').textContent = ACTIVE_CURRENCY === 'USD' ? '$' + fee : 'Rs. ' + fee;
+      $('succWhatsAppBtn').href = waUrl;
+
+      $('bookingSuccessModal').classList.add('active');
+      toast('Appointment booked successfully! ✓');
+    }
+
+    function dismissBookingSuccess(){
+      $('bookingSuccessModal').classList.remove('active');
+      switchTab('tracker');
+    }
+
+    /* ================= 10. CLIENT LOOKUP & TRACKER ================= */
+    function promptClientLogin(){
+      const val = prompt('Enter your registered Mobile Number or 4-digit Patient ID:', ACTIVE_CLIENT ? ACTIVE_CLIENT.mobile : '');
+      if(val){
+        executeTrackerLookup(val.trim());
+        switchTab('tracker');
+      }
+    }
+
+    function updateClientChipUI(){
+      if(ACTIVE_CLIENT){
+        $('clientChipName').textContent = ACTIVE_CLIENT.name + ` (#${ACTIVE_CLIENT.id})`;
+        $('clientDot').style.background = 'var(--green)';
+      } else {
+        $('clientChipName').textContent = 'Lookup Patient';
+        $('clientDot').style.background = 'var(--gold)';
+      }
+      renderActiveApptBanner();
+    }
+
+    function executeTrackerLookup(query){
+      reloadDB();
+      const q = (query || $('trackerSearchInput').value || '').trim();
+      if(!q){
+        toast('Please enter a mobile number or Patient ID', true);
+        return;
+      }
+
+      const cleanQ = q.replace(/\D/g, '');
+      const p = DB.patients.find(x => x.id === q || (cleanQ && x.mobile.replace(/\D/g, '').includes(cleanQ)));
+
+      if(!p){
+        $('trackerResults').innerHTML = `
+          <div class="card" style="text-align: center; padding: 40px 20px;">
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">🔍</div>
+            <h3 style="color: var(--brown-dark);">No Patient Found</h3>
+            <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 16px;">
+              No record matches "${esc(q)}". If this is your first visit, you can register by scheduling a session.
+            </p>
+            <button class="btn btn-gold btn-sm" onclick="switchTab('book')">📅 Book Appointment Now</button>
+          </div>
+        `;
+        return;
+      }
+
+      // Remember as active client
+      ACTIVE_CLIENT = { id: p.id, name: p.name, mobile: p.mobile };
+      localStorage.setItem('src_client_session', JSON.stringify(ACTIVE_CLIENT));
+      updateClientChipUI();
+
+      // Find all appointments for this patient
+      const appts = DB.appts.filter(a => a.patientId === p.id);
+
+      renderTrackerResultsUI(p, appts);
+    }
+
+    function clearTrackerLookup(){
+      ACTIVE_CLIENT = null;
+      localStorage.removeItem('src_client_session');
+      $('trackerSearchInput').value = '';
+      updateClientChipUI();
+      $('trackerResults').innerHTML = `
+        <div class="card" style="text-align: center; padding: 48px 20px;">
+          <div style="font-size: 3rem; margin-bottom: 12px;">📋</div>
+          <h3 style="font-family: 'Playfair Display', serif; color: var(--brown-dark); margin-bottom: 6px;">No Record Loaded</h3>
+          <p style="font-size: 0.85rem; color: var(--muted); max-width: 440px; margin: 0 auto 20px;">
+            Please enter your registered mobile number or Patient ID above to view your upcoming and past consultations.
+          </p>
+          <button class="btn btn-gold btn-sm" onclick="switchTab('book')">📅 Book a New Session</button>
+        </div>
+      `;
+    }
+
+    function renderTrackerResultsUI(p, appts){
+      let html = `
+        <div class="card card-gold-edge" style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: var(--gold-dark); text-transform: uppercase;">Verified Patient Profile</span>
+              <h3 style="font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--brown-dark);">${esc(p.name)}</h3>
+              <p style="font-size: 0.8rem; color: var(--muted);">ID: <b>#${p.id}</b> &middot; Mobile: <b>${esc(p.mobile)}</b> &middot; Country: <b>${esc(p.country||'Pakistan')}</b></p>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="prefillNumerology('${esc(p.name)}', '${p.dob||''}')">
+              <span>🔮</span> View Spiritual Numerology
+            </button>
+          </div>
+        </div>
+      `;
+
+      if(!appts.length){
+        html += `
+          <div class="card" style="text-align: center; padding: 30px;">
+            <p style="color: var(--muted);">No appointments booked under this patient record yet.</p>
+            <button class="btn btn-gold btn-sm" style="margin-top: 12px;" onclick="switchTab('book')">📅 Book First Session</button>
+          </div>
+        `;
+      } else {
+        html += `<div class="appt-list">`;
+        appts.forEach(a => {
+          const badgeCls = 'badge-' + (a.status||'pending').toLowerCase();
+          const cardCls = 'status-' + (a.status||'pending').toLowerCase();
+          const bal = Math.max(0, (a.fee||0) - (a.paid||0));
+
+          html += `
+            <div class="appt-item-card ${cardCls}">
+              <div class="appt-status-ribbon"></div>
+              <div class="appt-item-top">
+                <div>
+                  <span style="font-size: 0.72rem; color: var(--muted); font-weight: 700;">APPOINTMENT REF: ${a.id}</span>
+                  <h4 style="font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--brown-dark); margin-top: 2px;">
+                    ${esc(a.notes || 'Ruqyah Consultation')}
+                  </h4>
+                </div>
+                <span class="appt-badge ${badgeCls}">● ${esc(a.status || 'Confirmed')}</span>
+              </div>
+
+              <div class="appt-details-grid">
+                <div class="appt-detail-item">
+                  <span class="lbl">Date</span>
+                  <span class="val">📅 ${fmtDate(a.date)}</span>
+                </div>
+                <div class="appt-detail-item">
+                  <span class="lbl">Time Slot</span>
+                  <span class="val">⏰ ${fmtTime(a.start)} - ${fmtTime(a.end)}</span>
+                </div>
+                <div class="appt-detail-item">
+                  <span class="lbl">Total Fee</span>
+                  <span class="val">${a.fee ? a.fee : 'Standard'}</span>
+                </div>
+                <div class="appt-detail-item">
+                  <span class="lbl">Payment Status</span>
+                  <span class="val" style="color: ${bal === 0 ? 'var(--green)' : 'var(--gold-dark)'};">
+                    ${bal === 0 ? 'Paid ✓' : 'Due on Arrival'}
+                  </span>
+                </div>
+              </div>
+
+              <div class="appt-actions-bar">
+                <button class="btn btn-outline btn-sm" onclick="openWaitingRoom('${a.id}', '${esc(p.name)}', '${a.date}', '${a.start}')">
+                  <span>🕊️</span> Waiting Room &amp; Countdown
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="printApptSlip('${a.id}')">
+                  <span>🖨️</span> Print Slip
+                </button>
+                <button class="btn btn-whatsapp btn-sm" onclick="openWaApptInquiry('${a.id}', '${esc(p.name)}', '${a.date}', '${a.start}')">
+                  <span>💬</span> WhatsApp Query
+                </button>
+              </div>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      }
+
+      $('trackerResults').innerHTML = html;
+    }
+
+    /* ================= 11. ACTIVE UPCOMING APPOINTMENT BANNER ================= */
+    function renderActiveApptBanner(){
+      const container = $('activeApptBannerContainer');
+      if(!ACTIVE_CLIENT){
+        container.innerHTML = '';
+        return;
+      }
+
+      reloadDB();
+      const today = todayISO();
+      // Find upcoming appointment
+      const upcoming = DB.appts
+        .filter(a => a.patientId === ACTIVE_CLIENT.id && a.date >= today && a.status !== 'Cancelled')
+        .sort((a,b) => (a.date + a.start).localeCompare(b.date + b.start))[0];
+
+      if(!upcoming){
+        container.innerHTML = '';
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="active-appt-banner">
+          <div class="active-appt-lead">
+            <div class="active-pulse-circle">⏰</div>
+            <div class="active-appt-info">
+              <h4>Upcoming Session Scheduled</h4>
+              <p>${esc(upcoming.notes || 'Ruqyah Session')} on <b>${fmtDate(upcoming.date)}</b> at <b>${fmtTime(upcoming.start)}</b></p>
+              <div class="active-countdown-tag" id="homeCountdownTag">
+                ⏳ Starts soon
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-gold btn-sm" onclick="openWaitingRoom('${upcoming.id}', '${esc(ACTIVE_CLIENT.name)}', '${upcoming.date}', '${upcoming.start}')">
+              <span>🕊️</span> Enter Waiting Room
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="switchTab('tracker')">
+              Details
+            </button>
+          </div>
+        </div>
+      `;
+
+      updateCountdownDisplay(upcoming.date, upcoming.start, 'homeCountdownTag');
+    }
+
+    function updateCountdownDisplay(dateStr, timeStr, elementId){
+      const el = $(elementId);
+      if(!el) return;
+
+      const target = new Date(`${dateStr}T${timeStr}:00`).getTime();
+      const now = Date.now();
+      const diff = target - now;
+
+      if(diff <= 0){
+        el.innerHTML = `🟢 <b>Session Time is Active</b>`;
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+      let str = '⏳ ';
+      if(days > 0) str += `${days}d `;
+      str += `${hours}h ${mins}m remaining`;
+      el.textContent = str;
+    }
+
+    /* ================= 12. WAITING ROOM MODAL ================= */
+    let waitInterval = null;
+    function openWaitingRoom(apptId, patName, dateStr, timeStr){
+      $('waitRoomApptId').textContent = apptId;
+      $('waitRoomPatientName').textContent = patName;
+      $('waitingRoomModal').classList.add('active');
+
+      clearInterval(waitInterval);
+      const updateTimer = () => {
+        const target = new Date(`${dateStr}T${timeStr}:00`).getTime();
+        const now = Date.now();
+        const diff = target - now;
+
+        if(diff <= 0){
+          $('waitRoomCountdown').innerHTML = `<span style="color: var(--green);">Session is Live!</span>`;
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        $('waitRoomCountdown').textContent = 
+          (days > 0 ? days + 'd ' : '') + 
+          String(hours).padStart(2,'0') + ':' + 
+          String(mins).padStart(2,'0') + ':' + 
+          String(secs).padStart(2,'0');
+      };
+
+      updateTimer();
+      waitInterval = setInterval(updateTimer, 1000);
+    }
+
+    function closeWaitingRoom(){
+      clearInterval(waitInterval);
+      $('waitingRoomModal').classList.remove('active');
+    }
+
+    function openClinicWhatsAppChat(){
+      window.open('https://wa.me/923000000000', '_blank');
+    }
+
+    function openWaApptInquiry(apptId, name, date, time){
+      const text = encodeURIComponent(`Assalam-o-Alaikum, I have an inquiry regarding my appointment ${apptId} for ${name} on ${fmtDate(date)} at ${fmtTime(time)}.`);
+      window.open(`https://wa.me/923000000000?text=${text}`, '_blank');
+    }
+
+    function printApptSlip(apptId){
+      reloadDB();
+      const a = DB.appts.find(x => x.id === apptId);
+      if(!a) return;
+      const p = DB.patients.find(x => x.id === a.patientId);
+
+      const w = window.open('', '_blank');
+      w.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Appointment Slip - ${a.id}</title>
+          <style>
+            body { font-family: 'Segoe UI', Tahoma, sans-serif; padding: 40px; color: #222; }
+            .slip-box { max-width: 600px; margin: 0 auto; border: 2px solid #7c5339; border-radius: 12px; padding: 24px; }
+            .head { text-align: center; border-bottom: 2px solid #eee; padding-bottom: 14px; margin-bottom: 18px; }
+            .head h2 { margin: 0; color: #3d281d; font-family: Georgia, serif; }
+            .head p { margin: 4px 0 0; color: #777; font-size: 13px; }
+            .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
+            .row b { color: #3d281d; }
+            .note { margin-top: 20px; font-size: 12px; color: #666; line-height: 1.5; background: #faf8f5; padding: 10px; border-radius: 6px; }
+          </style>
+        </head>
+        <body>
+          <div class="slip-box">
+            <div class="head">
+              <h2>SHIFA-RUQIYAH CENTRE</h2>
+              <p>Official Patient Consultation Slip</p>
+            </div>
+            <div class="row"><span>Appointment ID:</span><b>${a.id}</b></div>
+            <div class="row"><span>Patient Name:</span><b>${p ? p.name : '-'} (ID: #${a.patientId})</b></div>
+            <div class="row"><span>Contact:</span><b>${p ? p.mobile : '-'}</b></div>
+            <div class="row"><span>Session Type:</span><b>${a.notes || 'Ruqyah Consultation'}</b></div>
+            <div class="row"><span>Date:</span><b>${fmtDate(a.date)}</b></div>
+            <div class="row"><span>Time Slot:</span><b>${fmtTime(a.start)} to ${fmtTime(a.end)}</b></div>
+            <div class="row"><span>Status:</span><b>${a.status}</b></div>
+            <div class="row"><span>Session Fee:</span><b>${a.fee ? a.fee : 'Standard'}</b></div>
+            <div class="note">
+              <strong>Instructions:</strong> Please arrive or connect 10 minutes prior to your allocated time slot in a state of purity (Wudu). Punctuality is strictly enforced.
+            </div>
+          </div>
+          <script>window.onload = function(){ window.print(); };<\/script>
+        </body>
+        </html>
+      `);
+      w.document.close();
+    }
+
+    /* ================= 13. NUMEROLOGY GENERATOR & REPORT ================= */
+    let CURRENT_NUM_PROFILE = null;
+    let ACTIVE_NUM_TILE = 'lifePath';
+
+    function prefillNumerology(name, dob){
+      $('numCalcName').value = name;
+      $('numCalcDob').value = dob;
+      switchTab('profile');
+      runNumerologyCalculation();
+    }
+
+    function runNumerologyCalculation(){
+      const name = $('numCalcName').value.trim();
+      const dob = $('numCalcDob').value;
+
+      if(!name && !dob){
+        toast('Please enter a name or date of birth', true);
+        return;
+      }
+
+      const lp = NUM.lifePath(dob);
+      const bd = NUM.birthdayNumber(dob);
+      const pythName = NUM.nameNumber(name, NUM.PYTH);
+      const chalName = NUM.nameNumber(name, NUM.CHAL);
+      const soul = NUM.soulUrge(name, NUM.PYTH);
+
+      CURRENT_NUM_PROFILE = {
+        name, dob, lp, bd, pythName, chalName, soul
+      };
+
+      const deck = $('numTilesDeck');
+      deck.innerHTML = `
+        <div class="num-card-tile selected" id="tile-lifePath" onclick="selectNumTile('lifePath')">
+          <div class="num-badge-title">Life Path Number</div>
+          <div class="num-big-digit">${lp ? lp.reduced : '-'}</div>
+          <div class="num-sub-meaning">${lp ? (NUM.meaning(lp.reduced) ? NUM.meaning(lp.reduced).title : 'Insight') : 'Requires DOB'}</div>
+        </div>
+
+        <div class="num-card-tile" id="tile-destiny" onclick="selectNumTile('destiny')">
+          <div class="num-badge-title">Destiny (Pythagorean)</div>
+          <div class="num-big-digit">${pythName.reduced || '-'}</div>
+          <div class="num-sub-meaning">${NUM.meaning(pythName.reduced) ? NUM.meaning(pythName.reduced).title : 'Expression'}</div>
+        </div>
+
+        <div class="num-card-tile" id="tile-chaldean" onclick="selectNumTile('chaldean')">
+          <div class="num-badge-title">Chaldean Vibration</div>
+          <div class="num-big-digit">${chalName.reduced || '-'}</div>
+          <div class="num-sub-meaning">${NUM.meaning(chalName.reduced) ? NUM.meaning(chalName.reduced).title : 'Sound Power'}</div>
+        </div>
+
+        <div class="num-card-tile" id="tile-soul" onclick="selectNumTile('soul')">
+          <div class="num-badge-title">Soul Urge (Vowels)</div>
+          <div class="num-big-digit">${soul || '-'}</div>
+          <div class="num-sub-meaning">Inner Longing</div>
+        </div>
+      `;
+
+      $('numerologyReportContainer').style.display = 'block';
+      selectNumTile('lifePath');
+    }
+
+    function selectNumTile(tileId){
+      ACTIVE_NUM_TILE = tileId;
+      document.querySelectorAll('.num-card-tile').forEach(t => t.classList.remove('selected'));
+      const activeTile = $('tile-' + tileId);
+      if(activeTile) activeTile.classList.add('selected');
+
+      renderNumDetailText();
+    }
+
+    function setNumLang(lang){
+      NUM_LANG = lang;
+      localStorage.setItem('air_numlang', lang);
+      $('btnLangEn').classList.toggle('active', lang === 'en');
+      $('btnLangUr').classList.toggle('active', lang === 'ur');
+      renderNumDetailText();
+    }
+
+    function renderNumDetailText(){
+      if(!CURRENT_NUM_PROFILE) return;
+      let targetDigit = 1;
+      let label = 'Life Path';
+
+      if(ACTIVE_NUM_TILE === 'lifePath'){
+        targetDigit = CURRENT_NUM_PROFILE.lp ? CURRENT_NUM_PROFILE.lp.reduced : 1;
+        label = 'Life Path';
+      } else if(ACTIVE_NUM_TILE === 'destiny'){
+        targetDigit = CURRENT_NUM_PROFILE.pythName ? CURRENT_NUM_PROFILE.pythName.reduced : 1;
+        label = 'Destiny & Purpose';
+      } else if(ACTIVE_NUM_TILE === 'chaldean'){
+        targetDigit = CURRENT_NUM_PROFILE.chalName ? CURRENT_NUM_PROFILE.chalName.reduced : 1;
+        label = 'Chaldean Vibration';
+      } else if(ACTIVE_NUM_TILE === 'soul'){
+        targetDigit = CURRENT_NUM_PROFILE.soul || 1;
+        label = 'Soul Urge';
+      }
+
+      const m = NUM.meaning(targetDigit);
+      if(!m) return;
+
+      if(NUM_LANG === 'ur'){
+        $('numDetailTitle').textContent = `${label} نمبر: ${targetDigit} - ${m.title_ur}`;
+        $('numDetailSub').textContent = `خصوصیات اور روحانی ہم آہنگی`;
+        $('numDetailBody').innerHTML = `
+          <div style="direction: rtl; text-align: right; font-family: 'Amiri', serif; font-size: 1.15rem; line-height: 1.9;">
+            <p><b>اہم اوصاف:</b> ${m.traits_ur}</p>
+            <p style="margin-top: 8px;"><b>قوت و شفا:</b> ${m.strength_ur}</p>
+            <p style="margin-top: 8px;"><b>احتیاط و تدابیر:</b> ${m.watch_ur}</p>
+            <p style="margin-top: 8px;"><b>مبارک رنگ:</b> ${m.color_ur} &middot; <b>مبارک دن:</b> ${m.day_ur}</p>
+          </div>
+        `;
+      } else {
+        $('numDetailTitle').textContent = `${label} Number ${targetDigit}: ${m.title}`;
+        $('numDetailSub').textContent = `Spiritual archetype and vibrational traits`;
+        $('numDetailBody').innerHTML = `
+          <p><b>Key Qualities:</b> ${m.traits}</p>
+          <p style="margin-top: 6px;"><b>Core Strengths:</b> ${m.strength}</p>
+          <p style="margin-top: 6px;"><b>Points to Balance:</b> ${m.watch}</p>
+          <div style="margin-top: 12px; padding: 10px; background: var(--cream); border-radius: var(--radius-sm); font-size: 0.82rem; display: flex; gap: 16px; flex-wrap: wrap;">
+            <span>🎨 <b>Harmonic Color:</b> ${m.color}</span>
+            <span>☀️ <b>Beneficial Day:</b> ${m.day}</span>
+          </div>
+        `;
+      }
+    }
+
+    /* ================= 14. ADHKAR ACCORDION RENDER ================= */
+    function renderAdhkarList(){
+      const deck = $('adhkarDeck');
+      deck.innerHTML = '';
+
+      ADHKAR_LIST.forEach((a, idx) => {
+        const card = document.createElement('div');
+        card.className = 'adhkar-card';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--brown-dark);">${a.title}</h4>
+            <span style="font-size: 0.72rem; font-weight: 700; color: var(--gold-dark); background: var(--gold-light); padding: 2px 8px; border-radius: 12px;">
+              ${a.category}
+            </span>
+          </div>
+          <div class="adhkar-arabic">${a.arabic}</div>
+          <div class="adhkar-translit">${a.translit}</div>
+          <div class="adhkar-meaning">"${a.meaning}"</div>
+          <div class="adhkar-meta">
+            <span>💡 <b>Benefit:</b> ${a.benefit}</span>
+            <button class="btn btn-outline btn-sm" onclick="setTasbeehDhikrText('${esc(a.title)}'); openTasbeehModal();">
+              📿 Count on Tasbeeh
+            </button>
+          </div>
+        `;
+        deck.appendChild(card);
+      });
+    }
+
+    /* ================= 15. DIGITAL TASBEEH MODAL ================= */
+    let TASBEEH_COUNT = 0;
+    let TASBEEH_TARGET = 33;
+
+    function openTasbeehModal(){
+      $('tasbeehModal').classList.add('active');
+    }
+
+    function closeTasbeehModal(){
+      $('tasbeehModal').classList.remove('active');
+    }
+
+    function incrementTasbeeh(){
+      TASBEEH_COUNT++;
+      $('tasbeehCountNum').textContent = TASBEEH_COUNT;
+
+      if(navigator.vibrate){
+        navigator.vibrate(25);
+      }
+
+      if(TASBEEH_TARGET > 0 && TASBEEH_COUNT >= TASBEEH_TARGET){
+        if(navigator.vibrate) navigator.vibrate([60, 40, 60]);
+        toast(`MashaAllah! Target ${TASBEEH_TARGET} reached ✓`);
+      }
+    }
+
+    function resetTasbeeh(){
+      TASBEEH_COUNT = 0;
+      $('tasbeehCountNum').textContent = '0';
+    }
+
+    function setTasbeehTarget(target){
+      TASBEEH_TARGET = target;
+      $('preset33').classList.toggle('active', target === 33);
+      $('preset100').classList.toggle('active', target === 100);
+      $('presetFree').classList.toggle('active', target === 0);
+      $('tasbeehCountSub').textContent = target > 0 ? `Target: ${target}` : 'Free Count';
+    }
+
+    function handleTasbeehDhikrChange(){
+      resetTasbeeh();
+    }
+
+    function setTasbeehDhikrText(txt){
+      // optional custom label
+    }
+
+    /* ================= 16. INITIALIZATION ================= */
+    window.addEventListener('DOMContentLoaded', () => {
+      initCalendar();
+      renderServicesDeck();
+      renderAdhkarList();
+      updateClientChipUI();
+
+      if(ACTIVE_CLIENT){
+        $('trackerSearchInput').value = ACTIVE_CLIENT.mobile || ACTIVE_CLIENT.id;
+      }
+
+      // Hash route listener
+      const handleHash = () => {
+        const h = (window.location.hash || '').replace('#', '');
+        if(['home', 'book', 'tracker', 'profile'].includes(h)){
+          switchTab(h);
+        }
+      };
+      window.addEventListener('hashchange', handleHash);
+      if(window.location.hash) handleHash();
+    });
+  </script>
+</body>
+</html>

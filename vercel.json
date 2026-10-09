@@ -1,6 +1,10 @@
 {
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/customer", "destination": "/customer-panel/index.html" },
+    { "source": "/customer-panel", "destination": "/customer-panel/index.html" },
+    { "source": "/portal", "destination": "/customer-panel/index.html" },
+    { "source": "/app", "destination": "/customer-panel/index.html" },
     { "source": "/shifa-ruqiyah-center", "destination": "/index.html" },
     { "source": "/shifa-ruqiyah-centre", "destination": "/index.html" },
     { "source": "/air-patient-management-system", "destination": "/index.html" },
