@@ -16,7 +16,7 @@
  <title>Shifa-Ruqiyah Centre | Customer & Patient Portal</title>
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Noto+Naskh+Arabic:wght@400;600;700&family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Noto+Naskh+Arabic:wght@400;600;700&family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
  <style>
  :root {
  --brown-dark: #301f16;
@@ -1491,6 +1491,202 @@
     }
   }
 
+
+/* ================= URDU & RTL MULTILINGUAL SYSTEM ================= */
+html[lang="ur"] {
+  direction: rtl;
+}
+html[lang="ur"] body {
+  direction: rtl;
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', Tahoma, system-ui, sans-serif;
+}
+html[lang="ur"] .portal-header .brand-wrap {
+  direction: rtl;
+}
+html[lang="ur"] .portal-header .nav-tabs-desktop {
+  direction: rtl;
+}
+html[lang="ur"] .mobile-bottom-nav {
+  direction: rtl;
+}
+html[lang="ur"] .sec-head {
+  text-align: right;
+}
+html[lang="ur"] .sec-head h2 {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', 'Playfair Display', serif;
+  line-height: 1.8;
+}
+html[lang="ur"] .features-grid, html[lang="ur"] .form-grid {
+  direction: rtl;
+}
+html[lang="ur"] .feature-card {
+  text-align: right;
+}
+html[lang="ur"] .feature-card h3 {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', serif;
+  line-height: 1.7;
+}
+html[lang="ur"] .feature-card p {
+  line-height: 1.8;
+  font-size: 0.86rem;
+}
+html[lang="ur"] .card-cta {
+  justify-content: flex-start;
+}
+html[lang="ur"] .form-label {
+  text-align: right;
+  direction: rtl;
+  font-size: 0.86rem;
+}
+html[lang="ur"] .form-input, html[lang="ur"] .form-select, html[lang="ur"] .form-textarea {
+  text-align: right;
+  direction: rtl;
+  font-family: inherit;
+}
+html[lang="ur"] .form-input::placeholder, html[lang="ur"] .form-textarea::placeholder {
+  text-align: right;
+  direction: rtl;
+  font-family: inherit;
+}
+html[lang="ur"] input[type="tel"],
+html[lang="ur"] input[type="number"],
+html[lang="ur"] input[type="time"],
+html[lang="ur"] input[type="date"],
+html[lang="ur"] .ltr-val,
+html[lang="ur"] .code-badge,
+html[lang="ur"] .phone-display,
+html[lang="ur"] code {
+  direction: ltr !important;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+html[lang="ur"] .hero-title {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', 'Playfair Display', serif;
+  line-height: 1.7;
+  font-size: 2.1rem;
+}
+html[lang="ur"] .hero-subtitle {
+  line-height: 1.9;
+  font-size: 0.98rem;
+}
+html[lang="ur"] .hero-actions {
+  direction: rtl;
+  justify-content: flex-start;
+}
+html[lang="ur"] .service-box {
+  text-align: right;
+}
+html[lang="ur"] .service-box-title {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+html[lang="ur"] .service-box-desc {
+  line-height: 1.75;
+  font-size: 0.82rem;
+}
+html[lang="ur"] .service-box-meta {
+  direction: rtl;
+}
+html[lang="ur"] .fee-summary-card .fee-row {
+  direction: rtl;
+}
+html[lang="ur"] .cal-month-title {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', sans-serif;
+}
+html[lang="ur"] .strip-title {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', serif;
+}
+html[lang="ur"] .strip-cat-tag {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', sans-serif;
+}
+html[lang="ur"] .adhkar-filter-pill {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', Tahoma, sans-serif;
+}
+
+/* Language Switcher Pill in Header */
+.lang-switcher-pill {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1.5px solid rgba(197, 155, 39, 0.42);
+  border-radius: 999px;
+  padding: 2px;
+  gap: 2px;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(48, 31, 22, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.lang-switcher-btn {
+  background: transparent;
+  border: none;
+  color: var(--brown-dark);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.lang-switcher-btn.active {
+  background: var(--gold-dark);
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(140, 106, 17, 0.3);
+}
+.lang-switcher-btn[data-lang="ur"] {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', Tahoma, sans-serif;
+  font-size: 0.84rem;
+  padding: 1px 9px 3px 9px;
+}
+
+
+/* Hero & Mobile Prominent Language Switcher */
+.hero-lang-switch-box {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 16px 0;
+}
+.hero-lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--brown-dark);
+  border: 1.5px solid var(--gold);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(48, 31, 22, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+}
+.hero-lang-toggle-btn:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(197, 155, 39, 0.28);
+  border-color: var(--gold-dark);
+}
+.hero-lang-toggle-btn .globe-ico {
+  font-size: 1.1rem;
+}
+.lang-switcher-pill {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid var(--gold) !important;
+  box-shadow: 0 2px 10px rgba(48, 31, 22, 0.12) !important;
+  padding: 3px !important;
+}
+.lang-switcher-btn {
+  font-size: 0.82rem !important;
+  padding: 4px 12px !important;
+}
+
 </style>
 </head>
 <body>
@@ -1504,10 +1700,10 @@
  <img src="../logo/src-logo.webp" onerror="this.onerror=null;this.src='../logo/src-logo-256.png'" alt="Shifa-Ruqiyah Centre Emblem">
  </div>
  <div class="brand-titles">
- <h1>SHIFA-RUQIYAH CENTRE</h1>
+ <h1 data-i18n="brand_title">SHIFA-RUQIYAH CENTRE</h1>
  <p>
- <span>Al-Qur'an &amp; Sunnah</span>
- <span class="portal-pill">Patient Portal</span>
+ <span data-i18n="brand_sub">Al-Qur'an &amp; Sunnah</span>
+ <span class="portal-pill" data-i18n="brand_pill">Patient Portal</span>
  </p>
  </div>
  </a>
@@ -1515,27 +1711,31 @@
  <!-- Desktop Tabs Navigation -->
  <nav class="nav-tabs-desktop" role="tablist">
  <button class="tab-btn active" id="tab-btn-home" onclick="switchTab('home')">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Overview
+ <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> <span data-i18n="tab_overview">Overview</span>
  </button>
  <button class="tab-btn" id="tab-btn-book" onclick="switchTab('book')">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Book Session
+ <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span data-i18n="tab_book">Book Session</span>
  </button>
  <button class="tab-btn" id="tab-btn-tracker" onclick="switchTab('tracker')">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> My Appointments
+ <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span data-i18n="tab_tracker">My Appointments</span>
  </button>
  <button class="tab-btn" id="tab-btn-profile" onclick="switchTab('profile')">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Spiritual &amp; Adhkar
+ <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> <span data-i18n="tab_profile">Spiritual &amp; Adhkar</span>
  </button>
  </nav>
 
  <!-- Right Header Actions -->
  <div class="header-actions">
+ <div class="lang-switcher-pill" role="group" aria-label="Language Selector">
+   <button type="button" class="lang-switcher-btn active" id="btnLangEn" data-lang="en" onclick="setAppLanguage('en')" title="Switch to English">EN</button>
+   <button type="button" class="lang-switcher-btn" id="btnLangUr" data-lang="ur" onclick="setAppLanguage('ur')" title="اردو میں تبدیل کریں">اردو</button>
+ </div>
  <div class="client-status-chip" id="clientChip" onclick="promptClientLogin()" title="Switch or View Patient Account">
  <span class="client-avatar-dot" id="clientDot"></span>
- <span id="clientChipName">Lookup<span class="chip-patient-text"> Patient</span></span>
+ <span id="clientChipName" data-i18n="client_lookup">Lookup<span class="chip-patient-text"> Patient</span></span>
  </div>
  <a href="../index.html" class="admin-switch-btn" title="Open Practitioner Management System">
- <span>Admin</span> ↗
+ <span data-i18n="nav_admin">Admin</span> ↗
  </a>
  </div>
  </div>
@@ -1550,19 +1750,19 @@
  <div class="hero-banner">
  <div class="hero-bg-arabic" aria-hidden="true">شِفَاء</div>
  <div class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
- <h2 class="hero-title">Shifa &amp; Ruqyah Patient Portal</h2>
- <p class="hero-subtitle">
+ <h2 class="hero-title" data-i18n="hero_title">Shifa &amp; Ruqyah Patient Portal</h2>
+ <p class="hero-subtitle" data-i18n="hero_sub">
  Welcome to Shifa-Ruqiyah Centre's dedicated customer platform. Schedule your Ruqyah Shari'ah sessions, track appointment statuses, explore your spiritual numerology, and access personalized healing adhkar.
  </p>
  <div class="hero-actions">
  <button class="btn btn-gold" onclick="switchTab('book')">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Schedule Appointment
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span data-i18n="hero_btn_book">Schedule Appointment</span>
  </button>
  <button class="btn btn-outline-white" onclick="switchTab('tracker')">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Track My Booking
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> <span data-i18n="hero_btn_track">Track My Booking</span>
  </button>
  <a href="https://wa.me/923000000000" id="heroWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-whatsapp">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp Hotline
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> <span data-i18n="hero_btn_whatsapp">WhatsApp Hotline</span>
  </a>
  </div>
  </div>
@@ -1573,8 +1773,8 @@
  <!-- Feature Highlights Deck -->
  <div class="sec-head">
  <div>
- <h2>Direct Services &amp; Tools</h2>
- <p>Quick access to all spiritual guidance and booking facilities</p>
+ <h2 data-i18n="features_title">Direct Services &amp; Tools</h2>
+ <p data-i18n="features_sub">Quick access to all spiritual guidance and booking facilities</p>
  </div>
  </div>
 
@@ -1583,36 +1783,36 @@
  <div class="feature-icon-badge">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-dark);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
  </div>
- <h3>Book Ruqyah Consultation</h3>
- <p>Schedule a specialized Ruqyah Shari'ah session for Jadu, Nazar, Jinn, or spiritual assessment with date &amp; time slot selection.</p>
- <div class="card-cta">Proceed to Booking →</div>
+ <h3 data-i18n="f1_title">Book Ruqyah Consultation</h3>
+ <p data-i18n="f1_desc">Schedule a specialized Ruqyah Shari'ah session for Jadu, Nazar, Jinn, or spiritual assessment with date &amp; time slot selection.</p>
+ <div class="card-cta" data-i18n="f1_cta">Proceed to Booking →</div>
  </div>
 
  <div class="feature-card" onclick="switchTab('tracker')">
  <div class="feature-icon-badge">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-dark);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
  </div>
- <h3>Appointment Status &amp; Slip</h3>
- <p>Look up your booked appointment by mobile number or Patient ID. View live countdowns and download your printable session slip.</p>
- <div class="card-cta">Check Booking Status →</div>
+ <h3 data-i18n="f2_title">Appointment Status &amp; Slip</h3>
+ <p data-i18n="f2_desc">Look up your booked appointment by mobile number or Patient ID. View live countdowns and download your printable session slip.</p>
+ <div class="card-cta" data-i18n="f2_cta">Check Booking Status →</div>
  </div>
 
  <div class="feature-card" onclick="switchTab('profile')">
  <div class="feature-icon-badge">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-dark);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
  </div>
- <h3>Spiritual Numerology Report</h3>
- <p>Instant Pythagorean &amp; Chaldean profile for your name and date of birth with bilingual (English &amp; Urdu) spiritual insights.</p>
- <div class="card-cta">Calculate Profile →</div>
+ <h3 data-i18n="f3_title">Spiritual Numerology Report</h3>
+ <p data-i18n="f3_desc">Instant Pythagorean &amp; Chaldean profile for your name and date of birth with bilingual (English &amp; Urdu) spiritual insights.</p>
+ <div class="card-cta" data-i18n="f3_cta">Calculate Profile →</div>
  </div>
 
  <div class="feature-card" onclick="openTasbeehModal()">
  <div class="feature-icon-badge">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-dark);"><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="7.75" cy="7.75" r="2.5"/><circle cx="16.25" cy="16.25" r="2.5"/><circle cx="7.75" cy="16.25" r="2.5"/><circle cx="16.25" cy="7.75" r="2.5"/></svg>
  </div>
- <h3>Digital Tasbeeh &amp; Adhkar</h3>
- <p>Interactive dhikr counter with vibration feedback, preset targets (33, 100), and recommended daily protection du'as.</p>
- <div class="card-cta">Open Tasbeeh Counter →</div>
+ <h3 data-i18n="f4_title">Digital Tasbeeh &amp; Adhkar</h3>
+ <p data-i18n="f4_desc">Interactive dhikr counter with vibration feedback, preset targets (33, 100), and recommended daily protection du'as.</p>
+ <div class="card-cta" data-i18n="f4_cta">Open Tasbeeh Counter →</div>
  </div>
  </div>
 
@@ -1620,22 +1820,22 @@
  <div class="card">
  <div class="sec-head" style="margin-bottom: 12px;">
  <div>
- <h2>Clinic Consultation Guidelines</h2>
- <p>Important instructions before attending your Ruqyah session</p>
+ <h2 data-i18n="g_title">Clinic Consultation Guidelines</h2>
+ <p data-i18n="g_sub">Important instructions before attending your Ruqyah session</p>
  </div>
  </div>
  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; font-size: 0.85rem; color: var(--muted);">
  <div style="background: var(--card-muted); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid var(--gold);">
- <strong style="color: var(--brown-dark);">1. State of Purity (Wudu)</strong>
- <p style="margin-top: 4px;">Please arrive or join in a state of ablution (Wudu) with clean clothing and modest attire.</p>
+ <strong style="color: var(--brown-dark);" data-i18n="g1_title">1. State of Purity (Wudu)</strong>
+ <p style="margin-top: 4px;" data-i18n="g1_desc">Please arrive or join in a state of ablution (Wudu) with clean clothing and modest attire.</p>
  </div>
  <div style="background: var(--card-muted); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid var(--gold);">
- <strong style="color: var(--brown-dark);">2. Punctuality is Mandatory</strong>
- <p style="margin-top: 4px;">Sessions run strictly to time. Please arrive or connect 10 minutes prior to your allocated slot.</p>
+ <strong style="color: var(--brown-dark);" data-i18n="g2_title">2. Punctuality is Mandatory</strong>
+ <p style="margin-top: 4px;" data-i18n="g2_desc">Sessions run strictly to time. Please arrive or connect 10 minutes prior to your allocated slot.</p>
  </div>
  <div style="background: var(--card-muted); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid var(--gold);">
- <strong style="color: var(--brown-dark);">3. Bring Fresh Water &amp; Oil</strong>
- <p style="margin-top: 4px;">For personalized recitation, keep a sealed bottle of drinking water and pure olive oil ready.</p>
+ <strong style="color: var(--brown-dark);" data-i18n="g3_title">3. Bring Fresh Water &amp; Oil</strong>
+ <p style="margin-top: 4px;" data-i18n="g3_desc">For personalized recitation, keep a sealed bottle of drinking water and pure olive oil ready.</p>
  </div>
  </div>
  </div>
@@ -1646,8 +1846,8 @@
  <section class="view-panel" id="view-book">
  <div class="sec-head">
  <div>
- <h2>Book a Consultation Session</h2>
- <p>Choose your session type, pick your date &amp; time, and receive instant confirmation</p>
+ <h2 data-i18n="book_title">Book a Consultation Session</h2>
+ <p data-i18n="book_sub">Choose your session type, pick your date &amp; time, and receive instant confirmation</p>
  </div>
  <div class="currency-switcher">
  <button class="currency-btn active" id="curBtnPKR" onclick="setCurrency('PKR')">PKR (Rs)</button>
@@ -1659,8 +1859,8 @@
  <!-- Step 1: Service Type Selection -->
  <div class="card card-gold-edge">
  <div class="form-label" style="margin-bottom: 14px;">
- <span>Step 1: Select Consultation / Session Type <span class="req">*</span></span>
- <span class="hint">Click to choose</span>
+ <span><span data-i18n="book_s1_title">Step 1: Select Consultation / Session Type</span> <span class="req">*</span></span>
+ <span class="hint" data-i18n="book_s1_hint">Click to choose</span>
  </div>
 
  <div class="service-deck" id="serviceDeck">
@@ -1672,8 +1872,8 @@
  <!-- Step 2: Date & Time Slot Picker -->
  <div class="card">
  <div class="form-label" style="margin-bottom: 14px;">
- <span>Step 2: Choose Appointment Date &amp; Time Slot <span class="req">*</span></span>
- <span class="hint">Select date from calendar below</span>
+ <span><span data-i18n="book_s2_title">Step 2: Choose Appointment Date &amp; Time Slot</span> <span class="req">*</span></span>
+ <span class="hint" data-i18n="book_s2_hint">Select date from calendar below</span>
  </div>
 
  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px;">
@@ -1696,7 +1896,7 @@
  Available Slots for <span id="selectedDateDisplay" style="color: var(--gold-dark);">Today</span>:
  </div>
  <p style="font-size: 0.76rem; color: var(--muted); margin-bottom: 12px;">
- Standard session length: 60 minutes. Booked slots are crossed out.
+ <span data-i18n="book_slot_note">Standard session length: 60 minutes. Booked slots are crossed out.</span>
  </p>
  <div class="slots-grid" id="slotsGrid">
  <!-- Time slots injected by JS -->
@@ -1711,46 +1911,46 @@
  <!-- Step 3: Patient Information -->
  <div class="card">
  <div class="form-label" style="margin-bottom: 14px;">
- <span>Step 3: Patient Information &amp; Contact Details <span class="req">*</span></span>
- <span class="hint">Required for spiritual consultation record</span>
+ <span><span data-i18n="book_s3_title">Step 3: Patient Information &amp; Contact Details</span> <span class="req">*</span></span>
+ <span class="hint" data-i18n="book_s3_hint">Required for spiritual consultation record</span>
  </div>
 
  <div class="form-grid">
  <div class="form-group">
- <label class="form-label">Patient Full Name <span class="req">*</span></label>
- <input type="text" id="custName" class="form-input" placeholder="e.g. Muhammad Farooq" required oninput="handleNameDobChange()" />
+ <label class="form-label"><span data-i18n="lbl_name">Patient Full Name</span> <span class="req">*</span></label>
+ <input type="text" id="custName" class="form-input" placeholder="e.g. Muhammad Farooq" data-i18n-ph="ph_name" required oninput="handleNameDobChange()" />
  </div>
 
  <div class="form-group">
- <label class="form-label">Father's / Guardian's Name <span class="req">*</span></label>
- <input type="text" id="custFather" class="form-input" placeholder="e.g. Abdul Rehman" required />
+ <label class="form-label"><span data-i18n="lbl_father">Father's / Guardian's Name</span> <span class="req">*</span></label>
+ <input type="text" id="custFather" class="form-input" placeholder="e.g. Abdul Rehman" data-i18n-ph="ph_father" required />
  </div>
 
  <div class="form-group">
- <label class="form-label">Country / Location <span class="req">*</span></label>
- <input type="text" id="custCountry" class="form-input" placeholder="e.g. Pakistan, UK, USA, UAE" value="Pakistan" oninput="handleCountryInput()" />
+ <label class="form-label"><span data-i18n="lbl_country">Country / Location</span> <span class="req">*</span></label>
+ <input type="text" id="custCountry" class="form-input" placeholder="e.g. Pakistan, UK, USA, UAE" data-i18n-ph="ph_country" value="Pakistan" oninput="handleCountryInput()" />
  </div>
 
  <div class="form-group">
  <label class="form-label">
- <span>WhatsApp / Mobile Number <span class="req">*</span></span>
+ <span><span data-i18n="lbl_mobile">WhatsApp / Mobile Number</span> <span class="req">*</span></span>
  <span class="hint" id="dialCodeHint">+92</span>
  </label>
- <input type="tel" id="custMobile" class="form-input" placeholder="e.g. 03001234567 or +92300..." required />
+ <input type="tel" id="custMobile" class="form-input" placeholder="e.g. 03001234567 or +92300..." data-i18n-ph="ph_mobile" required />
  </div>
 
  <div class="form-group">
- <label class="form-label">Gender <span class="req">*</span></label>
+ <label class="form-label"><span data-i18n="lbl_gender">Gender</span> <span class="req">*</span></label>
  <select id="custGender" class="form-select">
- <option value="Male">Male</option>
- <option value="Female">Female</option>
+ <option value="Male" data-i18n="opt_male">Male</option>
+ <option value="Female" data-i18n="opt_female">Female</option>
  </select>
  </div>
 
  <div class="form-group">
  <label class="form-label">
- <span>Date of Birth</span>
- <span class="hint">Day / Month / Year</span>
+ <span><span data-i18n="lbl_dob">Date of Birth</span></span>
+ <span class="hint" data-i18n="lbl_dob_hint">Day / Month / Year</span>
  </label>
  <div class="dob-boxes">
  <input type="number" id="custDobD" class="form-input" placeholder="DD" min="1" max="31" oninput="handleNameDobChange()" />
@@ -1785,8 +1985,8 @@
  </div>
 
  <div class="form-group col-full">
- <label class="form-label">Brief Description of Concern / Symptoms</label>
- <textarea id="custNotes" class="form-textarea" rows="3" placeholder="Please describe any dreams, sudden sickness, unexplainable physical discomfort, heaviness during recitation, or concerns..."></textarea>
+ <label class="form-label" data-i18n="lbl_notes">Brief Description of Concern / Symptoms</label>
+ <textarea id="custNotes" class="form-textarea" rows="3" placeholder="Please describe any dreams, sudden sickness, unexplainable physical discomfort, heaviness during recitation, or concerns..." data-i18n-ph="ph_notes"></textarea>
  </div>
  </div>
  </div>
@@ -1795,29 +1995,29 @@
  <div class="card card-gold-edge">
  <div class="fee-summary-card">
  <div class="fee-row">
- <span>Selected Consultation:</span>
+ <span data-i18n="summary_sel">Selected Consultation:</span>
  <b id="summaryServiceName" style="color: var(--brown-dark);">Ruqyah Shari'ah Diagnosis</b>
  </div>
  <div class="fee-row">
- <span>Scheduled Date &amp; Time:</span>
+ <span data-i18n="summary_sched">Scheduled Date &amp; Time:</span>
  <span id="summaryDateTime">Today at 10:00 AM</span>
  </div>
  <div class="fee-row">
- <span>Consultation Mode:</span>
- <span>In-Person / Online Audio Session</span>
+ <span data-i18n="summary_mode">Consultation Mode:</span>
+ <span data-i18n="summary_mode_val">In-Person / Online Audio Session</span>
  </div>
  <div class="fee-row total">
- <span>Estimated Session Fee:</span>
+ <span data-i18n="summary_est">Estimated Session Fee:</span>
  <span id="summaryFeeAmount">Rs. 3,000</span>
  </div>
  </div>
 
  <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
  <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1rem; padding: 14px; display: flex; align-items: center; justify-content: center;">
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Confirm &amp; Request Appointment
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="btn_confirm_book">Confirm &amp; Request Appointment</span>
  </button>
  <p style="font-size: 0.74rem; text-align: center; color: var(--muted);">
- An instant WhatsApp confirmation message will be prepared for immediate dispatch to the clinic reception.
+ <span data-i18n="summary_disclaimer">An instant WhatsApp confirmation message will be prepared for immediate dispatch to the clinic reception.</span>
  </p>
  </div>
  </div>
@@ -1829,24 +2029,24 @@
  <section class="view-panel" id="view-tracker">
  <div class="sec-head">
  <div>
- <h2>My Appointments &amp; Status Tracker</h2>
- <p>Track your scheduled sessions, view practitioner notes, and enter live waiting mode</p>
+ <h2 data-i18n="tracker_title">My Appointments &amp; Status Tracker</h2>
+ <p data-i18n="tracker_sub">Track your scheduled sessions, view practitioner notes, and enter live waiting mode</p>
  </div>
  </div>
 
  <!-- Lookup Box -->
  <div class="tracker-lookup-card">
- <label class="form-label" style="margin-bottom: 6px;">Find Your Record</label>
+ <label class="form-label" style="margin-bottom: 6px;" data-i18n="tracker_find_lbl">Find Your Record</label>
  <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 10px;">
- Enter your registered Mobile Number or 4-digit Patient ID (e.g. <code>0001</code>) to retrieve your consultations:
+ <span data-i18n="tracker_find_desc">Enter your registered Mobile Number or 4-digit Patient ID (e.g. <code>0001</code>) to retrieve your consultations:</span>
  </p>
  <div class="lookup-input-row">
- <input type="text" id="trackerSearchInput" class="form-input" placeholder="e.g. 03001234567 or 0001" onkeydown="if(event.key==='Enter') executeTrackerLookup()" />
+ <input type="text" id="trackerSearchInput" class="form-input" placeholder="e.g. 03001234567 or 0001" data-i18n-ph="ph_tracker_search" onkeydown="if(event.key==='Enter') executeTrackerLookup()" />
  <button type="button" class="btn btn-primary" onclick="executeTrackerLookup()">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Records
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> <span data-i18n="btn_find_records">Find Records</span>
  </button>
  <button type="button" class="btn btn-outline" onclick="clearTrackerLookup()" title="Clear and switch">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Reset
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> <span data-i18n="btn_reset">Reset</span>
  </button>
  </div>
  </div>
@@ -1869,26 +2069,26 @@
  <section class="view-panel" id="view-profile">
  <div class="sec-head">
  <div>
- <h2>Spiritual Numerology &amp; Healing Adhkar</h2>
- <p>Personalized Pythagorean &amp; Chaldean profile with bilingual insights &amp; prescribed Du'as</p>
+ <h2 data-i18n="profile_title">Spiritual Numerology &amp; Healing Adhkar</h2>
+ <p data-i18n="profile_sub">Personalized Pythagorean &amp; Chaldean profile with bilingual insights &amp; prescribed Du'as</p>
  </div>
  </div>
 
  <!-- Interactive Calculator Input -->
  <div class="card">
- <div class="form-label" style="margin-bottom: 12px;">Generate Numerology Profile</div>
+ <div class="form-label" style="margin-bottom: 12px;" data-i18n="num_box_title">Generate Numerology Profile</div>
  <div class="form-grid">
  <div class="form-group">
- <label class="form-label">Full Name</label>
+ <label class="form-label" data-i18n="lbl_num_name">Full Name</label>
  <input type="text" id="numCalcName" class="form-input" placeholder="e.g. Muhammad Farooq" />
  </div>
  <div class="form-group">
- <label class="form-label">Date of Birth (YYYY-MM-DD)</label>
+ <label class="form-label" data-i18n="lbl_num_dob">Date of Birth (YYYY-MM-DD)</label>
  <input type="date" id="numCalcDob" class="form-input" />
  </div>
  <div class="form-group" style="justify-content: flex-end;">
  <button type="button" class="btn btn-primary" onclick="runNumerologyCalculation()">
- <span>✨</span> Calculate Profile
+ <span>✨</span> <span data-i18n="btn_calc_profile">Calculate Profile</span>
  </button>
  </div>
  </div>
@@ -1921,11 +2121,11 @@
  <!-- Prescribed Ruqyah Duas & Adhkar Section -->
  <div class="sec-head" style="margin-top: 36px;">
  <div>
- <h2>Prescribed Ruqyah, Ayats &amp; Adhkar</h2>
- <p>Hover or tap any card to smoothly expand full calligraphy, transliteration, audio, and virtues</p>
+ <h2 data-i18n="adhkar_title">Prescribed Ruqyah, Ayats &amp; Adhkar</h2>
+ <p data-i18n="adhkar_sub">Hover or tap any card to smoothly expand full calligraphy, transliteration, audio, and virtues</p>
  </div>
  <button class="btn btn-gold btn-sm" onclick="openTasbeehModal()">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.75" cy="7.75" r="2"/><circle cx="16.25" cy="16.25" r="2"/><circle cx="7.75" cy="16.25" r="2"/><circle cx="16.25" cy="7.75" r="2"/></svg> Open Dhikr Counter
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.75" cy="7.75" r="2"/><circle cx="16.25" cy="16.25" r="2"/><circle cx="7.75" cy="16.25" r="2"/><circle cx="16.25" cy="7.75" r="2"/></svg> <span data-i18n="btn_open_dhikr">Open Dhikr Counter</span>
  </button>
  </div>
 
@@ -2066,19 +2266,23 @@
  <nav class="mobile-bottom-nav">
  <button class="m-nav-item active" id="m-nav-home" onclick="switchTab('home')">
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
- <span>Home</span>
+ <span data-i18n="m_tab_home">Home</span>
  </button>
  <button class="m-nav-item" id="m-nav-book" onclick="switchTab('book')">
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
- <span>Book</span>
+ <span data-i18n="m_tab_book">Book</span>
  </button>
  <button class="m-nav-item" id="m-nav-tracker" onclick="switchTab('tracker')">
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
- <span>Tracker</span>
+ <span data-i18n="m_tab_tracker">Tracker</span>
  </button>
  <button class="m-nav-item" id="m-nav-profile" onclick="switchTab('profile')">
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
- <span>Spiritual</span>
+ <span data-i18n="m_tab_profile">Spiritual</span>
+ </button>
+ <button class="m-nav-item m-nav-lang" id="m-nav-lang" onclick="toggleAppLanguage()" title="Switch Language" style="color:var(--gold-dark);font-weight:700;">
+ <span style="font-size:18px;line-height:1;">🌐</span>
+ <span id="mNavLangTxt">اردو</span>
  </button>
  </nav>
 
@@ -2117,54 +2321,72 @@
  {
  id: "ruqyah-general",
  name: "Ruqyah Shari'ah Diagnosis",
+ nameUr: "رقیہ شرعیہ تشخیص",
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
  desc: "Comprehensive diagnostic assessment for physical and spiritual afflictions according to the Sunnah.",
+ descUr: "سنت نبوی کے مطابق جسمانی و روحانی تکالیف اور اثرات کی جامع تشخیصی جانچ۔",
  duration: "60 mins",
+ durationUr: "۶۰ منٹ",
  feePKR: 3000,
  feeUSD: 50
  },
  {
  id: "sihr-jadu",
  name: "Sihr & Jadu Removal",
+ nameUr: "سحر و جادو کا توڑ",
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
  desc: "Intensive spiritual treatment and Quranic neutralizing sessions for black magic and sorcery.",
+ descUr: "کالے جادو، سفلی اور بندش کے خاتمے کے لیے قرآنی آیات سے خصوصی روحانی علاج۔",
  duration: "75 mins",
+ durationUr: "۷۵ منٹ",
  feePKR: 4500,
  feeUSD: 70
  },
  {
  id: "nazar-hasad",
  name: "Nazar & Evil Eye Cleansing",
+ nameUr: "نظر بد و حسد سے نجات",
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
  desc: "Specific spiritual healing and Quranic recitation for severe evil eye, envy, and unexplained heavy blockages.",
+ descUr: "شدید نظر بد، حسد اور غیر واضح رکاوٹوں سے نجات کے لیے مسنون دعاؤں سے شفاء۔",
  duration: "45 mins",
+ durationUr: "۴۵ منٹ",
  feePKR: 2500,
  feeUSD: 40
  },
  {
  id: "jinn-possession",
  name: "Jinn & Waswas Relief",
+ nameUr: "جنات و وسوسے کا علاج",
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>',
  desc: "Direct Quranic expulsion and psychological/spiritual stabilization for severe whisperings or touch.",
+ descUr: "جنات کے اثرات، شیطانی وسوسوں اور خوف و وہم سے نجات کے لیے قرآنی دم۔",
  duration: "60 mins",
+ durationUr: "۶۰ منٹ",
  feePKR: 4000,
  feeUSD: 65
  },
  {
  id: "spiritual-numerology",
  name: "Spiritual Numerology Deep Session",
+ nameUr: "علم الاعداد روحانی سیشن",
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><circle cx="16" cy="8" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="8" cy="16" r="1.5"/><circle cx="16" cy="16" r="1.5"/></svg>',
  desc: "Detailed personal numerology study analyzing Life Path, Destiny, and harmonic alignments.",
+ descUr: "نام اور تاریخ پیدائش کے مطابق لائف پاتھ اور روحانی اعداد کا تفصیلی تجزیہ۔",
  duration: "45 mins",
+ durationUr: "۴۵ منٹ",
  feePKR: 3500,
  feeUSD: 55
  },
  {
  id: "relationship-healing",
  name: "Marital & Relationship Guidance",
+ nameUr: "ازدواجی و گھریلو رہنمائی",
  icon: "💍",
  desc: "Spiritual evaluation and Istikhara guidance for household harmony, marital tension, and peace.",
+ descUr: "گھریلو ناچاقی، میاں بیوی میں ہم آہنگی اور سکون کے لیے استخارہ و روحانی رہنمائی۔",
  duration: "60 mins",
+ durationUr: "۶۰ منٹ",
  feePKR: 3500,
  feeUSD: 55
  }
@@ -2252,91 +2474,172 @@
  const ADHKAR_LIST = [
  {
  code: "# 01",
- title: "Ayat al-Kursi (The Throne Verse)",
- reference: "Surah Al-Baqarah (2:255)",
- category: "Supreme Protection",
- arabicPreview: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...",
- arabic: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ وَلَا يَئُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ",
- translit: "Allahu la ilaha illa Huwal-Hayyul-Qayyum. La ta'khudhuhu sinatun wa la nawm. Lahu ma fis-samawati wa ma fil-ard. Man dhal-ladhi yashfa'u 'indahu illa bi-idhnih. Ya'lamu ma bayna aydihim wa ma khalfahum, wa la yuhituna bi-shay'im-min 'ilmihi illa bima sha'. Wasi'a kursiyyuhus-samawati wal-ard, wa la ya'uduhu hifdhuhuma, wa Huwal-'Aliyyul-'Adheem.",
- meaning: "Allah! There is no deity except Him, the Ever-Living, the Sustainer of all existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth... and their preservation tires Him not. And He is the Most High, the Most Great.",
- meaning_ur: "اللہ، اس کے سوا کوئی معبود نہیں، وہ زندہ ہے سب کا تھامنے والا۔ نہ اسے اونگھ آتی ہے نہ نیند۔ جو کچھ آسمانوں اور زمین میں ہے سب اسی کا ہے۔ دونوں جہانوں کی نگہبانی اس پر گراں نہیں گزرتی اور وہی بلند و برتر ہے۔",
- benefit: "Recite after each obligatory prayer and before sleep. The Prophet (ﷺ) said: 'An angel will continually protect you and no Shaytan will come near until morning' (Sahih Al-Bukhari).",
- repeat: "1x / 3x",
- audio: "https://everyayah.com/data/Alafasy_128kbps/002255.mp3"
+ id: "surah-fatiha",
+ title: "Surah Al-Fatiha (The Ultimate Healing - Ash-Shifa)",
+ title_ur: "سورۃ الفاتحہ (ام الکتاب و الشافیہ - مکمل شفا)",
+ reference: "Surah Al-Fatiha (1:1-7)",
+ category: "Ruqyah Remedy",
+ arabicPreview: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ... الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ...",
+ arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَٰنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+ translit: "Bismillahi-r-Rahmani-r-Rahim. Al-hamdu lillahi Rabbi-l-'alamin. Ar-Rahmani-r-Rahim. Maliki yawmi-d-din. Iyyaka na'budu wa iyyaka nasta'in. Ihdina-s-sirata-l-mustaqim. Sirata-l-ladhina an'amta 'alayhim, ghayri-l-maghdubi 'alayhim wa la-d-dallin.",
+ meaning: "In the name of Allah, the Entirely Merciful, the Especially Merciful. All praise is due to Allah, Lord of the worlds. The Entirely Merciful, the Especially Merciful. Sovereign of the Day of Recompense. It is You we worship and You we ask for help. Guide us to the straight path - the path of those upon whom You have bestowed favor, not of those who have evoked Your anger or of those who are astray.",
+ meaning_ur: "اللہ کے نام سے جو نہایت مہربان بہت رحم والا ہے۔ تمام تعریفیں اللہ ہی کے لیے ہیں جو تمام جہانوں کا پالنے والا ہے۔ نہایت مہربان بہت رحم والا ہے۔ جزا و سزا کے دن کا مالک ہے۔ ہم صرف تیری ہی عبادت کرتے ہیں اور صرف تجھ ہی سے مدد مانگتے ہیں۔ ہمیں سیدھے راستے کی ہدایت فرما، ان لوگوں کے راستے کی جن پر تو نے انعام فرمایا، جن پر نہ غضب ہوا اور نہ وہ گمراہ ہوئے۔",
+ benefit: "Designated explicitly by the Prophet (ﷺ) as 'Ar-Ruqyah' (The Complete Remedy). Recite 7 times blowing over the forehead, chest, or drinking water for total physical, psychological, and spiritual healing.",
+ benefit_ur: "رسول اللہ ﷺ نے اس سورہ مبارکہ کو 'الرقیہ' اور 'الشافیہ' قرار دیا۔ سر کے درد، جادو، نظر بد اور تمام بیماریوں کے لیے ۷ مرتبہ پڑھ کر دم کرنا مسنون ہے۔",
+ repeat: "7x Daily",
+ audio: ["https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/1.mp3"]
  },
  {
  code: "# 02",
- title: "Al-Mu'awwidhat (Surah Al-Ikhlas, Al-Falaq, An-Nas)",
- reference: "Surah Al-Ikhlas, Al-Falaq & An-Nas (112-114)",
- category: "Daily Shifa & Shield",
- arabicPreview: "قُلْ هُوَ اللَّهُ أَحَدٌ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ...",
- arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ اللَّهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ مِن شَرِّ مَا خَلَقَ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ قُلْ أَعُوذُ بِرَبِّ النَّاسِ مَلِكِ النَّاسِ إِلَٰهِ النَّاسِ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ مِنَ الْجِنَّةِ وَالنَّاسِ",
- translit: "Qul Huwa Allahu Ahad... Qul A'udhu bi Rabbil-Falaq... Qul A'udhu bi Rabbin-Nas...",
- meaning: "Say: He is Allah, [who is] One... Say: I seek refuge in the Lord of daybreak from the evil of what He created and from the evil of blowers in knots... Say: I seek refuge in the Lord of mankind from the whispering of the retreating whisperer.",
- meaning_ur: "کہہ دیجئے وہ اللہ ایک ہے... کہہ دیجئے میں پناہ مانگتا ہوں صبح کے رب کی، ہر مخلوق کے شر سے اور گرہوں میں پھونکنے والیوں کے شر سے... کہہ دیجئے میں پناہ مانگتا ہوں انسانوں کے پروردگار کی وسوسہ ڈالنے والے کے شر سے۔",
- benefit: "Recite 3 times morning and evening, cupping the hands, blowing, and wiping over the entire body. The Prophet (ﷺ) said: 'They will suffice you against everything' (Abu Dawud).",
- repeat: "3x Morning & Evening",
- audio: "https://everyayah.com/data/Alafasy_128kbps/112001.mp3"
+ id: "ayat-al-kursi",
+ title: "Ayat al-Kursi (The Throne Verse - Supreme Shield)",
+ title_ur: "آیۃ الکرسی (اعظم آیات - عظیم الشان حفاظتی ڈھال)",
+ reference: "Surah Al-Baqarah (2:255)",
+ category: "Supreme Protection",
+ arabicPreview: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...",
+ arabic: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+ translit: "Allahu la ilaha illa Huwal-Hayyul-Qayyum. La ta'khudhuhu sinatun wa la nawm. Lahu ma fis-samawati wa ma fil-ard. Man dhal-ladhi yashfa'u 'indahu illa bi-idhnih. Ya'lamu ma bayna aydihim wa ma khalfahum, wa la yuhituna bi-shay'im-min 'ilmihi illa bima sha'. Wasi'a kursiyyuhus-samawati wal-ard, wa la ya'uduhu hifdhuhuma, wa Huwal-'Aliyyul-'Adheem.",
+ meaning: "Allah! There is no deity except Him, the Ever-Living, the Sustainer of all existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is before them and what will be after them, and they encompass not a thing of His knowledge except for what He wills. His Kursi extends over the heavens and the earth, and their preservation tires Him not. And He is the Most High, the Most Great.",
+ meaning_ur: "اللہ، اس کے سوا کوئی معبود نہیں، وہ زندہ ہے سب کا تھامنے والا۔ نہ اسے اونگھ آتی ہے نہ نیند۔ جو کچھ آسمانوں اور زمین میں ہے سب اسی کا ہے۔ کون ہے جو اس کی اجازت کے بغیر اس کے حضور سفارش کر سکے؟ وہ جانتا ہے جو ان کے آگے ہے اور جو ان کے پیچھے ہے، اور وہ اس کے علم میں سے کسی چیز کا احاطہ نہیں کر سکتے مگر جتنا وہ چاہے۔ اس کی کرسی آسمانوں اور زمین پر چھائی ہوئی ہے، اور ان کی حفاظت اسے نہیں تھکاتی، اور وہی بلند و برتر عظمت والا ہے۔",
+ benefit: "Recite after each obligatory prayer and before sleep. The Prophet (ﷺ) said: 'An angel will continually protect you and no Shaytan will come near until morning' (Sahih Al-Bukhari). Nullifies witchcraft and repels hostile jinns.",
+ benefit_ur: "ہر فرض نماز کے بعد اور رات سونے سے قبل پڑھیں۔ نبی اکرم ﷺ نے فرمایا: 'اللہ کی طرف سے ایک محافظ مقرر کر دیا جاتا ہے اور شیطان صبح تک قریب نہیں آ سکتا۔'",
+ repeat: "1x / 3x",
+ audio: ["https://everyayah.com/data/Alafasy_128kbps/002255.mp3"]
  },
  {
  code: "# 03",
- title: "Amanar-Rasul (Last 2 Verses of Al-Baqarah)",
- reference: "Surah Al-Baqarah (2:285-286)",
+ id: "surah-yaseen",
+ title: "Surah Yaseen (The Heart of the Quran - Complete Surah)",
+ title_ur: "سورۃ یٰس (قلب القرآن - مکمل تلاوت و حفاظت)",
+ reference: "Surah Yaseen (36:1-83) · Full Surah Recitation",
  category: "Supreme Protection",
- arabicPreview: "آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ...",
- arabic: "آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ وَقَالُوا سَمِعْنَا وَأَطَعْنَا غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",
- translit: "Amanar-Rasulu bima unzila ilayhi mir-Rabbihi wal-mu'minun... Rabbana la tu'akhidhna in-nasina aw akhta'na... Wa'fu 'anna waghfir lana warhamna, Anta Mawlana fansurna 'alal-qawmil-kafirin.",
- meaning: "The Messenger has believed in what was revealed to him from his Lord, and so have the believers... Our Lord, do not impose blame upon us if we have forgotten or erred... Pardon us, forgive us, and have mercy upon us. You are our protector, so give us victory over the disbelieving people.",
- meaning_ur: "رسول ایمان لائے اس پر جو ان کے رب کی طرف سے نازل ہوا اور مومن بھی... اے ہمارے رب، اگر ہم بھول جائیں یا خطا کر جائیں تو ہماری گرفت نہ فرما... اور ہمیں معاف فرما اور بخش دے اور ہم پر رحم فرما، تو ہی ہمارا مولیٰ ہے۔",
- benefit: "The Prophet (ﷺ) said: 'Whoever recites the last two verses of Surah Al-Baqarah at night, they will suffice him for all protection and security' (Sahih Al-Bukhari).",
- repeat: "1x Every Night",
- audio: "https://everyayah.com/data/Alafasy_128kbps/002285.mp3"
+ arabicPreview: "يس ۝ وَالْقُرْآنِ الْحَكِيمِ ۝ إِنَّكَ لَمِنَ الْمُرْسَلِينَ...",
+ arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nيس ۝ وَالْقُرْآنِ الْحَكِيمِ ۝ إِنَّكَ لَمِنَ الْمُرْسَلِينَ ۝ عَلَىٰ صِرَاطٍ مُّسْتَقِيمٍ ۝ تَنزِيلَ الْعَزِيزِ الرَّحِيمِ ۝ لِتُنذِرَ قَوْمًا مَّا أُنذِرَ آبَاؤُهُمْ فَهُمْ غَافِلُونَ ۝ لَقَدْ حَقَّ الْقَوْلُ عَلَىٰ أَكْثَرِهِمْ فَهُمْ لَا يُؤْمِنُونَ ۝ إِنَّا جَعَلْنَا فِي أَعْنَاقِهِمْ أَغْلَالًا فَهِيَ إِلَى الْأَذْقَانِ فَهُم مُّقْمَحُونَ ۝ وَجَعَلْنَا مِن بَيْنِ أَيْدِيهِمْ سَدًّا وَمِنْ خَلْفِهِمْ سَدًّا فَأَغْشَيْنَاهُمْ فَهُمْ لَا يُبْصِرُونَ...\n(إِنَّمَا أَمْرُهُ إِذَا أَرَادَ شَيْئًا أَن يَقُولَ لَهُ كُن فَيَكُونُ ۝ فَسُبْحَانَ الَّذِي بِيَدِهِ مَلَكُوتُ كُلِّ شَيْءٍ وَإِلَيْهِ تُرْجَعُونَ)",
+ translit: "Ya-Seen. Wal-Qur'anil-Hakim. Innaka lamina-l-mursalin. 'Ala siratim-mustaqim. Tanzilal-'Azizir-Rahim... Innama amruhu idha arada shay'an an yaqula lahu kun fa-yakun. Fa-subhana-lladhi biyadihi malakutu kulli shay'in wa ilayhi turja'un.",
+ meaning: "Ya-Seen. By the wise Qur'an. Indeed you, [O Muhammad], are from among the messengers, on a straight path. A revelation of the Exalted in Might, the Merciful... Indeed, His command when He intends a thing is only that He says to it, 'Be,' and it is. So exalted is He in whose hand is the realm of all things, and to Him you will be returned.",
+ meaning_ur: "یٰس۔ حکمت سے بھرے قرآن کی قسم۔ بے شک آپ رسولوں میں سے ہیں، سیدھے راستے پر ہیں۔ زبردست رحم والے کی طرف سے نازل کردہ... اس کا حکم تو بس یہ ہے کہ جب وہ کسی چیز کا ارادہ کرتا ہے تو فرماتا ہے 'ہو جا' تو وہ ہو جاتی ہے۔ پاک ہے وہ ذات جس کے ہاتھ میں ہر چیز کی بادشاہی ہے اور اسی کی طرف تم سب لوٹائے جاؤ گے۔",
+ benefit: "The Prophet (ﷺ) said: 'Everything has a heart, and the heart of the Quran is Surah Yaseen' (Tirmidhi). Provides immense relief from black magic, severe physical & emotional agony, breaks heavy blockages, and brings divine mercy to the home.",
+ benefit_ur: "رسول اللہ ﷺ نے فرمایا: 'ہر چیز کا ایک دل ہوتا ہے اور قرآن کا دل سورہ یٰسین ہے۔' صبح پڑھنے سے دن بھر کی حاجات پوری ہوتی ہیں اور جادو، جنات اور لاعلاج بیماریوں میں شفا نصیب ہوتی ہے۔",
+ repeat: "1x Daily / Morning",
+ audio: ["https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/36.mp3"]
  },
  {
  code: "# 04",
- title: "Sihr Annulment Verse (Musa VS Sorcerers)",
- reference: "Surah Yunus (10:81-82)",
- category: "Sihr & Jadu Shield",
- arabicPreview: "مَا جِئْتُم بِهِ السِّحْرُ إِنَّ اللَّهَ سَيُبْطِلُهُ...",
- arabic: "فَلَمَّا أَلْقَوْا قَالَ مُوسَىٰ مَا جِئْتُم بِهِ السِّحْرُ إِنَّ اللَّهَ سَيُبْطِلُهُ إِنَّ اللَّهَ لَا يُصْلِحُ عَمَلَ الْمُفْسِدِينَ وَيُحِقُّ اللَّهُ الْحَقَّ بِكَلِمَاتِهِ وَلَوْ كَرِهَ الْمُجْرِمُونَ",
- translit: "Falamma alqaw qala Musa ma ji'tum bihis-sihr, innAllaha sayubtiluh, innAllaha la yuslihu 'amalal-mufsidin. Wa yuhiqqul-lahul-haqqa bi-kalimatihi wa law karihal-mujrimun.",
- meaning: "Musa said: What you have brought is sorcery; indeed, Allah will make it null and void. Indeed, Allah does not amend the work of corrupters. And Allah will establish the truth by His words, even if the criminals dislike it.",
- meaning_ur: "جب انہوں نے ڈالا تو موسیٰ نے کہا: جو تم لائے ہو وہ جادو ہے۔ بے شک اللہ اسے ابھی باطل کر دے گا، اللہ فسادیوں کا کام درست نہیں کرتا۔ اور اللہ حق کو سچا کر دکھائے گا۔",
- benefit: "Foremost Quranic verse for breaking and nullifying black magic (Sihr) and occult knots. Recite 7 times over drinking water, bath water with Sidr leaves, and pure olive oil.",
- repeat: "7x Daily",
- audio: "https://everyayah.com/data/Alafasy_128kbps/010081.mp3"
+ id: "surah-rahman",
+ title: "Surah Ar-Rahman (The Crown of Shifa & Divine Mercy)",
+ title_ur: "سورۃ الرحمٰن (عروس القرآن - اعصابی و روحانی شفا)",
+ reference: "Surah Ar-Rahman (55:1-78) · Full Surah Recitation",
+ category: "Daily Shifa & Shield",
+ arabicPreview: "الرَّحْمَٰنُ ۝ عَلَّمَ الْقُرْآنَ ۝ خَلَقَ الْإِنسَانَ ۝ عَلَّمَهُ الْبَيَانَ...",
+ arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالرَّحْمَٰنُ ۝ عَلَّمَ الْقُرْآنَ ۝ خَلَقَ الْإِنسَانَ ۝ عَلَّمَهُ الْبَيَانَ ۝ الشَّمْسُ وَالْقَمَرُ بِحُسْبَانٍ ۝ وَالنَّجْمُ وَالشَّجَرُ يَسْجُدَانِ ۝ وَالسَّمَاءَ رَفَعَهَا وَوَضَعَ الْمِيزَانَ... فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ...\n(تَبَارَكَ اسْمُ رَبِّكَ ذِي الْجَلَالِ وَالْإِكْرَامِ)",
+ translit: "Ar-Rahman. 'Allamal-Qur'an. Khalaqal-insan. 'Allamahul-bayan. Ash-shamsu wal-qamaru bi-husban. Wan-najmu wash-shajaru yasjudan... Fa-bi'ayyi ala'i Rabbikuma tukadh-dhiban... Tabarakasmu Rabbika Dhil-Jalali wal-Ikram.",
+ meaning: "The Most Merciful. Taught the Qur'an. Created man. [And] taught him speech. The sun and the moon [move] by precise calculation. And the stars and trees prostrate... So which of the favors of your Lord would you deny?... Blessed is the name of your Lord, Owner of Majesty and Honor.",
+ meaning_ur: "رحمٰن نے قرآن سکھایا۔ انسان کو پیدا کیا، اسے بولنا سکھایا۔ سورج اور چاند ایک حساب کے پابند ہیں۔ اور جھاڑیاں اور درخت سجدہ کرتے ہیں... پس تم اپنے رب کی کون کون سی نعمتوں کو جھٹلاؤ گے؟... بڑی برکت والا ہے تیرے رب کا نام جو عظمت اور عزت کا مالک ہے۔",
+ benefit: "Prophetically known as the 'Bride of the Quran' (Bayhaqi). Renowned worldwide for clinical and spiritual healing: cleanses anxiety, balances nervous energy, cures depression, and expels deep-rooted spiritual heavy toxins.",
+ benefit_ur: "رسول اللہ ﷺ نے فرمایا: 'ہر چیز کی ایک زینت ہوتی ہے اور قرآن کی زینت سورہ رحمٰن ہے۔' بیماری، ذہنی انتشار، اور گھریلو ناچاقی کے خاتمے کے لیے اسے روزانہ سننا اور پڑھنا ازحد مفید ہے۔",
+ repeat: "1x Daily / Sunset",
+ audio: ["https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/55.mp3"]
  },
  {
  code: "# 05",
- title: "Du'a of Jibreel (A.S.) for Sickness & Evil Eye",
- reference: "Sahih Muslim (Hadith 2186)",
- category: "Ruqyah Remedy",
- arabicPreview: "بِسْمِ اللَّهِ أَرْقِيكَ، مِن كُلِّ شَيْءٍ يُؤْذِيكَ...",
- arabic: "بِسْمِ اللَّهِ أَرْقِيكَ، مِن كُلِّ شَيْءٍ يُؤْذِيكَ، مِن شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ",
- translit: "Bismillahi arqeek, min kulli shay'in yu'dheek, min sharri kulli nafsin aw 'ayni hasid, Allahu yashfeek, Bismillahi arqeek.",
- meaning: "In the name of Allah I perform Ruqyah upon you, from everything that harms you, from the evil of every soul or envious eye. May Allah heal you. In the name of Allah I perform Ruqyah upon you.",
- meaning_ur: "اللہ کے نام سے میں آپ پر دم کرتا ہوں، ہر اس چیز سے جو آپ کو اذیت دے، ہر جان یا حاسد کی نظر کے شر سے، اللہ آپ کو شفا دے، اللہ کے نام سے میں دم کرتا ہوں۔",
- benefit: "The authentic Ruqyah recitation performed by Archangel Jibreel upon the Messenger of Allah (ﷺ) during his illness. Repeat 7 times with the right hand over pain or water.",
- repeat: "7x",
- audio: "https://everyayah.com/data/Alafasy_128kbps/001001.mp3"
+ id: "surah-muzzammil",
+ title: "Surah Al-Muzzammil (Removal of Hardships & Spiritual Light)",
+ title_ur: "سورۃ المزمل (کشادگی رزق، رفعِ مصائب و روحانی نور)",
+ reference: "Surah Al-Muzzammil (73:1-20) · Full Surah Recitation",
+ category: "Supreme Protection",
+ arabicPreview: "يَا أَيُّهَا الْمُزَّمِّلُ ۝ قُمِ اللَّيْلَ إِلَّا قَلِيلًا...",
+ arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nيَا أَيُّهَا الْمُزَّمِّلُ ۝ قُمِ اللَّيْلَ إِلَّا قَلِيلًا ۝ نِّصْفَهُ أَوِ انقُصْ مِنْهُ قَلِيلًا ۝ أَوْ زِدْ عَلَيْهِ وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا ۝ إِنَّا سَنُلْقِي عَلَيْكَ قَوْلًا ثَقِيلًا ۝ إِنَّ نَاشِئَةَ اللَّيْلِ هِيَ أَشَدُّ وَطْئًا وَأَقْوَمُ قِيلًا...\n(رَّبُّ الْمَشْرِقِ وَالْمَغْرِبِ لَا إِلَٰهَ إِلَّا هُوَ فَاتَّخِذْهُ وَكِيلًا)",
+ translit: "Ya ayyuhal-muzzammil. Qumil-layla illa qalila. Nisfahu awinqus minhu qalila. Aw zid 'alayhi wa rattilil-Qur'ana tartila. Inna sanulqi 'alayka qawlan thaqila... Rabbul-mashriqi wal-maghribi la ilaha illa Huwa fattakhidh-hu wakila.",
+ meaning: "O you who wraps himself [in clothing], arise [to pray] the night, except for a little - half of it or a little less, or a little more, and recite the Qur'an with measured recitation. Indeed, We will cast upon you a heavy word... [He is] the Lord of the East and the West; there is no deity except Him, so take Him as Disposer of affairs.",
+ meaning_ur: "اے کپڑے میں لپٹنے والے! رات کو قیام فرمائیے مگر تھوڑا سا حصہ۔ آدھی رات یا اس سے کچھ کم کر لیجیے، یا اس پر بڑھا دیجیے اور قرآن کو ٹھہر ٹھہر کر پڑھیے۔ عنقریب ہم آپ پر ایک بھاری کلام نازل کریں گے... وہ مشرق و مغرب کا رب ہے، اس کے سوا کوئی معبود نہیں، پس اسی کو اپنا کارساز بنا لیجیے۔",
+ benefit: "Powerfully designated by masters of Sunnah spiritual healing for breaking suffocating blockages, removing financial and life paralysis, calming panicked souls, and receiving divine breakthrough in difficult affairs.",
+ benefit_ur: "تنگیِ رزق، بندشوں کے خاتمے، مصائب اور دشمنوں کے خوف سے نجات کے لیے کثرت سے پڑھی جاتی ہے۔ رات کے وقت اس کی تلاوت سے روحانی طاقت اور دل کو سکون ملتا ہے۔",
+ repeat: "1x Nightly",
+ audio: ["https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/73.mp3"]
  },
  {
  code: "# 06",
- title: "Protection with Allah's Perfect Words",
- reference: "Sahih Muslim (Hadith 2708)",
- category: "Jinn & Spiritual Relief",
- arabicPreview: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ الَّتِي لَا يُجَاوِزُهُنَّ...",
- arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ الَّتِي لَا يُجَاوِزُهُنَّ بَرٌّ وَلَا فَاجِرٌ مِن شَرِّ مَا خَلَقَ وَذَرَأَ وَبَرَأَ، وَمِن شَرِّ مَا يَنزِلُ مِنَ السَّمَاءِ، وَمِن شَرِّ مَا يَعْرُجُ فِيهَا، وَمِن شَرِّ مَا ذَرَأَ فِي الْأَرْضِ، وَمِن شَرِّ مَا يَخْرُجُ مِنْهَا، وَمِن شَرِّ فِتَنِ اللَّيْلِ وَالنَّهَارِ، وَمِن شَرِّ كُلِّ طَارِقٍ إِلَّا طَارِقًا يَطْرُقُ بِخَيْرٍ يَا رَحْمَٰنُ",
- translit: "A'udhu bi-kalimatil-lahit-tammati-llati la yujawizuhunna barrun wa la fajirun min sharri ma khalaqa wa dhara'a wa bara'a... wa min sharri kulli tariqin illa tariqan yatruqu bi-khayrin ya Rahman.",
- meaning: "I seek refuge in the perfect words of Allah, which neither the righteous nor the wicked can surpass, from the evil of what He created and multiplied... and from the evil of every visitor of the night, except one bringing good, O Most Merciful.",
- meaning_ur: "میں اللہ کے ان کامل کلمات کی پناہ مانگتا ہوں جن سے آگے کوئی نیک و بد نہیں گزر سکتا، ہر اس چیز کے شر سے جو اس نے پیدا کی... اور رات کے آنے والے ہر شر سے سوائے اس کے جو خیر کے ساتھ آئے اے رحمن۔",
- benefit: "Revealed when an aggressive Jinn attempted to assault the Prophet (ﷺ); upon reciting this supplication, the firebrand was extinguished and the entity vanquished.",
- repeat: "3x Morning & Evening",
- audio: "https://everyayah.com/data/Alafasy_128kbps/114001.mp3"
+ id: "dua-e-anas",
+ title: "Du'a-e-Anas Bin Malik (R.A.) (The Invincible Shield of Safety)",
+ title_ur: "دعائے حضرت انس بن مالک رضی اللہ عنہ (حفاظت و برکت کی ڈھال)",
+ reference: "Hadith Tradition of Sayyidina Anas ibn Malik (R.A.)",
+ category: "Supreme Protection",
+ arabicPreview: "بِسْمِ اللَّهِ خَيْرِ الأَسْمَاءِ، بِسْمِ اللَّهِ رَبِّ الأَرْضِ وَالسَّمَاءِ...",
+ arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nبِسْمِ اللَّهِ خَيْرِ الأَسْمَاءِ، بِسْمِ اللَّهِ رَبِّ الأَرْضِ وَالسَّمَاءِ، بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ سَمٌّ وَلَا دَاءٌ، بِسْمِ اللَّهِ أَصْبَحْتُ وَعَلَى اللَّهِ تَوَكَّلْتُ، بِسْمِ اللَّهِ عَلَى قَلْبِي وَنَفْسِي، بِسْمِ اللَّهِ عَلَى دِينِي وَعَقْلِي، بِسْمِ اللَّهِ عَلَى أَهْلِي وَمَالِي، بِسْمِ اللَّهِ عَلَى مَا أَعْطَانِي رَبِّي، بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ العَلِيمُ.\nاللَّهُ اللَّهُ رَبِّي لَا أُشْرِكُ بِهِ شَيْئًا، اللَّهُ أَكْبَرُ اللَّهُ أَكْبَرُ وَأَعَزُّ وَأَجَلُّ مِمَّا أَخَافُ وَأَحْذَرُ، عَزَّ جَارُكَ وَجَلَّ ثَنَاؤُكَ وَلَا إِلَٰهَ غَيْرُكَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ كُلِّ سُلْطَانٍ شَدِيدٍ، وَمِنْ شَرِّ كُلِّ شَيْطَانٍ مَرِيدٍ، وَمِنْ شَرِّ كُلِّ جَبَّارٍ عَنِيدٍ، وَمِنْ شَرِّ قَضَاءِ السُّوءِ، وَمِنْ شَرِّ كُلِّ دَابَّةٍ أَنْتَ آخِذٌ بِنَاصِيَتِهَا، إِنَّ رَبِّي عَلَى صِرَاطٍ مُسْتَقِيمٍ.",
+ translit: "Bismillahi-r-Rahmani-r-Rahim. Bismillahi khayril-asma', Bismillahi Rabbil-ardi was-sama', Bismillahi-lladhi la yadurru ma'as-mihi sammun wa la da', Bismillahi asbahtu wa 'alAllahi tawakkalt, Bismillahi 'ala qalbi wa nafsi, Bismillahi 'ala dini wa 'aqli, Bismillahi 'ala ahli wa mali, Bismillahi 'ala ma a'tani Rabbi... Allahu Allahu Rabbi la ushriku bihi shay'a. Allahu Akbaru Allahu Akbar, wa a'azzu wa ajallu mimma akhafu wa ahdhar. 'Azza jaruka wa jalla thana'uka wa la ilaha ghayruk. Allahumma inni a'udhu bika min sharri nafsi, wa min sharri kulli sultaning-shadid, wa min sharri kulli shaytanim-marid, wa min sharri kulli jabbarin 'anid, wa min sharri qada'is-su', wa min sharri kulli dabbatin Anta akhidhum-bi nasiyatiha, inna Rabbi 'ala siratim-mustaqim.",
+ meaning: "In the name of Allah, the Entirely Merciful, the Especially Merciful. In the name of Allah, the Best of Names. In the name of Allah, Lord of the earth and the heavens. In the name of Allah, with Whose name no poison or disease can harm. In the name of Allah, I begin my day and upon Allah I rely. In the name of Allah upon my heart and my soul, upon my faith and my intellect, upon my family and my wealth, and upon all that my Lord has granted me. In the name of Allah, with Whose name nothing can harm on earth or in the heavens, and He is the All-Hearing, the All-Knowing. Allah, Allah is my Lord, I associate nothing with Him. Allah is Greater, Allah is Greater, mightier and grander than whatever I fear. Exalted is Your protection and glorified is Your praise, and there is no deity besides You. O Allah, I seek refuge in You from the evil of my self, from the evil of every tyrannical authority, from the evil of every rebellious devil, from every stubborn despot, from every adverse decree, and from the evil of every creature You hold by its forelock. Indeed, my Lord is on a straight path.",
+ meaning_ur: "اللہ کے نام سے جو نہایت مہربان بہت رحم والا ہے۔ اللہ کے نام سے جو تمام ناموں میں بہترین نام ہے، زمین اور آسمان کے پروردگار کے نام سے، اس اللہ کے نام سے جس کے نام کے ساتھ کوئی زہر اور کوئی بیماری نقصان نہیں پہنچا سکتی۔ اللہ کے نام کے ساتھ میں نے صبح کی اور اللہ ہی پر بھروسہ کیا۔ اللہ کا نام میرے دل اور میری جان پر، میرے دین اور میری عقل پر، میرے اہل و عیال اور مال پر، اور ہر اس چیز پر جو میرے رب نے مجھے عطا فرمائی۔ اللہ کے نام سے جس کے نام کی برکت سے زمین و آسمان کی کوئی چیز نقصان نہیں پہنچا سکتی اور وہ خوب سننے والا جاننے والا ہے۔ اللہ، اللہ ہی میرا رب ہے میں اس کے ساتھ کسی کو شریک نہیں ٹھہراتا۔ اللہ سب سے بڑا ہے، اللہ سب سے بڑا ہے، اور اس سے زیادہ غالب و عظیم ہے جس سے میں ڈرتا اور خطرہ محسوس کرتا ہوں۔ تیری پناہ زبردست ہے اور تیری تعریف بلند و برتر ہے اور تیرے سوا کوئی معبود نہیں۔ اے اللہ! میں تیری پناہ مانگتا ہوں اپنے نفس کے شر سے، ہر جابر حاکم کے شر سے، ہر سرکش شیطان کے شر سے، ہر ہٹ دھرم ظالم کے شر سے، بری تقدیر کے شر سے، اور ہر اس جاندار کے شر سے جس کی پیشانی تیرے قبضے میں ہے۔ بے شک میرا رب سیدھی راہ پر ہے۔",
+ benefit: "The legendary prayer taught by Prophet Muhammad (ﷺ) to Anas ibn Malik (R.A.). When the tyrant Hajjaj ibn Yusuf sent executioners to arrest and slay him, Anas recited this Du'a; instantly, the soldiers were paralyzed, swords fell from their hands, and Hajjaj prostrated in terror, unable to cause him any harm. Supreme protection from black magic, oppressive enemies, courts, and jinns.",
+ benefit_ur: "یہ وہ مبارک دعا ہے جو رسول اللہ ﷺ نے حضرت انس رضی اللہ عنہ کو سکھائی۔ جب ظالم حجاج بن یوسف نے ان کو قتل کرنے کے لیے جلاد بھیجے تو حضرت انس نے یہ دعا پڑھی جس پر لشکر بے بس ہو گیا اور حجاج نے عاجز آ کر معافی مانگی۔ جادو کے توڑ، ظالموں کے شر اور مصائب سے امان کا مستند حصنِ حصین ہے۔",
+ repeat: "1x Morning & Evening",
+ audio: ["/media/dua-e-anas.mp3", "https://dn710600.ca.archive.org/0/items/7.8.18DuaANASSilisilaBarkatGariHyd/7.8.18_DuaANAS_SilisilaBarkat_gari_hyd.mp3"]
  },
  {
  code: "# 07",
- title: "Ayat Karima (Supplication of Prophet Yunus)",
+ id: "al-muawwidhat",
+ title: "Al-Mu'awwidhat (Surah Al-Ikhlas, Al-Falaq & An-Nas)",
+ title_ur: "المعوذات (سورۃ الاخلاص، الفلق اور الناس - مکمل تلاوت)",
+ reference: "Surah Al-Ikhlas (112), Al-Falaq (113), An-Nas (114)",
+ category: "Daily Shifa & Shield",
+ arabicPreview: "قُلْ هُوَ اللَّهُ أَحَدٌ... قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ... قُلْ أَعُوذُ بِرَبِّ النَّاسِ...",
+ arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nقُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ\n\nبِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nقُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ\n\nبِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nقُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ",
+ translit: "Qul Huwal-lahu Ahad. Allahus-Samad. Lam yalid wa lam yulad. Wa lam yakul-lahu kufuwan ahad. -- Qul a'udhu bi Rabbil-falaq. Min sharri ma khalaq. Wa min sharri ghasiqin idha waqab. Wa min sharrin-naffathati fil-'uqad. Wa min sharri hasidin idha hasad. -- Qul a'udhu bi Rabbin-nas. Malikin-nas. Ilahin-nas. Min sharril-waswasil-khannas. Alladhi yuwaswisu fi sudurin-nas. Minal-jinnati wan-nas.",
+ meaning: "Say: He is Allah, [who is] One. Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent. -- Say: I seek refuge in the Lord of daybreak from the evil of that which He created and from the evil of darkness when it settles and from the evil of the blowers in knots and from the evil of an envier when he envies. -- Say: I seek refuge in the Lord of mankind, the Sovereign of mankind, the God of mankind, from the evil of the retreating whisperer who whispers into the breasts of mankind, from among the jinn and mankind.",
+ meaning_ur: "کہہ دیجئے: وہ اللہ ایک ہے۔ اللہ بے نیاز ہے۔ نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد ہے، اور کوئی اس کا ہمسر نہیں۔ -- کہہ دیجئے: میں صبح کے رب کی پناہ مانگتا ہوں، ہر اس چیز کے شر سے جو اس نے پیدا کی، اور اندھیری رات کے شر سے جب وہ چھا جائے، اور گرہوں میں پھونکنے والیوں کے شر سے، اور حاسد کے شر سے جب وہ حسد کرے۔ -- کہہ دیجئے: میں انسانوں کے پروردگار کی پناہ مانگتا ہوں، انسانوں کے بادشاہ کی، انسانوں کے معبود کی، وسوسہ ڈال کر پیچھے ہٹ جانے والے کے شر سے، جو انسانوں کے سینوں میں وسوسے ڈالتا ہے، جنات میں سے اور انسانوں میں سے۔",
+ benefit: "Recite 3 times each morning and evening. The Prophet (ﷺ) said: 'Recite these three when you enter upon the evening and morning; they will suffice you against every harm' (Abu Dawud & Tirmidhi).",
+ benefit_ur: "صبح و شام تین تین مرتبہ پڑھ کر ہاتھوں پر پھونک کر پورے جسم پر پھیریں۔ نبی کریم ﷺ نے فرمایا: 'یہ تینوں سورتیں تمہیں ہر شر سے بچانے کے لیے کافی ہو جائیں گی۔'",
+ repeat: "3x Morning & Evening",
+ audio: [
+   "https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/112.mp3",
+   "https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/113.mp3",
+   "https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/114.mp3"
+ ]
+ },
+ {
+ code: "# 08",
+ id: "amanar-rasul",
+ title: "Amanar-Rasul (Last 2 Verses of Al-Baqarah - Night Shield)",
+ title_ur: "آمن الرسول (سورۃ البقرہ کی آخری دو آیات - رات کی حفاظت)",
+ reference: "Surah Al-Baqarah (2:285-286) · Full Two Verses",
+ category: "Supreme Protection",
+ arabicPreview: "آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ...",
+ arabic: "آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ ۝ لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",
+ translit: "Amanar-rasulu bima unzila ilayhi mir-Rabbihi wal-mu'minun. Kullun amana billahi wa mala'ikatihi wa kutubihi wa rusulih, la nufarriqu bayna ahadim-mir-rusulih, wa qalu sami'na wa ata'na ghufranaka Rabbana wa ilaykal-masir. La yukalliful-lahu nafsan illa wus'aha... Rabbana la tu'akhidhna in-nasina aw akhta'na... wa'fu 'anna waghfir lana warhamna, Anta Mawlana fansurna 'alal-qawmil-kafirin.",
+ meaning: "The Messenger has believed in what was revealed to him from his Lord, and [so have] the believers. All of them have believed in Allah and His angels and His books and His messengers... Allah does not burden a soul beyond that it can bear... Our Lord, do not impose blame upon us if we have forgotten or erred... and pardon us; forgive us; and have mercy upon us. You are our protector, so give us victory over the disbelieving people.",
+ meaning_ur: "رسول اس پر ایمان لائے جو ان کے رب کی طرف سے ان پر نازل ہوا اور مومنین بھی۔ سب ایمان لائے اللہ پر، اس کے فرشتوں، اس کی کتابوں اور اس کے رسولوں پر... اللہ کسی جان پر اس کی طاقت سے زیادہ بوجھ نہیں ڈالتا... اے ہمارے رب! اگر ہم بھول جائیں یا خطا کر بیٹھیں تو ہماری پکڑ نہ فرما... اور ہمیں معاف فرما، ہماری مغفرت فرما اور ہم پر رحم فرما، تو ہی ہمارا کارساز ہے پس کافروں کے مقابلے میں ہماری مدد فرما۔",
+ benefit: "The Prophet (ﷺ) said: 'Whoever recites the last two verses of Surah Al-Baqarah at night, they will suffice him against all harm and devils' (Sahih Al-Bukhari).",
+ benefit_ur: "رسول اللہ ﷺ نے فرمایا: 'جو شخص رات کے وقت سورہ بقرہ کی آخری دو آیتیں پڑھ لے گا وہ اس کے لیے (ہر مصیبت و شیطان سے) کافی ہو جائیں گی۔'",
+ repeat: "1x Nightly",
+ audio: [
+   "https://everyayah.com/data/Alafasy_128kbps/002285.mp3",
+   "https://everyayah.com/data/Alafasy_128kbps/002286.mp3"
+ ]
+ },
+ {
+ code: "# 09",
+ id: "ayat-sihr",
+ title: "Ayat of Sihr Annulment (Musa vs Sorcerers - Magic Breaker)",
+ title_ur: "آیاتِ ابطالِ سحر (کالے جادو اور بندش کا قرآنی توڑ)",
+ reference: "Surah Yunus (10:81-82)",
+ category: "Sihr & Jadu Shield",
+ arabicPreview: "فَلَمَّا أَلْقَوْا قَالَ مُوسَىٰ مَا جِئْتُم بِهِ السِّحْرُ ۖ إِنَّ اللَّهَ سَيُبْطِلُهُ...",
+ arabic: "فَلَمَّا أَلْقَوْا قَالَ مُوسَىٰ مَا جِئْتُم بِهِ السِّحْرُ ۖ إِنَّ اللَّهَ سَيُبْطِلُهُ ۖ إِنَّ اللَّهَ لَا يُصْلِحُ عَمَلَ الْمُفْسِدِينَ ۝ وَيُحِقُّ اللَّهُ الْحَقَّ بِكَلِمَاتِهِ وَلَوْ كَرِهَ الْمُجْرِمُونَ",
+ translit: "Falamma alqaw qala Musa ma ji'tum bihis-sihr, innAllaha sayubtiluh, innAllaha la yuslihu 'amalal-mufsidin. Wa yuhiqqul-lahul-haqqa bi-kalimatihi wa law karihal-mujrimun.",
+ meaning: "Musa said: What you have brought is sorcery; indeed, Allah will make it null and void. Indeed, Allah does not amend the work of corrupters. And Allah will establish the truth by His words, even if the criminals dislike it.",
+ meaning_ur: "جب انہوں نے (جادو کے سامان) ڈالے تو موسیٰ نے کہا: جو تم لائے ہو وہ جادو ہے۔ بے شک اللہ اسے ابھی باطل کر دے گا، اللہ فسادیوں کے کام کو نہیں سدھارتا۔ اور اللہ اپنے کلمات کے ذریعے حق کو سچا کر دکھائے گا اگرچہ مجرم ناپسند ہی کریں۔",
+ benefit: "Foremost Quranic verse for breaking and nullifying black magic (Sihr) and occult knots. Recite 7 times over drinking water, bath water with Sidr leaves, and pure olive oil.",
+ benefit_ur: "سحر، کالے جادو اور بد اثرات کو باطل کرنے کے لیے یہ آیت اکسیر ہے۔ پانی اور زیتون کے تیل پر ۷ مرتبہ دم کر کے استعمال کریں۔",
+ repeat: "7x Daily",
+ audio: [
+   "https://everyayah.com/data/Alafasy_128kbps/010081.mp3",
+   "https://everyayah.com/data/Alafasy_128kbps/010082.mp3"
+ ]
+ },
+ {
+ code: "# 10",
+ id: "ayat-karima",
+ title: "Ayat Karima (Supplication of Prophet Yunus - Relief from Distress)",
+ title_ur: "آیۃ کریمہ (دعا حضرت یونس علیہ السلام - نجات از مصائب)",
  reference: "Surah Al-Anbiya (21:87)",
  category: "Supreme Protection",
  arabicPreview: "لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ...",
@@ -2344,25 +2647,46 @@
  translit: "La ilaha illa Anta subhanaka inni kuntu minaz-zalimin.",
  meaning: "There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.",
  meaning_ur: "تیرے سوا کوئی معبود نہیں، تو پاک ہے، بے شک میں ہی قصورواروں میں سے تھا۔",
- benefit: "The Prophet (ﷺ) said: 'No believer calls upon Allah with these words in any distress or affliction except that Allah relieves him' (Jami` at-Tirmidhi). Recite 40x or 100x for profound relief.",
+ benefit: "The Prophet (ﷺ) said: 'No believer calls upon Allah with these words in any distress or affliction except that Allah relieves him' (Jami` at-Tirmidhi). Recite 40x or 100x for profound relief from impossible hardships.",
+ benefit_ur: "نبی کریم ﷺ نے فرمایا: 'کوئی بھی مسلمان جب کسی مشکل میں یہ دعا مانگے گا تو اللہ اس کی دعا ضرور قبول فرمائے گا۔'",
  repeat: "40x / 100x",
- audio: "https://everyayah.com/data/Alafasy_128kbps/021087.mp3"
+ audio: ["https://everyayah.com/data/Alafasy_128kbps/021087.mp3"]
  },
  {
- code: "# 08",
- title: "Surah Al-Fatiha (The Ultimate Healing - Ash-Shifa)",
- reference: "Surah Al-Fatiha (1:1-7)",
+ code: "# 11",
+ id: "dua-jibreel",
+ title: "Du'a of Jibreel (A.S.) for Sickness & Evil Eye",
+ title_ur: "دعائے جبرائیل علیہ السلام (نظر بد اور امراض سے دم)",
+ reference: "Sahih Muslim (Hadith 2186)",
  category: "Ruqyah Remedy",
- arabicPreview: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ الْحَمْدُ لِلَّهِ...",
- arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ الرَّحْمَٰنِ الرَّحِيمِ مَالِكِ يَوْمِ الدِّينِ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
- translit: "Bismillahi-r-Rahmani-r-Rahim. Al-hamdu lillahi Rabbi-l-'alamin. Ar-Rahmani-r-Rahim. Maliki yawmi-d-din. Iyyaka na'budu wa iyyaka nasta'in. Ihdina-s-sirata-l-mustaqim. Sirata-l-ladhina an'amta 'alayhim, ghayri-l-maghdubi 'alayhim wa la-d-dallin.",
- meaning: "In the name of Allah, the Entirely Merciful, the Especially Merciful. All praise is due to Allah, Lord of the worlds... Guide us to the straight path, the path of those upon whom You have bestowed favor...",
- meaning_ur: "اللہ کے نام سے جو نہایت مہربان بہت رحم والا ہے۔ تمام تعریفیں اللہ ہی کے لیے ہیں جو تمام جہانوں کا پالنے والا ہے... ہمیں سیدھے راستے کی ہدایت فرما، ان لوگوں کے راستے کی جن پر تو نے انعام فرمایا...",
- benefit: "Explicitly designated by the Prophet (ﷺ) as 'Ar-Ruqyah' (The Complete Cure). Recite 7 times blowing over the forehead, chest, or drinking water for total spiritual cleansing.",
+ arabicPreview: "بِسْمِ اللَّهِ أَرْقِيكَ، مِن كُلِّ شَيْءٍ يُؤْذِيكَ...",
+ arabic: "بِسْمِ اللَّهِ أَرْقِيكَ، مِن كُلِّ شَيْءٍ يُؤْذِيكَ، مِن شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ",
+ translit: "Bismillahi arqeek, min kulli shay'in yu'dheek, min sharri kulli nafsin aw 'ayni hasid, Allahu yashfeek, Bismillahi arqeek.",
+ meaning: "In the name of Allah I perform Ruqyah upon you, from everything that harms you, from the evil of every soul or envious eye. May Allah heal you. In the name of Allah I perform Ruqyah upon you.",
+ meaning_ur: "اللہ کے نام سے میں آپ پر دم کرتا ہوں، ہر اس چیز سے جو آپ کو تکلیف دے، ہر جان یا حاسد کی نظر کے شر سے، اللہ آپ کو شفا دے، اللہ کے نام سے میں دم کرتا ہوں۔",
+ benefit: "The authentic Ruqyah recitation performed by Archangel Jibreel upon the Messenger of Allah (ﷺ) during illness. Repeat 7 times with the right hand over pain or water.",
+ benefit_ur: "جب نبی کریم ﷺ بیمار ہوئے تو حضرت جبرائیل علیہ السلام تشریف لائے اور ان کلمات سے آپ ﷺ پر دم فرمایا۔",
  repeat: "7x",
- audio: "https://everyayah.com/data/Alafasy_128kbps/001001.mp3"
+ audio: ["https://everyayah.com/data/Alafasy_128kbps/002255.mp3"]
+ },
+ {
+ code: "# 12",
+ id: "kalimatillah",
+ title: "Protection with Allah's Perfect Words (Shield from Jinns)",
+ title_ur: "کلمات اللہ التامات (جنات، شیاطین و موذی اثرات سے پناہ)",
+ reference: "Sahih Muslim (Hadith 2708)",
+ category: "Jinn & Spiritual Relief",
+ arabicPreview: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ الَّتِي لَا يُجَاوِزُهُنَّ...",
+ arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ الَّتِي لَا يُجَاوِزُهُنَّ بَرٌّ وَلَا فَاجِرٌ مِن شَرِّ مَا خَلَقَ وَذَرَأَ وَبَرَأَ، وَمِن شَرِّ مَا يَنزِلُ مِنَ السَّمَاءِ، وَمِن شَرِّ مَا يَعْرُجُ فِيهَا، وَمِن شَرِّ مَا ذَرَأَ فِي الْأَرْضِ، وَمِن شَرِّ مَا يَخْرُجُ مِنْهَا، وَمِن شَرِّ فِتَنِ اللَّيْلِ وَالنَّهَارِ، وَمِن شَرِّ كُلِّ طَارِقٍ إِلَّا طَارِقًا يَطْرُقُ بِخَيْرٍ يَا رَحْمَٰنُ",
+ translit: "A'udhu bi-kalimatil-lahit-tammati-llati la yujawizuhunna barrun wa la fajirun min sharri ma khalaqa wa dhara'a wa bara'a, wa min sharri ma yanzilu minas-sama'i wa ma ya'ruju fiha... wa min sharri kulli tariqin illa tariqan yatruqu bi-khayrin ya Rahman.",
+ meaning: "I seek refuge in the perfect words of Allah, which neither the righteous nor the wicked can surpass, from the evil of what He created and multiplied... and from the evil of every visitor of the night, except one bringing good, O Most Merciful.",
+ meaning_ur: "میں اللہ کے ان کامل کلمات کی پناہ مانگتا ہوں جن سے آگے کوئی نیک و بد نہیں گزر سکتا، ہر اس چیز کے شر سے جو اس نے پیدا کی، اور آسمان سے اترنے والے اور اس پر چڑھنے والے کے شر سے، اور رات دن کے فتنوں سے اور رات کو آنے والے ہر شر سے سوائے اس کے جو خیر کے ساتھ آئے اے رحمن۔",
+ benefit: "Revealed when an aggressive demon with a flame attempted to attack the Prophet (ﷺ); upon reciting this du'a, the entity fell vanquished and the fire extinguished.",
+ benefit_ur: "جب سرکش جنات نے آگ کا شعلہ لے کر نبی اکرم ﷺ پر حملہ کرنا چاہا تو حضرت جبرائیل علیہ السلام نے یہ کلمات سکھائے، جن کے پڑھتے ہی شعلہ بجھ گیا اور جن ہلاک ہو گیا۔",
+ repeat: "3x Morning & Evening",
+ audio: ["https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/114.mp3"]
  }
- ];
+];
 
  /* ================= 5. HELPER UTILITIES ================= */
  const $ = id => document.getElementById(id);
@@ -2564,20 +2888,24 @@
  function renderServicesDeck(){
  const deck = $('serviceDeck');
  deck.innerHTML = '';
+ const isUr = (getAppLanguage() === 'ur');
 
  SERVICES.forEach(s => {
  const box = document.createElement('div');
  box.className = 'service-box' + (s.name === $('selectedService').value ? ' selected' : '');
- const fee = ACTIVE_CURRENCY === 'USD' ? '$' + s.feeUSD : 'Rs. ' + s.feePKR.toLocaleString();
+ const sTitle = (isUr && s.nameUr) ? s.nameUr : s.name;
+ const sDesc = (isUr && s.descUr) ? s.descUr : s.desc;
+ const sDur = (isUr && s.durationUr) ? s.durationUr : s.duration;
+ const fee = ACTIVE_CURRENCY === 'USD' ? '$' + s.feeUSD : (isUr ? 'روپے ' : 'Rs. ') + s.feePKR.toLocaleString();
 
  box.innerHTML = `
  <div class="service-box-header">
  <span class="service-box-icon">${s.icon}</span>
- <div class="service-box-title">${esc(s.name)}</div>
+ <div class="service-box-title">${esc(sTitle)}</div>
  </div>
- <div class="service-box-desc">${esc(s.desc)}</div>
+ <div class="service-box-desc">${esc(sDesc)}</div>
  <div class="service-box-meta">
- <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${s.duration}</span>
+ <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${sDur}</span>
  <span style="display:inline-flex;align-items:center;gap:4px;font-weight:700;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> ${fee}</span>
  </div>
  `;
@@ -3242,294 +3570,566 @@
  }
  }
 
- /* ================= 14. HOVER-EXPAND ADHKAR DECK & AUDIO ENGINE ================= */
+ /* ================= 14. ENHANCED HOVER-EXPAND ADHKAR DECK & AUDIO ENGINE ================= */
  let ACTIVE_HOVER_CARD = 0;
  let ACTIVE_ADHKAR_FILTER = 'All';
  let CURRENT_AUDIO = null;
- let PLAYING_CARD_INDEX = null;
+ let CURRENT_PLAYLIST = [];
+ let CURRENT_PLAYLIST_INDEX = 0;
+ let PLAYING_CARD_CODE = null;
 
  function filterAdhkarCategory(cat){
- ACTIVE_ADHKAR_FILTER = cat;
- document.querySelectorAll('.adhkar-filter-pill').forEach(p => {
- p.classList.toggle('active', p.textContent.includes(cat) || (cat === 'All' && p.textContent.includes('All')));
- });
- renderAdhkarList();
+   ACTIVE_ADHKAR_FILTER = cat;
+   document.querySelectorAll('.adhkar-filter-pill').forEach(p => {
+     p.classList.toggle('active', p.textContent.includes(cat) || (cat === 'All' && p.textContent.includes('All')));
+   });
+   renderAdhkarList();
  }
 
  function renderAdhkarList(){
- const deck = $('adhkarDeck');
- if(!deck) return;
- deck.innerHTML = '';
+   const deck = $('adhkarDeck');
+   if(!deck) return;
+   deck.innerHTML = '';
+   const isUr = (getAppLanguage() === 'ur');
 
- const filtered = ACTIVE_ADHKAR_FILTER === 'All'
- ? ADHKAR_LIST
- : ADHKAR_LIST.filter(a => a.category.toLowerCase().includes(ACTIVE_ADHKAR_FILTER.toLowerCase()));
+   const filtered = ACTIVE_ADHKAR_FILTER === 'All'
+     ? ADHKAR_LIST
+     : ADHKAR_LIST.filter(a => a.category.toLowerCase().includes(ACTIVE_ADHKAR_FILTER.toLowerCase()));
 
- if(!filtered.length){
- deck.innerHTML = `
- <div class="card" style="text-align: center; padding: 36px 20px;">
- <p style="color: var(--muted); font-size: 0.9rem;">No Ayats found in this category.</p>
- <button class="btn btn-outline btn-sm" style="margin-top: 10px;" onclick="filterAdhkarCategory('All')">View All Ayats</button>
- </div>
- `;
- return;
- }
+   if(!filtered.length){
+     deck.innerHTML = `
+       <div class="card" style="text-align: center; padding: 36px 20px;">
+         <p style="color: var(--muted); font-size: 0.9rem;">${isUr ? 'اس کیٹیگری میں کوئی دعا یا سورہ موجود نہیں ہے۔' : 'No Ayats or Surahs found in this category.'}</p>
+         <button class="btn btn-outline btn-sm" style="margin-top: 10px;" onclick="filterAdhkarCategory('All')">${isUr ? 'تمام دعائیں دیکھیں' : 'View All Ayats'}</button>
+       </div>
+     `;
+     return;
+   }
 
- filtered.forEach((item, idx) => {
- const isDefaultActive = (idx === 0);
- const card = document.createElement('div');
- card.className = 'hover-expand-card' + (isDefaultActive ? ' active' : '');
- card.id = 'expandCard-' + idx;
+   filtered.forEach((item, idx) => {
+     const isDefaultActive = (idx === 0);
+     const card = document.createElement('div');
+     card.className = 'hover-expand-card' + (isDefaultActive ? ' active' : '');
+     card.id = 'expandCard-' + idx;
+     card.dataset.code = item.code;
 
- // Desktop hover expansion & touch click expansion
- card.onmouseenter = () => handleCardHover(idx);
- card.onclick = (e) => {
- if(e.target.closest('button')) return;
- toggleHoverCard(idx);
- };
+     // Desktop hover expansion & touch click expansion
+     card.onmouseenter = () => handleCardHover(idx);
+     card.onclick = (e) => {
+       if(e.target.closest('button')) return;
+       toggleHoverCard(idx);
+     };
 
- card.innerHTML = `
- <!-- Collapsed Strip Header -->
- <div class="expand-card-strip">
- <div class="strip-left">
- <span class="strip-code-badge">${item.code}</span>
- <div class="strip-title-group">
- <span class="strip-title">${esc(item.title)}</span>
- <span class="strip-cat-tag">${esc(item.category)}</span>
- </div>
- </div>
- <div class="strip-right">
- <span class="strip-arabic-preview">${item.arabicPreview}</span>
- <div class="strip-chevron">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
- </div>
- </div>
- </div>
+     const displayTitle = (isUr && item.title_ur) ? item.title_ur : item.title;
+     const displayBenefit = (isUr && item.benefit_ur) ? item.benefit_ur : item.benefit;
+     const isCurrentPlaying = (PLAYING_CARD_CODE === item.code);
+     const audioDataJson = esc(JSON.stringify(item.audio));
 
- <!-- Expandable Animated Body -->
- <div class="expand-card-content-wrap">
- <div class="expand-card-inner">
- <div class="expand-body-pad">
- <div class="watermark-bg" aria-hidden="true">شِفَاء</div>
+     card.innerHTML = `
+       <!-- Collapsed Strip Header -->
+       <div class="expand-card-strip">
+         <div class="strip-left">
+           <span class="strip-code-badge">${item.code}</span>
+           <div class="strip-title-group">
+             <span class="strip-title">${esc(displayTitle)}</span>
+             <span class="strip-cat-tag">${esc(item.category)}</span>
+           </div>
+         </div>
+         <div class="strip-right">
+           <span class="strip-arabic-preview">${item.arabicPreview}</span>
+           <div class="strip-chevron">
+             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+           </div>
+         </div>
+       </div>
 
- <!-- Calligraphy Box -->
- <div class="expand-arabic-frame">
- <div style="font-size: 0.72rem; color: var(--gold-light); font-weight: 700; margin-bottom: 8px; letter-spacing: 0.05em;">
- 📖 ${esc(item.reference)}
- </div>
- <div class="expand-arabic-text">${item.arabic}</div>
- </div>
+       <!-- Expandable Animated Body -->
+       <div class="expand-card-content-wrap">
+         <div class="expand-card-inner">
+           <div class="expand-body-pad">
+             <div class="watermark-bg" aria-hidden="true">شِفَاء</div>
 
- <!-- Transliteration -->
- <div class="expand-translit-text">
- <b>Pronunciation:</b> ${esc(item.translit)}
- </div>
+             <!-- Calligraphy Box -->
+             <div class="expand-arabic-frame">
+               <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 700; margin-bottom: 8px; letter-spacing: 0.05em; display:flex; justify-content:space-between; align-items:center;">
+                 <span>📖 ${esc(item.reference)}</span>
+                 <span style="font-size: 0.68rem; opacity:0.85;">🔊 Full High Quality Recitation</span>
+               </div>
+               <div class="expand-arabic-text" style="font-family:'Amiri Quran','Noto Naskh Arabic','Amiri',serif; line-height:2.1; font-size:1.25rem;">${item.arabic}</div>
+             </div>
 
- <!-- Bilingual Meaning -->
- <div class="expand-translations-box">
- <div class="trans-title">Translation &amp; Meaning</div>
- <div class="trans-en-text">"${esc(item.meaning)}"</div>
- <div class="trans-ur-text">"${item.meaning_ur}"</div>
- </div>
+             <!-- Transliteration -->
+             <div class="expand-translit-text">
+               <b>Pronunciation:</b> ${esc(item.translit)}
+             </div>
 
- <!-- Hadith Virtue Box -->
- <div class="expand-virtue-box">
- <strong>💡 Sunnah Prescription &amp; Virtue:</strong> ${esc(item.benefit)}
- </div>
+             <!-- Bilingual Meaning -->
+             <div class="expand-translations-box">
+               <div class="trans-title">${isUr ? 'ترجمہ و مفہوم' : 'Translation & Meaning'}</div>
+               <div class="trans-en-text">"${esc(item.meaning)}"</div>
+               <div class="trans-ur-text" style="direction:rtl; text-align:right; font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif; line-height:1.9;">"${item.meaning_ur}"</div>
+             </div>
 
- <!-- Action Bar -->
- <div class="expand-actions-bar">
- <span class="recitation-target-badge">
- 🔁 Target Recitation: <b>${item.repeat}</b>
- </span>
- <div class="action-btns-group">
- <button type="button" class="btn-audio-play" id="audioBtn-${idx}" onclick="event.stopPropagation(); toggleAudioRecitation(${idx}, '${item.audio}')">
- <span>▶</span> Listen Recitation
- </button>
- <button type="button" class="btn-copy-card" onclick="event.stopPropagation(); copyAyatText('${esc(item.title)}', '${esc(item.arabic)}', '${esc(item.meaning)}')">
- <span>📋</span> Copy Text
- </button>
- <button type="button" class="btn-copy-card" onclick="event.stopPropagation(); openTasbeehWithPreset('${esc(item.title)}', '${item.repeat}')">
- <span>📿</span> Tasbeeh Counter
- </button>
- </div>
- </div>
- </div>
- </div>
- </div>
- `;
+             <!-- Hadith Virtue Box -->
+             <div class="expand-virtue-box">
+               <strong>💡 ${isUr ? 'مسنون فضائل و طریقہ علاج:' : 'Sunnah Prescription & Virtue:'}</strong> ${esc(displayBenefit)}
+             </div>
 
- deck.appendChild(card);
- });
+             <!-- Action Bar -->
+             <div class="expand-actions-bar">
+               <span class="recitation-target-badge">
+                 🔁 ${isUr ? 'مقررہ تعداد:' : 'Target Recitation:'} <b>${item.repeat}</b>
+               </span>
+               <div class="action-btns-group">
+                 <button type="button" class="btn-audio-play ${isCurrentPlaying ? 'playing' : ''}" data-audio-code="${item.code}" onclick="event.stopPropagation(); toggleAudioRecitation('${item.code}', ${audioDataJson})">
+                   <span>${isCurrentPlaying ? '⏸' : '▶'}</span>
+                   <span class="audio-btn-lbl">${isCurrentPlaying ? (isUr ? 'آڈیو روکیں' : 'Pause Recitation') : (isUr ? 'مکمل تلاوت سنیں' : 'Listen Full Recitation')}</span>
+                 </button>
+                 <button type="button" class="btn-copy-card" onclick="event.stopPropagation(); copyAyatText('${esc(displayTitle)}', '${esc(item.arabic)}', '${esc(item.meaning)}')">
+                   <span>📋</span> ${isUr ? 'متن کاپی کریں' : 'Copy Text'}
+                 </button>
+                 <button type="button" class="btn-copy-card" onclick="event.stopPropagation(); openTasbeehWithPreset('${esc(displayTitle)}', '${item.repeat}')">
+                   <span>📿</span> ${isUr ? 'تسبیح کاؤنٹر' : 'Tasbeeh Counter'}
+                 </button>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     `;
+
+     deck.appendChild(card);
+   });
  }
 
  function handleCardHover(idx){
- setActiveHoverCard(idx);
+   setActiveHoverCard(idx);
  }
 
  function toggleHoverCard(idx){
- const card = $('expandCard-' + idx);
- if(!card) return;
- setActiveHoverCard(idx);
+   const card = $('expandCard-' + idx);
+   if(!card) return;
+   setActiveHoverCard(idx);
  }
 
  function setActiveHoverCard(idx){
- ACTIVE_HOVER_CARD = idx;
- document.querySelectorAll('.hover-expand-card').forEach((c, index) => {
- c.classList.toggle('active', index === idx);
- });
+   ACTIVE_HOVER_CARD = idx;
+   document.querySelectorAll('.hover-expand-card').forEach((c, index) => {
+     c.classList.toggle('active', index === idx);
+   });
  }
 
- function toggleAudioRecitation(idx, audioUrl){
- if(CURRENT_AUDIO && PLAYING_CARD_INDEX === idx){
- if(!CURRENT_AUDIO.paused){
- CURRENT_AUDIO.pause();
- updateAudioBtnUI(idx, false);
- return;
- } else {
- CURRENT_AUDIO.play();
- updateAudioBtnUI(idx, true);
- return;
- }
+ function toggleAudioRecitation(code, audioSource){
+   const isUr = (getAppLanguage() === 'ur');
+
+   // Toggle play/pause if clicking the currently active recitation
+   if(CURRENT_AUDIO && PLAYING_CARD_CODE === code){
+     if(!CURRENT_AUDIO.paused){
+       CURRENT_AUDIO.pause();
+       updateAudioBtnUI(code, false);
+     } else {
+       CURRENT_AUDIO.play().catch(e => toast(isUr ? 'آڈیو پلے کرنے میں مسئلہ' : 'Audio stream error', true));
+       updateAudioBtnUI(code, true);
+     }
+     return;
+   }
+
+   // Stop any previously playing recitation
+   if(CURRENT_AUDIO){
+     CURRENT_AUDIO.pause();
+     CURRENT_AUDIO.currentTime = 0;
+     if(PLAYING_CARD_CODE) updateAudioBtnUI(PLAYING_CARD_CODE, false);
+   }
+
+   // Prepare playlist (can be single URL or array of verse URLs)
+   let playlist = [];
+   try {
+     if(typeof audioSource === 'string'){
+       playlist = JSON.parse(audioSource);
+     } else if(Array.isArray(audioSource)){
+       playlist = audioSource;
+     } else {
+       playlist = [audioSource];
+     }
+   } catch(e) {
+     playlist = [audioSource];
+   }
+   if(!Array.isArray(playlist)) playlist = [playlist];
+
+   CURRENT_PLAYLIST = playlist;
+   CURRENT_PLAYLIST_INDEX = 0;
+   PLAYING_CARD_CODE = code;
+
+   playCurrentPlaylistTrack();
  }
 
- if(CURRENT_AUDIO){
- CURRENT_AUDIO.pause();
- if(PLAYING_CARD_INDEX !== null) updateAudioBtnUI(PLAYING_CARD_INDEX, false);
+ function playCurrentPlaylistTrack(){
+   const isUr = (getAppLanguage() === 'ur');
+   if(!CURRENT_PLAYLIST || CURRENT_PLAYLIST_INDEX >= CURRENT_PLAYLIST.length){
+     if(PLAYING_CARD_CODE) updateAudioBtnUI(PLAYING_CARD_CODE, false);
+     PLAYING_CARD_CODE = null;
+     CURRENT_AUDIO = null;
+     return;
+   }
+
+   const url = CURRENT_PLAYLIST[CURRENT_PLAYLIST_INDEX];
+   CURRENT_AUDIO = new Audio(url);
+   updateAudioBtnUI(PLAYING_CARD_CODE, true);
+
+   CURRENT_AUDIO.play().then(() => {
+     updateAudioBtnUI(PLAYING_CARD_CODE, true);
+   }).catch(err => {
+     console.warn('Primary audio failed, trying fallback...', err);
+     // If fallback exists in playlist
+     if(CURRENT_PLAYLIST.length > 1 && CURRENT_PLAYLIST_INDEX === 0){
+       CURRENT_PLAYLIST_INDEX++;
+       playCurrentPlaylistTrack();
+     } else {
+       toast(isUr ? 'آڈیو لوڈ ہو رہی ہے، براہ کرم انتظار فرمائیں...' : 'Connecting to recitation stream...', false);
+       updateAudioBtnUI(PLAYING_CARD_CODE, false);
+     }
+   });
+
+   CURRENT_AUDIO.onended = () => {
+     CURRENT_PLAYLIST_INDEX++;
+     if(CURRENT_PLAYLIST_INDEX < CURRENT_PLAYLIST.length){
+       playCurrentPlaylistTrack();
+     } else {
+       if(PLAYING_CARD_CODE) updateAudioBtnUI(PLAYING_CARD_CODE, false);
+       PLAYING_CARD_CODE = null;
+       CURRENT_AUDIO = null;
+     }
+   };
  }
 
- CURRENT_AUDIO = new Audio(audioUrl);
- PLAYING_CARD_INDEX = idx;
- updateAudioBtnUI(idx, true);
-
- CURRENT_AUDIO.play().catch(e => {
- toast('Audio recitation stream error', true);
- updateAudioBtnUI(idx, false);
- });
-
- CURRENT_AUDIO.onended = () => {
- updateAudioBtnUI(idx, false);
- PLAYING_CARD_INDEX = null;
- };
- }
-
- function updateAudioBtnUI(idx, isPlaying){
- const btn = $('audioBtn-' + idx);
- if(!btn) return;
- if(isPlaying){
- btn.classList.add('playing');
- btn.innerHTML = `<span>⏸</span> Pause Recitation`;
- } else {
- btn.classList.remove('playing');
- btn.innerHTML = `<span>▶</span> Listen Recitation`;
- }
+ function updateAudioBtnUI(code, isPlaying){
+   const isUr = (getAppLanguage() === 'ur');
+   const btn = document.querySelector(`[data-audio-code="${code}"]`);
+   if(!btn) return;
+   if(isPlaying){
+     btn.classList.add('playing');
+     btn.innerHTML = `<span>⏸</span> <span class="audio-btn-lbl">${isUr ? 'آڈیو روکیں' : 'Pause Recitation'}</span>`;
+   } else {
+     btn.classList.remove('playing');
+     btn.innerHTML = `<span>▶</span> <span class="audio-btn-lbl">${isUr ? 'مکمل تلاوت سنیں' : 'Listen Full Recitation'}</span>`;
+   }
  }
 
  function copyAyatText(title, arabic, meaning){
- const text = `${title}\n\n${arabic}\n\n"${meaning}"\n\n— Shifa-Ruqiyah Centre (src-online.com)`;
- if(navigator.clipboard && navigator.clipboard.writeText){
- navigator.clipboard.writeText(text).then(() => {
- toast(`Copied "${title}" to clipboard ✓`);
- }).catch(() => {
- toast(`Text copied ✓`);
- });
- } else {
- toast(`Text copied ✓`);
- }
- }
-
- function openTasbeehWithPreset(title, repeatStr){
- let count = 33;
- if(repeatStr.includes('7x')) count = 7;
- else if(repeatStr.includes('3x')) count = 3;
- else if(repeatStr.includes('100x')) count = 100;
- else if(repeatStr.includes('40x')) count = 40;
-
- const select = $('tasbeehDhikrSelect');
- if(select){
- for(let opt of select.options){
- if(title.toLowerCase().includes(opt.value.toLowerCase())){
- select.value = opt.value;
- break;
- }
- }
+   const isUr = (getAppLanguage() === 'ur');
+   const text = `${title}\n\n${arabic}\n\n"${meaning}"\n\n— Shifa-Ruqiyah Centre (src-online.com)`;
+   if(navigator.clipboard && navigator.clipboard.writeText){
+     navigator.clipboard.writeText(text).then(() => {
+       toast(isUr ? `"${title}" کاپی ہو گئی ✓` : `Copied "${title}" to clipboard ✓`);
+     }).catch(() => {
+       toast(isUr ? 'متن کاپی ہو گیا ✓' : 'Text copied ✓');
+     });
+   } else {
+     toast(isUr ? 'متن کاپی ہو گیا ✓' : 'Text copied ✓');
+   }
  }
 
- setTasbeehTarget(count);
- resetTasbeeh();
- openTasbeehModal();
- toast(`Tasbeeh target set to ${count} for ${title}`);
- }
 
- /* ================= 15. DIGITAL TASBEEH MODAL ================= */
- let TASBEEH_COUNT = 0;
- let TASBEEH_TARGET = 33;
+ /* ================= 15. COMPREHENSIVE URDU & ENGLISH I18N SYSTEM ================= */
+const APP_I18N = {
+  current: localStorage.getItem('src_app_language') || 'en',
+  dict: {
+    en: {
+      brand_title: "SHIFA-RUQIYAH CENTRE",
+      brand_sub: "Al-Qur'an & Sunnah",
+      brand_pill: "Patient Portal",
+      tab_overview: "Overview",
+      tab_book: "Book Session",
+      tab_tracker: "My Appointments",
+      tab_profile: "Spiritual & Adhkar",
+      m_tab_home: "Home",
+      m_tab_book: "Book",
+      m_tab_tracker: "Tracker",
+      m_tab_profile: "Spiritual",
+      client_lookup: 'Lookup<span class="chip-patient-text"> Patient</span>',
+      nav_admin: "Admin",
 
- function openTasbeehModal(){
- $('tasbeehModal').classList.add('active');
- }
+      hero_title: "Shifa & Ruqyah Patient Portal",
+      hero_sub: "Welcome to Shifa-Ruqiyah Centre's dedicated customer platform. Schedule your Ruqyah Shari'ah sessions, track appointment statuses, explore your spiritual numerology, and access personalized healing adhkar.",
+      hero_btn_book: "Schedule Appointment",
+      hero_btn_track: "Track My Booking",
+      hero_btn_whatsapp: "WhatsApp Hotline",
 
- function closeTasbeehModal(){
- $('tasbeehModal').classList.remove('active');
- }
+      features_title: "Direct Services & Tools",
+      features_sub: "Quick access to all spiritual guidance and booking facilities",
+      f1_title: "Book Ruqyah Consultation",
+      f1_desc: "Schedule a specialized Ruqyah Shari'ah session for Jadu, Nazar, Jinn, or spiritual assessment with date & time slot selection.",
+      f1_cta: "Proceed to Booking →",
+      f2_title: "Appointment Status & Slip",
+      f2_desc: "Look up your booked appointment by mobile number or Patient ID. View live countdowns and download your printable session slip.",
+      f2_cta: "Check Booking Status →",
+      f3_title: "Spiritual Numerology Report",
+      f3_desc: "Instant Pythagorean & Chaldean profile for your name and date of birth with bilingual (English & Urdu) spiritual insights.",
+      f3_cta: "Calculate Profile →",
+      f4_title: "Digital Tasbeeh & Adhkar",
+      f4_desc: "Interactive dhikr counter with vibration feedback, preset targets (33, 100), and recommended daily protection du'as.",
+      f4_cta: "Open Tasbeeh Counter →",
 
- function incrementTasbeeh(){
- TASBEEH_COUNT++;
- $('tasbeehCountNum').textContent = TASBEEH_COUNT;
+      g_title: "Clinic Consultation Guidelines",
+      g_sub: "Important instructions before attending your Ruqyah session",
+      g1_title: "1. State of Purity (Wudu)",
+      g1_desc: "Please arrive or join in a state of ablution (Wudu) with clean clothing and modest attire.",
+      g2_title: "2. Punctuality is Mandatory",
+      g2_desc: "Sessions run strictly to time. Please arrive or connect 10 minutes prior to your allocated slot.",
+      g3_title: "3. Bring Fresh Water & Oil",
+      g3_desc: "For personalized recitation, keep a sealed bottle of drinking water and pure olive oil ready.",
 
- if(navigator.vibrate){
- navigator.vibrate(25);
- }
+      book_title: "Book a Consultation Session",
+      book_sub: "Choose your session type, pick your date & time, and receive instant confirmation",
+      book_s1_title: "Step 1: Select Consultation / Session Type",
+      book_s1_hint: "Click to choose",
+      book_s2_title: "Step 2: Choose Appointment Date & Time Slot",
+      book_s2_hint: "Select date from calendar below",
+      book_slot_note: "Standard session length: 60 minutes. Booked slots are crossed out.",
+      book_s3_title: "Step 3: Patient Information & Contact Details",
+      book_s3_hint: "Required for spiritual consultation record",
+      lbl_name: "Patient Full Name",
+      lbl_father: "Father's / Guardian's Name",
+      lbl_country: "Country / Location",
+      lbl_mobile: "WhatsApp / Mobile Number",
+      lbl_gender: "Gender",
+      opt_male: "Male",
+      opt_female: "Female",
+      lbl_dob: "Date of Birth",
+      lbl_dob_hint: "Day / Month / Year",
+      lbl_notes: "Brief Description of Concern / Symptoms",
+      ph_name: "e.g. Muhammad Farooq",
+      ph_father: "e.g. Abdul Rehman",
+      ph_country: "e.g. Pakistan, UK, USA, UAE",
+      ph_mobile: "e.g. 03001234567 or +92300...",
+      ph_notes: "Please describe any dreams, sudden sickness, unexplainable physical discomfort, heaviness during recitation, or concerns...",
 
- if(TASBEEH_TARGET > 0 && TASBEEH_COUNT >= TASBEEH_TARGET){
- if(navigator.vibrate) navigator.vibrate([60, 40, 60]);
- toast(`MashaAllah! Target ${TASBEEH_TARGET} reached ✓`);
- }
- }
+      summary_sel: "Selected Consultation:",
+      summary_sched: "Scheduled Date & Time:",
+      summary_mode: "Consultation Mode:",
+      summary_mode_val: "In-Person / Online Audio Session",
+      summary_est: "Estimated Session Fee:",
+      btn_confirm_book: "Confirm & Request Appointment",
+      summary_disclaimer: "An instant WhatsApp confirmation message will be prepared for immediate dispatch to the clinic reception.",
 
- function resetTasbeeh(){
- TASBEEH_COUNT = 0;
- $('tasbeehCountNum').textContent = '0';
- }
+      tracker_title: "My Appointments & Status Tracker",
+      tracker_sub: "Track your scheduled sessions, view practitioner notes, and enter live waiting mode",
+      tracker_find_lbl: "Find Your Record",
+      tracker_find_desc: "Enter your registered Mobile Number or 4-digit Patient ID (e.g. <code>0001</code>) to retrieve your consultations:",
+      ph_tracker_search: "e.g. 03001234567 or 0001",
+      btn_find_records: "Find Records",
+      btn_reset: "Reset",
 
- function setTasbeehTarget(target){
- TASBEEH_TARGET = target;
- $('preset33').classList.toggle('active', target === 33);
- $('preset100').classList.toggle('active', target === 100);
- $('presetFree').classList.toggle('active', target === 0);
- $('tasbeehCountSub').textContent = target > 0 ? `Target: ${target}` : 'Free Count';
- }
+      profile_title: "Spiritual Numerology & Healing Adhkar",
+      profile_sub: "Personalized Pythagorean & Chaldean profile with bilingual insights & prescribed Du'as",
+      num_box_title: "Generate Numerology Profile",
+      lbl_num_name: "Full Name",
+      lbl_num_dob: "Date of Birth (YYYY-MM-DD)",
+      btn_calc_profile: "Calculate Profile",
+      adhkar_title: "Prescribed Ruqyah, Ayats & Adhkar",
+      adhkar_sub: "Hover or tap any card to smoothly expand full calligraphy, transliteration, audio, and virtues",
+      btn_open_dhikr: "Open Dhikr Counter",
 
- function handleTasbeehDhikrChange(){
- resetTasbeeh();
- }
+      tasbeeh_title: "Digital Tasbeeh Counter",
+      tasbeeh_sub: "Daily Remembrance & Healing Dhikr",
+      tasbeeh_presets: "Presets / اہداف:",
+      tasbeeh_t33: "Target: 33",
+      tasbeeh_t100: "Target: 100",
+      tasbeeh_tfree: "Free (∞)",
+      tasbeeh_tap_hint: "Tap screen, spacebar, or button to count",
+      tasbeeh_btn_reset: "Reset Counter",
+      tasbeeh_btn_done: "Done & Close",
 
- function setTasbeehDhikrText(txt){
- // optional custom label
- }
+      success_modal_title: "Consultation Request Confirmed!",
+      success_modal_desc: "Your consultation booking has been saved. Please dispatch your details to our WhatsApp coordinator to lock in your time slot.",
+      btn_send_whatsapp: "Send to Clinic WhatsApp",
+      btn_track_appt: "Track Appointment"
+    },
+    ur: {
+      brand_title: "شفاء و رقیہ سینٹر",
+      brand_sub: "قرآن و سنت کی روشنی میں",
+      brand_pill: "کسٹمر پورٹل",
+      tab_overview: "جائزہ (ہوم)",
+      tab_book: "اپائنٹمنٹ بک کریں",
+      tab_tracker: "میری اپائنٹمنٹس",
+      tab_profile: "روحانی علاج و اذکار",
+      m_tab_home: "ہوم",
+      m_tab_book: "بکنگ",
+      m_tab_tracker: "ٹریکر",
+      m_tab_profile: "اذکار",
+      client_lookup: 'مریض<span class="chip-patient-text"> تلاش کریں</span>',
+      nav_admin: "ایڈمن",
 
- /* ================= 16. INITIALIZATION ================= */
- window.addEventListener('DOMContentLoaded', () => {
- initCalendar();
- renderServicesDeck();
- renderAdhkarList();
- updateClientChipUI();
+      hero_title: "شفاء و رقیہ پیشنٹ پورٹل",
+      hero_sub: "شفاء و رقیہ سینٹر کے آفیشل پورٹل میں خوش آمدید۔ اپنا رقیہ شرعیہ سیشن بک کریں، اپائنٹمنٹ کی صورتحال معلوم کریں، اپنا روحانی اعداد و شمار معلوم کریں اور مسنون دعائیں و اذکار حاصل کریں۔",
+      hero_btn_book: "اپائنٹمنٹ بک کریں",
+      hero_btn_track: "بکنگ معلوم کریں",
+      hero_btn_whatsapp: "واٹس ایپ رابطہ",
 
- if(ACTIVE_CLIENT){
- $('trackerSearchInput').value = ACTIVE_CLIENT.mobile || ACTIVE_CLIENT.id;
- }
+      features_title: "روحانی خدمات و سہولیات",
+      features_sub: "تمام روحانی رہنمائی اور آن لائن بکنگ تک فوری و آسان رسائی",
+      f1_title: "رقیہ شرعیہ سیشن بک کریں",
+      f1_desc: "سحر، نظر بد، جنات یا عمومی روحانی تشخیص کے لیے تاریخ اور وقت کے انتخاب کے ساتھ سیشن بک کریں۔",
+      f1_cta: "بکنگ کی طرف جائیں ←",
+      f2_title: "اپائنٹمنٹ کی صورتحال اور سلپ",
+      f2_desc: "موبائل نمبر یا مریض آئی ڈی کے ذریعے اپنی بکنگ چیک کریں۔ لائیو کاؤنٹ ڈاؤن دیکھیں اور پرنٹ سلپ حاصل کریں۔",
+      f2_cta: "بکنگ اسٹیٹس دیکھیں ←",
+      f3_title: "روحانی علم الاعداد رپورٹ",
+      f3_desc: "اپنے نام اور تاریخ پیدائش کے مطابق فیثاغورثی اور کلدانی روحانی پروفائل اور اردو/انگریزی رہنمائی حاصل کریں۔",
+      f3_cta: "پروفائل معلوم کریں ←",
+      f4_title: "ڈیجیٹل تسبیح و اذکار",
+      f4_desc: "تسبیح کاؤنٹر، مخصوص اہداف (33، 100) اور روزمرہ کی مسنون حفاظتی دعاؤں کا مجموعہ۔",
+      f4_cta: "تسبیح کاؤنٹر کھولیں ←",
 
- // Hash route listener
- const handleHash = () => {
- const h = (window.location.hash || '').replace('#', '');
- if(['home', 'book', 'tracker', 'profile'].includes(h)){
- switchTab(h);
- }
- };
- window.addEventListener('hashchange', handleHash);
- if(window.location.hash) handleHash();
- });
- 
+      g_title: "کلینک اور سیشن کے اہم رہنما اصول",
+      g_sub: "اپنے رقیہ سیشن میں شرکت سے قبل ضروری شرعی ہدایات",
+      g1_title: "۱. باوضو اور پاکیزگی کی حالت",
+      g1_desc: "براہ کرم باوضو ہو کر، پاک صاف اور باوقار شرعی لباس میں تشریف لائیں۔",
+      g2_title: "۲. وقت کی پابندی لازمی ہے",
+      g2_desc: "تمام سیشنز وقت پر شروع ہوتے ہیں۔ براہ کرم اپنے مقررہ وقت سے ۱۰ منٹ پہلے تشریف لائیں۔",
+      g3_title: "۳. پینے کا پانی اور زیتون کا تیل",
+      g3_desc: "دم کرنے کے لیے پینے کے صاف پانی کی بوتل اور خالص زیتون کا تیل ہمراہ رکھیں۔",
+
+      book_title: "اپائنٹمنٹ سیشن بک کیجئے",
+      book_sub: "سیشن کی نوعیت منتخب کریں، تاریخ و وقت کا انتخاب کریں اور فوری تصدیق حاصل کریں",
+      book_s1_title: "مرحلہ ۱: سیشن کی نوعیت منتخب کریں",
+      book_s1_hint: "منتخب کرنے کے لیے کلک کریں",
+      book_s2_title: "مرحلہ ۲: تاریخ اور وقت کا انتخاب کریں",
+      book_s2_hint: "نیچے کیلنڈر سے تاریخ منتخب کریں",
+      book_slot_note: "معیاری سیشن کا دورانیہ: ۶۰ منٹ۔ بک شدہ اوقات بند ہیں۔",
+      book_s3_title: "مرحلہ ۳: مریض کی معلومات اور رابطہ",
+      book_s3_hint: "روحانی و دفتری ریکارڈ کے لیے لازمی ہے",
+      lbl_name: "مریض کا مکمل نام",
+      lbl_father: "والد / سرپرست کا نام",
+      lbl_country: "ملک / شہر",
+      lbl_mobile: "واٹس ایپ / موبائل نمبر",
+      lbl_gender: "جنس",
+      opt_male: "مرد",
+      opt_female: "عورت",
+      lbl_dob: "تاریخ پیدائش",
+      lbl_dob_hint: "دن / مہینہ / سال",
+      lbl_notes: "مسئلہ یا علامات کی مختصر تفصیل",
+      ph_name: "مثلاً محمد فاروق",
+      ph_father: "مثلاً عبد الرحمن",
+      ph_country: "مثلاً پاکستان، برطانیہ، امریکہ، امارات",
+      ph_mobile: "مثلاً 03001234567 یا +92300...",
+      ph_notes: "کوئی خواب، اچانک بیماری، غیر واضح جسمانی تکلیف، دم کے دوران گھبراہٹ یا اپنا مسئلہ تحریر کریں...",
+
+      summary_sel: "منتخب سیشن:",
+      summary_sched: "مقررہ تاریخ و وقت:",
+      summary_mode: "سیشن کا طریقہ:",
+      summary_mode_val: "بالمشافہ / آن لائن آڈیو سیشن",
+      summary_est: "متوقع سیشن فیس:",
+      btn_confirm_book: "اپائنٹمنٹ کی تصدیق اور بکنگ بھیجیں",
+      summary_disclaimer: "کلینک ریسپشن کو فوری ترسیل کے لیے واٹس ایپ پیغام تیار کیا جائے گا۔",
+
+      tracker_title: "میری اپائنٹمنٹس اور اسٹیٹس ٹریکر",
+      tracker_sub: "اپنی شیڈول نشستیں دیکھیں، رقیہ نوٹس چیک کریں اور لائیو ویٹنگ روم میں داخل ہوں",
+      tracker_find_lbl: "اپنا ریکارڈ تلاش کریں",
+      tracker_find_desc: "اپنا رجسٹرڈ موبائل نمبر یا ۴ ہندسوں کا مریض آئی ڈی (مثلاً 0001) درج کریں:",
+      ph_tracker_search: "مثلاً 03001234567 یا 0001",
+      btn_find_records: "ریکارڈ تلاش کریں",
+      btn_reset: "صاف کریں",
+
+      profile_title: "روحانی علم الاعداد و مسنون اذکار",
+      profile_sub: "نام اور تاریخ پیدائش کے مطابق روحانی تجزیہ اور مسنون دعائیں",
+      num_box_title: "علم الاعداد پروفائل تیار کریں",
+      lbl_num_name: "پورا نام",
+      lbl_num_dob: "تاریخ پیدائش (سال-ماہ-دن)",
+      btn_calc_profile: "پروفائل معلوم کریں",
+      adhkar_title: "مسنون رقیہ، آیاتِ شفاء و اذکار",
+      adhkar_sub: "مکمل عربی متن، ترجمہ، فضائل اور تلاوت سننے کے لیے کارڈ پر ٹیپ کریں",
+      btn_open_dhikr: "تسبیح کاؤنٹر کھولیں",
+
+      tasbeeh_title: "ڈیجیٹل تسبیح کاؤنٹر",
+      tasbeeh_sub: "روزمرہ کے مسنون اذکار و دعائیں",
+      tasbeeh_presets: "اہداف (Presets):",
+      tasbeeh_t33: "ہدف: ۳۳",
+      tasbeeh_t100: "ہدف: ۱۰۰",
+      tasbeeh_tfree: "لامحدود (∞)",
+      tasbeeh_tap_hint: "شمار کرنے کے لیے سکرین یا بٹن پر ٹیپ کریں",
+      tasbeeh_btn_reset: "کاؤنٹر صفر کریں",
+      tasbeeh_btn_done: "مکمل / بند کریں",
+
+      success_modal_title: "اپائنٹمنٹ کی درخواست موصول ہوگئی!",
+      success_modal_desc: "آپ کی بکنگ محفوظ کر لی گئی ہے۔ وقت کو حتمی شکل دینے کے لیے واٹس ایپ کوآرڈینیٹر کو تفصیلات ارسال فرمائیں۔",
+      btn_send_whatsapp: "کلینک واٹس ایپ پر بھیجیں",
+      btn_track_appt: "اپائنٹمنٹ ٹریک کریں"
+    }
+  }
+};
+
+function getAppLanguage(){
+  return APP_I18N.current || 'en';
+}
+
+
+function toggleAppLanguage(){
+  const cur = getAppLanguage();
+  const next = (cur === 'ur') ? 'en' : 'ur';
+  setAppLanguage(next);
+}
+
+function setAppLanguage(lang){
+  APP_I18N.current = lang;
+  try { localStorage.setItem('src_app_language', lang); } catch(e){}
+
+  const isUr = (lang === 'ur');
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isUr ? 'rtl' : 'ltr';
+  // Update prominent hero & mobile language toggle indicators
+  const hTxt = document.getElementById('heroLangToggleTxt');
+  if(hTxt) hTxt.textContent = isUr ? 'Switch to English (انگریزی)' : 'اردو میں دیکھیں (Switch to Urdu)';
+  const mTxt = document.getElementById('mNavLangTxt');
+  if(mTxt) mTxt.textContent = isUr ? 'English' : 'اردو';
+
+  // Toggle active state on language buttons
+  const bEn = document.getElementById('btnLangEn');
+  const bUr = document.getElementById('btnLangUr');
+  if(bEn) bEn.classList.toggle('active', !isUr);
+  if(bUr) bUr.classList.toggle('active', isUr);
+
+  // Apply translations to data-i18n elements
+  const dict = APP_I18N.dict[lang] || APP_I18N.dict.en;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] !== undefined){
+      el.innerHTML = dict[key];
+    }
+  });
+
+  // Apply translations to placeholders
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if(dict[key] !== undefined){
+      el.placeholder = dict[key];
+    }
+  });
+
+  // Also sync numerology language switch
+  if(typeof setNumLang === 'function'){
+    setNumLang(lang);
+  }
+
+  // Re-render dynamic decks
+  if(typeof renderServicesDeck === 'function'){
+    renderServicesDeck();
+  }
+  if(typeof renderCalendar === 'function'){
+    renderCalendar();
+  }
+  if(typeof updateSummaryPreview === 'function'){
+    updateSummaryPreview();
+  }
+}
+
+// Global helper for ad-hoc strings
+function t(key, fallback){
+  const lang = getAppLanguage();
+  const dict = APP_I18N.dict[lang] || APP_I18N.dict.en;
+  return dict[key] !== undefined ? dict[key] : (fallback !== undefined ? fallback : key);
+}
+
 /* ================= PWA ENGINE & SERVICE WORKER ================= */
 let deferredPwaPrompt = null;
 if ('serviceWorker' in navigator) {
