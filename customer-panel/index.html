@@ -2,7 +2,17 @@
 <html lang="en">
 <head>
  <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <!-- PWA & Mobile Web App Meta Tags -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#1c130d" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Shifa Ruqiyah" />
+  <link rel="apple-touch-icon" href="/logo/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/logo/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/logo/icon-512.png" />
  <title>Shifa-Ruqiyah Centre | Customer & Patient Portal</title>
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1055,42 +1065,43 @@
       flex: 1;
     }
     .brand-logo-frame {
-      width: 38px;
-      height: 38px;
-      flex: 0 0 38px;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
     }
     .brand-titles h1 {
-      font-size: 0.88rem;
+      font-size: 0.8rem;
       letter-spacing: 0.02em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      line-height: 1.1;
+      font-weight: 800;
     }
     .brand-titles p {
-      font-size: 0.62rem;
-      gap: 4px;
+      font-size: 0.6rem;
+      gap: 3px;
     }
     .brand-titles p span:first-child {
       display: none;
     }
     .brand-titles p span.portal-pill {
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       padding: 0 6px;
     }
     .nav-tabs-desktop {
       display: none;
     }
     .header-actions {
-      gap: 6px;
+      gap: 5px;
       flex-shrink: 0;
     }
     .client-status-chip {
-      padding: 4px 9px;
-      font-size: 0.72rem;
-      gap: 5px;
+      padding: 4px 8px;
+      font-size: 0.7rem;
+      gap: 4px;
+      border-radius: 20px;
     }
     .client-status-chip #clientChipName {
-      max-width: 95px;
+      max-width: 85px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1098,6 +1109,7 @@
     .admin-switch-btn {
       padding: 4px 8px;
       font-size: 0.7rem;
+      border-radius: 20px;
     }
     .chip-patient-text {
       display: none !important;
@@ -1110,11 +1122,12 @@
     .sec-head {
       flex-direction: column;
       align-items: flex-start;
-      gap: 8px;
+      gap: 6px;
       margin-bottom: 14px;
     }
     .sec-head h2 {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
+      line-height: 1.25;
     }
     .sec-head p {
       font-size: 0.76rem;
@@ -1122,77 +1135,146 @@
 
     /* 3. Hero Banner */
     .hero-banner {
-      padding: 20px 16px;
+      padding: 18px 14px 16px;
       border-radius: var(--radius);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+      background: linear-gradient(145deg, #2a180e 0%, #3e2416 60%, #1e1009 100%);
+      box-shadow: 0 8px 24px rgba(48,31,22,0.18);
     }
     .hero-bismillah {
-      font-size: 1.15rem;
-      margin-bottom: 6px;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+      opacity: 0.9;
     }
     .hero-title {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       line-height: 1.25;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-    .hero-lead {
-      font-size: 0.82rem;
-      line-height: 1.5;
-      margin-bottom: 18px;
+    .hero-subtitle {
+      font-size: 0.78rem;
+      line-height: 1.45;
+      margin-bottom: 14px;
+      color: rgba(255,255,255,0.85);
     }
     .hero-actions {
-      flex-direction: column;
-      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
+      width: 100%;
     }
     .hero-actions .btn {
       width: 100%;
       justify-content: center;
-      padding: 11px 16px;
-      font-size: 0.84rem;
+      padding: 10px 8px;
+      font-size: 0.76rem;
+      border-radius: 20px;
+    }
+    .hero-actions .btn-whatsapp {
+      grid-column: span 2;
+      padding: 9px 12px;
     }
 
-    /* 4. Features Grid */
+    /* 4. Features Grid - 2x2 Modern Native App Layout */
     .features-grid {
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
+      margin-bottom: 20px !important;
     }
     .feature-card {
-      padding: 16px;
+      padding: 14px 12px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      border-radius: 14px !important;
+      gap: 4px !important;
+      background: #ffffff !important;
+      border: 1.5px solid var(--border) !important;
+      box-shadow: 0 2px 8px rgba(48,31,22,0.04) !important;
+    }
+    .feature-icon-badge {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
+      margin-bottom: 4px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .feature-icon-badge svg {
+      width: 18px !important;
+      height: 18px !important;
     }
     .feature-card h3 {
-      font-size: 1.05rem;
+      font-size: 0.86rem !important;
+      line-height: 1.25 !important;
+      margin-bottom: 2px !important;
+      color: var(--brown-dark) !important;
+    }
+    .feature-card p {
+      font-size: 0.71rem !important;
+      line-height: 1.35 !important;
+      color: var(--muted) !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden !important;
+      margin-bottom: 6px !important;
+    }
+    .card-cta {
+      font-size: 0.72rem !important;
+      font-weight: 700 !important;
+      color: var(--gold-dark) !important;
+      margin-top: auto !important;
     }
 
     /* 5. Booking Step 1: Services Deck */
     .service-deck {
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-bottom: 18px;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 8px !important;
+      margin-bottom: 16px !important;
     }
     .service-box {
-      padding: 14px 16px;
-      border-radius: var(--radius-sm);
+      padding: 10px 10px !important;
+      border-radius: 12px !important;
+      border: 1.5px solid var(--border) !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .service-box.selected {
+      border-color: var(--gold-dark) !important;
+      background: #fffdf8 !important;
+      box-shadow: 0 4px 14px rgba(197,155,39,0.12) !important;
     }
     .service-box-header {
-      margin-bottom: 4px;
-      gap: 8px;
+      margin-bottom: 2px !important;
+      gap: 6px !important;
+      align-items: flex-start !important;
     }
     .service-box-icon {
-      font-size: 1.3rem;
+      font-size: 1.1rem !important;
     }
     .service-box-title {
-      font-size: 0.98rem;
+      font-size: 0.8rem !important;
+      font-weight: 700 !important;
+      line-height: 1.25 !important;
     }
     .service-box-desc {
-      font-size: 0.78rem;
-      line-height: 1.45;
+      font-size: 0.68rem !important;
+      line-height: 1.3 !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden !important;
+      margin-top: 2px !important;
+      margin-bottom: 4px !important;
     }
     .service-box-meta {
-      margin-top: 8px;
-      padding-top: 6px;
-      font-size: 0.74rem;
+      margin-top: auto !important;
+      padding-top: 4px !important;
+      font-size: 0.68rem !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2px !important;
     }
 
     /* 6. Booking Step 2: Calendar & Slots */
@@ -1336,27 +1418,35 @@
     /* 10. Bottom Navigation Bar */
     nav.mobile-bottom-nav {
       display: flex;
-      padding: 6px 10px max(8px, env(safe-area-inset-bottom));
-      background: rgba(252, 249, 244, 0.96);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      padding: 6px 8px max(10px, env(safe-area-inset-bottom));
+      background: rgba(253, 250, 246, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid var(--border);
       box-shadow: 0 -4px 20px rgba(48, 31, 22, 0.08);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
     }
     .m-nav-item {
       flex: 1;
-      padding: 5px 4px;
-      gap: 2px;
-      font-size: 0.66rem;
+      padding: 6px 4px;
+      gap: 3px;
+      font-size: 0.68rem;
       border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.2s ease;
     }
     .m-nav-item svg {
       width: 19px;
       height: 19px;
     }
     .m-nav-item.active {
-      background: rgba(197, 155, 39, 0.12);
+      background: rgba(197, 155, 39, 0.15);
       color: var(--brown-dark);
+      font-weight: 700;
     }
 
     /* 11. Modals on Mobile */
@@ -1371,7 +1461,37 @@
       -webkit-overflow-scrolling: touch;
     }
   }
- </style>
+ 
+  .pwa-install-header-btn {
+    background: linear-gradient(135deg, #a87932 0%, #cfa856 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    padding: 5px 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(168, 121, 50, 0.35);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .pwa-install-header-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+  @media (max-width: 768px) {
+    .pwa-install-header-btn span {
+      display: none;
+    }
+    .pwa-install-header-btn {
+      padding: 6px 8px;
+    }
+  }
+
+</style>
 </head>
 <body>
  <div class="bg-mesh" aria-hidden="true"></div>
@@ -1693,8 +1813,8 @@
  </div>
 
  <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
- <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1rem; padding: 14px;">
- <span>💾</span> Confirm &amp; Request Appointment
+ <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1rem; padding: 14px; display: flex; align-items: center; justify-content: center;">
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> Confirm &amp; Request Appointment
  </button>
  <p style="font-size: 0.74rem; text-align: center; color: var(--muted);">
  An instant WhatsApp confirmation message will be prepared for immediate dispatch to the clinic reception.
@@ -2939,7 +3059,37 @@
  .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
  .row b { color: #3d281d; }
  .note { margin-top: 20px; font-size: 12px; color: #666; line-height: 1.5; background: #faf8f5; padding: 10px; border-radius: 6px; }
- </style>
+ 
+  .pwa-install-header-btn {
+    background: linear-gradient(135deg, #a87932 0%, #cfa856 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    padding: 5px 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(168, 121, 50, 0.35);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .pwa-install-header-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+  @media (max-width: 768px) {
+    .pwa-install-header-btn span {
+      display: none;
+    }
+    .pwa-install-header-btn {
+      padding: 6px 8px;
+    }
+  }
+
+</style>
  </head>
  <body>
  <div class="slip-box">
@@ -3379,6 +3529,53 @@
  window.addEventListener('hashchange', handleHash);
  if(window.location.hash) handleHash();
  });
- </script>
+ 
+/* ================= PWA ENGINE & SERVICE WORKER ================= */
+let deferredPwaPrompt = null;
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(reg => {
+      console.log('[PWA] Service Worker active with scope:', reg.scope);
+    }).catch(err => {
+      console.warn('[PWA] Service Worker registration failed:', err);
+    });
+  });
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPwaPrompt = e;
+  const btn = document.getElementById('pwaInstallBtn');
+  if (btn) btn.style.display = 'inline-flex';
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('[PWA] App successfully installed');
+  const btn = document.getElementById('pwaInstallBtn');
+  if (btn) btn.style.display = 'none';
+  deferredPwaPrompt = null;
+});
+
+function triggerPwaInstall() {
+  if (deferredPwaPrompt) {
+    deferredPwaPrompt.prompt();
+    deferredPwaPrompt.userChoice.then(choice => {
+      if (choice.outcome === 'accepted') {
+        const btn = document.getElementById('pwaInstallBtn');
+        if (btn) btn.style.display = 'none';
+      }
+      deferredPwaPrompt = null;
+    });
+  } else {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      alert("To install Shifa Ruqiyah on iPhone/iPad:\n\n1. Tap the Share button (⎋) at the bottom of Safari.\n2. Scroll down and tap 'Add to Home Screen' (⊞).\n\nThe app will install directly onto your home screen!");
+    } else {
+      alert("To install on your device:\n\n1. Tap your browser menu (⋮) in the top-right.\n2. Select 'Install app' or 'Add to Home screen'.");
+    }
+  }
+}
+
+</script>
 </body>
 </html>

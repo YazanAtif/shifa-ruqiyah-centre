@@ -1,5 +1,6 @@
 .vercel
 *.bak
+*.bak_*
 *.before_*
 *.log
 .DS_Store

@@ -6,6 +6,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- PWA & Mobile Web App Meta Tags -->
+<link rel="manifest" href="/manifest-admin.json">
+<meta name="theme-color" content="#1c140e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SRC Admin">
+<link rel="apple-touch-icon" href="/logo/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/logo/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/logo/icon-512.png">
 <title>Shifa-Ruqiyah Centre - Patient Management System</title>
 <style>
   :root{
@@ -593,21 +603,26 @@
       display: none !important;
     }
     header.app-header .header-top-row {
-      gap: 6px !important;
-      flex-wrap: nowrap !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 2px !important;
+      min-width: 0 !important;
     }
     header.app-header h1 {
-      font-size: 13.5px !important;
-      letter-spacing: 0.1px !important;
+      font-size: 12px !important;
+      letter-spacing: 0px !important;
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
-      line-height: 1.2 !important;
+      line-height: 1.15 !important;
+      margin: 0 !important;
     }
     .admin-pill {
-      font-size: 8px !important;
-      padding: 1px 5px !important;
+      font-size: 8.5px !important;
+      padding: 1.5px 6px !important;
       letter-spacing: 0.4px !important;
+      border-radius: 10px !important;
     }
     header.app-header .header-sub {
       display: none !important;
@@ -615,20 +630,36 @@
     header.app-header .clock {
       display: none !important;
     }
-    .nav-portal-label {
+    .nav-portal-label,
+    .nav-user-label,
+    .nav-logout-label {
       display: none !important;
     }
+    .header-user-btn {
+      display: none !important;
+    }
+
+    .nav-install-label {
+      display: none !important;
+    }
+    .pwa-install-btn {
+      display: none !important;
+    }
+
     .header-right {
       display: flex !important;
       align-items: center !important;
-      gap: 6px !important;
+      gap: 4px !important;
       flex-shrink: 0 !important;
     }
     .header-timer-btn {
-      padding: 5px 9px !important;
-      font-size: 11px !important;
+      padding: 4px 7px !important;
+      font-size: 10.5px !important;
       border-radius: 16px !important;
       white-space: nowrap !important;
+    }
+    .header-logout-btn {
+      padding: 4px 7px !important;
     }
 
     /* 2. Seamless Sticky Mobile Horizontal Pill Navigation Bar */
@@ -732,23 +763,30 @@
     /* 4. Dashboard: 2-column quick actions and 2x2 stats */
     .admin-quick-bar {
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 8px !important;
+      gap: 10px !important;
       margin-bottom: 16px !important;
     }
     .admin-quick-btn {
-      padding: 10px 12px !important;
-      gap: 2px !important;
-      border-radius: 12px !important;
+      padding: 12px 12px !important;
+      gap: 3px !important;
+      border-radius: 14px !important;
+      background: #ffffff !important;
+      border: 1.5px solid var(--border) !important;
+    }
+    .admin-quick-btn:last-child {
+      grid-column: span 2 !important;
     }
     .admin-quick-btn .aq-icon {
       font-size: 18px !important;
+      margin-bottom: 2px !important;
     }
     .admin-quick-btn .aq-title {
       font-size: 12.5px !important;
       font-weight: 700 !important;
     }
     .admin-quick-btn .aq-desc {
-      font-size: 10px !important;
+      font-size: 10.5px !important;
+      color: var(--muted) !important;
       display: -webkit-box !important;
       -webkit-line-clamp: 1 !important;
       -webkit-box-orient: vertical !important;
@@ -756,23 +794,34 @@
     }
     .stats {
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 8px !important;
+      gap: 10px !important;
       margin-bottom: 18px !important;
     }
     .stat-card {
-      padding: 12px 14px !important;
-      border-radius: 12px !important;
+      padding: 14px 14px !important;
+      border-radius: 14px !important;
       gap: 4px !important;
+      position: relative !important;
+      overflow: hidden !important;
+      background: #ffffff !important;
+      border: 1.5px solid var(--border) !important;
+    }
+    .stat-card::after {
+      display: none !important; /* Remove giant circular cutout that clutters mobile */
     }
     .stat-card .num {
-      font-size: 22px !important;
+      font-size: 20px !important;
+      font-weight: 800 !important;
+      line-height: 1.2 !important;
     }
     .stat-card .label {
       font-size: 10.5px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.3px !important;
     }
     .card {
       padding: 16px 14px !important;
-      border-radius: 12px !important;
+      border-radius: 14px !important;
       margin-bottom: 16px !important;
     }
 
@@ -789,17 +838,22 @@
     /* 6. Tables & Lists */
     .table-wrap {
       -webkit-overflow-scrolling: touch !important;
-      border-radius: 10px !important;
+      border-radius: 12px !important;
+      overflow-x: auto !important;
+      border: 1px solid var(--border) !important;
     }
     table {
       font-size: 12.5px !important;
+      min-width: 520px !important;
     }
     thead th {
-      padding: 9px 10px !important;
+      padding: 10px 12px !important;
       font-size: 11px !important;
+      white-space: nowrap !important;
     }
     tbody td {
-      padding: 8px 10px !important;
+      padding: 10px 12px !important;
+      white-space: nowrap !important;
     }
     .filter-bar {
       flex-direction: column !important;
@@ -2058,12 +2112,13 @@
 
   /* ---------- Toast ---------- */
   #toast{
-    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);
-    background:var(--brown-dark);color:#fff;padding:13px 22px;border-radius:11px;
-    font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(61,40,29,.3);z-index:200;
-    transition:transform .3s cubic-bezier(.2,.9,.3,1);max-width:90%;
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--brown-dark);color:#fff;padding:12px 22px;border-radius:30px;
+    font-size:13.5px;font-weight:600;box-shadow:0 8px 24px rgba(61,40,29,.3);z-index:9999;
+    transition:all .3s cubic-bezier(.16,1,.3,1);max-width:90%;
+    opacity:0;pointer-events:none;visibility:hidden;
   }
-  #toast.show{transform:translateX(-50%) translateY(0)}
+  #toast.show{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto;visibility:visible;}
   #toast.err{background:#c0392b}
   /* ---------- Modal ---------- */
   .modal-overlay{
@@ -2494,7 +2549,7 @@
   /* Responsive / Mobile (Horizontal Fluid Garment Swiping) */
   @media(max-width: 860px) {
     .rack-accordion-track {
-      height: 350px;
+      height: 380px;
       padding: 4px;
       gap: 6px;
     }
@@ -2507,25 +2562,52 @@
     .rack-panel.active {
       flex: 0 0 calc(100vw - 36px);
       min-width: 290px;
-      max-width: 390px;
+      max-width: 400px;
     }
     .rack-expanded-view {
       grid-template-columns: 1fr;
-      gap: 12px;
-      padding: 16px;
+      gap: 10px;
+      padding: 14px 14px 18px;
       overflow-y: auto;
     }
     .rack-poster-left {
       border-right: none;
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       padding-right: 0;
-      padding-bottom: 10px;
+      padding-bottom: 8px;
     }
     .rack-headline-line {
-      font-size: 22px;
+      font-size: 19px;
+      line-height: 1.25;
+    }
+    .rack-index-anchor {
+      top: 12px !important;
+      bottom: auto !important;
+      right: 14px !important;
+      font-size: 11px !important;
+    }
+    .rack-action-row {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 6px !important;
+    }
+    .rack-act-btn {
+      padding: 7px 6px !important;
+      font-size: 10.5px !important;
     }
     .rack-patients-roster {
-      max-height: 110px;
+      max-height: 130px !important;
+      min-height: 60px !important;
+      overflow-y: auto !important;
+    }
+    .cec-empty-state {
+      padding: 8px 4px !important;
+      gap: 6px !important;
+      flex-direction: column !important;
+    }
+    .cec-empty-state span {
+      font-size: 11px !important;
+      opacity: 0.8 !important;
     }
   }
 
@@ -3452,9 +3534,403 @@
     cursor:pointer;
     flex:0 0 auto;
   }
+
+  /* ================= SECURE ADMIN AUTH GATEWAY ================= */
+  body.auth-locked {
+    overflow: hidden !important;
+  }
+  body.auth-locked > header.app-header,
+  body.auth-locked > nav.expand-nav-container,
+  body.auth-locked > main,
+  body.auth-locked > footer,
+  body.auth-locked > .floating-timer-widget,
+  body.auth-locked > .modal-overlay,
+  body.auth-locked > .bg-glow {
+    display: none !important;
+  }
+
+  .admin-auth-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    background: radial-gradient(circle at 50% 25%, #241710 0%, #120c08 55%, #070504 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+
+  .admin-auth-overlay.auth-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .auth-bg-ambient {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .auth-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+  }
+
+  .auth-orb-1 {
+    width: 400px;
+    height: 400px;
+    background: #d4af37;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .auth-orb-2 {
+    width: 320px;
+    height: 320px;
+    background: #96613d;
+    bottom: -60px;
+    left: 20%;
+  }
+
+  .auth-card {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    background: rgba(26, 18, 13, 0.94);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 30px rgba(212, 175, 55, 0.12);
+    border-radius: 20px;
+    padding: 32px 26px;
+    text-align: center;
+    color: #f7f1e9;
+    z-index: 2;
+    box-sizing: border-box;
+  }
+
+  .auth-card.auth-shake {
+    animation: authShake 0.45s cubic-bezier(.36,.07,.19,.97) both;
+  }
+
+  @keyframes authShake {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { transform: translate3d(4px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+    40%, 60% { transform: translate3d(5px, 0, 0); }
+  }
+
+  .auth-logo-badge {
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, rgba(212, 175, 55, 0.05) 70%);
+    margin-bottom: 12px;
+  }
+
+  .auth-logo-img {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border: 2px solid #d4af37;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+    display: block;
+  }
+
+  .auth-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #faf5ee;
+    margin: 0 0 4px 0;
+  }
+
+  .auth-badge {
+    display: inline-block;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #e5c158;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+
+  .auth-sub {
+    font-size: 12px;
+    color: #b5a494;
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+  }
+
+  .auth-alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 12px;
+    background: rgba(220, 53, 69, 0.18);
+    border: 1px solid rgba(220, 53, 69, 0.45);
+    color: #ff9d9d;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .auth-field-group {
+    text-align: left;
+    margin-bottom: 15px;
+  }
+
+  .auth-label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #ded0c0;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .auth-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .auth-field-icon {
+    position: absolute;
+    left: 12px;
+    color: #ab9582;
+    pointer-events: none;
+    transition: color 0.2s;
+  }
+
+  .auth-input {
+    width: 100%;
+    height: 44px;
+    padding: 0 40px 0 38px;
+    background: rgba(18, 12, 8, 0.75);
+    border: 1.5px solid rgba(171, 125, 88, 0.35);
+    border-radius: 10px;
+    color: #faf5ee;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .auth-input:focus {
+    border-color: #d4af37;
+    background: rgba(22, 15, 10, 0.95);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+  }
+
+  .auth-input:focus ~ .auth-field-icon {
+    color: #d4af37;
+  }
+
+  .auth-pwd-toggle {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #ab9582;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: color 0.2s;
+  }
+
+  .auth-pwd-toggle:hover {
+    color: #faf5ee;
+  }
+
+  .auth-options-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 18px;
+    font-size: 12px;
+  }
+
+  .auth-remember-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #c2b1a1;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .auth-checkbox {
+    accent-color: #d4af37;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+
+  .auth-submit-btn {
+    width: 100%;
+    height: 46px;
+    background: linear-gradient(135deg, #a87932 0%, #cfa856 50%, #8e6224 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 230, 150, 0.35);
+    border-radius: 11px;
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(168, 121, 50, 0.4);
+    transition: all 0.2s ease;
+  }
+
+  .auth-submit-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(168, 121, 50, 0.55);
+    transform: translateY(-1px);
+  }
+
+  .auth-submit-btn:active {
+    transform: translateY(1px);
+  }
+
+  .auth-footer-links {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(171, 125, 88, 0.2);
+  }
+
+  .auth-customer-link {
+    color: #c29d66;
+    text-decoration: none;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+
+  .auth-customer-link:hover {
+    color: #e5c158;
+    text-decoration: underline;
+  }
+
+  .header-user-btn {
+    background: rgba(124, 83, 57, 0.22);
+    border: 1.5px solid rgba(171, 125, 88, 0.45);
+    color: #ffffff;
+  }
+  .header-user-btn:hover {
+    background: rgba(124, 83, 57, 0.45);
+    border-color: #d4af37;
+  }
+
+  .header-logout-btn {
+    background: rgba(190, 40, 40, 0.22);
+    border: 1.5px solid rgba(220, 60, 60, 0.45);
+    color: #ffb4b4;
+  }
+  .header-logout-btn:hover {
+    background: rgba(220, 50, 50, 0.45);
+    color: #ffffff;
+    border-color: #ff6b6b;
+  }
+
 </style>
 </head>
 <body>
+
+<!-- Admin Authentication Gate Overlay -->
+<div id="adminAuthOverlay" class="admin-auth-overlay" aria-label="Admin Authentication">
+  <div class="auth-bg-ambient">
+    <div class="auth-glow-orb auth-orb-1"></div>
+    <div class="auth-glow-orb auth-orb-2"></div>
+  </div>
+  <div class="auth-card" id="authCard">
+    <div class="auth-logo-badge">
+      <img src="logo/src-logo.webp" onerror="this.onerror=null;this.src='logo/src-logo-256.png'" alt="Shifa-Ruqiyah Centre" class="auth-logo-img">
+    </div>
+    <h2 class="auth-title">SHIFA-RUQIYAH CENTRE</h2>
+    <div class="auth-badge">ADMIN CONSOLE</div>
+    <p class="auth-sub">Restricted Clinical &amp; Patient Management Access</p>
+    
+    <div id="authAlert" class="auth-alert" style="display:none;" role="alert">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="authAlertMsg">Invalid credentials</span>
+    </div>
+
+    <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" autocomplete="on">
+      <div class="auth-field-group">
+        <label for="authUsername" class="auth-label">Username</label>
+        <div class="auth-input-wrapper">
+          <svg class="auth-field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input type="text" id="authUsername" class="auth-input" placeholder="e.g. yazan" required autocomplete="username" spellcheck="false" autocorrect="off" autocapitalize="none">
+        </div>
+      </div>
+
+      <div class="auth-field-group">
+        <label for="authPassword" class="auth-label">Password</label>
+        <div class="auth-input-wrapper">
+          <svg class="auth-field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input type="password" id="authPassword" class="auth-input" placeholder="Enter password" required autocomplete="current-password">
+          <button type="button" class="auth-pwd-toggle" id="authPwdToggle" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility" tabindex="-1">
+            <svg id="eyeIconOpen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg id="eyeIconClosed" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-options-row">
+        <label class="auth-remember-label">
+          <input type="checkbox" id="authRemember" class="auth-checkbox" checked>
+          <span>Remember on this device</span>
+        </label>
+      </div>
+
+      <button type="submit" class="auth-submit-btn" id="authSubmitBtn">
+        <span class="auth-btn-text">Sign In to Admin</span>
+        <svg class="auth-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </form>
+
+    <div class="auth-footer-links">
+      <div style="margin-bottom: 8px;">
+        <button type="button" class="auth-install-btn" id="authInstallBtn" onclick="triggerPwaInstall()" style="background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.3); color: #e5c158; border-radius: 9999px; padding: 5px 14px; font-size: 11.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Install Admin App</span>
+        </button>
+      </div>
+      <a href="customer-panel/index.html" class="auth-customer-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        <span>Looking for booking? Go to Patient Portal</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 
 <!-- Full-Screen UHD Page Loader with Center Logo & White UHD Smoke -->
 <div id="pageLoader" class="page-loader" aria-label="Loading Shifa-Ruqiyah Centre">
@@ -3496,15 +3972,33 @@
     <div class="brand-group">
       <div class="header-top-row">
         <h1>SHIFA-RUQIYAH CENTRE</h1>
-        <span class="admin-pill">Admin Portal</span>
+        <span class="admin-pill">Admin</span>
       </div>
       <p class="header-sub">Patient Management System &middot; Spiritual Guidance</p>
     </div>
   </div>
   <div class="spacer"></div>
   <div class="header-right">
-    <a href="customer-panel/index.html" class="header-timer-btn" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center;" title="Open Customer & Patient Portal">🌐 <span class="nav-portal-label">Customer Portal</span> ↗</a>
-    <button type="button" class="header-timer-btn" id="headerTimerBtn" onclick="openTimerModal()" title="Open Session Timer">⏱️ <span id="headerTimerTxt">Timer</span></button>
+    <a href="customer-panel/index.html" class="header-timer-btn" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 5px;" title="Open Customer & Patient Portal">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <span class="nav-portal-label">Portal</span>
+    </a>
+    <button type="button" class="header-timer-btn" id="headerTimerBtn" onclick="openTimerModal()" title="Open Session Timer" style="display: inline-flex; align-items: center; gap: 5px;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span id="headerTimerTxt">Timer</span>
+    </button>
+    <button type="button" class="header-timer-btn pwa-install-btn" id="adminInstallBtn" onclick="triggerPwaInstall()" title="Install SRC Admin App" style="display: none; background: #ab7d58; border-color: #8e623e;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span class="nav-install-label">Install App</span>
+    </button>
+    <button type="button" class="header-timer-btn header-user-btn" id="headerUserBtn" onclick="openPasswordModal()" title="Security & Password Settings" style="display: inline-flex; align-items: center; gap: 5px;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span class="nav-user-label" id="headerUserLabel">Yazan</span>
+    </button>
+    <button type="button" class="header-timer-btn header-logout-btn" id="headerLogoutBtn" onclick="adminLogout()" title="Log Out of Admin Portal" style="display: inline-flex; align-items: center; gap: 5px;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span class="nav-logout-label">Logout</span>
+    </button>
     <div class="clock" id="clock"></div>
   </div>
 </header>
@@ -3924,7 +4418,7 @@
         <div class="reg-appt-scheduler-card" id="regApptScheduler">
           <div class="ras-header">
             <div class="ras-head-left">
-              <span class="ras-head-icon">📅</span>
+              <span class="ras-head-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
               <div>
                 <h3 class="ras-title">Schedule Patient Appointment</h3>
                 <p class="ras-sub">Choose consultation date, session time slot, and treatment parameters</p>
@@ -3968,7 +4462,7 @@
               <div class="ras-details-box">
                 <div class="ras-selected-date-banner">
                   <div class="ras-sdb-left">
-                    <span class="ras-sdb-icon">🕒</span>
+                    <span class="ras-sdb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
                     <div>
                       <div class="ras-sdb-title" id="regSelectedDateDisplay">Selected Date</div>
                       <div class="ras-sdb-sub" id="regSlotsAvailableHint">Pick an available time slot below</div>
@@ -3981,19 +4475,19 @@
                   <label class="lbl-title">Select Time Slot Preset</label>
                   <div class="ras-slots-grid">
                     <button type="button" class="ras-slot-chip active" onclick="setRegTimeSlot('10:00','11:00', this)">
-                      <span>🌅</span> 10:00 AM – 11:00 AM
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> 10:00 AM – 11:00 AM
                     </button>
                     <button type="button" class="ras-slot-chip" onclick="setRegTimeSlot('11:30','12:30', this)">
-                      <span>☀️</span> 11:30 AM – 12:30 PM
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg> 11:30 AM – 12:30 PM
                     </button>
                     <button type="button" class="ras-slot-chip" onclick="setRegTimeSlot('15:00','16:00', this)">
-                      <span>☕</span> 03:00 PM – 04:00 PM
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg> 03:00 PM – 04:00 PM
                     </button>
                     <button type="button" class="ras-slot-chip" onclick="setRegTimeSlot('17:00','18:00', this)">
-                      <span>🌙</span> 05:00 PM – 06:00 PM
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> 05:00 PM – 06:00 PM
                     </button>
                     <button type="button" class="ras-slot-chip" onclick="setRegTimeSlot('20:00','21:00', this)">
-                      <span>✨</span> 08:00 PM – 09:00 PM
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 08:00 PM – 09:00 PM
                     </button>
                   </div>
                 </div>
@@ -4046,8 +4540,8 @@
         </div>
 
         <div class="btn-row">
-          <button type="submit" class="btn btn-primary" id="savePatientBtn">💾 Save Patient &amp; Book Appointment</button>
-          <button type="reset" class="btn btn-outline" id="clearBtn">↺ Clear Form</button>
+          <button type="submit" class="btn btn-primary" id="savePatientBtn">Save Patient &amp; Book Appointment</button>
+          <button type="reset" class="btn btn-outline" id="clearBtn">Clear Form</button>
         </div>
         <input type="hidden" id="editId">
       </form>
@@ -4075,7 +4569,7 @@
         <div class="field">
           <label><span class="lbl-title">Search Patient Records</span></label>
           <div class="input-with-icon">
-            <span class="input-icon">🔍</span>
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
             <input type="text" id="patSearch" placeholder="Search by name, mobile, or patient ID...">
           </div>
         </div>
@@ -4156,8 +4650,8 @@
         </div>
         <div class="pay-status-preview" id="payPreview"></div>
         <div class="btn-row">
-          <button type="submit" class="btn btn-primary">📅 Book Appointment</button>
-          <button type="reset" class="btn btn-outline">↺ Clear Form</button>
+          <button type="submit" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Book Appointment</button>
+          <button type="reset" class="btn btn-outline">Clear Form</button>
         </div>
         <input type="hidden" id="editApptId">
       </form>
@@ -4165,14 +4659,14 @@
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
       <h2 class="section-title" style="margin-bottom:0;">All Appointments</h2>
-      <button type="button" class="btn btn-timer btn-sm" onclick="openTimerModal()">⏱️ Open Session Timer</button>
+      <button type="button" class="btn btn-timer btn-sm" onclick="openTimerModal()" style="display:inline-flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Open Session Timer</button>
     </div>
     <div class="card">
       <div class="search-bar">
         <div class="field">
           <label><span class="lbl-title">Search Appointments</span></label>
           <div class="input-with-icon">
-            <span class="input-icon">🔍</span>
+            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
             <input type="text" id="apptSearch" placeholder="Search by patient name, mobile, or ID...">
           </div>
         </div>
@@ -4220,6 +4714,15 @@
     </div>
 
     <div class="card">
+      <h3 style="color:var(--green-dark);margin-bottom:6px">🔒 Admin Access &amp; Security</h3>
+      <p class="muted-note" style="margin-bottom:12px">Update your admin login username or change your secure portal password.</p>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn btn-primary" onclick="openPasswordModal()">🔑 Change Admin Password</button>
+        <button class="btn btn-outline" onclick="adminLogout()" style="color:#c82333;border-color:rgba(200,35,51,0.3)">🚪 Log Out</button>
+      </div>
+    </div>
+
+    <div class="card">
       <h3 style="color:var(--green-dark);margin-bottom:6px">💾 Backup Database</h3>
       <p class="muted-note" style="margin-bottom:12px">Save all patients & appointments to a file, or restore from a backup.</p>
       <div class="btn-row" style="margin-top:0">
@@ -4248,6 +4751,44 @@
 <div id="toast"></div>
 
 <!-- Patient detail modal -->
+<!-- Admin Security & Password Modal -->
+<div class="modal-overlay" id="passwordModal">
+  <div class="modal" style="max-width: 440px;">
+    <div class="modal-head">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:18px;">🔒</span>
+        <h3 style="margin:0;font-size:16px;">Admin Security &amp; Password</h3>
+      </div>
+      <button class="x" onclick="closeModal('passwordModal')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;">
+      <form id="changePasswordForm" onsubmit="handlePasswordChange(event)">
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Current Password *</label>
+          <input type="password" id="currentPassInput" required style="width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; box-sizing: border-box;" placeholder="Enter current password">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Admin Username *</label>
+          <input type="text" id="newUsernameInput" required style="width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; box-sizing: border-box;" placeholder="Admin username (e.g. yazan)">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text);">New Password *</label>
+          <input type="password" id="newPassInput" required minlength="6" style="width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; box-sizing: border-box;" placeholder="Enter new password (min 6 chars)">
+        </div>
+        <div style="margin-bottom: 18px;">
+          <label style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Confirm New Password *</label>
+          <input type="password" id="confirmPassInput" required minlength="6" style="width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; box-sizing: border-box;" placeholder="Re-enter new password">
+        </div>
+        <div id="changePassError" style="display: none; padding: 10px 12px; background: rgba(220, 53, 69, 0.1); border: 1px solid rgba(220, 53, 69, 0.3); color: #c82333; border-radius: 8px; font-size: 12px; margin-bottom: 14px;"></div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" class="btn btn-outline" onclick="closeModal('passwordModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="background: var(--brown-dark); color: #fff;">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="patientModal">
   <div class="modal">
     <div class="modal-head"><h3>Patient Record</h3><button class="x" onclick="closeModal('patientModal')">&times;</button></div>
@@ -4679,6 +5220,7 @@ function handleCardNavClick(e, tabName){
 }
 
 function goTab(name){
+  if(!checkAdminAuth()) return;
   if(!name) return;
   CURRENT_ACTIVE_TAB = name;
 
@@ -5049,9 +5591,9 @@ function toggleRegApptBooking(enabled){
   if(body) body.classList.toggle('disabled', !enabled);
   if(btn){
     if(isEditing){
-      btn.textContent = enabled ? '💾 Update Patient & Book Session' : '💾 Update Patient Record';
+      btn.textContent = enabled ? 'Update Patient & Book Session' : 'Update Patient Record';
     } else {
-      btn.textContent = enabled ? '💾 Save Patient & Book Appointment' : '💾 Save Patient Record Only';
+      btn.textContent = enabled ? 'Save Patient & Book Appointment' : 'Save Patient Record Only';
     }
   }
 }
@@ -5087,7 +5629,7 @@ function resetPatientForm(){
   if($('regApptBalance')) $('regApptBalance').value = '0';
   updateRegApptCurrency();
   const btn = $('savePatientBtn') || document.querySelector('#patientForm button[type=submit]');
-  if(btn) btn.textContent = '💾 Save Patient & Book Appointment';
+  if(btn) btn.textContent = 'Save Patient & Book Appointment';
 }
 /* Build hidden pDob (YYYY-MM-DD) from the 3 Day/Month/Year boxes + live age */
 function syncDob(){
@@ -5214,7 +5756,7 @@ function editPatient(id){
     toggleRegApptBooking(false);
   }
   const btn = $('savePatientBtn') || document.querySelector('#patientForm button[type=submit]');
-  if(btn) btn.textContent = '💾 Update Patient Record';
+  if(btn) btn.textContent = 'Update Patient Record';
 }
 function deletePatient(id){
   const p=patientById(id); if(!p) return;
@@ -5586,16 +6128,16 @@ function renderRackAccordionGallery(containerId, isDashboard){
                 <!-- Directory Actions -->
                 <div class="rack-action-row">
                   <button type="button" class="rack-act-btn primary" onclick="event.stopPropagation(); filterCategoryDirectory('${esc(panel.id)}')">
-                    <span>🔍</span> Filter Table &rarr;
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Filter Table &rarr;
                   </button>
                   <button type="button" class="rack-act-btn" onclick="event.stopPropagation(); openNewPatientForCategory('${esc(panel.id)}')">
-                    <span>➕</span> Add [${panel.short}] Patient
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add [${panel.short}]
                   </button>
                   <button type="button" class="rack-act-btn" onclick="event.stopPropagation(); openBookSessionForCategory('${esc(panel.id)}')">
-                    <span>📅</span> Book Session
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Book Session
                   </button>
                   <button type="button" class="rack-act-btn" onclick="event.stopPropagation(); printCategoryRoster('${esc(panel.id)}')">
-                    <span>🖨️</span> Print Slips
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print Slips
                   </button>
                 </div>
 
@@ -6080,7 +6622,7 @@ function renderAppts(){
     return matchQ && matchS;
   }).sort((a,b)=>(b.created||0)-(a.created||0));
   const tb=$('apptTable');
-  if(!list.length){ tb.innerHTML='<tr><td colspan="5" class="empty">No appointments found. <button type="button" class="btn btn-timer btn-sm" style="margin-left:10px;vertical-align:middle;" onclick="openTimerModal()">⏱️ Open Session Timer</button></td></tr>'; return; }
+  if(!list.length){ tb.innerHTML='<tr><td colspan="5" class="empty">No appointments found.</td></tr>'; return; }
   tb.innerHTML=list.map(a=>{
     const bal=apptBalance(a); const ps=paymentStatus(a.fee,a.paid);
     const sym=currencyFor(a.pt.country).sym;
@@ -6226,7 +6768,7 @@ function editAppt(id){
   $('aStart').value=a.start; $('aEnd').value=a.end; $('aStatus').value=a.status;
   $('aFee').value=a.fee||''; $('aPaid').value=a.paid||''; $('aPayMethod').value=a.payMethod||'';
   updateApptCurrency();
-  document.querySelector('#apptForm button[type=submit]').textContent='💾 Update Appointment';
+  document.querySelector('#apptForm button[type=submit]').textContent='Update Appointment';
   window.scrollTo(0,0);
 }
 function deleteAppt(id){
@@ -6237,6 +6779,7 @@ function deleteAppt(id){
 
 /* ================= DASHBOARD ================= */
 function renderDashboard(){
+  if(!checkAdminAuth()) return;
   $('statTotal').textContent=DB.patients.length;
   $('statAppts').textContent=DB.appts.filter(a=>a.status!=='Cancelled').length;
   $('statPending').textContent=DB.appts.filter(a=>a.status==='Pending'||a.status==='Confirmed').length;
@@ -6252,7 +6795,7 @@ function renderDashboard(){
   $('todayTable').innerHTML = recentAppts.length
     ? recentAppts.map(a=>`<tr><td><strong>${esc(a.pt.name)}</strong></td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${esc(a.pt.problem||'-')}</td><td>${badge(a.status)}</td>
       <td><div class="inline-actions"><button class="btn btn-timer btn-sm" onclick="startApptSession('${a.id}')" title="Start appointment session timer">⏱️ Start</button><button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button><button class="btn btn-blue btn-sm" onclick="printLetter('${a.id}')">Letter</button></div></td></tr>`).join('')
-    : '<tr><td colspan="5" class="empty">No appointments yet. <button type="button" class="btn btn-timer btn-sm" style="margin-left:10px;vertical-align:middle;" onclick="openTimerModal()">⏱️ Open Session Timer</button></td></tr>';
+    : '<tr><td colspan="5" class="empty">No appointments yet.</td></tr>';
 
   const recent=DB.patients.slice(0,5);
   $('recentTable').innerHTML = recent.length
@@ -6872,13 +7415,345 @@ function completeApptFromTimer() {
   hideFloatingWidget();
 }
 
-/* ================= INIT ================= */
-resetPatientForm();
-renderDashboard();
-initCategoriesUI();
-initExpandNavEngine();
-initRegCalendar();
-initTimerEngine();
+
+/* ================= SECURE ADMIN AUTH ENGINE ================= */
+const AUTH_SALT = "src_shifa_secure_2026";
+const DEFAULT_AUTH_HASHES = {
+  "yazan": "b6dc68f6a551bbf17e514c3114a16ec50568802d7f6f92becd9f916bdb03d257",
+  "admin": "225f14b98b4b44701ca2ebfe4345ab752e1449044811427a9dc2d304a7d846fb"
+};
+
+// Pure JS SHA-256 implementation (Works on plain HTTP, HTTPS & localhost)
+function calculateSha256(ascii) {
+  function rightRotate(value, amount) {
+    return (value >>> amount) | (value << (32 - amount));
+  }
+  var mathPow = Math.pow;
+  var maxWord = mathPow(2, 32);
+  var lengthProperty = "length";
+  var i, j;
+  var result = "";
+  var words = [];
+  var asciiBitLength = ascii[lengthProperty] * 8;
+  var hash = [];
+  var k = [];
+  var primeCounter = 0;
+  var isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (i = 0; i < 313; i += candidate) {
+        isComposite[i] = candidate;
+      }
+      hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
+      k[primeCounter++] = (mathPow(candidate, 1/3) * maxWord) | 0;
+    }
+  }
+  ascii += "\x80";
+  while (ascii[lengthProperty] % 64 - 56) ascii += "\x00";
+  for (i = 0; i < ascii[lengthProperty]; i++) {
+    j = ascii.charCodeAt(i);
+    words[i >> 2] |= j << ((3 - i % 4) * 8);
+  }
+  words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+  words[words[lengthProperty]] = (asciiBitLength);
+  for (j = 0; j < words[lengthProperty];) {
+    var w = words.slice(j, j += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (i = 0; i < 64; i++) {
+      var i2 = i + j;
+      var w15 = w[i - 15], w2 = w[i - 2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+        + ((e & hash[5]) ^ ((~e) & hash[6]))
+        + k[i]
+        + (w[i] = (i < 16) ? w[i] : (
+            w[i - 16]
+            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+            + w[i - 7]
+            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+          ) | 0
+        );
+      var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+      hash = [(temp1 + temp2) | 0].concat(hash);
+      hash[4] = (hash[4] + temp1) | 0;
+    }
+    for (i = 0; i < 8; i++) {
+      hash[i] = (hash[i] + oldHash[i]) | 0;
+    }
+  }
+  for (i = 0; i < 8; i++) {
+    for (j = 3; j + 1; j--) {
+      var b = (hash[i] >> (j * 8)) & 255;
+      result += ((b < 16) ? 0 : "") + b.toString(16);
+    }
+  }
+  return result;
+}
+
+function getCredentialHash(username, password) {
+  return calculateSha256(username.trim().toLowerCase() + ":" + password + ":" + AUTH_SALT);
+}
+
+function checkAdminAuth() {
+  const sessionToken = sessionStorage.getItem('air_auth_session') || localStorage.getItem('air_auth_session');
+  return !!sessionToken;
+}
+
+function getStoredUser() {
+  return sessionStorage.getItem('air_auth_user') || localStorage.getItem('air_auth_user') || 'Yazan';
+}
+
+function initAdminAuth() {
+  const isAuth = checkAdminAuth();
+  const overlay = document.getElementById('adminAuthOverlay');
+  const userLabel = document.getElementById('headerUserLabel');
+
+  if (isAuth) {
+    document.body.classList.remove('auth-locked');
+    if (overlay) {
+      overlay.classList.add('auth-hidden');
+      setTimeout(() => { if (overlay.parentNode) overlay.style.display = 'none'; }, 350);
+    }
+    if (userLabel) userLabel.textContent = getStoredUser();
+  } else {
+    document.body.classList.add('auth-locked');
+    if (overlay) {
+      overlay.classList.remove('auth-hidden');
+      overlay.style.display = 'flex';
+      setTimeout(() => {
+        const uInput = document.getElementById('authUsername');
+        if (uInput) uInput.focus();
+      }, 150);
+    }
+    // Dismiss the heavy loader so the login card appears immediately
+    const loader = document.getElementById('pageLoader');
+    if (loader) {
+      loader.classList.add('loaded');
+      setTimeout(() => { if (loader.parentNode) loader.remove(); }, 250);
+    }
+  }
+}
+
+function handleAdminLogin(e) {
+  e.preventDefault();
+  const uInput = document.getElementById('authUsername');
+  const pInput = document.getElementById('authPassword');
+  const remember = document.getElementById('authRemember').checked;
+  const alertBox = document.getElementById('authAlert');
+  const alertMsg = document.getElementById('authAlertMsg');
+  const card = document.getElementById('authCard');
+  const btn = document.getElementById('authSubmitBtn');
+
+  const username = (uInput.value || '').trim();
+  const password = pInput.value || '';
+
+  if (!username || !password) {
+    alertMsg.textContent = 'Please enter both username and password.';
+    alertBox.style.display = 'flex';
+    return;
+  }
+
+  const computedHash = getCredentialHash(username, password);
+
+  // Check custom credentials from localStorage first
+  let isValid = false;
+  let customCred = null;
+  try {
+    customCred = JSON.parse(localStorage.getItem('air_admin_cred') || 'null');
+  } catch (err) {}
+
+  if (customCred && customCred.username && customCred.hash) {
+    if (username.toLowerCase() === customCred.username.toLowerCase() && computedHash === customCred.hash) {
+      isValid = true;
+    }
+  } else {
+    // Check default hashes
+    const expected = DEFAULT_AUTH_HASHES[username.toLowerCase()];
+    if (expected && computedHash === expected) {
+      isValid = true;
+    }
+  }
+
+  if (isValid) {
+    alertBox.style.display = 'none';
+    btn.innerHTML = '<span>Authenticated ✓</span>';
+    btn.style.background = '#28a745';
+
+    const token = 'auth_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    if (remember) {
+      localStorage.setItem('air_auth_session', token);
+      localStorage.setItem('air_auth_user', username);
+    } else {
+      sessionStorage.setItem('air_auth_session', token);
+      sessionStorage.setItem('air_auth_user', username);
+    }
+
+    const userLabel = document.getElementById('headerUserLabel');
+    if (userLabel) userLabel.textContent = username;
+
+    setTimeout(() => {
+      const overlay = document.getElementById('adminAuthOverlay');
+      if (overlay) {
+        overlay.classList.add('auth-hidden');
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          document.body.classList.remove('auth-locked');
+          // Boot portal features now that authentication has succeeded
+          resetPatientForm();
+          renderDashboard();
+          initCategoriesUI();
+          initExpandNavEngine();
+          initRegCalendar();
+          initTimerEngine();
+          toast('✓ Welcome back, ' + username + '! Admin access granted.');
+        }, 350);
+      }
+    }, 280);
+  } else {
+    alertMsg.textContent = 'Invalid username or password. Access denied.';
+    alertBox.style.display = 'flex';
+    card.classList.remove('auth-shake');
+    void card.offsetWidth;
+    card.classList.add('auth-shake');
+    pInput.value = '';
+    pInput.focus();
+  }
+}
+
+function togglePasswordVisibility() {
+  const pInput = document.getElementById('authPassword');
+  const eyeOpen = document.getElementById('eyeIconOpen');
+  const eyeClosed = document.getElementById('eyeIconClosed');
+  if (pInput.type === 'password') {
+    pInput.type = 'text';
+    eyeOpen.style.display = 'none';
+    eyeClosed.style.display = 'block';
+  } else {
+    pInput.type = 'password';
+    eyeOpen.style.display = 'block';
+    eyeClosed.style.display = 'none';
+  }
+}
+
+function adminLogout() {
+  if (confirm('Are you sure you want to log out of the Admin Portal?')) {
+    sessionStorage.removeItem('air_auth_session');
+    sessionStorage.removeItem('air_auth_user');
+    localStorage.removeItem('air_auth_session');
+    localStorage.removeItem('air_auth_user');
+
+    const pInput = document.getElementById('authPassword');
+    if (pInput) pInput.value = '';
+    const btn = document.getElementById('authSubmitBtn');
+    if (btn) {
+      btn.innerHTML = '<span class="auth-btn-text">Sign In to Admin</span><svg class="auth-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>';
+      btn.style.background = '';
+    }
+
+    document.body.classList.add('auth-locked');
+    const overlay = document.getElementById('adminAuthOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      void overlay.offsetWidth;
+      overlay.classList.remove('auth-hidden');
+      const uInput = document.getElementById('authUsername');
+      if (uInput) uInput.focus();
+    }
+    toast('✓ Successfully logged out.');
+  }
+}
+
+function openPasswordModal() {
+  const modal = document.getElementById('passwordModal');
+  const uInput = document.getElementById('newUsernameInput');
+  const errBox = document.getElementById('changePassError');
+  if (errBox) errBox.style.display = 'none';
+  if (uInput) uInput.value = getStoredUser();
+  if (modal) modal.classList.add('show');
+}
+
+function handlePasswordChange(e) {
+  e.preventDefault();
+  const curPass = document.getElementById('currentPassInput').value;
+  const newUsername = (document.getElementById('newUsernameInput').value || '').trim();
+  const newPass = document.getElementById('newPassInput').value;
+  const confPass = document.getElementById('confirmPassInput').value;
+  const errBox = document.getElementById('changePassError');
+
+  if (!newUsername || !newPass || !confPass) {
+    errBox.textContent = 'Please fill all required fields.';
+    errBox.style.display = 'block';
+    return;
+  }
+
+  if (newPass !== confPass) {
+    errBox.textContent = 'New passwords do not match. Please verify.';
+    errBox.style.display = 'block';
+    return;
+  }
+
+  if (newPass.length < 6) {
+    errBox.textContent = 'New password must be at least 6 characters long.';
+    errBox.style.display = 'block';
+    return;
+  }
+
+  const curUser = getStoredUser();
+  const curHash = getCredentialHash(curUser, curPass);
+  let isCurrentValid = false;
+
+  let customCred = null;
+  try {
+    customCred = JSON.parse(localStorage.getItem('air_admin_cred') || 'null');
+  } catch (err) {}
+
+  if (customCred && customCred.hash) {
+    if (curHash === customCred.hash) isCurrentValid = true;
+  } else {
+    const expected = DEFAULT_AUTH_HASHES[curUser.toLowerCase()] || DEFAULT_AUTH_HASHES['yazan'];
+    if (curHash === expected) isCurrentValid = true;
+  }
+
+  if (!isCurrentValid) {
+    errBox.textContent = 'Current password is incorrect.';
+    errBox.style.display = 'block';
+    return;
+  }
+
+  const newHash = getCredentialHash(newUsername, newPass);
+  localStorage.setItem('air_admin_cred', JSON.stringify({
+    username: newUsername,
+    hash: newHash,
+    updatedAt: new Date().toISOString()
+  }));
+
+  if (localStorage.getItem('air_auth_session')) {
+    localStorage.setItem('air_auth_user', newUsername);
+  } else {
+    sessionStorage.setItem('air_auth_user', newUsername);
+  }
+
+  const userLabel = document.getElementById('headerUserLabel');
+  if (userLabel) userLabel.textContent = newUsername;
+
+  closeModal('passwordModal');
+  toast('✓ Admin password & credentials updated successfully!');
+}
+
+
+/* ================= SECURE AUTH & INIT ================= */
+initAdminAuth();
+if (checkAdminAuth()) {
+  resetPatientForm();
+  renderDashboard();
+  initCategoriesUI();
+  initExpandNavEngine();
+  initRegCalendar();
+  initTimerEngine();
+}
 
 /* ================= UHD REACTIVE SMOKE EFFECT ================= */
 (function initSmokeEffect(){
@@ -7272,6 +8147,59 @@ initTimerEngine();
     }
   }, 3500);
 })();
+
+
+/* ================= PWA ENGINE & SERVICE WORKER ================= */
+let deferredPwaPrompt = null;
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(reg => {
+      console.log('[PWA Admin] Service Worker active with scope:', reg.scope);
+    }).catch(err => {
+      console.warn('[PWA Admin] Service Worker registration failed:', err);
+    });
+  });
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPwaPrompt = e;
+  const hBtn = document.getElementById('adminInstallBtn');
+  if (hBtn) hBtn.style.display = 'inline-flex';
+  const aBtn = document.getElementById('authInstallBtn');
+  if (aBtn) aBtn.style.display = 'inline-flex';
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('[PWA Admin] App installed');
+  const hBtn = document.getElementById('adminInstallBtn');
+  if (hBtn) hBtn.style.display = 'none';
+  const aBtn = document.getElementById('authInstallBtn');
+  if (aBtn) aBtn.style.display = 'none';
+  deferredPwaPrompt = null;
+});
+
+function triggerPwaInstall() {
+  if (deferredPwaPrompt) {
+    deferredPwaPrompt.prompt();
+    deferredPwaPrompt.userChoice.then(choice => {
+      if (choice.outcome === 'accepted') {
+        const hBtn = document.getElementById('adminInstallBtn');
+        if (hBtn) hBtn.style.display = 'none';
+        const aBtn = document.getElementById('authInstallBtn');
+        if (aBtn) aBtn.style.display = 'none';
+      }
+      deferredPwaPrompt = null;
+    });
+  } else {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      alert("To install SRC Admin on iPhone/iPad:\n\n1. Tap the Share button (⎋) at the bottom of Safari.\n2. Scroll down and tap 'Add to Home Screen' (⊞).\n\nThe Admin Console will install directly on your home screen!");
+    } else {
+      alert("To install on your device:\n\n1. Tap your browser menu (⋮) in the top-right.\n2. Select 'Install app' or 'Add to Home screen'.");
+    }
+  }
+}
 
 </script>
 </body>

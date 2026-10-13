@@ -1,0 +1,38 @@
+{
+  "name": "Shifa-Ruqiyah Centre - Patient Portal",
+  "short_name": "Shifa Ruqiyah",
+  "description": "Shifa-Ruqiyah Centre Spiritual Guidance & Patient Consultation Booking Portal",
+  "start_url": "/customer.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#120c08",
+  "theme_color": "#1c130d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/logo/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["medical", "health", "lifestyle"]
+}
