@@ -6,6 +6,7 @@
 .DS_Store
 .gradle/
 *.apk
+!shifa-ruqiyah.apk
 local.properties
 **/build/
 **/.gradle/
