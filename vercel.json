@@ -1,13 +1,16 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/customer", "destination": "/customer-panel/index.html" },
-    { "source": "/customer-panel", "destination": "/customer-panel/index.html" },
-    { "source": "/portal", "destination": "/customer-panel/index.html" },
-    { "source": "/app", "destination": "/customer-panel/index.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/admin-panel", "destination": "/admin.html" },
+    { "source": "/portal-management", "destination": "/admin.html" },
+    { "source": "/customer", "destination": "/index.html" },
+    { "source": "/customer-panel", "destination": "/index.html" },
+    { "source": "/portal", "destination": "/index.html" },
+    { "source": "/app", "destination": "/index.html" },
     { "source": "/shifa-ruqiyah-center", "destination": "/index.html" },
     { "source": "/shifa-ruqiyah-centre", "destination": "/index.html" },
-    { "source": "/air-patient-management-system", "destination": "/index.html" },
-    { "source": "/Air-patient-management-system.html", "destination": "/index.html" }
+    { "source": "/air-patient-management-system", "destination": "/admin.html" },
+    { "source": "/Air-patient-management-system.html", "destination": "/admin.html" }
   ]
 }

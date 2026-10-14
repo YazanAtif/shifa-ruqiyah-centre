@@ -4,3 +4,9 @@
 *.before_*
 *.log
 .DS_Store
+.gradle/
+*.apk
+local.properties
+**/build/
+**/.gradle/
+**/local.properties
