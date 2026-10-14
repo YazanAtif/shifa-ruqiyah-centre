@@ -7,13 +7,32 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.shifaruqiyah.app"
         minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    flavorDimensions = ["target"]
+    productFlavors {
+        client {
+            dimension "target"
+            applicationId "com.shifaruqiyah.app"
+            manifestPlaceholders = [appName: "Shifa Ruqiyah"]
+            buildConfigField "String", "DEFAULT_URL", "\"https://src-online.com\""
+        }
+        admin {
+            dimension "target"
+            applicationId "com.shifaruqiyah.admin"
+            manifestPlaceholders = [appName: "SRC Admin"]
+            buildConfigField "String", "DEFAULT_URL", "\"https://src-online.com/admin\""
+        }
     }
 
     buildTypes {
