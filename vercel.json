@@ -11,6 +11,7 @@
     { "source": "/shifa-ruqiyah-center", "destination": "/index.html" },
     { "source": "/shifa-ruqiyah-centre", "destination": "/index.html" },
     { "source": "/air-patient-management-system", "destination": "/admin.html" },
-    { "source": "/Air-patient-management-system.html", "destination": "/admin.html" }
+    { "source": "/Air-patient-management-system.html", "destination": "/admin.html" },
+    { "source": "/lander", "destination": "/index.html" }
   ]
 }
