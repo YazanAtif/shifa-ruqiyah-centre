@@ -15,14 +15,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final String DEFAULT_URL = BuildConfig.DEFAULT_URL;
     private WebView webView;
     private ProgressBar progressBar;
-    private SwipeRefreshLayout swipeRefresh;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -32,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
-        swipeRefresh = findViewById(R.id.swipeRefresh);
 
-        swipeRefresh.setColorSchemeResources(R.color.accent, R.color.primary);
-        swipeRefresh.setOnRefreshListener(() -> webView.reload());
+        // Enable hardware acceleration and silky-smooth scrolling
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        webView.setVerticalScrollBarEnabled(false);
+        webView.setHorizontalScrollBarEnabled(false);
 
         // Configure WebSettings
         WebSettings settings = webView.getSettings();
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 progressBar.setVisibility(View.GONE);
-                swipeRefresh.setRefreshing(false);
             }
         });
 
