@@ -2144,6 +2144,7 @@
     backdrop-filter: blur(8px);
     background: rgba(22, 14, 10, 0.75);
     transition: opacity 0.22s ease;
+    z-index: 200;
   }
   #deleteConfirmModal .del-modal-card{
     background: #fff;
@@ -4970,8 +4971,11 @@ html[lang="ur"] .auth-input-wrapper input {
         </div>
       </form>
     </div>
+  </div>
+</div>
+
 <!-- Smooth Delete Patient Confirmation Modal -->
-<div class="modal-overlay" id="deleteConfirmModal">
+<div class="modal-overlay" id="deleteConfirmModal" onclick="if(event.target===this)closeDeleteConfirmModal()">
   <div class="del-modal-card">
     <div style="background: linear-gradient(135deg, #991b1b, #7f1d1d); color: #fff; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;">
       <div style="display:flex; align-items:center; gap:10px;">
@@ -5290,7 +5294,13 @@ const MONTHS=['January','February','March','April','May','June','July','August',
 function fmtDate(iso){ if(!iso) return ''; const p=iso.split('-'); if(p.length!==3) return iso; return parseInt(p[2])+' '+MONTHS[parseInt(p[1])-1]+' '+p[0]; }
 function fmtTime(t){ if(!t) return ''; let [h,m]=t.split(':').map(Number); const ap=h>=12?'PM':'AM'; h=h%12||12; return h+':'+String(m).padStart(2,'0')+' '+ap; }
 function nextId(){ DB.counter++; return String(DB.counter).padStart(4,'0'); }
-function patientById(id){ return DB.patients.find(p=>p.id===id); }
+function patientById(id){
+  if(id == null) return null;
+  const s = String(id).trim();
+  const clean = s.replace(/^0+/, '') || '0';
+  const padded = s.padStart(4, '0');
+  return DB.patients.find(p => String(p.id) === s || String(p.id) === clean || String(p.id) === padded);
+}
 function badge(status){ const c={Pending:'b-pending',Confirmed:'b-confirmed',Completed:'b-completed',Cancelled:'b-cancelled'}[status]||'b-pending'; return '<span class="badge '+c+'">'+esc(status)+'</span>'; }
 
 /* ================= NUMEROLOGY ENGINE ================= */
