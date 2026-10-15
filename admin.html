@@ -2139,6 +2139,32 @@
   .detail-row .v{color:var(--text)}
   .muted-note{font-size:12.5px;color:var(--muted);margin-top:8px}
   .inline-actions{display:flex;gap:6px;flex-wrap:wrap}
+  /* ---------- Smooth Delete Confirm & Animations ---------- */
+  #deleteConfirmModal{
+    backdrop-filter: blur(8px);
+    background: rgba(22, 14, 10, 0.75);
+    transition: opacity 0.22s ease;
+  }
+  #deleteConfirmModal .del-modal-card{
+    background: #fff;
+    border-radius: var(--radius);
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 25px 60px -10px rgba(0,0,0,0.4), 0 0 0 1px rgba(220,38,38,0.2);
+    overflow: hidden;
+    animation: delPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes delPopIn{
+    0%{opacity:0;transform:scale(0.92) translateY(12px)}
+    100%{opacity:1;transform:scale(1) translateY(0)}
+  }
+  .row-fade-del{
+    transition: opacity 0.32s ease, transform 0.32s ease, background 0.32s ease !important;
+    opacity: 0 !important;
+    transform: translateX(25px) scale(0.97) !important;
+    background: rgba(239, 68, 68, 0.12) !important;
+    pointer-events: none !important;
+  }
   /* ---------- Footer ---------- */
   footer{text-align:center;padding:18px;color:var(--muted);font-size:12.5px}
   /* ---------- Print letter (hidden on screen) ---------- */
@@ -4944,6 +4970,51 @@ html[lang="ur"] .auth-input-wrapper input {
         </div>
       </form>
     </div>
+<!-- Smooth Delete Patient Confirmation Modal -->
+<div class="modal-overlay" id="deleteConfirmModal">
+  <div class="del-modal-card">
+    <div style="background: linear-gradient(135deg, #991b1b, #7f1d1d); color: #fff; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:22px; line-height:1;">⚠️</span>
+        <div>
+          <h3 style="margin:0; font-size:16.5px; font-weight:700; letter-spacing:-0.01em;">Confirm Patient Deletion</h3>
+          <span style="font-size:11.5px; opacity:0.85;">Permanent removal from database</span>
+        </div>
+      </div>
+      <button type="button" class="x" onclick="closeDeleteConfirmModal()" style="font-size:26px; line-height:1; background:none; border:none; color:#fff; opacity:0.85; cursor:pointer;" title="Cancel">&times;</button>
+    </div>
+    <div style="padding: 22px;">
+      <p style="margin:0 0 14px; color:var(--text); font-size:14px; line-height:1.5;">
+        Are you sure you want to permanently delete this customer record?
+      </p>
+
+      <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:14px 16px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <strong id="delModalPatientName" style="color:#991b1b; font-size:16px;">-</strong>
+          <span id="delModalPatientId" style="background:#fee2e2; color:#991b1b; font-weight:700; font-size:12px; padding:3px 8px; border-radius:6px; font-family:monospace;">#0000</span>
+        </div>
+        <div style="font-size:12.5px; color:#7f1d1d; display:flex; gap:12px; flex-wrap:wrap; margin-bottom:4px;">
+          <span id="delModalPatientMobile">📞 -</span>
+          <span id="delModalPatientProblem">🩺 -</span>
+        </div>
+        <div style="font-size:12px; color:#b91c1c; font-weight:500;" id="delModalPatientAppts">
+          📅 0 appointments
+        </div>
+      </div>
+
+      <p style="margin:0 0 20px; font-size:12px; color:#6b7280; line-height:1.4;">
+        ⚠️ This action cannot be undone. All consultation logs, appointment history, and spiritual notes will be completely purged from this portal and the server database.
+      </p>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeDeleteConfirmModal()" style="border-color:#d1d5db; color:#374151; padding:9px 18px; font-weight:600; cursor:pointer;">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteSubmitBtn" onclick="executeConfirmedDelete()" style="background:#dc2626; border-color:#b91c1c; padding:9px 20px; font-weight:700; display:inline-flex; align-items:center; gap:6px; box-shadow:0 3px 10px rgba(220,38,38,0.3); cursor:pointer;">
+          <span>🗑️ Yes, Delete Record</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -5095,9 +5166,30 @@ html[lang="ur"] .auth-input-wrapper input {
 /* ---------- Storage & Central Database Sync ---------- */
 // Default WhatsApp country code for locally-typed numbers (Pakistan = 92)
 let AIR_COUNTRY = localStorage.getItem('air_country') || '92';
+
+// Deletion Blacklist to completely eliminate resurrecting deleted records
+let DELETED_PATIENT_IDS = new Set(JSON.parse(localStorage.getItem('air_deleted_patients') || '[]'));
+function recordDeletedPatient(id){
+  if(!id) return;
+  const s = String(id).trim();
+  const clean = s.replace(/^0+/, '') || '0';
+  const padded = s.padStart(4, '0');
+  DELETED_PATIENT_IDS.add(s);
+  DELETED_PATIENT_IDS.add(clean);
+  DELETED_PATIENT_IDS.add(padded);
+  localStorage.setItem('air_deleted_patients', JSON.stringify(Array.from(DELETED_PATIENT_IDS)));
+}
+function isPatientDeleted(id){
+  if(!id) return false;
+  const s = String(id).trim();
+  const clean = s.replace(/^0+/, '') || '0';
+  const padded = s.padStart(4, '0');
+  return DELETED_PATIENT_IDS.has(s) || DELETED_PATIENT_IDS.has(clean) || DELETED_PATIENT_IDS.has(padded);
+}
+
 const DB = {
-  patients: JSON.parse(localStorage.getItem('air_patients') || '[]'),
-  appts: JSON.parse(localStorage.getItem('air_appts') || '[]'),
+  patients: JSON.parse(localStorage.getItem('air_patients') || '[]').filter(p => !isPatientDeleted(p.id)),
+  appts: JSON.parse(localStorage.getItem('air_appts') || '[]').filter(a => !isPatientDeleted(a.patientId)),
   counter: parseInt(localStorage.getItem('air_counter') || '0', 10)
 };
 // Migrate older appointments (from before dates were removed) so ordering stays stable
@@ -5122,16 +5214,17 @@ async function syncDBWithServer(){
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        patients: DB.patients,
-        appts: DB.appts,
-        counter: DB.counter
+        patients: DB.patients.filter(p => !isPatientDeleted(p.id)),
+        appts: DB.appts.filter(a => !isPatientDeleted(a.patientId)),
+        counter: DB.counter,
+        deletedPatientIds: Array.from(DELETED_PATIENT_IDS)
       })
     });
     if(res.ok){
       const data = await res.json();
       if(data && data.success && Array.isArray(data.patients)){
-        DB.patients = data.patients;
-        DB.appts = data.appts;
+        DB.patients = data.patients.filter(p => !isPatientDeleted(p.id));
+        DB.appts = (data.appts || []).filter(a => !isPatientDeleted(a.patientId));
         if(data.counter > DB.counter) DB.counter = data.counter;
         localStorage.setItem('air_patients', JSON.stringify(DB.patients));
         localStorage.setItem('air_appts', JSON.stringify(DB.appts));
@@ -5151,13 +5244,16 @@ async function loadDBFromServer(silent = false){
     if(res.ok){
       const data = await res.json();
       if(data && data.success && Array.isArray(data.patients)){
-        if(data.patients.length === 0 && data.appts.length === 0 && (DB.patients.length > 0 || DB.appts.length > 0)){
+        const validPatients = data.patients.filter(p => !isPatientDeleted(p.id));
+        const validAppts = (data.appts || []).filter(a => !isPatientDeleted(a.patientId));
+
+        if(validPatients.length === 0 && validAppts.length === 0 && (DB.patients.length > 0 || DB.appts.length > 0)){
           await syncDBWithServer();
           return;
         }
-        DB.patients = data.patients;
-        DB.appts = data.appts;
-        DB.counter = data.counter || DB.patients.length;
+        DB.patients = validPatients;
+        DB.appts = validAppts;
+        DB.counter = Math.max(data.counter || 0, DB.counter || 0, DB.patients.length);
         localStorage.setItem('air_patients', JSON.stringify(DB.patients));
         localStorage.setItem('air_appts', JSON.stringify(DB.appts));
         localStorage.setItem('air_counter', String(DB.counter));
@@ -5986,28 +6082,106 @@ function editPatient(id){
 function handleDeleteFromEdit(){
   const editId = $('editId') ? $('editId').value : '';
   if(editId){
-    deletePatient(editId);
+    promptDeletePatient(editId, () => {
+      resetPatientForm();
+      goTab('patients');
+    });
+  }
+}
+
+let pendingDeletePatientId = null;
+let pendingDeleteCallback = null;
+
+function promptDeletePatient(id, callback){
+  const p = patientById(id);
+  if(!p){
+    toast('Patient record not found', true);
+    return;
+  }
+  // Smoothly close patient detail view if open
+  closeModal('patientModal');
+  
+  pendingDeletePatientId = id;
+  pendingDeleteCallback = typeof callback === 'function' ? callback : null;
+  
+  if($('delModalPatientName')) $('delModalPatientName').textContent = p.name || 'Unknown Patient';
+  if($('delModalPatientId')) $('delModalPatientId').textContent = '#' + (p.id || '');
+  if($('delModalPatientMobile')) $('delModalPatientMobile').textContent = '📞 ' + (p.mobile || 'No phone recorded');
+  if($('delModalPatientProblem')) $('delModalPatientProblem').textContent = '🩺 ' + (p.problem || 'General Consultation');
+  
+  const apptsCount = DB.appts.filter(a => a.patientId === id || a.patientId === String(id).padStart(4, '0')).length;
+  if($('delModalPatientAppts')){
+    $('delModalPatientAppts').textContent = apptsCount > 0 ? `📅 ${apptsCount} appointment${apptsCount > 1 ? 's' : ''}` : '📅 No appointments scheduled';
+  }
+  
+  openModal('deleteConfirmModal');
+}
+
+function closeDeleteConfirmModal(){
+  pendingDeletePatientId = null;
+  pendingDeleteCallback = null;
+  closeModal('deleteConfirmModal');
+}
+
+function executeConfirmedDelete(){
+  const id = pendingDeletePatientId;
+  const cb = pendingDeleteCallback;
+  if(!id) {
+    closeDeleteConfirmModal();
+    return;
+  }
+  
+  const p = patientById(id);
+  const pName = p ? p.name : ('#' + id);
+
+  // Close confirmation modal smoothly
+  closeModal('deleteConfirmModal');
+  pendingDeletePatientId = null;
+  pendingDeleteCallback = null;
+
+  // Visual smooth fade out for all matching rows in any table
+  const cleanId = String(id).replace(/^0+/, '') || '0';
+  const paddedId = String(id).padStart(4, '0');
+  const rows = document.querySelectorAll(`[data-patient-id="${id}"], [data-patient-id="${cleanId}"], [data-patient-id="${paddedId}"]`);
+  rows.forEach(r => r.classList.add('row-fade-del'));
+
+  // Blacklist to prevent resurrection from server/sync
+  recordDeletedPatient(id);
+
+  // Local state update
+  DB.patients = DB.patients.filter(x => x.id !== id && x.id !== cleanId && x.id !== paddedId);
+  DB.appts = DB.appts.filter(a => a.patientId !== id && a.patientId !== cleanId && a.patientId !== paddedId);
+  localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+  localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+  localStorage.setItem('air_counter', String(DB.counter));
+
+  if($('editId') && ($('editId').value === id || $('editId').value === cleanId || $('editId').value === paddedId)){
     resetPatientForm();
-    goTab('patients');
+  }
+
+  // Smooth short delay for animation before refreshing views
+  setTimeout(() => {
+    renderPatients();
+    renderDashboard();
+    renderAppts();
+    if(typeof renderReports === 'function') renderReports();
+    updateCategoryBadges();
+    if(cb) cb();
+  }, 220);
+
+  toast('✓ Patient ' + pName + ' deleted successfully');
+
+  // Background cloud database purge
+  try {
+    fetch('/api/patient?id=' + encodeURIComponent(id), { method: 'DELETE' }).catch(e => console.warn(e));
+    syncDBWithServer();
+  } catch(e) {
+    console.warn('Delete sync notice:', e);
   }
 }
 
 function deletePatient(id){
-  const p=patientById(id); if(!p) return;
-  if(!confirm('⚠️ Delete patient "'+p.name+'" (ID: #'+p.id+')?\n\nThis will permanently delete this customer record and all their associated appointments from both the laptop and cloud database.')) return;
-  DB.patients=DB.patients.filter(x=>x.id!==id);
-  DB.appts=DB.appts.filter(a=>a.patientId!==id);
-  save();
-  toast('✓ Patient '+p.name+' deleted');
-  renderPatients();
-  renderDashboard();
-  renderAppts();
-  if($('editId') && $('editId').value === id){
-    resetPatientForm();
-  }
-  try {
-    fetch('/api/patient?id=' + encodeURIComponent(id), { method: 'DELETE' }).catch(e => console.warn(e));
-  } catch(e){}
+  promptDeletePatient(id);
 }
 
 
@@ -6580,7 +6754,7 @@ function renderPatients(){
   tb.innerHTML=list.map(p=>{
     const lp = p.dob ? (NUM.lifePath(p.dob)||{}).reduced : null;
     const age = ageFromDob(p.dob);
-    return `<tr>
+    return `<tr data-patient-id="${esc(p.id)}">
     <td><strong>${esc(p.id)}</strong></td>
     <td>${esc(p.name)}</td>
     <td>${esc(p.father||'-')}</td>
@@ -6592,7 +6766,7 @@ function renderPatients(){
     <td><div class="inline-actions">
       <button class="btn btn-outline btn-sm" onclick="viewPatient('${p.id}')">View</button>
       <button class="btn btn-outline btn-sm" onclick="editPatient('${p.id}')">Edit</button>
-      <button class="btn btn-danger btn-sm" onclick="deletePatient('${p.id}')">Del</button>
+      <button class="btn btn-danger btn-sm" onclick="promptDeletePatient('${p.id}')">Del</button>
     </div></td></tr>`;
   }).join('');
 }
@@ -6625,7 +6799,7 @@ function viewPatient(id){
   html+=`<div class="btn-row" style="flex-wrap:wrap;gap:8px;margin-top:16px;">
     <button type="button" class="btn btn-blue" onclick="printPatientRecord('${p.id}')">🖨️ Print Record</button>
     <button type="button" class="btn btn-outline" onclick="closeModal('patientModal');editPatient('${p.id}')">✏️ Edit Patient</button>
-    <button type="button" class="btn btn-danger" onclick="closeModal('patientModal');deletePatient('${p.id}')">🗑️ Delete Patient</button>
+    <button type="button" class="btn btn-danger" onclick="promptDeletePatient('${p.id}')">🗑️ Delete Patient</button>
     <button type="button" class="btn btn-outline" onclick="closeModal('patientModal')">Close</button>
   </div>`;
   $('patientModalBody').innerHTML=html;
@@ -7023,7 +7197,13 @@ function editAppt(id){
 function deleteAppt(id){
   if(!confirm('Delete this appointment?')) return;
   DB.appts=DB.appts.filter(x=>x.id!==id);
-  save(); toast('Appointment deleted'); renderAppts(); renderDashboard();
+  save(); 
+  toast('Appointment deleted'); 
+  renderAppts(); 
+  renderDashboard();
+  try {
+    fetch('/api/appointment?id=' + encodeURIComponent(id), { method: 'DELETE' }).catch(e=>console.warn(e));
+  } catch(e){}
 }
 
 /* ================= DASHBOARD ================= */
@@ -7048,7 +7228,7 @@ function renderDashboard(){
 
   const recent = DB.patients.slice(0, 8);
   $('recentTable').innerHTML = recent.length
-    ? recent.map(p => `<tr>
+    ? recent.map(p => `<tr data-patient-id="${esc(p.id)}">
         <td><strong>${esc(p.id)}</strong></td>
         <td><strong>${esc(p.name)}</strong></td>
         <td>${esc(p.mobile)}</td>
@@ -7058,7 +7238,7 @@ function renderDashboard(){
           <div class="inline-actions" style="justify-content:flex-end;">
             <button type="button" class="btn btn-outline btn-sm" onclick="viewPatient('${esc(p.id)}')" title="View complete customer profile and history">👁️ View</button>
             <button type="button" class="btn btn-outline btn-sm" onclick="editPatient('${esc(p.id)}')" title="Edit customer record">✏️ Edit</button>
-            <button type="button" class="btn btn-danger btn-sm" onclick="deletePatient('${esc(p.id)}')" title="Delete customer record">🗑️ Del</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="promptDeletePatient('${esc(p.id)}')" title="Delete customer record">🗑️ Del</button>
           </div>
         </td>
       </tr>`).join('')

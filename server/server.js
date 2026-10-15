@@ -127,10 +127,17 @@ const server = http.createServer(async (req, res) => {
 
     // 3. DELETE PATIENT
     if (req.method === 'DELETE' && pathname === '/api/patient') {
-      const id = url.searchParams.get('id');
+      let id = url.searchParams.get('id');
+      if (!id) {
+        try {
+          const b = await parseBody(req);
+          id = b.id;
+        } catch(e){}
+      }
       if (!id) return sendJson(res, 400, { error: 'Patient id is required' });
 
-      await pool.query('DELETE FROM patients WHERE id = $1', [String(id).padStart(4, '0')]);
+      await pool.query('DELETE FROM appointments WHERE patient_id = $1 OR patient_id = $2', [String(id), String(id).padStart(4, '0')]);
+      await pool.query('DELETE FROM patients WHERE id = $1 OR id = $2', [String(id), String(id).padStart(4, '0')]);
       return sendJson(res, 200, { success: true, deleted: id });
     }
 
@@ -178,7 +185,13 @@ const server = http.createServer(async (req, res) => {
 
     // 5. DELETE APPOINTMENT
     if (req.method === 'DELETE' && pathname === '/api/appointment') {
-      const id = url.searchParams.get('id');
+      let id = url.searchParams.get('id');
+      if (!id) {
+        try {
+          const b = await parseBody(req);
+          id = b.id;
+        } catch(e){}
+      }
       if (!id) return sendJson(res, 400, { error: 'Appointment id is required' });
 
       await pool.query('DELETE FROM appointments WHERE id = $1', [id]);
@@ -195,6 +208,19 @@ const server = http.createServer(async (req, res) => {
       const client = await pool.connect();
       try {
         await client.query('BEGIN');
+
+        if (Array.isArray(body.deletedPatientIds) && body.deletedPatientIds.length > 0) {
+          for (const dId of body.deletedPatientIds) {
+            await client.query('DELETE FROM appointments WHERE patient_id = $1 OR patient_id = $2', [String(dId), String(dId).padStart(4, '0')]);
+            await client.query('DELETE FROM patients WHERE id = $1 OR id = $2', [String(dId), String(dId).padStart(4, '0')]);
+          }
+        }
+
+        if (Array.isArray(body.deletedApptIds) && body.deletedApptIds.length > 0) {
+          for (const aId of body.deletedApptIds) {
+            await client.query('DELETE FROM appointments WHERE id = $1', [String(aId)]);
+          }
+        }
         
         for (const p of patients) {
           await client.query(`

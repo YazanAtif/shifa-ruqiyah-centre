@@ -14,6 +14,9 @@ module.exports = async function proxyToVPS(endpoint, req, res) {
     const queryIdx = (req.url || '').indexOf('?');
     if (queryIdx !== -1) {
       url += req.url.slice(queryIdx);
+    } else if (req.query && Object.keys(req.query).length > 0) {
+      const q = new URLSearchParams(req.query).toString();
+      url += `?${q}`;
     }
 
     const options = {
