@@ -48,17 +48,16 @@
   input[type="number"]{
     -moz-appearance:textfield;
   }
-  html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+  html{-webkit-tap-highlight-color:transparent;-webkit-overflow-scrolling:touch}
   *{box-sizing:border-box;margin:0;padding:0}
   body{
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;
-    background:linear-gradient(135deg,#f6f1eb 0%,#fbf8f3 40%,#eee4d6 75%,#f7f2ec 100%);
-    background-size:250% 250%;
-    animation:subtleGradient 30s ease-in-out infinite alternate;
+    background:#f6f1eb linear-gradient(135deg,#f6f1eb 0%,#fbf8f3 40%,#eee4d6 75%,#f7f2ec 100%);
     color:var(--text);
     line-height:1.5;
     -webkit-font-smoothing:antialiased;
     min-height:100vh;
+    touch-action:pan-y;
   }
   @keyframes subtleGradient{
     0%{background-position:0% 30%}
@@ -3557,7 +3556,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 24px 16px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     opacity: 1;
     visibility: visible;
     transition: opacity 0.35s ease, visibility 0.35s ease;
@@ -3604,6 +3605,7 @@
     position: relative;
     width: 100%;
     max-width: 400px;
+    margin: auto;
     background: rgba(26, 18, 13, 0.94);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
@@ -4081,10 +4083,14 @@ html[lang="ur"] .auth-input-wrapper input {
     </form>
 
     <div class="auth-footer-links">
-      <div style="margin-bottom: 8px;">
+      <div style="margin-bottom: 8px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
+        <a href="/shifa-ruqiyah-admin.apk" download="shifa-ruqiyah-admin.apk" class="auth-install-btn" style="background: rgba(212,175,55,0.18); border: 1px solid rgba(212,175,55,0.45); color: #f5d67b; border-radius: 9999px; padding: 5px 14px; font-size: 11.5px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" title="Download SRC Admin APK for Android">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download Admin APK</span>
+        </a>
         <button type="button" class="auth-install-btn" id="authInstallBtn" onclick="triggerPwaInstall()" style="background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.3); color: #e5c158; border-radius: 9999px; padding: 5px 14px; font-size: 11.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Install Admin App</span>
+          <span>Install PWA</span>
         </button>
       </div>
       <a href="/" class="auth-customer-link">
@@ -4096,27 +4102,7 @@ html[lang="ur"] .auth-input-wrapper input {
 </div>
 
 
-<!-- Full-Screen UHD Page Loader with Center Logo & White UHD Smoke -->
-<div id="pageLoader" class="page-loader" aria-label="Loading Shifa-Ruqiyah Centre">
-  <div class="loader-bg-overlay"></div>
-  <div class="loader-content">
-    <div class="loader-smoke-wrapper" id="loaderSmokeWrapper" title="Shifa-Ruqiyah Centre">
-      <canvas id="loaderSmokeCanvas" class="loader-smoke-canvas" width="340" height="340" aria-hidden="true"></canvas>
-      <div class="loader-aura" aria-hidden="true"></div>
-      <div class="loader-logo-orb" id="loaderLogoOrb">
-        <img src="logo/src-logo-512.png" onerror="this.onerror=null;this.src='logo/src-logo-256.png'" alt="Shifa-Ruqiyah Centre Emblem" class="loader-logo-img">
-      </div>
-    </div>
-    <div class="loader-text-group">
-      <h2 class="loader-brand-title">SHIFA-RUQIYAH CENTRE</h2>
-      <p class="loader-brand-sub">Spiritual Guidance &middot; Patient Management Portal</p>
-      <div class="loader-progress-track">
-        <div class="loader-progress-bar" id="loaderProgressBar"></div>
-      </div>
-      <div class="loader-status" id="loaderStatus">Initializing Portal...</div>
-    </div>
-  </div>
-</div>
+
 
 <!-- Subtle ambient background glow -->
 <div class="bg-glow" aria-hidden="true">
@@ -4494,10 +4480,13 @@ html[lang="ur"] .auth-input-wrapper input {
     </div>
 
     <div class="card">
-      <h2 class="section-title">Recent Registrations</h2>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <h2 class="section-title" style="margin-bottom:0;" data-i18n="sec_recent_reg">Recent Registrations</h2>
+        <button type="button" class="btn btn-outline btn-sm" onclick="goTab('patients')" style="font-size:11px;">View All Directory →</button>
+      </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>ID</th><th>Name</th><th>Mobile</th><th>Problem</th><th>Registered</th></tr></thead>
+          <thead><tr><th>ID</th><th>Name</th><th>Mobile</th><th>Problem</th><th>Registered</th><th style="text-align:right;">Actions</th></tr></thead>
           <tbody id="recentTable"></tbody>
         </table>
       </div>
@@ -4709,6 +4698,7 @@ html[lang="ur"] .auth-input-wrapper input {
 
         <div class="btn-row">
           <button type="submit" class="btn btn-primary" id="savePatientBtn"><span data-i18n="btn_save_book">Save Patient &amp; Book Appointment</span></button>
+          <button type="button" class="btn btn-danger" id="deletePatientEditBtn" style="display:none;" onclick="handleDeleteFromEdit()"><span data-i18n="btn_del_patient">🗑️ Delete Patient</span></button>
           <button type="reset" class="btn btn-outline" id="clearBtn"><span data-i18n="btn_clear_form">Clear Form</span></button>
         </div>
         <input type="hidden" id="editId">
@@ -5102,7 +5092,7 @@ html[lang="ur"] .auth-input-wrapper input {
 <script>
 /* ================= Shifa-Ruqiyah Centre - App Logic ================= */
 
-/* ---------- Storage ---------- */
+/* ---------- Storage & Central Database Sync ---------- */
 // Default WhatsApp country code for locally-typed numbers (Pakistan = 92)
 let AIR_COUNTRY = localStorage.getItem('air_country') || '92';
 const DB = {
@@ -5122,10 +5112,73 @@ const DB = {
   });
   if(changed) localStorage.setItem('air_appts', JSON.stringify(DB.appts));
 })();
+
+let isSyncing = false;
+async function syncDBWithServer(){
+  if(isSyncing) return;
+  isSyncing = true;
+  try {
+    const res = await fetch('/api/sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        patients: DB.patients,
+        appts: DB.appts,
+        counter: DB.counter
+      })
+    });
+    if(res.ok){
+      const data = await res.json();
+      if(data && data.success && Array.isArray(data.patients)){
+        DB.patients = data.patients;
+        DB.appts = data.appts;
+        if(data.counter > DB.counter) DB.counter = data.counter;
+        localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+        localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+        localStorage.setItem('air_counter', String(DB.counter));
+      }
+    }
+  } catch(err) {
+    console.warn('Sync notice:', err.message);
+  } finally {
+    isSyncing = false;
+  }
+}
+
+async function loadDBFromServer(silent = false){
+  try {
+    const res = await fetch('/api/data');
+    if(res.ok){
+      const data = await res.json();
+      if(data && data.success && Array.isArray(data.patients)){
+        if(data.patients.length === 0 && data.appts.length === 0 && (DB.patients.length > 0 || DB.appts.length > 0)){
+          await syncDBWithServer();
+          return;
+        }
+        DB.patients = data.patients;
+        DB.appts = data.appts;
+        DB.counter = data.counter || DB.patients.length;
+        localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+        localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+        localStorage.setItem('air_counter', String(DB.counter));
+        if(!silent){
+          if(typeof renderDashboard === 'function') renderDashboard();
+          if(typeof renderPatients === 'function') renderPatients();
+          if(typeof renderAppts === 'function') renderAppts();
+          if(typeof renderReports === 'function') renderReports();
+        }
+      }
+    }
+  } catch(err) {
+    console.warn('Server fetch notice:', err.message);
+  }
+}
+
 function save(){
   localStorage.setItem('air_patients', JSON.stringify(DB.patients));
   localStorage.setItem('air_appts', JSON.stringify(DB.appts));
   localStorage.setItem('air_counter', String(DB.counter));
+  syncDBWithServer();
 }
 
 /* ---------- Helpers ---------- */
@@ -5798,6 +5851,7 @@ function resetPatientForm(){
   updateRegApptCurrency();
   const btn = $('savePatientBtn') || document.querySelector('#patientForm button[type=submit]');
   if(btn) btn.textContent = 'Save Patient & Book Appointment';
+  if($('deletePatientEditBtn')) $('deletePatientEditBtn').style.display = 'none';
 }
 /* Build hidden pDob (YYYY-MM-DD) from the 3 Day/Month/Year boxes + live age */
 function syncDob(){
@@ -5925,13 +5979,35 @@ function editPatient(id){
   }
   const btn = $('savePatientBtn') || document.querySelector('#patientForm button[type=submit]');
   if(btn) btn.textContent = 'Update Patient Record';
+  if($('deletePatientEditBtn')) $('deletePatientEditBtn').style.display = 'inline-flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+function handleDeleteFromEdit(){
+  const editId = $('editId') ? $('editId').value : '';
+  if(editId){
+    deletePatient(editId);
+    resetPatientForm();
+    goTab('patients');
+  }
+}
+
 function deletePatient(id){
   const p=patientById(id); if(!p) return;
-  if(!confirm('Delete patient "'+p.name+'"?\nThis will also remove their appointments.')) return;
+  if(!confirm('⚠️ Delete patient "'+p.name+'" (ID: #'+p.id+')?\n\nThis will permanently delete this customer record and all their associated appointments from both the laptop and cloud database.')) return;
   DB.patients=DB.patients.filter(x=>x.id!==id);
   DB.appts=DB.appts.filter(a=>a.patientId!==id);
-  save(); toast('Patient deleted'); renderPatients(); renderDashboard();
+  save();
+  toast('✓ Patient '+p.name+' deleted');
+  renderPatients();
+  renderDashboard();
+  renderAppts();
+  if($('editId') && $('editId').value === id){
+    resetPatientForm();
+  }
+  try {
+    fetch('/api/patient?id=' + encodeURIComponent(id), { method: 'DELETE' }).catch(e => console.warn(e));
+  } catch(e){}
 }
 
 
@@ -6546,7 +6622,12 @@ function viewPatient(id){
       appts.map((a,i)=>`<tr><td>${i+1}</td><td>${fmtTime(a.start)} - ${fmtTime(a.end)}</td><td>${badge(a.status)}</td><td><button class="btn btn-timer btn-sm" onclick="closeModal('patientModal');startApptSession('${a.id}')">⏱️ Start</button></td></tr>`).join('')+
       '</tbody></table></div>';
   }else{ html+='<p class="muted-note">No appointments yet.</p>'; }
-  html+=`<div class="btn-row"><button class="btn btn-blue" onclick="printPatientRecord('${p.id}')">🖨️ Print Record</button><button class="btn btn-outline" onclick="closeModal('patientModal')">Close</button></div>`;
+  html+=`<div class="btn-row" style="flex-wrap:wrap;gap:8px;margin-top:16px;">
+    <button type="button" class="btn btn-blue" onclick="printPatientRecord('${p.id}')">🖨️ Print Record</button>
+    <button type="button" class="btn btn-outline" onclick="closeModal('patientModal');editPatient('${p.id}')">✏️ Edit Patient</button>
+    <button type="button" class="btn btn-danger" onclick="closeModal('patientModal');deletePatient('${p.id}')">🗑️ Delete Patient</button>
+    <button type="button" class="btn btn-outline" onclick="closeModal('patientModal')">Close</button>
+  </div>`;
   $('patientModalBody').innerHTML=html;
   openModal('patientModal');
 }
@@ -6965,10 +7046,23 @@ function renderDashboard(){
       <td><div class="inline-actions"><button class="btn btn-timer btn-sm" onclick="startApptSession('${a.id}')" title="Start appointment session timer">⏱️ Start</button><button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button><button class="btn btn-blue btn-sm" onclick="printLetter('${a.id}')">Letter</button></div></td></tr>`).join('')
     : '<tr><td colspan="5" class="empty">No appointments yet.</td></tr>';
 
-  const recent=DB.patients.slice(0,5);
+  const recent = DB.patients.slice(0, 8);
   $('recentTable').innerHTML = recent.length
-    ? recent.map(p=>`<tr><td><strong>${esc(p.id)}</strong></td><td>${esc(p.name)}</td><td>${esc(p.mobile)}</td><td>${esc(p.problem||'-')}</td><td>${fmtDate(p.registered)}</td></tr>`).join('')
-    : '<tr><td colspan="5" class="empty">No patients registered yet.</td></tr>';
+    ? recent.map(p => `<tr>
+        <td><strong>${esc(p.id)}</strong></td>
+        <td><strong>${esc(p.name)}</strong></td>
+        <td>${esc(p.mobile)}</td>
+        <td>${esc(p.problem || '-')}</td>
+        <td>${fmtDate(p.registered)}</td>
+        <td style="text-align:right;">
+          <div class="inline-actions" style="justify-content:flex-end;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="viewPatient('${esc(p.id)}')" title="View complete customer profile and history">👁️ View</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="editPatient('${esc(p.id)}')" title="Edit customer record">✏️ Edit</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="deletePatient('${esc(p.id)}')" title="Delete customer record">🗑️ Del</button>
+          </div>
+        </td>
+      </tr>`).join('')
+    : '<tr><td colspan="6" class="empty">No patients registered yet.</td></tr>';
 }
 
 /* ---------- Modal ---------- */
@@ -7776,6 +7870,7 @@ function handleAdminLogin(e) {
           initExpandNavEngine();
           initRegCalendar();
           initTimerEngine();
+          loadDBFromServer(false);
           toast('✓ Welcome back, ' + username + '! Admin access granted.');
         }, 350);
       }
@@ -8052,6 +8147,7 @@ const ADMIN_I18N = {
       sec_admin_dash: "Admin Dashboard",
       sec_cat_dir: "Categories Directory",
       sec_recent_appts: "Recent Appointments",
+      sec_recent_reg: "Recent Registrations",
       sec_pat_reg: "Patient Registration",
       sec_pat_dir: "Patient Directory",
       sec_new_appt: "New Appointment",
@@ -8083,6 +8179,7 @@ const ADMIN_I18N = {
       lbl_paid_amt: "Paid Amount",
       lbl_bal_due: "Balance Due",
       btn_save_book: "Save Patient & Book Appointment",
+      btn_del_patient: "🗑️ Delete Patient",
       btn_clear_form: "Clear Form",
 
       lbl_search_patients: "Search Patient Records",
@@ -8235,6 +8332,7 @@ const ADMIN_I18N = {
       sec_admin_dash: "ایڈمن ڈیش بورڈ",
       sec_cat_dir: "کیٹیگریز ڈائریکٹری",
       sec_recent_appts: "حالیہ اپائنٹمنٹس",
+      sec_recent_reg: "حالیہ اندراج (رجسٹریشن)",
       sec_pat_reg: "مریض کا اندراج (رجسٹریشن)",
       sec_pat_dir: "مریضوں کی ڈائریکٹری",
       sec_new_appt: "نئی اپائنٹمنٹ",
@@ -8266,6 +8364,7 @@ const ADMIN_I18N = {
       lbl_paid_amt: "وصول شدہ رقم",
       lbl_bal_due: "بقایا رقم",
       btn_save_book: "مریض درج کریں اور اپائنٹمنٹ محفوظ کریں",
+      btn_del_patient: "🗑️ مریض ڈیلیٹ کریں",
       btn_clear_form: "فارم صاف کریں",
 
       lbl_search_patients: "مریض کا ریکارڈ تلاش کریں",
@@ -8354,7 +8453,12 @@ if (checkAdminAuth()) {
   initExpandNavEngine();
   initRegCalendar();
   initTimerEngine();
+  loadDBFromServer(false);
 }
+
+// Background sync & tab focus sync for real-time customer appointments
+window.addEventListener('focus', () => { if(checkAdminAuth()) loadDBFromServer(false); });
+setInterval(() => { if(checkAdminAuth()) loadDBFromServer(false); }, 15000);
 
 /* ================= UHD REACTIVE SMOKE EFFECT ================= */
 (function initSmokeEffect(){
@@ -8549,204 +8653,7 @@ if (checkAdminAuth()) {
 /* ================= WHITE UHD SMOKE PAGE LOADER ENGINE ================= */
 (function initPageLoader(){
   const loader = document.getElementById('pageLoader');
-  const canvas = document.getElementById('loaderSmokeCanvas');
-  const wrapper = document.getElementById('loaderSmokeWrapper');
-  const orb = document.getElementById('loaderLogoOrb');
-  const pBar = document.getElementById('loaderProgressBar');
-  const statusEl = document.getElementById('loaderStatus');
-  if(!loader || !canvas || !orb) return;
-
-  const ctx = canvas.getContext('2d');
-  if(!ctx) return;
-
-  // UHD Retina scale
-  const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-  const CSS_SIZE = 340;
-  canvas.width = Math.round(CSS_SIZE * dpr);
-  canvas.height = Math.round(CSS_SIZE * dpr);
-  ctx.scale(dpr, dpr);
-
-  const cx = CSS_SIZE / 2;
-  const cy = CSS_SIZE / 2;
-  const orbRadius = 62; // Center 124px logo orb radius
-
-  let mouse = { x: cx, y: cy, active: false };
-  let particles = [];
-  const MAX_PARTICLES = 44;
-
-  // Offscreen pre-rendered WHITE smoke puff sprite for ultra-soft feathered rendering
-  const spriteSize = 80;
-  const spriteCanvas = document.createElement('canvas');
-  spriteCanvas.width = spriteSize;
-  spriteCanvas.height = spriteSize;
-  const sctx = spriteCanvas.getContext('2d');
-  const scx = spriteSize / 2;
-  const scy = spriteSize / 2;
-  const sGrad = sctx.createRadialGradient(scx, scy, 0, scx, scy, scx);
-
-  // Pure ethereal WHITE smoke palette
-  sGrad.addColorStop(0, 'rgba(255, 255, 255, 0.70)');
-  sGrad.addColorStop(0.2, 'rgba(252, 250, 246, 0.52)');
-  sGrad.addColorStop(0.45, 'rgba(242, 238, 230, 0.28)');
-  sGrad.addColorStop(0.75, 'rgba(225, 220, 212, 0.08)');
-  sGrad.addColorStop(1, 'rgba(210, 205, 195, 0)');
-  sctx.fillStyle = sGrad;
-  sctx.beginPath();
-  sctx.arc(scx, scy, scx, 0, Math.PI * 2);
-  sctx.fill();
-
-  class WhiteSmokeParticle {
-    constructor(forcedX, forcedY, isBurst = false){
-      this.reset(forcedX, forcedY, isBurst);
-    }
-    reset(forcedX, forcedY, isBurst = false){
-      const angle = isBurst
-        ? Math.random() * Math.PI * 2
-        : (Math.random() * Math.PI * 1.5 + 0.25 * Math.PI); // sides & bottom perimeter
-      const spawnDist = orbRadius * (0.85 + Math.random() * 0.35);
-
-      this.x = forcedX != null ? forcedX : cx + Math.cos(angle) * spawnDist;
-      this.y = forcedY != null ? forcedY : cy + Math.sin(angle) * spawnDist;
-
-      const speed = isBurst ? (0.8 + Math.random() * 1.4) : (0.25 + Math.random() * 0.45);
-      this.vx = isBurst ? Math.cos(angle) * speed : (Math.random() - 0.5) * 0.4;
-      this.vy = isBurst ? Math.sin(angle) * speed : (-0.45 - Math.random() * 0.45);
-
-      this.size = 20 + Math.random() * 16;
-      this.maxSize = this.size * (2.2 + Math.random() * 1.4);
-      this.rotation = Math.random() * Math.PI * 2;
-      this.rotSpeed = (Math.random() - 0.5) * 0.012;
-
-      this.age = 0;
-      this.lifespan = isBurst ? (50 + Math.random() * 30) : (75 + Math.random() * 55);
-      this.maxAlpha = isBurst ? (0.48 + Math.random() * 0.2) : (0.26 + Math.random() * 0.16);
-      this.swayFreq = 0.025 + Math.random() * 0.025;
-      this.swayPhase = Math.random() * Math.PI * 2;
-      this.swayAmp = 0.35 + Math.random() * 0.45;
-    }
-    update(){
-      this.age++;
-      if(this.age >= this.lifespan){
-        this.reset();
-        return;
-      }
-      this.x += this.vx + Math.sin(this.age * this.swayFreq + this.swayPhase) * this.swayAmp;
-      this.y += this.vy;
-      this.vy *= 0.993;
-      this.rotation += this.rotSpeed;
-
-      if(mouse.active){
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.hypot(dx, dy);
-        if(dist < 70 && dist > 1){
-          const force = (1 - dist / 70) * 0.65;
-          this.vx += (dx / dist) * force;
-          this.vy += (dy / dist) * force;
-        }
-      }
-    }
-    draw(){
-      const progress = this.age / this.lifespan;
-      const alpha = Math.sin(progress * Math.PI) * this.maxAlpha;
-      if(alpha <= 0.005) return;
-
-      const currentSize = this.size + (this.maxSize - this.size) * progress;
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.drawImage(spriteCanvas, -currentSize / 2, -currentSize / 2, currentSize, currentSize);
-      ctx.restore();
-    }
-  }
-
-  // Pre-seed particles staggered
-  for(let i = 0; i < MAX_PARTICLES; i++){
-    const p = new WhiteSmokeParticle();
-    p.age = Math.floor(Math.random() * p.lifespan);
-    particles.push(p);
-  }
-
-  // Interactive mouse/touch movement
-  wrapper.addEventListener('mousemove', e => {
-    const rect = wrapper.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-    mouse.x = (mx / rect.width) * CSS_SIZE;
-    mouse.y = (my / rect.height) * CSS_SIZE;
-    mouse.active = true;
-
-    const tiltX = -((mouse.y - cy) / cy) * 10;
-    const tiltY = ((mouse.x - cx) / cx) * 10;
-    orb.style.transform = `perspective(400px) rotateX(${tiltX.toFixed(1)}deg) rotateY(${tiltY.toFixed(1)}deg) scale(1.04)`;
-
-    if(Math.random() < 0.4 && particles.length < MAX_PARTICLES + 12){
-      particles.push(new WhiteSmokeParticle(mouse.x, mouse.y, false));
-    }
-  });
-
-  wrapper.addEventListener('mouseleave', () => {
-    mouse.active = false;
-    orb.style.transform = 'perspective(400px) rotateX(0deg) rotateY(0deg) scale(1)';
-  });
-
-  wrapper.addEventListener('click', () => {
-    for(let i = 0; i < 14; i++){
-      particles.push(new WhiteSmokeParticle(cx, cy, true));
-    }
-  });
-
-  let animRunning = true;
-  function renderLoader(){
-    if(!animRunning) return;
-    ctx.clearRect(0, 0, CSS_SIZE, CSS_SIZE);
-    for(let i = particles.length - 1; i >= 0; i--){
-      const p = particles[i];
-      p.update();
-      p.draw();
-      if(p.age >= p.lifespan && particles.length > MAX_PARTICLES){
-        particles.splice(i, 1);
-      }
-    }
-    requestAnimationFrame(renderLoader);
-  }
-  requestAnimationFrame(renderLoader);
-
-  // Progressive loader bar & dismiss sequence
-  let progress = 0;
-  const statuses = ['Loading Core Modules...', 'Connecting Database...', 'Calibrating Spiritual Engine...', 'Ready'];
-  const interval = setInterval(() => {
-    progress += Math.floor(Math.random() * 18) + 12;
-    if(progress > 100) progress = 100;
-    if(pBar) pBar.style.width = progress + '%';
-    const statusIdx = Math.min(Math.floor((progress / 100) * (statuses.length - 1)), statuses.length - 1);
-    if(statusEl) statusEl.textContent = statuses[statusIdx];
-
-    if(progress >= 100){
-      clearInterval(interval);
-      // Gentle white burst wave
-      for(let i = 0; i < 16; i++){
-        particles.push(new WhiteSmokeParticle(cx, cy, true));
-      }
-      setTimeout(() => {
-        loader.classList.add('loaded');
-        setTimeout(() => {
-          animRunning = false;
-          loader.remove(); // Remove from DOM after transition
-        }, 750);
-      }, 400);
-    }
-  }, 140);
-
-  // Fallback auto-dismiss after 3.5s
-  setTimeout(() => {
-    if(!loader.classList.contains('loaded')){
-      clearInterval(interval);
-      loader.classList.add('loaded');
-      setTimeout(() => { animRunning = false; loader.remove(); }, 750);
-    }
-  }, 3500);
+  if(loader) loader.remove();
 })();
 
 
