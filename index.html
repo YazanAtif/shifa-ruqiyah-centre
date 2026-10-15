@@ -1734,6 +1734,10 @@ html[lang="ur"] .adhkar-filter-pill {
  <span class="client-avatar-dot" id="clientDot"></span>
  <span id="clientChipName" data-i18n="client_lookup">Lookup<span class="chip-patient-text"> Patient</span></span>
  </div>
+ <a href="/admin" class="admin-switch-btn" id="adminSwitchBtn" title="Admin Portal Login">
+ <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+ <span data-i18n="nav_admin">Admin</span>
+ </a>
  </div>
  </div>
  </header>
@@ -2145,6 +2149,20 @@ html[lang="ur"] .adhkar-filter-pill {
  </div>
  </section>
 
+ <footer class="portal-footer" style="text-align: center; padding: 28px 16px 20px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border-light); margin-top: 48px;">
+ <p style="margin-bottom: 10px; font-weight: 500;">&copy; 2026 Shifa-Ruqiyah Centre &middot; Ruqyah Shari'ah &amp; Spiritual Healing</p>
+ <div style="display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap;">
+ <a href="#home" onclick="switchTab('home')" style="color: var(--brown); text-decoration: none;">Patient Portal</a>
+ <span style="color: var(--border);">&bull;</span>
+ <a href="#tracker" onclick="switchTab('tracker')" style="color: var(--brown); text-decoration: none;">Appointment Tracker</a>
+ <span style="color: var(--border);">&bull;</span>
+ <a href="/admin" style="color: var(--gold-dark); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+ <span data-i18n="nav_admin">Admin</span> Portal
+ </a>
+ </div>
+ </footer>
+
  </main>
 
  <!-- ================= FLOATING / MODAL COMPONENTS ================= -->
@@ -2303,12 +2321,74 @@ html[lang="ur"] .adhkar-filter-pill {
  localStorage.setItem('air_patients', JSON.stringify(DB.patients));
  localStorage.setItem('air_appts', JSON.stringify(DB.appts));
  localStorage.setItem('air_counter', String(DB.counter));
+ syncClientDBWithServer();
  }
 
  function reloadDB() {
  DB.patients = JSON.parse(localStorage.getItem('air_patients') || '[]');
  DB.appts = JSON.parse(localStorage.getItem('air_appts') || '[]');
  DB.counter = parseInt(localStorage.getItem('air_counter') || '0', 10);
+ }
+
+ async function syncClientDBWithServer() {
+   try {
+     const res = await fetch('/api/sync', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({
+         patients: DB.patients,
+         appts: DB.appts,
+         counter: DB.counter
+       })
+     });
+     if(res.ok) {
+       const data = await res.json();
+       if(data && data.success && Array.isArray(data.appts)) {
+         DB.appts = data.appts;
+         if(Array.isArray(data.patients) && data.patients.length > 0) {
+           const map = new Map();
+           data.patients.forEach(p => map.set(p.id, p));
+           DB.patients.forEach(p => { if(!map.has(p.id)) map.set(p.id, p); });
+           DB.patients = Array.from(map.values());
+         }
+         if(data.counter > DB.counter) DB.counter = data.counter;
+         localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+         localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+         localStorage.setItem('air_counter', String(DB.counter));
+       }
+     }
+   } catch(e) {
+     console.warn('Sync notice:', e);
+   }
+ }
+
+ async function fetchLiveAppointments(silent = true) {
+   try {
+     const res = await fetch('/api/data');
+     if(res.ok) {
+       const data = await res.json();
+       if(data && data.success && Array.isArray(data.appts)) {
+         DB.appts = data.appts;
+         if(Array.isArray(data.patients) && data.patients.length > 0) {
+           const map = new Map();
+           data.patients.forEach(p => map.set(p.id, p));
+           DB.patients.forEach(p => { if(!map.has(p.id)) map.set(p.id, p); });
+           DB.patients = Array.from(map.values());
+         }
+         if(data.counter > DB.counter) DB.counter = data.counter;
+         localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+         localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+         localStorage.setItem('air_counter', String(DB.counter));
+
+         const curDate = $('selectedDate') ? $('selectedDate').value : '';
+         if(curDate && typeof renderTimeSlots === 'function') {
+           renderTimeSlots(curDate);
+         }
+       }
+     }
+   } catch(e) {
+     console.warn('Live fetch notice:', e);
+   }
  }
 
  // Client session memory (remembers current phone/patient)
@@ -3102,7 +3182,8 @@ const ADHKAR_LIST = [
    renderActiveApptBanner();
  }
 
- function executeTrackerLookup(query){
+ async function executeTrackerLookup(query){
+ await fetchLiveAppointments(true);
  reloadDB();
  const q = (query || $('trackerSearchInput').value || '').trim();
  if(!q){
@@ -4194,8 +4275,18 @@ function setAppLanguage(lang){
 function t(key, fallback){
   const lang = getAppLanguage();
   const dict = APP_I18N.dict[lang] || APP_I18N.dict.en;
-  return dict[key] !== undefined ? dict[key] : (fallback !== undefined ? fallback : key);
 }
+
+// Boot language, calendar and initial database sync
+const initialClientLang = getAppLanguage();
+setAppLanguage(initialClientLang);
+if(typeof initCalendar === 'function') initCalendar();
+if(typeof renderServicesDeck === 'function') renderServicesDeck();
+fetchLiveAppointments(true);
+
+// Focus & interval sync for real-time slot booking
+window.addEventListener('focus', () => fetchLiveAppointments(true));
+setInterval(() => fetchLiveAppointments(true), 25000);
 
 /* ================= PWA ENGINE & SERVICE WORKER ================= */
 let deferredPwaPrompt = null;

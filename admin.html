@@ -5088,7 +5088,7 @@ html[lang="ur"] .auth-input-wrapper input {
 <script>
 /* ================= Shifa-Ruqiyah Centre - App Logic ================= */
 
-/* ---------- Storage ---------- */
+/* ---------- Storage & Central Database Sync ---------- */
 // Default WhatsApp country code for locally-typed numbers (Pakistan = 92)
 let AIR_COUNTRY = localStorage.getItem('air_country') || '92';
 const DB = {
@@ -5108,10 +5108,73 @@ const DB = {
   });
   if(changed) localStorage.setItem('air_appts', JSON.stringify(DB.appts));
 })();
+
+let isSyncing = false;
+async function syncDBWithServer(){
+  if(isSyncing) return;
+  isSyncing = true;
+  try {
+    const res = await fetch('/api/sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        patients: DB.patients,
+        appts: DB.appts,
+        counter: DB.counter
+      })
+    });
+    if(res.ok){
+      const data = await res.json();
+      if(data && data.success && Array.isArray(data.patients)){
+        DB.patients = data.patients;
+        DB.appts = data.appts;
+        if(data.counter > DB.counter) DB.counter = data.counter;
+        localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+        localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+        localStorage.setItem('air_counter', String(DB.counter));
+      }
+    }
+  } catch(err) {
+    console.warn('Sync notice:', err.message);
+  } finally {
+    isSyncing = false;
+  }
+}
+
+async function loadDBFromServer(silent = false){
+  try {
+    const res = await fetch('/api/data');
+    if(res.ok){
+      const data = await res.json();
+      if(data && data.success && Array.isArray(data.patients)){
+        if(data.patients.length === 0 && data.appts.length === 0 && (DB.patients.length > 0 || DB.appts.length > 0)){
+          await syncDBWithServer();
+          return;
+        }
+        DB.patients = data.patients;
+        DB.appts = data.appts;
+        DB.counter = data.counter || DB.patients.length;
+        localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+        localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+        localStorage.setItem('air_counter', String(DB.counter));
+        if(!silent){
+          if(typeof renderDashboard === 'function') renderDashboard();
+          if(typeof renderPatients === 'function') renderPatients();
+          if(typeof renderAppts === 'function') renderAppts();
+          if(typeof renderReports === 'function') renderReports();
+        }
+      }
+    }
+  } catch(err) {
+    console.warn('Server fetch notice:', err.message);
+  }
+}
+
 function save(){
   localStorage.setItem('air_patients', JSON.stringify(DB.patients));
   localStorage.setItem('air_appts', JSON.stringify(DB.appts));
   localStorage.setItem('air_counter', String(DB.counter));
+  syncDBWithServer();
 }
 
 /* ---------- Helpers ---------- */
@@ -7762,6 +7825,7 @@ function handleAdminLogin(e) {
           initExpandNavEngine();
           initRegCalendar();
           initTimerEngine();
+          loadDBFromServer(false);
           toast('✓ Welcome back, ' + username + '! Admin access granted.');
         }, 350);
       }
@@ -8340,7 +8404,12 @@ if (checkAdminAuth()) {
   initExpandNavEngine();
   initRegCalendar();
   initTimerEngine();
+  loadDBFromServer(false);
 }
+
+// Background sync & tab focus sync for real-time customer appointments
+window.addEventListener('focus', () => { if(checkAdminAuth()) loadDBFromServer(false); });
+setInterval(() => { if(checkAdminAuth()) loadDBFromServer(false); }, 15000);
 
 /* ================= UHD REACTIVE SMOKE EFFECT ================= */
 (function initSmokeEffect(){

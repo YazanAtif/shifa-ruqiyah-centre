@@ -9,6 +9,8 @@
 !shifa-ruqiyah.apk
 !shifa-ruqiyah-admin.apk
 local.properties
+node_modules/
+**/node_modules/
 **/build/
 **/.gradle/
 **/local.properties
