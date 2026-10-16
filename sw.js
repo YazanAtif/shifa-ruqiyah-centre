@@ -4,7 +4,7 @@
    Strategy: Network-First for HTML/APIs, Stale-While-Revalidate for Assets
    ===================================================================== */
 
-const CACHE_NAME = 'src-pwa-v1.0.5';
+const CACHE_NAME = 'src-pwa-v1.0.6';
 
 const PRECACHE_ASSETS = [
   '/',

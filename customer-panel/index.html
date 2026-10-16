@@ -626,6 +626,8 @@
  }
  .badge-confirmed { background: var(--green-light); color: var(--green); }
  .badge-pending { background: var(--gold-light); color: var(--gold-dark); }
+.badge-pending-verification { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.status-pending-verification { border-left-color: #f59e0b; }
  .badge-completed { background: var(--blue-light); color: var(--blue); }
  .badge-cancelled { background: var(--red-light); color: var(--red); }
 
@@ -2065,52 +2067,71 @@ html[lang="ur"] .adhkar-filter-pill {
  </div>
  <div class="fee-row total">
  <span data-i18n="summary_est">Estimated Session Fee:</span>
- <span id="summaryFeeAmount">Rs. 3,000</span>
+ <span id="summaryFeeAmount">Rs. 1,000</span>
  </div>
  </div>
 
-  <!-- Official Payment Methods & Options in Step 4 -->
-  <div class="payment-methods-card" style="background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:16px; margin:16px 0;">
-    <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--brown-dark); margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;">
-      <span>💳 Official Payment Accounts</span>
-      <span style="font-size:0.7rem; color:var(--muted); text-transform:none; font-weight:500;">EasyPaisa / Bank Transfer</span>
+  <!-- Official Mandatory Consultation Fee & Payment Section in Step 4 -->
+  <div class="payment-methods-card" style="background:var(--card); border:2px solid var(--gold); border-radius:var(--radius); padding:18px; margin:16px 0; box-shadow:0 4px 16px rgba(197,155,39,0.12);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+      <div style="font-size:0.9rem; font-weight:800; color:var(--brown-dark); display:flex; align-items:center; gap:6px;">
+        <span>💳 Step 4: Pay Rs. 1,000 Consultation Fee</span>
+      </div>
+      <span style="font-size:0.72rem; background:#fee2e2; color:#b91c1c; padding:3px 10px; border-radius:12px; font-weight:700;">Mandatory to Book</span>
     </div>
+
+    <p style="font-size:0.8rem; color:var(--muted); margin-bottom:14px; line-height:1.5;">
+      To confirm your appointment slot and prevent unverified bookings, a consultation fee of <strong style="color:var(--text);">Rs. 1,000</strong> must be transferred to either official clinic account below. <b>Without this fee payment, no appointment will be booked.</b>
+    </p>
     
-    <div class="pay-options-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-bottom:12px;">
+    <div class="pay-options-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-bottom:14px;">
       <!-- EasyPaisa -->
-      <div style="background:var(--card-muted); border:1.5px solid rgba(46,125,50,0.25); border-radius:var(--radius-sm); padding:10px 12px;">
+      <div style="background:var(--card-muted); border:1.5px solid rgba(46,125,50,0.3); border-radius:var(--radius-sm); padding:10px 12px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-weight:700; font-size:0.82rem; color:#2e7d32;">📱 EasyPaisa</span>
           <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-4040', this)" style="background:transparent; border:1px solid #2e7d32; color:#2e7d32; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; cursor:pointer;">📋 Copy</button>
         </div>
-        <div style="font-family:monospace; font-size:0.95rem; font-weight:700; color:var(--text); margin-top:4px; letter-spacing:0.5px;">0341-5919-4040</div>
+        <div style="font-family:monospace; font-size:1.05rem; font-weight:700; color:var(--text); margin-top:4px; letter-spacing:0.5px;">0341-5919-4040</div>
         <div style="font-size:0.7rem; color:var(--muted); margin-top:2px;">Title: Shifa Ruqiyah Centre</div>
       </div>
 
       <!-- Askari Bank -->
-      <div style="background:var(--card-muted); border:1.5px solid rgba(197,155,39,0.3); border-radius:var(--radius-sm); padding:10px 12px;">
+      <div style="background:var(--card-muted); border:1.5px solid rgba(197,155,39,0.35); border-radius:var(--radius-sm); padding:10px 12px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-weight:700; font-size:0.82rem; color:var(--gold-dark);">🏦 Askari Bank</span>
           <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('03010690004748', this)" style="background:transparent; border:1px solid var(--gold-dark); color:var(--gold-dark); padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; cursor:pointer;">📋 Copy</button>
         </div>
-        <div style="font-family:monospace; font-size:0.95rem; font-weight:700; color:var(--text); margin-top:4px; letter-spacing:0.5px;">03010690004748</div>
+        <div style="font-family:monospace; font-size:1.05rem; font-weight:700; color:var(--text); margin-top:4px; letter-spacing:0.5px;">03010690004748</div>
         <div style="font-size:0.7rem; color:var(--muted); margin-top:2px;">Bank Account Number</div>
       </div>
     </div>
 
-    <div class="form-group" style="margin-bottom:0;">
-      <label class="form-label" style="font-size:0.75rem;">Your Intended Payment Method:</label>
-      <select id="custPayMethod" class="form-select" style="padding:9px 12px; font-size:0.85rem;">
-        <option value="EasyPaisa (0341-5919-4040)">EasyPaisa (0341-5919-4040)</option>
-        <option value="Askari Bank (03010690004748)">Askari Bank (03010690004748)</option>
-        <option value="Cash / Direct">Cash / Direct at Centre</option>
-      </select>
+    <!-- Payment Inputs Grid -->
+    <div class="form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; margin-bottom:12px;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label" style="font-size:0.75rem;"><span>Account Transferred To <span class="req">*</span></span></label>
+        <select id="custPayMethod" class="form-select" style="padding:10px 12px; font-size:0.85rem;" required>
+          <option value="EasyPaisa (0341-5919-4040)">EasyPaisa (0341-5919-4040)</option>
+          <option value="Askari Bank (03010690004748)">Askari Bank (03010690004748)</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label" style="font-size:0.75rem;"><span>Transaction ID (TRX) / Sender Mobile <span class="req">*</span></span></label>
+        <input type="text" id="custTrxId" class="form-input" placeholder="e.g. 2489123456 or 0341..." required style="padding:10px 12px; font-size:0.85rem;" />
+      </div>
     </div>
+
+    <!-- Mandatory Confirmation Checkbox -->
+    <label style="display:flex; align-items:flex-start; gap:8px; font-size:0.78rem; color:var(--brown-dark); cursor:pointer; margin-top:10px; font-weight:600; background:rgba(197,155,39,0.08); padding:10px 12px; border-radius:var(--radius-sm); border:1px dashed var(--gold-border);">
+      <input type="checkbox" id="custPaidCheck" required style="margin-top:2px; accent-color:var(--gold-dark); cursor:pointer;" />
+      <span>I have transferred the mandatory <b>Rs. 1,000</b> consultation fee to the selected account and will share my receipt screenshot on WhatsApp for instant activation.</span>
+    </label>
   </div>
 
- <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
  <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1rem; padding: 14px; display: flex; align-items: center; justify-content: center;">
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="btn_confirm_book">Confirm &amp; Request Appointment</span>
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="btn_confirm_book">Pay Rs. 1,000 &amp; Book Appointment</span>
  </button>
  <p style="font-size: 0.74rem; text-align: center; color: var(--muted);">
  <span data-i18n="summary_disclaimer">An instant WhatsApp confirmation message will be prepared for immediate dispatch to the clinic reception.</span>
@@ -2354,13 +2375,15 @@ html[lang="ur"] .adhkar-filter-pill {
  Your consultation has been recorded. To confirm your scheduled slot instantly, click below to send your pre-filled details to the Shifa-Ruqiyah Centre WhatsApp hotline:
  </p>
 
- <div style="background: var(--card-muted); border-radius: var(--radius-sm); padding: 14px; text-align: left; font-size: 0.8rem; margin-bottom: 20px; border-left: 3px solid var(--gold);">
- <div>👤 <b>Patient:</b> <span id="succName">-</span> (ID: <span id="succPid">-</span>)</div>
- <div>📅 <b>Date &amp; Time:</b> <span id="succDateTime">-</span></div>
- <div>🛡️ <b>Session:</b> <span id="succService">-</span></div>
- <div>💰 <b>Fee:</b> <span id="succFee">-</span></div>
- <div style="margin-top:6px; font-weight:600; color:var(--green-dark);">💬 WhatsApp Helpline: 0334 9996864</div>
- </div>
+ <div style="background: var(--card-muted); border-radius: var(--radius-sm); padding: 14px; text-align: left; font-size: 0.82rem; margin-bottom: 16px; border-left: 3.5px solid #2e7d32;">
+  <div>👤 <b>Patient:</b> <span id="succName">-</span> (ID: <span id="succPid">-</span>)</div>
+  <div>📅 <b>Date &amp; Time:</b> <span id="succDateTime">-</span></div>
+  <div>🛡️ <b>Session:</b> <span id="succService">-</span></div>
+  <div>💰 <b>Consultation Fee:</b> <b style="color:#2e7d32;" id="succFee">Rs. 1,000 (PAID)</b></div>
+  <div>🧾 <b>Payment Ref (TRX):</b> <code style="font-size:0.85rem; font-weight:700;" id="succTrx">-</code></div>
+  <div>⏳ <b>Status:</b> <span class="badge" style="background:#fef3c7; color:#b45309; padding:2px 8px; border-radius:8px; font-weight:700;">Pending Clinic Verification</span></div>
+  <div style="margin-top:6px; font-weight:600; color:var(--green-dark);">💬 WhatsApp Helpline: 0334 9996864</div>
+  </div>
 
   <!-- Official Payment Transfer Accounts in Success Modal -->
   <div style="background:var(--card); border:1.5px dashed var(--gold-border); border-radius:var(--radius-sm); padding:12px; margin-bottom:16px; text-align:left; font-size:0.78rem;">
@@ -2549,8 +2572,8 @@ html[lang="ur"] .adhkar-filter-pill {
  descUr: "سنت نبوی کے مطابق جسمانی و روحانی تکالیف اور اثرات کی جامع تشخیصی جانچ۔",
  duration: "60 mins",
  durationUr: "۶۰ منٹ",
- feePKR: 3000,
- feeUSD: 50
+ feePKR: 1000,
+ feeUSD: 10
  },
  {
  id: "sihr-jadu",
@@ -2561,8 +2584,8 @@ html[lang="ur"] .adhkar-filter-pill {
  descUr: "کالے جادو، سفلی اور بندش کے خاتمے کے لیے قرآنی آیات سے خصوصی روحانی علاج۔",
  duration: "75 mins",
  durationUr: "۷۵ منٹ",
- feePKR: 4500,
- feeUSD: 70
+ feePKR: 1000,
+ feeUSD: 10
  },
  {
  id: "nazar-hasad",
@@ -2573,8 +2596,8 @@ html[lang="ur"] .adhkar-filter-pill {
  descUr: "شدید نظر بد، حسد اور غیر واضح رکاوٹوں سے نجات کے لیے مسنون دعاؤں سے شفاء۔",
  duration: "45 mins",
  durationUr: "۴۵ منٹ",
- feePKR: 2500,
- feeUSD: 40
+ feePKR: 1000,
+ feeUSD: 10
  },
  {
  id: "jinn-possession",
@@ -2585,8 +2608,8 @@ html[lang="ur"] .adhkar-filter-pill {
  descUr: "جنات کے اثرات، شیطانی وسوسوں اور خوف و وہم سے نجات کے لیے قرآنی دم۔",
  duration: "60 mins",
  durationUr: "۶۰ منٹ",
- feePKR: 4000,
- feeUSD: 65
+ feePKR: 1000,
+ feeUSD: 10
  },
  {
  id: "spiritual-numerology",
@@ -2597,8 +2620,8 @@ html[lang="ur"] .adhkar-filter-pill {
  descUr: "نام اور تاریخ پیدائش کے مطابق لائف پاتھ اور روحانی اعداد کا تفصیلی تجزیہ۔",
  duration: "45 mins",
  durationUr: "۴۵ منٹ",
- feePKR: 3500,
- feeUSD: 55
+ feePKR: 1000,
+ feeUSD: 10
  },
  {
  id: "relationship-healing",
@@ -2609,8 +2632,8 @@ html[lang="ur"] .adhkar-filter-pill {
  descUr: "گھریلو ناچاقی، میاں بیوی میں ہم آہنگی اور سکون کے لیے استخارہ و روحانی رہنمائی۔",
  duration: "60 mins",
  durationUr: "۶۰ منٹ",
- feePKR: 3500,
- feeUSD: 55
+ feePKR: 1000,
+ feeUSD: 10
  }
  ];
 
@@ -3295,19 +3318,19 @@ function initCountryComponents(){
  e.preventDefault();
  const name = $('custName').value.trim();
  const father = $('custFather').value.trim();
+ const country = ($('custCountry') ? $('custCountry').value.trim() : '') || 'Pakistan';
  const rawMobile = $('custMobile').value.trim();
-const dialSel = $('custDialCode');
-const dialCode = dialSel ? dialSel.value : dialForCountry(country);
-let cleanDigits = rawMobile.replace(/[^0-9]/g, '');
-if (cleanDigits.startsWith(dialCode)) {
-  // already has dial code
-} else if (cleanDigits.startsWith('0')) {
-  cleanDigits = dialCode + cleanDigits.replace(/^0+/, '');
-} else {
-  cleanDigits = dialCode + cleanDigits;
-}
-const mobile = '+' + cleanDigits;
- const country = $('custCountry').value.trim() || 'Pakistan';
+ const dialSel = $('custDialCode');
+ const dialCode = dialSel ? dialSel.value : dialForCountry(country);
+ let cleanDigits = rawMobile.replace(/[^0-9]/g, '');
+ if (cleanDigits.startsWith(dialCode)) {
+   // already has dial code
+ } else if (cleanDigits.startsWith('0')) {
+   cleanDigits = dialCode + cleanDigits.replace(/^0+/, '');
+ } else {
+   cleanDigits = dialCode + cleanDigits;
+ }
+ const mobile = '+' + cleanDigits;
  const gender = $('custGender').value;
  const notes = $('custNotes').value.trim();
 
@@ -3323,8 +3346,25 @@ const mobile = '+' + cleanDigits;
  const end = $('selectedTimeEnd').value || '11:00';
 
  if(!name || !mobile){
- toast('Name and mobile number are required', true);
- return;
+   toast('Name and mobile number are required', true);
+   return;
+ }
+
+ const trxId = ($('custTrxId') ? $('custTrxId').value : '').trim();
+ const paidCheck = $('custPaidCheck') ? $('custPaidCheck').checked : false;
+
+ if(!trxId || trxId.length < 3){
+   toast('Mandatory Rs. 1,000 consultation fee is required to book. Please enter your Transaction ID (TRX) / Sender Mobile after transferring.', true);
+   if($('custTrxId')){
+     $('custTrxId').focus();
+     $('custTrxId').style.borderColor = 'var(--red)';
+   }
+   return;
+ }
+
+ if(!paidCheck){
+   toast('Please confirm that you transferred the Rs. 1,000 consultation fee by checking the verification box.', true);
+   return;
  }
 
  reloadDB();
@@ -3332,51 +3372,53 @@ const mobile = '+' + cleanDigits;
  // Check slot clash
  const clash = DB.appts.find(a => a.date === date && a.start === start && a.status !== 'Cancelled');
  if(clash){
- toast('Selected time slot was just booked. Please pick another slot.', true);
- renderTimeSlots(date);
- return;
+   toast('Selected time slot was just booked. Please pick another slot.', true);
+   renderTimeSlots(date);
+   return;
  }
 
  // Check if patient exists by mobile or create new
  let p = DB.patients.find(x => x.mobile.replace(/\D/g,'') === mobile.replace(/\D/g,''));
  if(!p){
- DB.counter++;
- const newId = String(DB.counter).padStart(4,'0');
- p = {
- id: newId,
- name: name,
- father: father,
- mobile: mobile,
- country: country,
- dob: dob,
- gender: gender,
- problem: service,
- notes: notes,
- registered: todayISO()
- };
- DB.patients.unshift(p);
+   DB.counter++;
+   const newId = String(DB.counter).padStart(4,'0');
+   p = {
+     id: newId,
+     name: name,
+     father: father,
+     mobile: mobile,
+     country: country,
+     dob: dob,
+     gender: gender,
+     problem: service,
+     notes: notes,
+     registered: todayISO()
+   };
+   DB.patients.unshift(p);
  } else {
- // update basic fields
- p.name = name;
- if(father) p.father = father;
- if(dob) p.dob = dob;
+   // update basic fields
+   p.name = name;
+   if(father) p.father = father;
+   if(dob) p.dob = dob;
  }
 
  // Create appointment record
  const fee = ACTIVE_CURRENCY === 'USD' ? sObj.feeUSD : sObj.feePKR;
  const newApptId = 'APT-' + Date.now().toString(36).toUpperCase();
+ const chosenPayMethod = $('custPayMethod') ? $('custPayMethod').value : 'EasyPaisa (0341-5919-4040)';
  const newAppt = {
- id: newApptId,
- patientId: p.id,
- date: date,
- start: start,
- end: end,
- status: 'Confirmed',
- fee: fee,
- paid: 0,
- payMethod: ($('custPayMethod') ? $('custPayMethod').value : 'Cash / Direct'),
- notes: service + (notes ? ': ' + notes : ''),
- created: Date.now()
+   id: newApptId,
+   patientId: p.id,
+   date: date,
+   start: start,
+   end: end,
+   status: 'Pending Verification',
+   fee: fee,
+   paid: fee,
+   payMethod: chosenPayMethod,
+   trxId: trxId,
+   notes: service + (notes ? ': ' + notes : '') + ' | Consultation Fee Paid: Rs. 1,000 (TRX: ' + trxId + ') via ' + chosenPayMethod,
+   created: Date.now()
  };
  DB.appts.unshift(newAppt);
  saveDB();
@@ -3398,41 +3440,43 @@ const mobile = '+' + cleanDigits;
    if (lang === 'ur') {
      return (
        `*شفاء رقیہ سینٹر - اپائنٹمنٹ بکنگ*\n\n` +
-       `السلام علیکم ورحمۃ اللہ،\nمیں نے شفاء رقیہ سینٹر کے پورٹل پر مشاورت کا وقت بک کیا ہے:\n\n` +
+       `السلام علیکم ورحمۃ اللہ،\nمیں نے شفاء رقیہ سینٹر کے پورٹل پر 1,000 روپے فیس ادا کر کے مشاورت کا وقت بک کیا ہے:\n\n` +
        `👤 *مریض:* ${p.name}\n` +
        `🆔 *مریض آئی ڈی:* #${p.id}\n` +
+       `📞 *موبائل:* ${p.mobile}\n` +
        `🛡️ *سروس:* ${ctx.service}\n` +
        `📅 *تاریخ:* ${fmtDate(ctx.date)}\n` +
        `⏰ *مقررہ وقت:* ${fmtTime(ctx.start)} تا ${fmtTime(ctx.end)}\n` +
-       `📞 *موبائل:* ${p.mobile}\n` +
-`📍 *ملک:* ${ctx.country}\n` +
-       `💰 *فیس:* ${feeStr}\n` +
+       `📍 *ملک:* ${ctx.country}\n` +
+       `💰 *کنسلٹیشن فیس:* ${feeStr} (ادا شدہ)\n` +
        (ctx.payMethod ? `💳 *طریقہ ادائیگی:* ${ctx.payMethod}\n` : '') +
+       (ctx.trxId ? `🧾 *ٹرانزیکشن / ٹی آر ایکس آئی ڈی:* ${ctx.trxId}\n` : '') +
        (ctx.notes ? `📝 *مسئلہ:* ${ctx.notes}\n` : '') +
        `\n💳 *فیس ادائیگی کے اکاؤنٹس:*\n` +
        `• ایزی پیسہ: 0341-5919-4040\n` +
        `• عسکری بینک اکاؤنٹ: 03010690004748\n\n` +
-       `براہ کرم ادائیگی کے بعد رسید / اسکرین شاٹ ارسال فرمائیں۔ جزاکم اللہ خیراً۔`
+       `میں نے 1000 روپے کنسلٹیشن فیس کی رسید / اسکرین شاٹ منسلک کر دی ہے۔ براہ کرم تصدیق فرما دیں۔ جزاکم اللہ خیراً۔`
      );
    }
 
    return (
      `*SHIFA-RUQIYAH CENTRE - APPOINTMENT BOOKING*\n\n` +
-     `Assalam-o-Alaikum,\nI have scheduled a consultation on the SRC Patient Portal:\n\n` +
+     `Assalam-o-Alaikum,\nI have scheduled a consultation on the SRC Patient Portal with advance fee payment:\n\n` +
      `👤 *Patient:* ${p.name}\n` +
      `🆔 *Patient ID:* #${p.id}\n` +
+     `📞 *Mobile:* ${p.mobile}\n` +
      `🛡️ *Service:* ${ctx.service}\n` +
      `📅 *Date:* ${fmtDate(ctx.date)}\n` +
      `⏰ *Time Slot:* ${fmtTime(ctx.start)} to ${fmtTime(ctx.end)}\n` +
-     `📞 *Mobile:* ${p.mobile}\n` +
-`📍 *Country:* ${ctx.country}\n` +
-     `💰 *Estimated Fee:* ${feeStr}\n` +
-     (ctx.payMethod ? `💳 *Payment Method:* ${ctx.payMethod}\n` : '') +
+     `📍 *Country:* ${ctx.country}\n` +
+     `💰 *Consultation Fee:* ${feeStr} (PAID)\n` +
+     (ctx.payMethod ? `💳 *Paid To:* ${ctx.payMethod}\n` : '') +
+     (ctx.trxId ? `🧾 *Transaction / TRX ID:* ${ctx.trxId}\n` : '') +
      (ctx.notes ? `📝 *Concern:* ${ctx.notes}\n` : '') +
-     `\n💳 *Official Payment Accounts:*\n` +
+     `\n💳 *Official Clinic Accounts:*\n` +
      `• EasyPaisa: 0341-5919-4040\n` +
      `• Askari Bank: 03010690004748\n\n` +
-     `Please share payment screenshot/receipt on this WhatsApp for verification. (Clinic WhatsApp: 0334 9996864)\nJazakAllah Khair.`
+     `I have transferred the Rs. 1,000 consultation fee and attached my payment receipt screenshot. Please confirm my appointment slot. (Clinic WhatsApp: 0334 9996864)\nJazakAllah Khair.`
    );
  }
 
@@ -3484,6 +3528,8 @@ const mobile = '+' + cleanDigits;
    country: country,
    fee: fee,
    currency: ACTIVE_CURRENCY,
+   payMethod: chosenPayMethod,
+   trxId: trxId,
    notes: notes
  };
 
@@ -3492,7 +3538,8 @@ const mobile = '+' + cleanDigits;
  $('succPid').textContent = p.id;
  $('succDateTime').textContent = `${fmtDate(date)} at ${fmtTime(start)}`;
  $('succService').textContent = service;
- $('succFee').textContent = ACTIVE_CURRENCY === 'USD' ? '$' + fee : 'Rs. ' + fee;
+ $('succFee').textContent = (ACTIVE_CURRENCY === 'USD' ? '$' + fee : 'Rs. ' + fee) + ' (PAID)';
+ if($('succTrx')) $('succTrx').textContent = trxId;
 
  const initialLang = (typeof CURRENT_LANG !== 'undefined' && CURRENT_LANG === 'ur') ? 'ur' : 'en';
  renderBookingSuccessWaLink(initialLang);
@@ -3607,7 +3654,7 @@ const mobile = '+' + cleanDigits;
  } else {
  html += `<div class="appt-list">`;
  appts.forEach(a => {
- const badgeCls = 'badge-' + (a.status||'pending').toLowerCase();
+ const badgeCls = 'badge-' + (a.status||'pending').toLowerCase().replace(/\s+/g, '-');
  const cardCls = 'status-' + (a.status||'pending').toLowerCase();
  const bal = Math.max(0, (a.fee||0) - (a.paid||0));
 
@@ -4401,7 +4448,7 @@ const APP_I18N = {
       summary_mode: "Consultation Mode:",
       summary_mode_val: "In-Person / Online Audio Session",
       summary_est: "Estimated Session Fee:",
-      btn_confirm_book: "Confirm & Request Appointment",
+      btn_confirm_book: "Pay Rs. 1,000 & Confirm Booking",
       summary_disclaimer: "An instant WhatsApp confirmation message will be prepared for immediate dispatch to the clinic reception.",
 
       tracker_title: "My Appointments & Status Tracker",
@@ -4513,7 +4560,7 @@ const APP_I18N = {
       summary_mode: "سیشن کا طریقہ:",
       summary_mode_val: "بالمشافہ / آن لائن آڈیو سیشن",
       summary_est: "متوقع سیشن فیس:",
-      btn_confirm_book: "اپائنٹمنٹ کی تصدیق اور بکنگ بھیجیں",
+      btn_confirm_book: "1,000 روپے ادائیگی کے بعد بکنگ کریں",
       summary_disclaimer: "کلینک ریسپشن کو فوری ترسیل کے لیے واٹس ایپ پیغام تیار کیا جائے گا۔",
 
       tracker_title: "میری اپائنٹمنٹس اور اسٹیٹس ٹریکر",

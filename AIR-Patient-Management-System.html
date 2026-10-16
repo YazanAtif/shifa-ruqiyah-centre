@@ -4816,6 +4816,7 @@ html[lang="ur"] .auth-input-wrapper input {
           <div class="field">
             <label><span class="lbl-title">Session Status</span></label>
             <select id="aStatus">
+              <option>Pending Verification</option>
               <option>Pending</option>
               <option>Confirmed</option>
               <option>Completed</option>
@@ -4873,6 +4874,7 @@ html[lang="ur"] .auth-input-wrapper input {
           <label><span class="lbl-title">Filter by Status</span></label>
           <select id="apptStatusFilter">
             <option value="">All Statuses</option>
+            <option>Pending Verification</option>
             <option>Pending</option>
             <option>Confirmed</option>
             <option>Completed</option>
@@ -4900,6 +4902,7 @@ html[lang="ur"] .auth-input-wrapper input {
           <label><span class="lbl-title">Filter by Status (Optional)</span></label>
           <select id="repStatus">
             <option value="">All Appointments</option>
+            <option>Pending Verification</option>
             <option>Pending</option>
             <option>Confirmed</option>
             <option>Completed</option>
@@ -5325,7 +5328,7 @@ function patientById(id){
   const padded = s.padStart(4, '0');
   return DB.patients.find(p => String(p.id) === s || String(p.id) === clean || String(p.id) === padded);
 }
-function badge(status){ const c={Pending:'b-pending',Confirmed:'b-confirmed',Completed:'b-completed',Cancelled:'b-cancelled'}[status]||'b-pending'; return '<span class="badge '+c+'">'+esc(status)+'</span>'; }
+function badge(status){ const c={Pending:'b-pending','Pending Verification':'b-pending',Confirmed:'b-confirmed',Completed:'b-completed',Cancelled:'b-cancelled'}[status]||'b-pending'; return '<span class="badge '+c+'">'+esc(status)+'</span>'; }
 
 /* ================= NUMEROLOGY ENGINE ================= */
 /* Note: For spiritual guidance & insight only — not medical or predictive certainty. */
@@ -7215,7 +7218,7 @@ function paymentStatus(fee,paid){
   return 'Unpaid';
 }
 function payBadge(status){
-  const c={'Paid':'p-paid','Partial':'p-partial','Unpaid':'p-unpaid','No Fee':'b-confirmed'}[status]||'p-unpaid';
+  const c={'Paid':'p-paid','Partial':'p-partial','Unpaid':'p-unpaid','No Fee':'b-confirmed','Pending Verification':'b-pending'}[status]||'p-unpaid';
   return '<span class="badge '+c+'">'+esc(status)+'</span>';
 }
 function apptBalance(a){ return Math.max(0,(parseFloat(a.fee)||0)-(parseFloat(a.paid)||0)); }
@@ -7226,7 +7229,7 @@ function renderAppts(){
   let list=DB.appts.map(a=>({...a,pt:patientById(a.patientId)})).filter(a=>a.pt);
   list=list.filter(a=>{
     const matchQ=!q || a.pt.name.toLowerCase().includes(q) || (a.pt.mobile||'').toLowerCase().includes(q) || a.pt.id.toLowerCase().includes(q);
-    const matchS=!sf || a.status===sf;
+    const matchS=!sf || a.status===sf || (sf==='Pending' && a.status==='Pending Verification');
     return matchQ && matchS;
   }).sort((a,b)=>(b.created||0)-(a.created||0));
   const tb=$('apptTable');
@@ -7234,8 +7237,9 @@ function renderAppts(){
   tb.innerHTML=list.map(a=>{
     const bal=apptBalance(a); const ps=paymentStatus(a.fee,a.paid);
     const sym=currencyFor(a.pt.country).sym;
+    const trxBadge = a.trxId ? `<span class="badge" style="background:#e8f5e9;color:#2e7d32;font-size:10px;margin-left:4px;font-weight:700;" title="TRX: ${esc(a.trxId)}">TRX: ${esc(a.trxId)}</span>` : '';
     const payCell=(a.fee||a.paid)
-      ? `${payBadge(ps)}<br><span style="font-size:11.5px;color:var(--muted)">Paid ${sym}${a.paid||0} / ${sym}${a.fee||0}${bal>0?` · <b style="color:#c0392b">Bal ${sym}${bal}</b>`:''}</span>`
+      ? `${payBadge(ps)}${trxBadge}<br><span style="font-size:11.5px;color:var(--muted)">Paid ${sym}${a.paid||0} / ${sym}${a.fee||0}${a.payMethod ? ` (${esc(a.payMethod)})`:''}${bal>0?` · <b style="color:#c0392b">Bal ${sym}${bal}</b>`:''}</span>`
       : '<span style="color:var(--muted);font-size:12px">—</span>';
     return `<tr>
     <td><strong>${esc(a.pt.name)}</strong><br><span style="color:var(--muted);font-size:12px">${esc(a.pt.mobile)}</span></td>
@@ -7243,6 +7247,7 @@ function renderAppts(){
     <td>${statusSelect(a)}</td>
     <td>${payCell}</td>
     <td><div class="inline-actions">
+      ${a.status === 'Pending Verification' ? `<button class="btn btn-sm" style="background:#2e7d32;color:#fff;border:none;font-weight:700;" onclick="quickStatus('${a.id}','Confirmed');toast('Appointment verified & confirmed ✓');">✓ Verify</button>` : ''}
       <button class="btn btn-timer btn-sm" onclick="startApptSession('${a.id}')" title="Start appointment session timer">⏱️ Start</button>
       ${bal>0?`<button class="btn btn-primary btn-sm" onclick="addPayment('${a.id}')">＋Pay</button>`:''}
       <button class="btn btn-send btn-sm" onclick="sendAppt('${a.id}')">📤 Send</button>
@@ -7267,7 +7272,7 @@ function addPayment(id){
   renderAppts(); renderDashboard(); renderReports();
 }
 function statusSelect(a){
-  const opts=['Pending','Confirmed','Completed','Cancelled'].map(s=>`<option ${s===a.status?'selected':''}>${s}</option>`).join('');
+  const opts=['Pending Verification','Confirmed','Pending','Completed','Cancelled'].map(s=>`<option ${s===a.status?'selected':''}>${s}</option>`).join('');
   return `<select onchange="quickStatus('${a.id}',this.value)" class="table-status-select">${opts}</select>`;
 }
 
@@ -7494,7 +7499,7 @@ function renderDashboard(){
   if(!checkAdminAuth()) return;
   $('statTotal').textContent=DB.patients.length;
   $('statAppts').textContent=DB.appts.filter(a=>a.status!=='Cancelled').length;
-  $('statPending').textContent=DB.appts.filter(a=>a.status==='Pending'||a.status==='Confirmed').length;
+  $('statPending').textContent=DB.appts.filter(a=>a.status==='Pending'||a.status==='Pending Verification'||a.status==='Confirmed').length;
   $('statCompleted').textContent=DB.appts.filter(a=>a.status==='Completed').length;
   const t=totalsByCurrency();
   $('statReceived').textContent=fmtDualMoney(t.PKR.paid, t.USD.paid);
