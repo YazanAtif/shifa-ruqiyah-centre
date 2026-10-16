@@ -1860,7 +1860,38 @@ html[lang="ur"] .adhkar-filter-pill {
      </a>
    </div>
  </div>
- </div>
+ 
+  <!-- Official Clinic Payment Methods Card -->
+  <div class="card" style="margin-top: 14px; border: 1.5px solid var(--border); background: var(--card);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+      <div>
+        <h4 style="margin:0; font-size:0.95rem; font-family:var(--font-heading); color:var(--brown-dark);">💳 Official Clinic Payment Accounts</h4>
+        <p style="margin:2px 0 0; font-size:0.78rem; color:var(--muted);">Easily send consultation fees directly via EasyPaisa or Askari Bank</p>
+      </div>
+      <span style="font-size:0.72rem; background:var(--card-muted); padding:3px 10px; border-radius:12px; font-weight:600; color:var(--gold-dark); border:1px solid var(--gold-border);">Verified Accounts</span>
+    </div>
+    <div class="pay-options-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:12px;">
+      <!-- EasyPaisa -->
+      <div style="background:var(--card-muted); border:1.5px solid rgba(46,125,50,0.25); border-radius:var(--radius-sm); padding:12px 14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:700; color:#2e7d32; font-size:0.88rem;">📱 EasyPaisa Account</span>
+          <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-4040', this)" style="background:transparent; border:1px solid #2e7d32; color:#2e7d32; padding:3px 10px; border-radius:10px; font-size:0.72rem; font-weight:600; cursor:pointer;">📋 Copy</button>
+        </div>
+        <div style="font-family:monospace; font-size:1.1rem; font-weight:700; color:var(--text); margin-top:5px; letter-spacing:0.5px;">0341-5919-4040</div>
+        <div style="font-size:0.72rem; color:var(--muted); margin-top:2px;">Account Title: Shifa Ruqiyah Centre</div>
+      </div>
+      <!-- Askari Bank -->
+      <div style="background:var(--card-muted); border:1.5px solid rgba(197,155,39,0.3); border-radius:var(--radius-sm); padding:12px 14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:700; color:var(--gold-dark); font-size:0.88rem;">🏦 Askari Bank Account</span>
+          <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('03010690004748', this)" style="background:transparent; border:1px solid var(--gold-dark); color:var(--gold-dark); padding:3px 10px; border-radius:10px; font-size:0.72rem; font-weight:600; cursor:pointer;">📋 Copy</button>
+        </div>
+        <div style="font-family:monospace; font-size:1.1rem; font-weight:700; color:var(--text); margin-top:5px; letter-spacing:0.5px;">03010690004748</div>
+        <div style="font-size:0.72rem; color:var(--muted); margin-top:2px;">Bank Account Number</div>
+      </div>
+    </div>
+  </div>
+  </div>
  </section>
 
 
@@ -2037,6 +2068,45 @@ html[lang="ur"] .adhkar-filter-pill {
  <span id="summaryFeeAmount">Rs. 3,000</span>
  </div>
  </div>
+
+  <!-- Official Payment Methods & Options in Step 4 -->
+  <div class="payment-methods-card" style="background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:16px; margin:16px 0;">
+    <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--brown-dark); margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;">
+      <span>💳 Official Payment Accounts</span>
+      <span style="font-size:0.7rem; color:var(--muted); text-transform:none; font-weight:500;">EasyPaisa / Bank Transfer</span>
+    </div>
+    
+    <div class="pay-options-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-bottom:12px;">
+      <!-- EasyPaisa -->
+      <div style="background:var(--card-muted); border:1.5px solid rgba(46,125,50,0.25); border-radius:var(--radius-sm); padding:10px 12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:700; font-size:0.82rem; color:#2e7d32;">📱 EasyPaisa</span>
+          <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-4040', this)" style="background:transparent; border:1px solid #2e7d32; color:#2e7d32; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; cursor:pointer;">📋 Copy</button>
+        </div>
+        <div style="font-family:monospace; font-size:0.95rem; font-weight:700; color:var(--text); margin-top:4px; letter-spacing:0.5px;">0341-5919-4040</div>
+        <div style="font-size:0.7rem; color:var(--muted); margin-top:2px;">Title: Shifa Ruqiyah Centre</div>
+      </div>
+
+      <!-- Askari Bank -->
+      <div style="background:var(--card-muted); border:1.5px solid rgba(197,155,39,0.3); border-radius:var(--radius-sm); padding:10px 12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:700; font-size:0.82rem; color:var(--gold-dark);">🏦 Askari Bank</span>
+          <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('03010690004748', this)" style="background:transparent; border:1px solid var(--gold-dark); color:var(--gold-dark); padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; cursor:pointer;">📋 Copy</button>
+        </div>
+        <div style="font-family:monospace; font-size:0.95rem; font-weight:700; color:var(--text); margin-top:4px; letter-spacing:0.5px;">03010690004748</div>
+        <div style="font-size:0.7rem; color:var(--muted); margin-top:2px;">Bank Account Number</div>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:0;">
+      <label class="form-label" style="font-size:0.75rem;">Your Intended Payment Method:</label>
+      <select id="custPayMethod" class="form-select" style="padding:9px 12px; font-size:0.85rem;">
+        <option value="EasyPaisa (0341-5919-4040)">EasyPaisa (0341-5919-4040)</option>
+        <option value="Askari Bank (03010690004748)">Askari Bank (03010690004748)</option>
+        <option value="Cash / Direct">Cash / Direct at Centre</option>
+      </select>
+    </div>
+  </div>
 
  <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
  <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1rem; padding: 14px; display: flex; align-items: center; justify-content: center;">
@@ -2291,6 +2361,22 @@ html[lang="ur"] .adhkar-filter-pill {
  <div>💰 <b>Fee:</b> <span id="succFee">-</span></div>
  <div style="margin-top:6px; font-weight:600; color:var(--green-dark);">💬 WhatsApp Helpline: 0334 9996864</div>
  </div>
+
+  <!-- Official Payment Transfer Accounts in Success Modal -->
+  <div style="background:var(--card); border:1.5px dashed var(--gold-border); border-radius:var(--radius-sm); padding:12px; margin-bottom:16px; text-align:left; font-size:0.78rem;">
+    <div style="font-weight:700; color:var(--brown-dark); margin-bottom:6px;">💳 Official Fee Payment Accounts:</div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; padding:4px 0; border-bottom:1px solid var(--border);">
+      <span>📱 <b>EasyPaisa:</b> <code style="font-size:0.85rem; font-weight:700;">0341-5919-4040</code></span>
+      <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-4040', this)" style="padding:2px 8px; border-radius:10px; border:1px solid #2e7d32; color:#2e7d32; background:transparent; font-size:0.7rem; cursor:pointer;">📋 Copy</button>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0;">
+      <span>🏦 <b>Askari Bank:</b> <code style="font-size:0.85rem; font-weight:700;">03010690004748</code></span>
+      <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('03010690004748', this)" style="padding:2px 8px; border-radius:10px; border:1px solid var(--gold-dark); color:var(--gold-dark); background:transparent; font-size:0.7rem; cursor:pointer;">📋 Copy</button>
+    </div>
+    <div style="font-size:0.72rem; color:var(--muted); margin-top:6px;">
+      ⚠️ Please share payment receipt / transaction screenshot on WhatsApp for instant booking confirmation.
+    </div>
+  </div>
 
  <!-- WhatsApp Message Language Option (English / Urdu) -->
  <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:14px;">
@@ -3288,7 +3374,7 @@ const mobile = '+' + cleanDigits;
  status: 'Confirmed',
  fee: fee,
  paid: 0,
- payMethod: 'Cash / Direct',
+ payMethod: ($('custPayMethod') ? $('custPayMethod').value : 'Cash / Direct'),
  notes: service + (notes ? ': ' + notes : ''),
  created: Date.now()
  };
@@ -3321,8 +3407,12 @@ const mobile = '+' + cleanDigits;
        `📞 *موبائل:* ${p.mobile}\n` +
 `📍 *ملک:* ${ctx.country}\n` +
        `💰 *فیس:* ${feeStr}\n` +
+       (ctx.payMethod ? `💳 *طریقہ ادائیگی:* ${ctx.payMethod}\n` : '') +
        (ctx.notes ? `📝 *مسئلہ:* ${ctx.notes}\n` : '') +
-       `\nبراہ کرم بکنگ کی تصدیق اور سیشن کی تیاری کی ہدایات ارسال فرمائیں۔ جزاکم اللہ خیراً۔`
+       `\n💳 *فیس ادائیگی کے اکاؤنٹس:*\n` +
+       `• ایزی پیسہ: 0341-5919-4040\n` +
+       `• عسکری بینک اکاؤنٹ: 03010690004748\n\n` +
+       `براہ کرم ادائیگی کے بعد رسید / اسکرین شاٹ ارسال فرمائیں۔ جزاکم اللہ خیراً۔`
      );
    }
 
@@ -3337,8 +3427,12 @@ const mobile = '+' + cleanDigits;
      `📞 *Mobile:* ${p.mobile}\n` +
 `📍 *Country:* ${ctx.country}\n` +
      `💰 *Estimated Fee:* ${feeStr}\n` +
+     (ctx.payMethod ? `💳 *Payment Method:* ${ctx.payMethod}\n` : '') +
      (ctx.notes ? `📝 *Concern:* ${ctx.notes}\n` : '') +
-     `\nPlease confirm reception and session preparation instructions. (Clinic WhatsApp: 0334 9996864)\nJazakAllah Khair.`
+     `\n💳 *Official Payment Accounts:*\n` +
+     `• EasyPaisa: 0341-5919-4040\n` +
+     `• Askari Bank: 03010690004748\n\n` +
+     `Please share payment screenshot/receipt on this WhatsApp for verification. (Clinic WhatsApp: 0334 9996864)\nJazakAllah Khair.`
    );
  }
 
