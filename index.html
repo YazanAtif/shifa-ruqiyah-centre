@@ -2288,6 +2288,15 @@ html[lang="ur"] .adhkar-filter-pill {
  <div style="margin-top:6px; font-weight:600; color:var(--green-dark);">💬 WhatsApp Helpline: 0334 9996864</div>
  </div>
 
+ <!-- WhatsApp Message Language Option (English / Urdu) -->
+ <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:14px;">
+   <span style="font-size:0.8rem; color:var(--muted); font-weight:600;">Message Language:</span>
+   <div style="display:inline-flex; border:1.5px solid var(--border); border-radius:20px; padding:2px; background:var(--card-muted);">
+     <button type="button" id="succMsgLangEn" onclick="switchBookingWaLang('en')" style="padding:4px 14px; border-radius:16px; border:none; font-size:0.75rem; font-weight:700; cursor:pointer; background:var(--green); color:#fff; transition:all 0.2s;">🇬🇧 English</button>
+     <button type="button" id="succMsgLangUr" onclick="switchBookingWaLang('ur')" style="padding:4px 14px; border-radius:16px; border:none; font-size:0.75rem; font-weight:700; cursor:pointer; background:transparent; color:var(--text); transition:all 0.2s;">🇵🇰 اردو</button>
+   </div>
+ </div>
+
  <div style="display: flex; flex-direction: column; gap: 10px;">
  <a href="#" id="succWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-whatsapp" style="padding: 13px;">
  <span>💬</span> Confirm via WhatsApp (0334 9996864)
@@ -3169,23 +3178,96 @@ const ADHKAR_LIST = [
  localStorage.setItem('src_client_session', JSON.stringify(ACTIVE_CLIENT));
  updateClientChipUI();
 
- // Formulate formatted WhatsApp text
- const waText = encodeURIComponent(
- `*SHIFA-RUQIYAH CENTRE - APPOINTMENT BOOKING*\n\n` +
- `Assalam-o-Alaikum,\nI have scheduled a consultation on the SRC Patient Portal:\n\n` +
- `👤 *Patient:* ${p.name}\n` +
- `🆔 *Patient ID:* #${p.id}\n` +
- `🛡️ *Service:* ${service}\n` +
- `📅 *Date:* ${fmtDate(date)}\n` +
- `⏰ *Time Slot:* ${fmtTime(start)} to ${fmtTime(end)}\n` +
- `📍 *Country:* ${country}\n` +
- `💰 *Estimated Fee:* ${ACTIVE_CURRENCY === 'USD' ? '$' + fee : 'Rs. ' + fee}\n` +
- (notes ? `📝 *Concern:* ${notes}\n` : '') +
- `\nPlease confirm reception and session preparation instructions. JazakAllah Khair.`
- );
+ // Bilingual WhatsApp message builder (English / Urdu)
+ let LAST_BOOKING_CONTEXT = null;
+ let currentBookingWaLang = 'en';
 
- const clinicWaNumber = '923349996864'; // Clinic reception hotline (03349996864)
- const waUrl = `https://wa.me/${clinicWaNumber}?text=${waText}`;
+ function buildBookingWaText(ctx, lang = 'en') {
+   if(!ctx) return '';
+   const p = ctx.patient;
+   const feeStr = ctx.currency === 'USD' ? '$' + ctx.fee : 'Rs. ' + ctx.fee;
+
+   if (lang === 'ur') {
+     return (
+       `*شفاء رقیہ سینٹر - اپائنٹمنٹ بکنگ*\n\n` +
+       `السلام علیکم ورحمۃ اللہ،\nمیں نے شفاء رقیہ سینٹر کے پورٹل پر مشاورت کا وقت بک کیا ہے:\n\n` +
+       `👤 *مریض:* ${p.name}\n` +
+       `🆔 *مریض آئی ڈی:* #${p.id}\n` +
+       `🛡️ *سروس:* ${ctx.service}\n` +
+       `📅 *تاریخ:* ${fmtDate(ctx.date)}\n` +
+       `⏰ *مقررہ وقت:* ${fmtTime(ctx.start)} تا ${fmtTime(ctx.end)}\n` +
+       `📍 *ملک:* ${ctx.country}\n` +
+       `💰 *فیس:* ${feeStr}\n` +
+       (ctx.notes ? `📝 *مسئلہ:* ${ctx.notes}\n` : '') +
+       `\nبراہ کرم بکنگ کی تصدیق اور سیشن کی تیاری کی ہدایات ارسال فرمائیں۔ جزاکم اللہ خیراً۔`
+     );
+   }
+
+   return (
+     `*SHIFA-RUQIYAH CENTRE - APPOINTMENT BOOKING*\n\n` +
+     `Assalam-o-Alaikum,\nI have scheduled a consultation on the SRC Patient Portal:\n\n` +
+     `👤 *Patient:* ${p.name}\n` +
+     `🆔 *Patient ID:* #${p.id}\n` +
+     `🛡️ *Service:* ${ctx.service}\n` +
+     `📅 *Date:* ${fmtDate(ctx.date)}\n` +
+     `⏰ *Time Slot:* ${fmtTime(ctx.start)} to ${fmtTime(ctx.end)}\n` +
+     `📍 *Country:* ${ctx.country}\n` +
+     `💰 *Estimated Fee:* ${feeStr}\n` +
+     (ctx.notes ? `📝 *Concern:* ${ctx.notes}\n` : '') +
+     `\nPlease confirm reception and session preparation instructions. (Clinic WhatsApp: 0334 9996864)\nJazakAllah Khair.`
+   );
+ }
+
+ function switchBookingWaLang(lang) {
+   currentBookingWaLang = lang;
+   renderBookingSuccessWaLink(lang);
+ }
+
+ function renderBookingSuccessWaLink(lang = 'en') {
+   if (!LAST_BOOKING_CONTEXT) return;
+   const clinicWaNumber = '923349996864';
+   const text = buildBookingWaText(LAST_BOOKING_CONTEXT, lang);
+   const waUrl = `https://wa.me/${clinicWaNumber}?text=${encodeURIComponent(text)}`;
+
+   const btn = $('succWhatsAppBtn');
+   if (btn) {
+     btn.href = waUrl;
+     if (lang === 'ur') {
+       btn.innerHTML = `<span>💬</span> واٹس ایپ پر تصدیق بھیجیں (0334 9996864)`;
+     } else {
+       btn.innerHTML = `<span>💬</span> Confirm via WhatsApp (0334 9996864)`;
+     }
+   }
+
+   const btnEn = $('succMsgLangEn');
+   const btnUr = $('succMsgLangUr');
+   if (btnEn && btnUr) {
+     if (lang === 'ur') {
+       btnUr.style.background = 'var(--green)';
+       btnUr.style.color = '#fff';
+       btnEn.style.background = 'transparent';
+       btnEn.style.color = 'var(--text)';
+     } else {
+       btnEn.style.background = 'var(--green)';
+       btnEn.style.color = '#fff';
+       btnUr.style.background = 'transparent';
+       btnUr.style.color = 'var(--text)';
+     }
+   }
+ }
+
+ // Save booking context for bilingual WhatsApp dispatch
+ LAST_BOOKING_CONTEXT = {
+   patient: p,
+   service: service,
+   date: date,
+   start: start,
+   end: end,
+   country: country,
+   fee: fee,
+   currency: ACTIVE_CURRENCY,
+   notes: notes
+ };
 
  // Populate Success Modal
  $('succName').textContent = p.name;
@@ -3193,7 +3275,9 @@ const ADHKAR_LIST = [
  $('succDateTime').textContent = `${fmtDate(date)} at ${fmtTime(start)}`;
  $('succService').textContent = service;
  $('succFee').textContent = ACTIVE_CURRENCY === 'USD' ? '$' + fee : 'Rs. ' + fee;
- $('succWhatsAppBtn').href = waUrl;
+
+ const initialLang = (typeof CURRENT_LANG !== 'undefined' && CURRENT_LANG === 'ur') ? 'ur' : 'en';
+ renderBookingSuccessWaLink(initialLang);
 
  $('bookingSuccessModal').classList.add('active');
  toast('Appointment booked successfully! ✓');
