@@ -4707,6 +4707,16 @@ html[lang="ur"] .auth-input-wrapper input {
                     <label><span class="lbl-title"><span data-i18n="lbl_bal_due">Balance Due</span> (<span class="reg-cur-lbl">Rs.</span>)</span></label>
                     <input type="text" id="regApptBalance" readonly placeholder="0">
                   </div>
+                  <div class="field">
+                    <label><span class="lbl-title">Payment Method</span></label>
+                    <select id="regApptPayMethod">
+                      <option value="Cash">Cash</option>
+                      <option value="EasyPaisa (0341-5919-4040)">EasyPaisa (0341-5919-4040)</option>
+                      <option value="Askari Bank (03010690004748)">Askari Bank (03010690004748)</option>
+                      <option value="JazzCash">JazzCash</option>
+                      <option value="Bank Transfer">Bank Transfer</option>
+                    </select>
+                  </div>
                 </div>
 
                 <!-- Existing Schedule on Selected Date -->
@@ -4828,11 +4838,12 @@ html[lang="ur"] .auth-input-wrapper input {
             <label><span class="lbl-title">Payment Method</span></label>
             <select id="aPayMethod">
               <option value="">Select Payment Method...</option>
-              <option>Cash</option>
-              <option>JazzCash</option>
-              <option>EasyPaisa</option>
-              <option>Bank Transfer</option>
-              <option>Other</option>
+              <option value="Cash">Cash</option>
+              <option value="EasyPaisa (0341-5919-4040)">EasyPaisa (0341-5919-4040)</option>
+              <option value="Askari Bank (03010690004748)">Askari Bank (03010690004748)</option>
+              <option value="JazzCash">JazzCash</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Other">Other</option>
             </select>
           </div>
         </div>
@@ -6161,7 +6172,7 @@ $('patientForm').addEventListener('submit',e=>{
       status: apptStatus,
       fee: apptFee,
       paid: apptPaid,
-      payMethod: 'Cash',
+      payMethod: ($('regApptPayMethod') ? $('regApptPayMethod').value : 'Cash'),
       created: Date.now()
     };
     DB.appts.unshift(newAppt);
@@ -7294,7 +7305,12 @@ function buildApptMessage(a, p, lang = 'en'){
       lines.push('💰 *کل فیس:* ' + sym + ' ' + (a.fee || 0));
       lines.push('✅ *ادا شدہ:* ' + sym + ' ' + (a.paid || 0));
       if(bal > 0) lines.push('⚠ *بقیہ واجب الادا:* ' + sym + ' ' + bal);
+      if(a.payMethod) lines.push('💳 *طریقہ ادائیگی:* ' + a.payMethod);
     }
+    lines.push('');
+    lines.push('💳 *فیس ادائیگی کے اکاؤنٹس:*');
+    lines.push('• ایزی پیسہ: 0341-5919-4040');
+    lines.push('• عسکری بینک اکاؤنٹ: 03010690004748');
     lines.push('');
     lines.push('⚠️ *اہم نوٹ:* وقت کی پابندی انتہائی لازمی ہے۔ مقررہ وقت ختم ہونے کی صورت میں نیا وقت لینا ہوگا۔ براہ کرم وقت سے 10 منٹ قبل باوضو تیار رہیں۔');
     lines.push('');
@@ -7320,7 +7336,12 @@ function buildApptMessage(a, p, lang = 'en'){
       lines.push('💰 Total Fee: ' + sym + ' ' + (a.fee || 0));
       lines.push('✅ Paid: ' + sym + ' ' + (a.paid || 0));
       if(bal > 0) lines.push('⚠ Balance Due: ' + sym + ' ' + bal);
+      if(a.payMethod) lines.push('💳 Payment Method: ' + a.payMethod);
     }
+    lines.push('');
+    lines.push('💳 *Payment Accounts:*');
+    lines.push('• EasyPaisa: 0341-5919-4040');
+    lines.push('• Askari Bank: 03010690004748');
     lines.push('');
     lines.push('Note: Time punctuality is strictly mandatory. If the allotted time expires, a new appointment will be required. Please be in a state of Wudu 10 minutes prior.');
     lines.push('');

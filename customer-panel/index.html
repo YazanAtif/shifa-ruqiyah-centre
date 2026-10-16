@@ -2920,7 +2920,22 @@ const ADHKAR_LIST = [
     }
   }
 
-  function initCountryComponents(){
+  function copyPaymentNumber(num, btn){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(num).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+      toast('Account copied: ' + num + ' ✓');
+    }).catch(() => {
+      toast('Account: ' + num);
+    });
+  } else {
+    toast('Account: ' + num);
+  }
+}
+
+function initCountryComponents(){
     const sel = $('custDialCode');
     if(sel){
       sel.innerHTML = WORLD_COUNTRIES.map(c => 
