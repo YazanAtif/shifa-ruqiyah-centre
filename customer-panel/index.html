@@ -1762,8 +1762,8 @@ html[lang="ur"] .adhkar-filter-pill {
  <button class="btn btn-outline-white" onclick="switchTab('tracker')">
  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> <span data-i18n="hero_btn_track">Track My Booking</span>
  </button>
- <a href="https://wa.me/923000000000" id="heroWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-whatsapp">
- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> <span data-i18n="hero_btn_whatsapp">WhatsApp Hotline</span>
+ <a href="https://wa.me/923349996864" id="heroWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-whatsapp">
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> <span data-i18n="hero_btn_whatsapp">WhatsApp: 0334 9996864</span>
  </a>
  <a href="/shifa-ruqiyah.apk" download="shifa-ruqiyah.apk" class="btn btn-outline-white" style="border-color: rgba(212, 175, 55, 0.6); background: rgba(255, 255, 255, 0.08);" title="Download Android App APK">
  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> <span data-i18n="hero_btn_apk">Download Android App</span>
@@ -1841,6 +1841,24 @@ html[lang="ur"] .adhkar-filter-pill {
  <strong style="color: var(--brown-dark);" data-i18n="g3_title">3. Bring Fresh Water &amp; Oil</strong>
  <p style="margin-top: 4px;" data-i18n="g3_desc">For personalized recitation, keep a sealed bottle of drinking water and pure olive oil ready.</p>
  </div>
+ </div>
+
+ <!-- Direct Clinic Helpline & WhatsApp Card -->
+ <div class="card" style="margin-top: 18px; border: 1.5px solid rgba(37, 211, 102, 0.35); background: linear-gradient(135deg, rgba(37, 211, 102, 0.06), rgba(212, 175, 55, 0.06)); box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+   <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;">
+     <div style="display: flex; align-items: center; gap: 14px;">
+       <div style="width: 44px; height: 44px; border-radius: 12px; background: #25D366; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.28);">
+         💬
+       </div>
+       <div>
+         <h4 style="margin: 0; font-size: 0.95rem; font-family: var(--font-heading); color: var(--text);">Direct Clinic WhatsApp &amp; Patient Helpline</h4>
+         <p style="margin: 3px 0 0; font-size: 0.8rem; color: var(--muted);">Direct inquiries, immediate bookings &amp; case assistance: <strong style="color: var(--green-dark);">0334 9996864</strong> (+92 334 9996864)</p>
+       </div>
+     </div>
+     <a href="https://wa.me/923349996864" target="_blank" rel="noopener" class="btn btn-whatsapp" style="padding: 9px 18px; font-size: 0.85rem;">
+       <span>Open WhatsApp (0334 9996864)</span> →
+     </a>
+   </div>
  </div>
  </div>
  </section>
@@ -2267,11 +2285,12 @@ html[lang="ur"] .adhkar-filter-pill {
  <div>📅 <b>Date &amp; Time:</b> <span id="succDateTime">-</span></div>
  <div>🛡️ <b>Session:</b> <span id="succService">-</span></div>
  <div>💰 <b>Fee:</b> <span id="succFee">-</span></div>
+ <div style="margin-top:6px; font-weight:600; color:var(--green-dark);">💬 WhatsApp Helpline: 0334 9996864</div>
  </div>
 
  <div style="display: flex; flex-direction: column; gap: 10px;">
  <a href="#" id="succWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-whatsapp" style="padding: 13px;">
- <span>💬</span> Confirm via WhatsApp Now
+ <span>💬</span> Confirm via WhatsApp (0334 9996864)
  </a>
  <button type="button" class="btn btn-outline" onclick="dismissBookingSuccess()">
  View in My Appointments
@@ -2310,24 +2329,43 @@ html[lang="ur"] .adhkar-filter-pill {
  <!-- ================= JAVASCRIPT LOGIC ================= -->
  <script>
  /* ================= 1. DATABASE & STORAGE INTEGRATION ================= */
- // Synchronized with main PMS keys: 'air_patients', 'air_appts', 'air_counter'
+ // Deletion Blacklist in customer portal to eliminate resurrecting deleted records
+ let DELETED_PATIENT_IDS = new Set(JSON.parse(localStorage.getItem('air_deleted_patients') || '[]'));
+ function recordDeletedPatient(id){
+   if(!id) return;
+   const s = String(id).trim();
+   const clean = s.replace(/^0+/, '') || '0';
+   const padded = s.padStart(4, '0');
+   DELETED_PATIENT_IDS.add(s);
+   DELETED_PATIENT_IDS.add(clean);
+   DELETED_PATIENT_IDS.add(padded);
+   localStorage.setItem('air_deleted_patients', JSON.stringify(Array.from(DELETED_PATIENT_IDS)));
+ }
+ function isPatientDeleted(id){
+   if(!id) return false;
+   const s = String(id).trim();
+   const clean = s.replace(/^0+/, '') || '0';
+   const padded = s.padStart(4, '0');
+   return DELETED_PATIENT_IDS.has(s) || DELETED_PATIENT_IDS.has(clean) || DELETED_PATIENT_IDS.has(padded);
+ }
+
  const DB = {
- patients: JSON.parse(localStorage.getItem('air_patients') || '[]'),
- appts: JSON.parse(localStorage.getItem('air_appts') || '[]'),
- counter: parseInt(localStorage.getItem('air_counter') || '0', 10)
+   patients: JSON.parse(localStorage.getItem('air_patients') || '[]').filter(p => !isPatientDeleted(p.id)),
+   appts: JSON.parse(localStorage.getItem('air_appts') || '[]').filter(a => !isPatientDeleted(a.patientId)),
+   counter: parseInt(localStorage.getItem('air_counter') || '0', 10)
  };
 
  function saveDB() {
- localStorage.setItem('air_patients', JSON.stringify(DB.patients));
- localStorage.setItem('air_appts', JSON.stringify(DB.appts));
- localStorage.setItem('air_counter', String(DB.counter));
- syncClientDBWithServer();
+   localStorage.setItem('air_patients', JSON.stringify(DB.patients));
+   localStorage.setItem('air_appts', JSON.stringify(DB.appts));
+   localStorage.setItem('air_counter', String(DB.counter));
+   syncClientDBWithServer();
  }
 
  function reloadDB() {
- DB.patients = JSON.parse(localStorage.getItem('air_patients') || '[]');
- DB.appts = JSON.parse(localStorage.getItem('air_appts') || '[]');
- DB.counter = parseInt(localStorage.getItem('air_counter') || '0', 10);
+   DB.patients = JSON.parse(localStorage.getItem('air_patients') || '[]').filter(p => !isPatientDeleted(p.id));
+   DB.appts = JSON.parse(localStorage.getItem('air_appts') || '[]').filter(a => !isPatientDeleted(a.patientId));
+   DB.counter = parseInt(localStorage.getItem('air_counter') || '0', 10);
  }
 
  async function syncClientDBWithServer() {
@@ -2336,20 +2374,23 @@ html[lang="ur"] .adhkar-filter-pill {
        method: 'POST',
        headers: { 'Content-Type': 'application/json' },
        body: JSON.stringify({
-         patients: DB.patients,
-         appts: DB.appts,
-         counter: DB.counter
+         patients: DB.patients.filter(p => !isPatientDeleted(p.id)),
+         appts: DB.appts.filter(a => !isPatientDeleted(a.patientId)),
+         counter: DB.counter,
+         deletedPatientIds: Array.from(DELETED_PATIENT_IDS)
        })
      });
      if(res.ok) {
        const data = await res.json();
-       if(data && data.success && Array.isArray(data.appts)) {
-         DB.appts = data.appts;
-         if(Array.isArray(data.patients) && data.patients.length > 0) {
-           const map = new Map();
-           data.patients.forEach(p => map.set(p.id, p));
-           DB.patients.forEach(p => { if(!map.has(p.id)) map.set(p.id, p); });
-           DB.patients = Array.from(map.values());
+       if(data && data.success) {
+         if(Array.isArray(data.deletedPatientIds)) {
+           data.deletedPatientIds.forEach(id => recordDeletedPatient(id));
+         }
+         if(Array.isArray(data.appts)) {
+           DB.appts = data.appts.filter(a => !isPatientDeleted(a.patientId));
+         }
+         if(Array.isArray(data.patients)) {
+           DB.patients = data.patients.filter(p => !isPatientDeleted(p.id));
          }
          if(data.counter > DB.counter) DB.counter = data.counter;
          localStorage.setItem('air_patients', JSON.stringify(DB.patients));
@@ -2367,13 +2408,15 @@ html[lang="ur"] .adhkar-filter-pill {
      const res = await fetch('/api/data');
      if(res.ok) {
        const data = await res.json();
-       if(data && data.success && Array.isArray(data.appts)) {
-         DB.appts = data.appts;
-         if(Array.isArray(data.patients) && data.patients.length > 0) {
-           const map = new Map();
-           data.patients.forEach(p => map.set(p.id, p));
-           DB.patients.forEach(p => { if(!map.has(p.id)) map.set(p.id, p); });
-           DB.patients = Array.from(map.values());
+       if(data && data.success) {
+         if(Array.isArray(data.deletedPatientIds)) {
+           data.deletedPatientIds.forEach(id => recordDeletedPatient(id));
+         }
+         if(Array.isArray(data.appts)) {
+           DB.appts = data.appts.filter(a => !isPatientDeleted(a.patientId));
+         }
+         if(Array.isArray(data.patients)) {
+           DB.patients = data.patients.filter(p => !isPatientDeleted(p.id));
          }
          if(data.counter > DB.counter) DB.counter = data.counter;
          localStorage.setItem('air_patients', JSON.stringify(DB.patients));
@@ -2387,7 +2430,7 @@ html[lang="ur"] .adhkar-filter-pill {
        }
      }
    } catch(e) {
-     console.warn('Live fetch notice:', e);
+     if(!silent) console.warn('Live fetch notice:', e);
    }
  }
 
@@ -3141,7 +3184,7 @@ const ADHKAR_LIST = [
  `\nPlease confirm reception and session preparation instructions. JazakAllah Khair.`
  );
 
- const clinicWaNumber = '923000000000'; // Clinic reception hotline
+ const clinicWaNumber = '923349996864'; // Clinic reception hotline (03349996864)
  const waUrl = `https://wa.me/${clinicWaNumber}?text=${waText}`;
 
  // Populate Success Modal
@@ -3429,12 +3472,12 @@ const ADHKAR_LIST = [
  }
 
  function openClinicWhatsAppChat(){
- window.open('https://wa.me/923000000000', '_blank');
+ window.open('https://wa.me/923349996864', '_blank');
  }
 
  function openWaApptInquiry(apptId, name, date, time){
  const text = encodeURIComponent(`Assalam-o-Alaikum, I have an inquiry regarding my appointment ${apptId} for ${name} on ${fmtDate(date)} at ${fmtTime(time)}.`);
- window.open(`https://wa.me/923000000000?text=${text}`, '_blank');
+ window.open(`https://wa.me/923349996864?text=${text}`, '_blank');
  }
 
  function printApptSlip(apptId){
@@ -3999,7 +4042,7 @@ const APP_I18N = {
       hero_sub: "Welcome to Shifa-Ruqiyah Centre's dedicated customer platform. Schedule your Ruqyah Shari'ah sessions, track appointment statuses, explore your spiritual numerology, and access personalized healing adhkar.",
       hero_btn_book: "Schedule Appointment",
       hero_btn_track: "Track My Booking",
-      hero_btn_whatsapp: "WhatsApp Hotline",
+      hero_btn_whatsapp: "WhatsApp: 0334 9996864",
       hero_btn_apk: "Download Android App",
 
       features_title: "Direct Services & Tools",
@@ -4111,7 +4154,7 @@ const APP_I18N = {
       hero_sub: "شفاء و رقیہ سینٹر کے آفیشل پورٹل میں خوش آمدید۔ اپنا رقیہ شرعیہ سیشن بک کریں، اپائنٹمنٹ کی صورتحال معلوم کریں، اپنا روحانی اعداد و شمار معلوم کریں اور مسنون دعائیں و اذکار حاصل کریں۔",
       hero_btn_book: "اپائنٹمنٹ بک کریں",
       hero_btn_track: "بکنگ معلوم کریں",
-      hero_btn_whatsapp: "واٹس ایپ رابطہ",
+      hero_btn_whatsapp: "واٹس ایپ: 03349996864",
       hero_btn_apk: "اینڈرائیڈ ایپ ڈاؤن لوڈ کریں",
 
       features_title: "روحانی خدمات و سہولیات",

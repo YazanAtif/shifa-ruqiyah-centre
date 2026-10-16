@@ -5226,9 +5226,16 @@ async function syncDBWithServer(){
     });
     if(res.ok){
       const data = await res.json();
-      if(data && data.success && Array.isArray(data.patients)){
-        DB.patients = data.patients.filter(p => !isPatientDeleted(p.id));
-        DB.appts = (data.appts || []).filter(a => !isPatientDeleted(a.patientId));
+      if(data && data.success){
+        if(Array.isArray(data.deletedPatientIds)){
+          data.deletedPatientIds.forEach(id => recordDeletedPatient(id));
+        }
+        if(Array.isArray(data.patients)){
+          DB.patients = data.patients.filter(p => !isPatientDeleted(p.id));
+        }
+        if(Array.isArray(data.appts)){
+          DB.appts = data.appts.filter(a => !isPatientDeleted(a.patientId));
+        }
         if(data.counter > DB.counter) DB.counter = data.counter;
         localStorage.setItem('air_patients', JSON.stringify(DB.patients));
         localStorage.setItem('air_appts', JSON.stringify(DB.appts));
@@ -5247,8 +5254,11 @@ async function loadDBFromServer(silent = false){
     const res = await fetch('/api/data');
     if(res.ok){
       const data = await res.json();
-      if(data && data.success && Array.isArray(data.patients)){
-        const validPatients = data.patients.filter(p => !isPatientDeleted(p.id));
+      if(data && data.success){
+        if(Array.isArray(data.deletedPatientIds)){
+          data.deletedPatientIds.forEach(id => recordDeletedPatient(id));
+        }
+        const validPatients = (data.patients || []).filter(p => !isPatientDeleted(p.id));
         const validAppts = (data.appts || []).filter(a => !isPatientDeleted(a.patientId));
 
         if(validPatients.length === 0 && validAppts.length === 0 && (DB.patients.length > 0 || DB.appts.length > 0)){
@@ -6183,8 +6193,12 @@ function executeConfirmedDelete(){
 
   // Background cloud database purge
   try {
-    fetch('/api/patient?id=' + encodeURIComponent(id), { method: 'DELETE' }).catch(e => console.warn(e));
-    syncDBWithServer();
+    fetch('/api/patient?id=' + encodeURIComponent(id), { method: 'DELETE' })
+      .then(() => syncDBWithServer())
+      .catch(e => {
+        console.warn('Delete error:', e);
+        syncDBWithServer();
+      });
   } catch(e) {
     console.warn('Delete sync notice:', e);
   }
@@ -7140,6 +7154,8 @@ function buildApptMessage(a, p){
   }
   lines.push('');
   lines.push('Note: Time punctuality is strictly mandatory. If the allotted time expires, a new appointment will be required.');
+  lines.push('');
+  lines.push('📞 WhatsApp: 0334 9996864 (+92 334 9996864)');
   lines.push('');
   lines.push('JazakAllah Khair,');
   lines.push('Shifa-Ruqiyah Centre');
