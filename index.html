@@ -1948,18 +1948,22 @@ html[lang="ur"] .adhkar-filter-pill {
  <input type="text" id="custFather" class="form-input" placeholder="e.g. Abdul Rehman" data-i18n-ph="ph_father" required />
  </div>
 
- <div class="form-group">
- <label class="form-label"><span data-i18n="lbl_country">Country / Location</span> <span class="req">*</span></label>
- <input type="text" id="custCountry" class="form-input" placeholder="e.g. Pakistan, UK, USA, UAE" data-i18n-ph="ph_country" value="Pakistan" oninput="handleCountryInput()" />
- </div>
+   <div class="form-group">
+  <label class="form-label"><span data-i18n="lbl_country">Country / Location</span> <span class="req">*</span></label>
+  <input type="text" id="custCountry" list="custCountryList" class="form-input" placeholder="e.g. Pakistan, UK, USA, UAE" data-i18n-ph="ph_country" value="Pakistan" oninput="handleCountryInput()" autocomplete="off" />
+  <datalist id="custCountryList"></datalist>
+  </div>
 
- <div class="form-group">
- <label class="form-label">
- <span><span data-i18n="lbl_mobile">WhatsApp / Mobile Number</span> <span class="req">*</span></span>
- <span class="hint" id="dialCodeHint">+92</span>
- </label>
- <input type="tel" id="custMobile" class="form-input" placeholder="e.g. 03001234567 or +92300..." data-i18n-ph="ph_mobile" required />
- </div>
+  <div class="form-group">
+  <label class="form-label">
+  <span><span data-i18n="lbl_mobile">WhatsApp / Mobile Number</span> <span class="req">*</span></span>
+  <span class="hint" id="dialCodeHint">+92 (Pakistan)</span>
+  </label>
+  <div class="phone-input-wrap">
+    <select id="custDialCode" class="form-select dial-code-select" onchange="handleDialCodeChange()" aria-label="Country Dial Code"></select>
+    <input type="tel" id="custMobile" class="form-input" placeholder="300 1234567" data-i18n-ph="ph_mobile" required oninput="handleMobileInput(this)" style="flex:1;" />
+  </div>
+  </div>
 
  <div class="form-group">
  <label class="form-label"><span data-i18n="lbl_gender">Gender</span> <span class="req">*</span></label>
@@ -2842,18 +2846,96 @@ const ADHKAR_LIST = [
  const d = new Date(parts[0], parts[1]-1, parts[2]);
  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
  }
+  /* ================= WORLD COUNTRIES & DIAL CODES ================= */
+  const WORLD_COUNTRIES = [{"n":"Pakistan","d":"92","f":"🇵🇰","c":"PK"},{"n":"Saudi Arabia","d":"966","f":"🇸🇦","c":"SA"},{"n":"United Arab Emirates","d":"971","f":"🇦🇪","c":"AE"},{"n":"United Kingdom","d":"44","f":"🇬🇧","c":"GB"},{"n":"United States","d":"1","f":"🇺🇸","c":"US"},{"n":"Canada","d":"1","f":"🇨🇦","c":"CA"},{"n":"Qatar","d":"974","f":"🇶🇦","c":"QA"},{"n":"Oman","d":"968","f":"🇴🇲","c":"OM"},{"n":"Kuwait","d":"965","f":"🇰🇼","c":"KW"},{"n":"Bahrain","d":"973","f":"🇧🇭","c":"BH"},{"n":"India","d":"91","f":"🇮🇳","c":"IN"},{"n":"Bangladesh","d":"880","f":"🇧🇩","c":"BD"},{"n":"Australia","d":"61","f":"🇦🇺","c":"AU"},{"n":"Turkey","d":"90","f":"🇹🇷","c":"TR"},{"n":"Malaysia","d":"60","f":"🇲🇾","c":"MY"},{"n":"South Africa","d":"27","f":"🇿🇦","c":"ZA"},{"n":"Germany","d":"49","f":"🇩🇪","c":"DE"},{"n":"Afghanistan","d":"93","f":"🇦🇫","c":"AF"},{"n":"Albania","d":"355","f":"🇦🇱","c":"AL"},{"n":"Algeria","d":"213","f":"🇩🇿","c":"DZ"},{"n":"Andorra","d":"376","f":"🇦🇩","c":"AD"},{"n":"Angola","d":"244","f":"🇦🇴","c":"AO"},{"n":"Antigua and Barbuda","d":"1268","f":"🇦🇬","c":"AG"},{"n":"Argentina","d":"54","f":"🇦🇷","c":"AR"},{"n":"Armenia","d":"374","f":"🇦🇲","c":"AM"},{"n":"Austria","d":"43","f":"🇦🇹","c":"AT"},{"n":"Azerbaijan","d":"994","f":"🇦🇿","c":"AZ"},{"n":"Bahamas","d":"1242","f":"🇧🇸","c":"BS"},{"n":"Barbados","d":"1246","f":"🇧🇧","c":"BB"},{"n":"Belarus","d":"375","f":"🇧🇾","c":"BY"},{"n":"Belgium","d":"32","f":"🇧🇪","c":"BE"},{"n":"Belize","d":"501","f":"🇧🇿","c":"BZ"},{"n":"Benin","d":"229","f":"🇧🇯","c":"BJ"},{"n":"Bhutan","d":"975","f":"🇧🇹","c":"BT"},{"n":"Bolivia","d":"591","f":"🇧🇴","c":"BO"},{"n":"Bosnia and Herzegovina","d":"387","f":"🇧🇦","c":"BA"},{"n":"Botswana","d":"267","f":"🇧🇼","c":"BW"},{"n":"Brazil","d":"55","f":"🇧🇷","c":"BR"},{"n":"Brunei","d":"673","f":"🇧🇳","c":"BN"},{"n":"Bulgaria","d":"359","f":"🇧🇬","c":"BG"},{"n":"Burkina Faso","d":"226","f":"🇧🇫","c":"BF"},{"n":"Burundi","d":"257","f":"🇧🇮","c":"BI"},{"n":"Cambodia","d":"855","f":"🇰🇭","c":"KH"},{"n":"Cameroon","d":"237","f":"🇨🇲","c":"CM"},{"n":"Cape Verde","d":"238","f":"🇨🇻","c":"CV"},{"n":"Central African Republic","d":"236","f":"🇨🇫","c":"CF"},{"n":"Chad","d":"235","f":"🇹🇩","c":"TD"},{"n":"Chile","d":"56","f":"🇨🇱","c":"CL"},{"n":"China","d":"86","f":"🇨🇳","c":"CN"},{"n":"Colombia","d":"57","f":"🇨🇴","c":"CO"},{"n":"Comoros","d":"269","f":"🇰🇲","c":"KM"},{"n":"Congo","d":"242","f":"🇨🇬","c":"CG"},{"n":"Costa Rica","d":"506","f":"🇨🇷","c":"CR"},{"n":"Croatia","d":"385","f":"🇭🇷","c":"HR"},{"n":"Cuba","d":"53","f":"🇨🇺","c":"CU"},{"n":"Cyprus","d":"357","f":"🇨🇾","c":"CY"},{"n":"Czech Republic","d":"420","f":"🇨🇿","c":"CZ"},{"n":"Denmark","d":"45","f":"🇩🇰","c":"DK"},{"n":"Djibouti","d":"253","f":"🇩🇯","c":"DJ"},{"n":"Dominica","d":"1767","f":"🇩🇲","c":"DM"},{"n":"Dominican Republic","d":"1809","f":"🇩🇴","c":"DO"},{"n":"DR Congo","d":"243","f":"🇨🇩","c":"CD"},{"n":"Ecuador","d":"593","f":"🇪🇨","c":"EC"},{"n":"Egypt","d":"20","f":"🇪🇬","c":"EG"},{"n":"El Salvador","d":"503","f":"🇸🇻","c":"SV"},{"n":"Equatorial Guinea","d":"240","f":"🇬🇶","c":"GQ"},{"n":"Eritrea","d":"291","f":"🇪🇷","c":"ER"},{"n":"Estonia","d":"372","f":"🇪🇪","c":"EE"},{"n":"Eswatini","d":"268","f":"🇸🇿","c":"SZ"},{"n":"Ethiopia","d":"251","f":"🇪🇹","c":"ET"},{"n":"Fiji","d":"679","f":"🇫🇯","c":"FJ"},{"n":"Finland","d":"358","f":"🇫🇮","c":"FI"},{"n":"France","d":"33","f":"🇫🇷","c":"FR"},{"n":"Gabon","d":"241","f":"🇬🇦","c":"GA"},{"n":"Gambia","d":"220","f":"🇬🇲","c":"GM"},{"n":"Georgia","d":"995","f":"🇬🇪","c":"GE"},{"n":"Ghana","d":"233","f":"🇬🇭","c":"GH"},{"n":"Greece","d":"30","f":"🇬🇷","c":"GR"},{"n":"Grenada","d":"1473","f":"🇬🇩","c":"GD"},{"n":"Guatemala","d":"502","f":"🇬🇹","c":"GT"},{"n":"Guinea","d":"224","f":"🇬🇳","c":"GN"},{"n":"Guinea-Bissau","d":"245","f":"🇬🇼","c":"GW"},{"n":"Guyana","d":"592","f":"🇬🇾","c":"GY"},{"n":"Haiti","d":"509","f":"🇭🇹","c":"HT"},{"n":"Honduras","d":"504","f":"🇭🇳","c":"HN"},{"n":"Hong Kong","d":"852","f":"🇭🇰","c":"HK"},{"n":"Hungary","d":"36","f":"🇭🇺","c":"HU"},{"n":"Iceland","d":"354","f":"🇮🇸","c":"IS"},{"n":"Indonesia","d":"62","f":"🇮🇩","c":"ID"},{"n":"Iran","d":"98","f":"🇮🇷","c":"IR"},{"n":"Iraq","d":"964","f":"🇮🇶","c":"IQ"},{"n":"Ireland","d":"353","f":"🇮🇪","c":"IE"},{"n":"Italy","d":"39","f":"🇮🇹","c":"IT"},{"n":"Ivory Coast","d":"225","f":"🇨🇮","c":"CI"},{"n":"Jamaica","d":"1876","f":"🇯🇲","c":"JM"},{"n":"Japan","d":"81","f":"🇯🇵","c":"JP"},{"n":"Jordan","d":"962","f":"🇯🇴","c":"JO"},{"n":"Kazakhstan","d":"7","f":"🇰🇿","c":"KZ"},{"n":"Kenya","d":"254","f":"🇰🇪","c":"KE"},{"n":"Kosovo","d":"383","f":"🇽🇰","c":"XK"},{"n":"Kyrgyzstan","d":"996","f":"🇰🇬","c":"KG"},{"n":"Laos","d":"856","f":"🇱🇦","c":"LA"},{"n":"Latvia","d":"371","f":"🇱🇻","c":"LV"},{"n":"Lebanon","d":"961","f":"🇱🇧","c":"LB"},{"n":"Lesotho","d":"266","f":"🇱🇸","c":"LS"},{"n":"Liberia","d":"231","f":"🇱🇷","c":"LR"},{"n":"Libya","d":"218","f":"🇱🇾","c":"LY"},{"n":"Liechtenstein","d":"423","f":"🇱🇮","c":"LI"},{"n":"Lithuania","d":"370","f":"🇱🇹","c":"LT"},{"n":"Luxembourg","d":"352","f":"🇱🇺","c":"LU"},{"n":"Madagascar","d":"261","f":"🇲🇬","c":"MG"},{"n":"Malawi","d":"265","f":"🇲🇼","c":"MW"},{"n":"Maldives","d":"960","f":"🇲🇻","c":"MV"},{"n":"Mali","d":"223","f":"🇲🇱","c":"ML"},{"n":"Malta","d":"356","f":"🇲🇹","c":"MT"},{"n":"Mauritania","d":"222","f":"🇲🇷","c":"MR"},{"n":"Mauritius","d":"230","f":"🇲🇺","c":"MU"},{"n":"Mexico","d":"52","f":"🇲🇽","c":"MX"},{"n":"Moldova","d":"373","f":"🇲🇩","c":"MD"},{"n":"Monaco","d":"377","f":"🇲🇨","c":"MC"},{"n":"Mongolia","d":"976","f":"🇲🇳","c":"MN"},{"n":"Montenegro","d":"382","f":"🇲🇪","c":"ME"},{"n":"Morocco","d":"212","f":"🇲🇦","c":"MA"},{"n":"Mozambique","d":"258","f":"🇲🇿","c":"MZ"},{"n":"Myanmar","d":"95","f":"🇲🇲","c":"MM"},{"n":"Namibia","d":"264","f":"🇳🇦","c":"NA"},{"n":"Nepal","d":"977","f":"🇳🇵","c":"NP"},{"n":"Netherlands","d":"31","f":"🇳🇱","c":"NL"},{"n":"New Zealand","d":"64","f":"🇳🇿","c":"NZ"},{"n":"Nicaragua","d":"505","f":"🇳🇮","c":"NI"},{"n":"Niger","d":"227","f":"🇳🇪","c":"NE"},{"n":"Nigeria","d":"234","f":"🇳🇬","c":"NG"},{"n":"North Macedonia","d":"389","f":"🇲🇰","c":"MK"},{"n":"Norway","d":"47","f":"🇳🇴","c":"NO"},{"n":"Palestine","d":"970","f":"🇵🇸","c":"PS"},{"n":"Panama","d":"507","f":"🇵🇦","c":"PA"},{"n":"Papua New Guinea","d":"675","f":"🇵🇬","c":"PG"},{"n":"Paraguay","d":"595","f":"🇵🇾","c":"PY"},{"n":"Peru","d":"51","f":"🇵🇪","c":"PE"},{"n":"Philippines","d":"63","f":"🇵🇭","c":"PH"},{"n":"Poland","d":"48","f":"🇵🇱","c":"PL"},{"n":"Portugal","d":"351","f":"🇵🇹","c":"PT"},{"n":"Romania","d":"40","f":"🇷🇴","c":"RO"},{"n":"Russia","d":"7","f":"🇷🇺","c":"RU"},{"n":"Rwanda","d":"250","f":"🇷🇼","c":"RW"},{"n":"Senegal","d":"221","f":"🇸🇳","c":"SN"},{"n":"Serbia","d":"381","f":"🇷🇸","c":"RS"},{"n":"Seychelles","d":"248","f":"🇸🇨","c":"SC"},{"n":"Sierra Leone","d":"232","f":"🇸🇱","c":"SL"},{"n":"Singapore","d":"65","f":"🇸🇬","c":"SG"},{"n":"Slovakia","d":"421","f":"🇸🇰","c":"SK"},{"n":"Slovenia","d":"386","f":"🇸🇮","c":"SI"},{"n":"Somalia","d":"252","f":"🇸🇴","c":"SO"},{"n":"South Korea","d":"82","f":"🇰🇷","c":"KR"},{"n":"South Sudan","d":"211","f":"🇸🇸","c":"SS"},{"n":"Spain","d":"34","f":"🇪🇸","c":"ES"},{"n":"Sri Lanka","d":"94","f":"🇱🇰","c":"LK"},{"n":"Sudan","d":"249","f":"🇸🇩","c":"SD"},{"n":"Suriname","d":"597","f":"🇸🇷","c":"SR"},{"n":"Sweden","d":"46","f":"🇸🇪","c":"SE"},{"n":"Switzerland","d":"41","f":"🇨🇭","c":"CH"},{"n":"Syria","d":"963","f":"🇸🇾","c":"SY"},{"n":"Taiwan","d":"886","f":"🇹🇼","c":"TW"},{"n":"Tajikistan","d":"992","f":"🇹🇯","c":"TJ"},{"n":"Tanzania","d":"255","f":"🇹🇿","c":"TZ"},{"n":"Thailand","d":"66","f":"🇹🇭","c":"TH"},{"n":"Togo","d":"228","f":"🇹🇬","c":"TG"},{"n":"Trinidad and Tobago","d":"1868","f":"🇹🇹","c":"TT"},{"n":"Tunisia","d":"216","f":"🇹🇳","c":"TN"},{"n":"Turkmenistan","d":"993","f":"🇹🇲","c":"TM"},{"n":"Uganda","d":"256","f":"🇺🇬","c":"UG"},{"n":"Ukraine","d":"380","f":"🇺🇦","c":"UA"},{"n":"Uruguay","d":"598","f":"🇺🇾","c":"UY"},{"n":"Uzbekistan","d":"998","f":"🇺🇿","c":"UZ"},{"n":"Venezuela","d":"58","f":"🇻🇪","c":"VE"},{"n":"Vietnam","d":"84","f":"🇻🇳","c":"VN"},{"n":"Yemen","d":"967","f":"🇾🇪","c":"YE"},{"n":"Zambia","d":"260","f":"🇿🇲","c":"ZM"},{"n":"Zimbabwe","d":"263","f":"🇿🇼","c":"ZW"}];
 
- function dialForCountry(name){
- if(!name) return '92';
- const low = name.toLowerCase().trim();
- if(low.includes('pakistan')) return '92';
- if(low.includes('united kingdom') || low === 'uk' || low.includes('britain')) return '44';
- if(low.includes('united states') || low === 'usa' || low === 'us' || low.includes('canada')) return '1';
- if(low.includes('emirates') || low === 'uae' || low.includes('dubai')) return '971';
- if(low.includes('saudi')) return '966';
- if(low.includes('india')) return '91';
- return '92';
- }
+  function findCountryMatch(str) {
+    if (!str) return null;
+    const s = str.toLowerCase().trim();
+    let hit = WORLD_COUNTRIES.find(x => x.n.toLowerCase() === s);
+    if (hit) return hit;
+    hit = WORLD_COUNTRIES.find(x => x.c.toLowerCase() === s);
+    if (hit) return hit;
+    const aliases = {
+      'uk': 'United Kingdom', 'britain': 'United Kingdom', 'great britain': 'United Kingdom', 'england': 'United Kingdom',
+      'usa': 'United States', 'us': 'United States', 'america': 'United States',
+      'uae': 'United Arab Emirates', 'emirates': 'United Arab Emirates', 'dubai': 'United Arab Emirates', 'abu dhabi': 'United Arab Emirates',
+      'ksa': 'Saudi Arabia', 'saudi': 'Saudi Arabia',
+      'pak': 'Pakistan', 'pk': 'Pakistan'
+    };
+    if (aliases[s]) {
+      return WORLD_COUNTRIES.find(x => x.n === aliases[s]) || null;
+    }
+    return WORLD_COUNTRIES.find(x => x.n.toLowerCase().includes(s) || s.includes(x.n.toLowerCase())) || null;
+  }
+
+  function dialForCountry(name){
+    const match = findCountryMatch(name);
+    return match ? match.d : '92';
+  }
+
+  function handleDialCodeChange(){
+    const sel = $('custDialCode');
+    if(!sel) return;
+    const opt = sel.options[sel.selectedIndex];
+    if(!opt) return;
+    const dial = opt.value;
+    const cName = opt.getAttribute('data-country') || '';
+    $('dialCodeHint').textContent = '+' + dial + (cName ? ' (' + cName + ')' : '');
+    if(cName && $('custCountry')) {
+      $('custCountry').value = cName;
+    }
+    if(dial !== '92' && ACTIVE_CURRENCY === 'PKR'){
+      setCurrency('USD');
+    } else if(dial === '92' && ACTIVE_CURRENCY === 'USD'){
+      setCurrency('PKR');
+    }
+  }
+
+  function handleMobileInput(input){
+    if(!input) return;
+    let val = input.value.trim();
+    if(val.startsWith('+') || val.startsWith('00')){
+      const digits = val.replace(/^(\+|00)/, '').replace(/\D/g, '');
+      for(let len = 4; len >= 1; len--){
+        const prefix = digits.substring(0, len);
+        const hit = WORLD_COUNTRIES.find(c => c.d === prefix);
+        if(hit){
+          if($('custDialCode')){
+            for(let i=0; i<$('custDialCode').options.length; i++){
+              const opt = $('custDialCode').options[i];
+              if(opt.getAttribute('data-country')?.toLowerCase() === hit.n.toLowerCase()){
+                $('custDialCode').selectedIndex = i;
+                $('dialCodeHint').textContent = '+' + hit.d + ' (' + hit.n + ')';
+                if($('custCountry')) $('custCountry').value = hit.n;
+                if(hit.d !== '92' && ACTIVE_CURRENCY === 'PKR') setCurrency('USD');
+                break;
+              }
+            }
+          }
+          input.value = digits.substring(len);
+          break;
+        }
+      }
+    }
+  }
+
+  function initCountryComponents(){
+    const sel = $('custDialCode');
+    if(sel){
+      sel.innerHTML = WORLD_COUNTRIES.map(c => 
+        `<option value="${c.d}" data-country="${c.n}" data-flag="${c.f}" ${c.d === '92' && c.n === 'Pakistan' ? 'selected' : ''}>` +
+        `${c.f} +${c.d} (${c.n})` +
+        `</option>`
+      ).join('');
+    }
+    const dl = $('custCountryList');
+    if(dl){
+      const uniqueNames = Array.from(new Set(WORLD_COUNTRIES.map(c => c.n))).sort();
+      dl.innerHTML = uniqueNames.map(n => `<option value="${n}">`).join('');
+    }
+    if($('dialCodeHint')) $('dialCodeHint').textContent = '+92 (Pakistan)';
+  }
 
  /* ================= 6. NAVIGATION & TABS ================= */
  function switchTab(tabId){
@@ -3062,15 +3144,29 @@ const ADHKAR_LIST = [
  const fee = ACTIVE_CURRENCY === 'USD' ? '$' + sObj.feeUSD : 'Rs. ' + sObj.feePKR.toLocaleString();
  $('summaryFeeAmount').textContent = fee;
  }
-
- function handleCountryInput(){
- const val = $('custCountry').value;
- const dial = dialForCountry(val);
- $('dialCodeHint').textContent = '+' + dial;
- if(val && !val.toLowerCase().includes('pakistan') && ACTIVE_CURRENCY === 'PKR'){
- setCurrency('USD');
- }
- }
+  function handleCountryInput(){
+    const val = ($('custCountry').value || '').trim();
+    const matched = findCountryMatch(val);
+    if(matched){
+      $('dialCodeHint').textContent = '+' + matched.d + ' (' + matched.n + ')';
+      if($('custDialCode')){
+        for(let i=0; i<$('custDialCode').options.length; i++){
+          const opt = $('custDialCode').options[i];
+          if(opt.getAttribute('data-country')?.toLowerCase() === matched.n.toLowerCase()){
+            $('custDialCode').selectedIndex = i;
+            break;
+          }
+        }
+      }
+      if(matched.d !== '92' && ACTIVE_CURRENCY === 'PKR'){
+        setCurrency('USD');
+      } else if(matched.d === '92' && ACTIVE_CURRENCY === 'USD'){
+        setCurrency('PKR');
+      }
+    } else {
+      $('dialCodeHint').textContent = '+92';
+    }
+  }
 
  function handleNameDobChange(){
  const name = $('custName').value.trim();
@@ -3098,7 +3194,18 @@ const ADHKAR_LIST = [
  e.preventDefault();
  const name = $('custName').value.trim();
  const father = $('custFather').value.trim();
- const mobile = $('custMobile').value.trim();
+ const rawMobile = $('custMobile').value.trim();
+const dialSel = $('custDialCode');
+const dialCode = dialSel ? dialSel.value : dialForCountry(country);
+let cleanDigits = rawMobile.replace(/[^0-9]/g, '');
+if (cleanDigits.startsWith(dialCode)) {
+  // already has dial code
+} else if (cleanDigits.startsWith('0')) {
+  cleanDigits = dialCode + cleanDigits.replace(/^0+/, '');
+} else {
+  cleanDigits = dialCode + cleanDigits;
+}
+const mobile = '+' + cleanDigits;
  const country = $('custCountry').value.trim() || 'Pakistan';
  const gender = $('custGender').value;
  const notes = $('custNotes').value.trim();
@@ -3196,7 +3303,8 @@ const ADHKAR_LIST = [
        `🛡️ *سروس:* ${ctx.service}\n` +
        `📅 *تاریخ:* ${fmtDate(ctx.date)}\n` +
        `⏰ *مقررہ وقت:* ${fmtTime(ctx.start)} تا ${fmtTime(ctx.end)}\n` +
-       `📍 *ملک:* ${ctx.country}\n` +
+       `📞 *موبائل:* ${p.mobile}\n` +
+`📍 *ملک:* ${ctx.country}\n` +
        `💰 *فیس:* ${feeStr}\n` +
        (ctx.notes ? `📝 *مسئلہ:* ${ctx.notes}\n` : '') +
        `\nبراہ کرم بکنگ کی تصدیق اور سیشن کی تیاری کی ہدایات ارسال فرمائیں۔ جزاکم اللہ خیراً۔`
@@ -3211,7 +3319,8 @@ const ADHKAR_LIST = [
      `🛡️ *Service:* ${ctx.service}\n` +
      `📅 *Date:* ${fmtDate(ctx.date)}\n` +
      `⏰ *Time Slot:* ${fmtTime(ctx.start)} to ${fmtTime(ctx.end)}\n` +
-     `📍 *Country:* ${ctx.country}\n` +
+     `📞 *Mobile:* ${p.mobile}\n` +
+`📍 *Country:* ${ctx.country}\n` +
      `💰 *Estimated Fee:* ${feeStr}\n` +
      (ctx.notes ? `📝 *Concern:* ${ctx.notes}\n` : '') +
      `\nPlease confirm reception and session preparation instructions. (Clinic WhatsApp: 0334 9996864)\nJazakAllah Khair.`
@@ -4409,6 +4518,7 @@ const initialClientLang = getAppLanguage();
 setAppLanguage(initialClientLang);
 if(typeof initCalendar === 'function') initCalendar();
 if(typeof renderServicesDeck === 'function') renderServicesDeck();
+if(typeof initCountryComponents === 'function') initCountryComponents();
 fetchLiveAppointments(true);
 
 // Focus & interval sync for real-time slot booking
