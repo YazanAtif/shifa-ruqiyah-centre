@@ -1877,9 +1877,9 @@ html[lang="ur"] .adhkar-filter-pill {
       <div style="background:var(--card-muted); border:1.5px solid rgba(46,125,50,0.25); border-radius:var(--radius-sm); padding:12px 14px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-weight:700; color:#2e7d32; font-size:0.88rem;">📱 EasyPaisa Account</span>
-          <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-4040', this)" style="background:transparent; border:1px solid #2e7d32; color:#2e7d32; padding:3px 10px; border-radius:10px; font-size:0.72rem; font-weight:600; cursor:pointer;">📋 Copy</button>
+          <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-404', this)" style="background:transparent; border:1px solid #2e7d32; color:#2e7d32; padding:3px 10px; border-radius:10px; font-size:0.72rem; font-weight:600; cursor:pointer;">📋 Copy</button>
         </div>
-        <div style="font-family:monospace; font-size:1.1rem; font-weight:700; color:var(--text); margin-top:5px; letter-spacing:0.5px;">0341-5919-4040</div>
+        <div style="font-family:monospace; font-size:1.1rem; font-weight:700; color:var(--text); margin-top:5px; letter-spacing:0.5px;">0341-5919-404</div>
         <div style="font-size:0.72rem; color:var(--muted); margin-top:2px;">Account Title: Shifa Ruqiyah Centre</div>
       </div>
       <!-- Askari Bank -->
@@ -2089,9 +2089,9 @@ html[lang="ur"] .adhkar-filter-pill {
       <div style="background:var(--card-muted); border:1.5px solid rgba(46,125,50,0.3); border-radius:var(--radius-sm); padding:10px 12px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-weight:700; font-size:0.82rem; color:#2e7d32;">📱 EasyPaisa</span>
-          <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-4040', this)" style="background:transparent; border:1px solid #2e7d32; color:#2e7d32; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; cursor:pointer;">📋 Copy</button>
+          <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-404', this)" style="background:transparent; border:1px solid #2e7d32; color:#2e7d32; padding:2px 8px; border-radius:10px; font-size:0.7rem; font-weight:600; cursor:pointer;">📋 Copy</button>
         </div>
-        <div style="font-family:monospace; font-size:1.05rem; font-weight:700; color:var(--text); margin-top:4px; letter-spacing:0.5px;">0341-5919-4040</div>
+        <div style="font-family:monospace; font-size:1.05rem; font-weight:700; color:var(--text); margin-top:4px; letter-spacing:0.5px;">0341-5919-404</div>
         <div style="font-size:0.7rem; color:var(--muted); margin-top:2px;">Title: Shifa Ruqiyah Centre</div>
       </div>
 
@@ -2111,7 +2111,7 @@ html[lang="ur"] .adhkar-filter-pill {
       <div class="form-group" style="margin-bottom:0;">
         <label class="form-label" style="font-size:0.75rem;"><span>Account Transferred To <span class="req">*</span></span></label>
         <select id="custPayMethod" class="form-select" style="padding:10px 12px; font-size:0.85rem;" required>
-          <option value="EasyPaisa (0341-5919-4040)">EasyPaisa (0341-5919-4040)</option>
+          <option value="EasyPaisa (0341-5919-404)">EasyPaisa (0341-5919-404)</option>
           <option value="Askari Bank (03010690004748)">Askari Bank (03010690004748)</option>
         </select>
       </div>
@@ -2389,8 +2389,8 @@ html[lang="ur"] .adhkar-filter-pill {
   <div style="background:var(--card); border:1.5px dashed var(--gold-border); border-radius:var(--radius-sm); padding:12px; margin-bottom:16px; text-align:left; font-size:0.78rem;">
     <div style="font-weight:700; color:var(--brown-dark); margin-bottom:6px;">💳 Official Fee Payment Accounts:</div>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; padding:4px 0; border-bottom:1px solid var(--border);">
-      <span>📱 <b>EasyPaisa:</b> <code style="font-size:0.85rem; font-weight:700;">0341-5919-4040</code></span>
-      <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-4040', this)" style="padding:2px 8px; border-radius:10px; border:1px solid #2e7d32; color:#2e7d32; background:transparent; font-size:0.7rem; cursor:pointer;">📋 Copy</button>
+      <span>📱 <b>EasyPaisa:</b> <code style="font-size:0.85rem; font-weight:700;">0341-5919-404</code></span>
+      <button type="button" class="btn-copy-sm" onclick="copyPaymentNumber('0341-5919-404', this)" style="padding:2px 8px; border-radius:10px; border:1px solid #2e7d32; color:#2e7d32; background:transparent; font-size:0.7rem; cursor:pointer;">📋 Copy</button>
     </div>
     <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0;">
       <span>🏦 <b>Askari Bank:</b> <code style="font-size:0.85rem; font-weight:700;">03010690004748</code></span>
@@ -3405,7 +3405,7 @@ function initCountryComponents(){
  // Create appointment record
  const fee = ACTIVE_CURRENCY === 'USD' ? sObj.feeUSD : sObj.feePKR;
  const newApptId = 'APT-' + Date.now().toString(36).toUpperCase();
- const chosenPayMethod = $('custPayMethod') ? $('custPayMethod').value : 'EasyPaisa (0341-5919-4040)';
+ const chosenPayMethod = $('custPayMethod') ? $('custPayMethod').value : 'EasyPaisa (0341-5919-404)';
  const newAppt = {
    id: newApptId,
    patientId: p.id,
@@ -3453,7 +3453,7 @@ function initCountryComponents(){
        (ctx.trxId ? `🧾 *ٹرانزیکشن / ٹی آر ایکس آئی ڈی:* ${ctx.trxId}\n` : '') +
        (ctx.notes ? `📝 *مسئلہ:* ${ctx.notes}\n` : '') +
        `\n💳 *فیس ادائیگی کے اکاؤنٹس:*\n` +
-       `• ایزی پیسہ: 0341-5919-4040\n` +
+       `• ایزی پیسہ: 0341-5919-404\n` +
        `• عسکری بینک اکاؤنٹ: 03010690004748\n\n` +
        `میں نے 1000 روپے کنسلٹیشن فیس کی رسید / اسکرین شاٹ منسلک کر دی ہے۔ براہ کرم تصدیق فرما دیں۔ جزاکم اللہ خیراً۔`
      );
@@ -3474,7 +3474,7 @@ function initCountryComponents(){
      (ctx.trxId ? `🧾 *Transaction / TRX ID:* ${ctx.trxId}\n` : '') +
      (ctx.notes ? `📝 *Concern:* ${ctx.notes}\n` : '') +
      `\n💳 *Official Clinic Accounts:*\n` +
-     `• EasyPaisa: 0341-5919-4040\n` +
+     `• EasyPaisa: 0341-5919-404\n` +
      `• Askari Bank: 03010690004748\n\n` +
      `I have transferred the Rs. 1,000 consultation fee and attached my payment receipt screenshot. Please confirm my appointment slot. (Clinic WhatsApp: 0334 9996864)\nJazakAllah Khair.`
    );

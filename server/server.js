@@ -1,4 +1,7 @@
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -26,10 +29,19 @@ function sendJson(res, statusCode, data) {
   res.end(JSON.stringify(data));
 }
 
-function parseBody(req) {
+function parseBody(req, limitBytes = 25 * 1024 * 1024) {
   return new Promise((resolve, reject) => {
     let body = '';
-    req.on('data', chunk => { body += chunk; });
+    let size = 0;
+    req.on('data', chunk => {
+      size += chunk.length;
+      if (size > limitBytes) {
+        req.destroy();
+        reject(new Error('Payload too large'));
+        return;
+      }
+      body += chunk;
+    });
     req.on('end', () => {
       try {
         resolve(body ? JSON.parse(body) : {});
@@ -39,6 +51,51 @@ function parseBody(req) {
     });
     req.on('error', reject);
   });
+}
+
+function fetchJson(url) {
+  return new Promise((resolve, reject) => {
+    https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }, timeout: 8000 }, (res) => {
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => {
+        try { resolve(JSON.parse(data)); } catch (e) { reject(new Error('Parse error: ' + data.slice(0, 100))); }
+      });
+    }).on('error', reject);
+  });
+}
+
+async function translateText(text, targetLang, sourceLang = 'auto') {
+  if (!text || !text.trim()) {
+    return { translated: '', detected: sourceLang, target: targetLang || 'en' };
+  }
+  const hasUrdu = /[\u0600-\u06FF]/.test(text);
+  if (!targetLang) {
+    targetLang = hasUrdu ? 'en' : 'ur';
+  }
+  if (sourceLang === 'auto') {
+    sourceLang = hasUrdu ? 'ur' : 'en';
+  }
+
+  // Primary: Google dict-chrome-ex
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=dict-chrome-ex&sl=${encodeURIComponent(sourceLang)}&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(text)}`;
+    const json = await fetchJson(url);
+    const translated = (json[0] || []).map(s => s[0]).join('');
+    return { translated, detected: json[2] || sourceLang, target: targetLang };
+  } catch (err) {
+    console.warn('Google translation failed, trying MyMemory fallback:', err.message);
+    try {
+      const mmUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(sourceLang)}|${encodeURIComponent(targetLang)}`;
+      const mmJson = await fetchJson(mmUrl);
+      if (mmJson && mmJson.responseData && mmJson.responseData.translatedText) {
+        return { translated: mmJson.responseData.translatedText, detected: sourceLang, target: targetLang };
+      }
+    } catch (e2) {
+      console.warn('MyMemory fallback failed:', e2.message);
+    }
+    throw err;
+  }
 }
 
 const server = http.createServer(async (req, res) => {
@@ -58,6 +115,79 @@ const server = http.createServer(async (req, res) => {
     // Health check
     if (pathname === '/api/health' || pathname === '/health') {
       return sendJson(res, 200, { status: 'healthy', time: new Date().toISOString() });
+    }
+
+    // TRANSLATE TEXT ENDPOINT (POST & GET)
+    if ((req.method === 'POST' || req.method === 'GET') && pathname === '/api/translate') {
+      let text = '';
+      let to = '';
+      let from = 'auto';
+
+      if (req.method === 'GET') {
+        text = url.searchParams.get('text') || '';
+        to = url.searchParams.get('to') || '';
+        from = url.searchParams.get('from') || 'auto';
+      } else {
+        const body = await parseBody(req);
+        text = body.text || '';
+        to = body.to || '';
+        from = body.from || 'auto';
+      }
+
+      if (!text || !text.trim()) {
+        return sendJson(res, 400, { error: 'Text is required for translation' });
+      }
+
+      try {
+        const result = await translateText(text, to, from);
+        return sendJson(res, 200, {
+          success: true,
+          translatedText: result.translated,
+          sourceLang: result.detected,
+          targetLang: result.target
+        });
+      } catch (err) {
+        console.error('Translation error:', err);
+        return sendJson(res, 500, { error: 'Translation failed', details: err.message });
+      }
+    }
+
+    // UPLOAD IMAGE ENDPOINT
+    if (req.method === 'POST' && pathname === '/api/upload') {
+      const data = await parseBody(req);
+      if (!data || !data.data) {
+        return sendJson(res, 400, { error: 'No image data provided' });
+      }
+
+      const match = data.data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      let buffer;
+      let ext = 'png';
+      if (match) {
+        const mime = match[1];
+        if (mime.includes('jpeg') || mime.includes('jpg')) ext = 'jpg';
+        else if (mime.includes('webp')) ext = 'webp';
+        else if (mime.includes('gif')) ext = 'gif';
+        buffer = Buffer.from(match[2], 'base64');
+      } else {
+        buffer = Buffer.from(data.data, 'base64');
+      }
+
+      const uploadsDir = path.join(__dirname, '..', 'media', 'uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+
+      const rawName = (data.filename || 'whatsapp-image').replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+      const baseName = path.parse(rawName).name || 'whatsapp-image';
+      const filename = `${Date.now()}-${baseName.slice(0, 30)}.${ext}`;
+      const filePath = path.join(uploadsDir, filename);
+
+      fs.writeFileSync(filePath, buffer);
+      return sendJson(res, 200, {
+        success: true,
+        url: `/media/uploads/${filename}`,
+        filename
+      });
     }
 
     // 1. GET FULL DATA

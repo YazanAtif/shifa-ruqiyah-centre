@@ -1124,6 +1124,33 @@
     border-radius:8px;font-weight:700;font-size:14px;background:#fff;color:var(--brown-dark);box-sizing:border-box;
   }
   .wa-country-row input:focus{outline:none;border-color:var(--brown);box-shadow:0 0 0 3px rgba(124,83,57,.14)}
+
+  /* Enhanced WhatsApp Send Controls */
+  .wa-ctrl-row{display:flex;justify-content:space-between;align-items:center;margin:12px 0 8px;flex-wrap:wrap;gap:8px}
+  .wa-lang-toggle{display:inline-flex;border:1.5px solid var(--border);border-radius:18px;padding:2px;background:var(--card-muted);font-size:12px;font-weight:600}
+  .wa-lang-pill{padding:4px 12px;border-radius:14px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s}
+  .wa-lang-pill.active{background:var(--green);color:#fff}
+  .wa-lang-pill:not(.active){background:transparent;color:var(--text)}
+  .btn-convert-trans{
+    display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg, #128c7e, #075e54);
+    color:#fff!important;border:none;border-radius:16px;padding:5px 12px;font-size:12px;font-weight:700;
+    cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.12);transition:all .2s;
+  }
+  .btn-convert-trans:hover{background:linear-gradient(135deg, #075e54, #043d37);transform:translateY(-1px)}
+  .btn-convert-trans:active{transform:translateY(0)}
+  .btn-reset-tmpl{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:14px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer}
+  .btn-reset-tmpl:hover{color:var(--brown);border-color:var(--brown)}
+  .wa-attach-card{
+    margin:12px 0;padding:12px 14px;border:1.5px dashed var(--border);border-radius:12px;background:var(--card-muted);
+  }
+  .wa-attach-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .wa-attach-actions{display:inline-flex;flex-wrap:wrap;gap:6px}
+  .wa-attach-btn{font-size:11px;padding:4px 9px;border-radius:12px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);font-weight:600}
+  .wa-attach-btn:hover{background:#f5f0ea;border-color:var(--brown)}
+  .wa-preview-box{display:flex;align-items:center;gap:12px;background:#fff;padding:8px 12px;border-radius:8px;border:1px solid var(--border);margin-top:8px}
+  .wa-preview-thumb{width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(--border);background:#fafafa}
+  .wa-copy-badge{font-size:11px;color:#128c7e;font-weight:700;cursor:pointer;background:transparent;border:none;padding:0}
+  .wa-copy-badge:hover{text-decoration:underline}
   /* ---------- Table ---------- */
   .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(61,40,29,.03)}
   table{width:100%;border-collapse:collapse;background:var(--card);font-size:13.5px}
@@ -4711,7 +4738,7 @@ html[lang="ur"] .auth-input-wrapper input {
                     <label><span class="lbl-title">Payment Method</span></label>
                     <select id="regApptPayMethod">
                       <option value="Cash">Cash</option>
-                      <option value="EasyPaisa (0341-5919-4040)">EasyPaisa (0341-5919-4040)</option>
+                      <option value="EasyPaisa (0341-5919-404)">EasyPaisa (0341-5919-404)</option>
                       <option value="Askari Bank (03010690004748)">Askari Bank (03010690004748)</option>
                       <option value="JazzCash">JazzCash</option>
                       <option value="Bank Transfer">Bank Transfer</option>
@@ -4840,7 +4867,7 @@ html[lang="ur"] .auth-input-wrapper input {
             <select id="aPayMethod">
               <option value="">Select Payment Method...</option>
               <option value="Cash">Cash</option>
-              <option value="EasyPaisa (0341-5919-4040)">EasyPaisa (0341-5919-4040)</option>
+              <option value="EasyPaisa (0341-5919-404)">EasyPaisa (0341-5919-404)</option>
               <option value="Askari Bank (03010690004748)">Askari Bank (03010690004748)</option>
               <option value="JazzCash">JazzCash</option>
               <option value="Bank Transfer">Bank Transfer</option>
@@ -7279,6 +7306,11 @@ function statusSelect(a){
 /* ============ SEND TO PATIENT (WhatsApp) ============ */
 let currentSendApptId = null;
 let currentSendLang = 'en';
+let currentWaImageFile = null;
+let currentWaImageDataUrl = null;
+let currentWaImageName = '';
+let currentWaUploadedUrl = null;
+let isTranslatingSendMsg = false;
 
 // Build the appointment message text for a given appointment (English or Urdu)
 function buildApptMessage(a, p, lang = 'en'){
@@ -7314,7 +7346,7 @@ function buildApptMessage(a, p, lang = 'en'){
     }
     lines.push('');
     lines.push('💳 *فیس ادائیگی کے اکاؤنٹس:*');
-    lines.push('• ایزی پیسہ: 0341-5919-4040');
+    lines.push('• ایزی پیسہ: 0341-5919-404');
     lines.push('• عسکری بینک اکاؤنٹ: 03010690004748');
     lines.push('');
     lines.push('⚠️ *اہم نوٹ:* وقت کی پابندی انتہائی لازمی ہے۔ مقررہ وقت ختم ہونے کی صورت میں نیا وقت لینا ہوگا۔ براہ کرم وقت سے 10 منٹ قبل باوضو تیار رہیں۔');
@@ -7345,7 +7377,7 @@ function buildApptMessage(a, p, lang = 'en'){
     }
     lines.push('');
     lines.push('💳 *Payment Accounts:*');
-    lines.push('• EasyPaisa: 0341-5919-4040');
+    lines.push('• EasyPaisa: 0341-5919-404');
     lines.push('• Askari Bank: 03010690004748');
     lines.push('');
     lines.push('Note: Time punctuality is strictly mandatory. If the allotted time expires, a new appointment will be required. Please be in a state of Wudu 10 minutes prior.');
@@ -7358,7 +7390,7 @@ function buildApptMessage(a, p, lang = 'en'){
   return lines.join('\n');
 }
 
-// Pick the right dial code: explicit override → patient\'s country → global default
+// Pick the right dial code: explicit override → patient's country → global default
 function codeFor(country, override){
   if(override) return (''+override).replace(/[^0-9]/g,'');
   const dc=dialFor(country);
@@ -7376,68 +7408,506 @@ function waNumber(mobile, country, override){
   return d;
 }
 
-// Open the send options modal with English / Urdu toggle
+// Open the send options modal with English / Urdu toggle, conversion & image options
 function sendAppt(id){
   const a=DB.appts.find(x=>x.id===id); if(!a) return;
   const p=patientById(a.patientId); if(!p){ toast('Patient not found',true); return; }
   currentSendApptId = id;
   currentSendLang = 'en';
+  currentWaImageFile = null;
+  currentWaImageDataUrl = null;
+  currentWaImageName = '';
+  currentWaUploadedUrl = null;
+
   const msg=buildApptMessage(a,p,currentSendLang);
   const dcode=codeFor(p.country);
   const waNum=waNumber(p.mobile, p.country);
+
   const body=`
     <div class="detail-row"><div class="k">Patient</div><div class="v">${esc(p.name)}</div></div>
     <div class="detail-row"><div class="k">Mobile</div><div class="v">${esc(p.mobile)||'-'}</div></div>
     <div class="detail-row"><div class="k">Country</div><div class="v">${esc(p.country||'Pakistan')}</div></div>
     
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 0 8px;">
+    <div class="wa-ctrl-row">
       <span class="send-preview-label" style="margin:0; font-weight:700;">Message preview:</span>
-      <div style="display:inline-flex; border:1.5px solid var(--border); border-radius:18px; padding:2px; background:var(--card-muted); font-size:12px; font-weight:600;">
-        <button type="button" id="msgLangBtnEn" onclick="switchSendMsgLang('en')" style="padding:4px 12px; border-radius:14px; background:var(--green); color:#fff; border:none; cursor:pointer;">🇬🇧 English</button>
-        <button type="button" id="msgLangBtnUr" onclick="switchSendMsgLang('ur')" style="padding:4px 12px; border-radius:14px; background:transparent; color:var(--text); border:none; cursor:pointer;">🇵🇰 اردو</button>
+      <div style="display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;">
+        <div class="wa-lang-toggle">
+          <button type="button" id="msgLangBtnEn" class="wa-lang-pill active" onclick="switchSendMsgLang('en')">🇬🇧 English</button>
+          <button type="button" id="msgLangBtnUr" class="wa-lang-pill" onclick="switchSendMsgLang('ur')">🇵🇰 اردو</button>
+        </div>
+        <button type="button" id="btnTranslateMsg" onclick="convertSendMsgText()" class="btn-convert-trans" title="Convert whatever you type between English and Urdu">
+          <span id="transIcon">🔄</span> <span id="transBtnText">Convert to اردو (Urdu)</span>
+        </button>
+        <button type="button" onclick="resetSendTemplate()" class="btn-reset-tmpl" title="Restore standard appointment template">
+          ↺ Reset Template
+        </button>
       </div>
     </div>
-    <textarea id="sendMsgText" class="send-textarea" style="min-height:175px;">${esc(msg)}</textarea>
-    <p class="muted-note">Choose English or Urdu above, and edit before sending if desired. Clicking Send opens WhatsApp with this pre-filled text.</p>
+
+    <textarea id="sendMsgText" class="send-textarea" style="min-height:175px;" oninput="handleSendMsgInput()">${esc(msg)}</textarea>
+    <p class="muted-note" style="margin-top:4px; font-size:11.5px;">Type in English or Urdu freely. Click <b>Convert (English ⇄ اردو)</b> to translate what you type back and forth!</p>
+
+    <!-- WhatsApp Image Attachment Card -->
+    <div class="wa-attach-card">
+      <div class="wa-attach-header">
+        <span style="font-size:12.5px; font-weight:700; color:var(--brown-dark); display:inline-flex; align-items:center; gap:6px;">
+          🖼️ <span>Attach Image to WhatsApp (تصویر منسلک کریں)</span>
+        </span>
+        <div class="wa-attach-actions">
+          <button type="button" class="wa-attach-btn" onclick="useDefaultClinicImage()" title="Attach official SRC Clinic Logo">
+            🏥 Clinic Logo
+          </button>
+          <button type="button" class="wa-attach-btn" onclick="generateAppointmentSlipCard()" title="Generate custom appointment slip card as image">
+            🏷️ Generate Slip Card
+          </button>
+          <label for="waImageFileInput" class="wa-attach-btn" style="background:var(--green); color:#fff; border-color:var(--green); font-weight:700; cursor:pointer;">
+            📁 Upload Image
+          </label>
+          <input type="file" id="waImageFileInput" accept="image/*" style="display:none;" onchange="handleWaImageFileInput(this.files)">
+        </div>
+      </div>
+
+      <!-- Preview Box (hidden initially) -->
+      <div id="waImagePreviewBox" class="wa-preview-box" style="display:none;">
+        <img id="waImageThumb" class="wa-preview-thumb" src="" alt="Thumbnail">
+        <div style="flex:1; min-width:0;">
+          <div id="waImageName" style="font-size:12px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">image.png</div>
+          <div id="waImageSize" style="font-size:11px; color:var(--muted); margin-bottom:4px;">0 KB</div>
+          <div style="display:flex; gap:10px;">
+            <button type="button" class="wa-copy-badge" onclick="copyWaImageClipboard()">📋 Copy Image</button>
+            <button type="button" class="wa-copy-badge" style="color:var(--text);" onclick="downloadWaImage()">⬇️ Download</button>
+          </div>
+        </div>
+        <button type="button" onclick="removeWaAttachedImage()" style="background:#fee2e2; color:#b91c1c; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center;" title="Remove image">&times;</button>
+      </div>
+
+      <div id="waImagePrompt" style="font-size:11.5px; color:var(--muted); margin-top:2px;">
+        Choose an image, clinic logo, or generate an appointment slip card to send alongside this WhatsApp message.
+      </div>
+
+      <label style="display:flex; align-items:center; gap:6px; font-size:11.5px; margin-top:8px; cursor:pointer; color:var(--text);">
+        <input type="checkbox" id="waIncludeLinkChk" checked> Include public image view/download link in WhatsApp text
+      </label>
+    </div>
+
     <div class="send-btn-row">
-      <button class="btn btn-primary" onclick="doSendWhatsApp('${p.id}')">🟢 Send via WhatsApp</button>
+      <button class="btn btn-primary" id="btnDoSendWa" onclick="doSendWhatsApp('${p.id}')">🟢 Send via WhatsApp</button>
       <button class="btn btn-outline" onclick="copySendMsg()">📋 Copy Text</button>
     </div>
+
     <div class="wa-country-row">
       WhatsApp country code: <input type="text" id="waCountryInp" value="${esc(dcode)}" style="width:60px;padding:5px 8px;border:1.5px solid var(--border);border-radius:7px;text-align:center" oninput="updateWaNumPreview('${p.id}')">
       <span class="muted-note" id="waNumPreview">(number: +${esc(waNum)})</span>
     </div>`;
+
   $('sendModalBody').innerHTML=body;
   openModal('sendModal');
+  handleSendMsgInput();
 }
 
-function switchSendMsgLang(lang){
-  currentSendLang = lang;
+function handleSendMsgInput(){
+  const t=$('sendMsgText');
+  if(!t) return;
+  const text=t.value.trim();
+  const hasUrdu=/[\u0600-\u06FF]/.test(text);
+  const lbl=$('transBtnText');
+  if(lbl){
+    if(!text){
+      lbl.textContent='Convert (English ⇄ اردو)';
+    } else if(hasUrdu){
+      lbl.textContent='Convert to English (انگریزی میں)';
+    } else {
+      lbl.textContent='Convert to اردو (Urdu)';
+    }
+  }
+}
+
+async function convertSendMsgText(){
+  const t=$('sendMsgText');
+  if(!t) return;
+  const text=t.value.trim();
+  if(!text){
+    toast('Please enter or edit your message first', true);
+    return;
+  }
+  if(isTranslatingSendMsg) return;
+
+  const hasUrdu=/[\u0600-\u06FF]/.test(text);
+  const targetLang=hasUrdu ? 'en' : 'ur';
+  const sourceLang=hasUrdu ? 'ur' : 'en';
+
+  const btn=$('btnTranslateMsg');
+  const lbl=$('transBtnText');
+  const icon=$('transIcon');
+  if(btn){
+    btn.disabled=true;
+    btn.style.opacity='0.75';
+    if(lbl) lbl.textContent=(targetLang === 'ur') ? 'اردو میں ترجمہ ہو رہا ہے...' : 'Converting to English...';
+    if(icon) icon.textContent='⏳';
+  }
+  isTranslatingSendMsg=true;
+
+  try {
+    let translated='';
+    // 1. Try server proxy endpoint
+    try {
+      const res=await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text, to: targetLang, from: sourceLang })
+      });
+      if(res.ok){
+        const d=await res.json();
+        if(d && d.success && d.translatedText){
+          translated=d.translatedText;
+        }
+      }
+    } catch(err){
+      console.warn('Server translation failed, trying client fallback...', err);
+    }
+
+    // 2. Client-side fallback if server was unreachable
+    if(!translated){
+      const gtxUrl=`https://translate.googleapis.com/translate_a/single?client=dict-chrome-ex&sl=${encodeURIComponent(sourceLang)}&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(text)}`;
+      const res=await fetch(gtxUrl);
+      const json=await res.json();
+      translated=(json[0] || []).map(s => s[0]).join('');
+    }
+
+    if(translated){
+      t.value=translated;
+      currentSendLang=targetLang;
+      t.style.direction=(targetLang === 'ur') ? 'rtl' : 'ltr';
+      t.style.textAlign=(targetLang === 'ur') ? 'right' : 'left';
+      updateLangPillUI(targetLang);
+      toast(targetLang === 'ur' ? 'Converted to Urdu ✓ (اردو میں تبدیل ہوگیا)' : 'Converted to English ✓');
+    } else {
+      toast('Could not convert text. Please check connection.', true);
+    }
+  } catch(e){
+    console.error('Translation error:', e);
+    toast('Conversion error: ' + (e.message || 'Failed'), true);
+  } finally {
+    isTranslatingSendMsg=false;
+    if(btn){
+      btn.disabled=false;
+      btn.style.opacity='1';
+      if(icon) icon.textContent='🔄';
+      handleSendMsgInput();
+    }
+  }
+}
+
+function updateLangPillUI(lang){
+  const btnEn=$('msgLangBtnEn');
+  const btnUr=$('msgLangBtnUr');
+  if(!btnEn || !btnUr) return;
+  if(lang === 'ur'){
+    btnUr.className='wa-lang-pill active';
+    btnEn.className='wa-lang-pill';
+  } else {
+    btnEn.className='wa-lang-pill active';
+    btnUr.className='wa-lang-pill';
+  }
+}
+
+function resetSendTemplate(){
   if(!currentSendApptId) return;
   const a=DB.appts.find(x=>x.id===currentSendApptId); if(!a) return;
   const p=patientById(a.patientId); if(!p) return;
-  const msg=buildApptMessage(a,p,lang);
   const t=$('sendMsgText');
   if(t){
-    t.value = msg;
-    t.style.direction = (lang === 'ur') ? 'rtl' : 'ltr';
-    t.style.textAlign = (lang === 'ur') ? 'right' : 'left';
+    t.value=buildApptMessage(a, p, currentSendLang);
+    t.style.direction=(currentSendLang === 'ur') ? 'rtl' : 'ltr';
+    t.style.textAlign=(currentSendLang === 'ur') ? 'right' : 'left';
+    handleSendMsgInput();
+    toast('Template restored ✓');
   }
-  const btnEn = $('msgLangBtnEn');
-  const btnUr = $('msgLangBtnUr');
-  if(btnEn && btnUr){
-    if(lang === 'ur'){
-      btnUr.style.background = 'var(--green)';
-      btnUr.style.color = '#fff';
-      btnEn.style.background = 'transparent';
-      btnEn.style.color = 'var(--text)';
-    } else {
-      btnEn.style.background = 'var(--green)';
-      btnEn.style.color = '#fff';
-      btnUr.style.background = 'transparent';
-      btnUr.style.color = 'var(--text)';
+}
+
+function switchSendMsgLang(lang){
+  if(lang === currentSendLang) return;
+  if(!currentSendApptId) return;
+  const a=DB.appts.find(x=>x.id===currentSendApptId); if(!a) return;
+  const p=patientById(a.patientId); if(!p) return;
+  const t=$('sendMsgText');
+  if(!t) return;
+
+  const currentVal=t.value.trim();
+  const prevTemplate=buildApptMessage(a, p, currentSendLang).trim();
+
+  // If user typed custom text, auto-convert it to preserve their edits!
+  if(currentVal && currentVal !== prevTemplate){
+    convertSendMsgText();
+    return;
+  }
+
+  currentSendLang=lang;
+  t.value=buildApptMessage(a, p, lang);
+  t.style.direction=(lang === 'ur') ? 'rtl' : 'ltr';
+  t.style.textAlign=(lang === 'ur') ? 'right' : 'left';
+  updateLangPillUI(lang);
+  handleSendMsgInput();
+}
+
+function setWaAttachedImage(file, dataUrl, name){
+  currentWaImageFile=file;
+  currentWaImageDataUrl=dataUrl;
+  currentWaImageName=name || 'image.png';
+  currentWaUploadedUrl=null;
+
+  const box=$('waImagePreviewBox');
+  const thumb=$('waImageThumb');
+  const nameEl=$('waImageName');
+  const sizeEl=$('waImageSize');
+  if(box && thumb && nameEl && sizeEl){
+    thumb.src=dataUrl;
+    nameEl.textContent=currentWaImageName;
+    const kb=file.size ? Math.round(file.size / 1024) : Math.round(dataUrl.length * 0.75 / 1024);
+    sizeEl.textContent=kb + ' KB';
+    box.style.display='flex';
+  }
+  const promptEl=$('waImagePrompt');
+  if(promptEl) promptEl.style.display='none';
+
+  // Background upload to /api/upload
+  fetch('/api/upload', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filename: currentWaImageName, data: currentWaImageDataUrl })
+  }).then(r => r.json()).then(res => {
+    if(res && res.success && res.url){
+      currentWaUploadedUrl=window.location.origin + res.url;
     }
+  }).catch(e => console.warn('Background upload:', e));
+}
+
+function handleWaImageFileInput(files){
+  if(!files || !files[0]) return;
+  const file=files[0];
+  const reader=new FileReader();
+  reader.onload=e => {
+    setWaAttachedImage(file, e.target.result, file.name);
+    toast('Image attached ✓');
+  };
+  reader.readAsDataURL(file);
+}
+
+function useDefaultClinicImage(){
+  const imgUrl='/logo/src-logo.png';
+  fetch(imgUrl)
+    .then(r => r.blob())
+    .then(blob => {
+      const file=new File([blob], 'src-clinic-logo.png', { type: blob.type || 'image/png' });
+      const reader=new FileReader();
+      reader.onload=e => {
+        setWaAttachedImage(file, e.target.result, file.name);
+        toast('Clinic Logo attached ✓');
+      };
+      reader.readAsDataURL(blob);
+    })
+    .catch(err => {
+      console.error(err);
+      toast('Failed to load clinic logo', true);
+    });
+}
+
+function generateAppointmentSlipCard(){
+  if(!currentSendApptId) return;
+  const a=DB.appts.find(x=>x.id===currentSendApptId); if(!a) return;
+  const p=patientById(a.patientId); if(!p) return;
+
+  const canvas=document.createElement('canvas');
+  canvas.width=800;
+  canvas.height=520;
+  const ctx=canvas.getContext('2d');
+
+  // Deep Islamic Emerald Green Gradient
+  const grad=ctx.createLinearGradient(0,0,800,520);
+  grad.addColorStop(0, '#064e3b');
+  grad.addColorStop(0.5, '#043427');
+  grad.addColorStop(1, '#022119');
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,800,520);
+
+  // Outer Gold Border
+  ctx.strokeStyle='#d4af37';
+  ctx.lineWidth=4;
+  ctx.strokeRect(16,16,768,488);
+
+  // Inner subtle border
+  ctx.strokeStyle='rgba(212,175,55,0.35)';
+  ctx.lineWidth=1.5;
+  ctx.strokeRect(24,24,752,472);
+
+  // Header Title
+  ctx.fillStyle='#d4af37';
+  ctx.font='bold 28px sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('SHIFA-RUQIYAH CENTRE', 400, 68);
+
+  ctx.fillStyle='#a7f3d0';
+  ctx.font='15px sans-serif';
+  ctx.fillText('شفاء رقیہ سینٹر • Official Appointment Slip', 400, 96);
+
+  // Divider
+  ctx.beginPath();
+  ctx.moveTo(60, 115);
+  ctx.lineTo(740, 115);
+  ctx.strokeStyle='rgba(212,175,55,0.6)';
+  ctx.lineWidth=1.5;
+  ctx.stroke();
+
+  // Details box
+  ctx.fillStyle='rgba(255,255,255,0.06)';
+  if(ctx.roundRect) ctx.roundRect(50, 130, 700, 240, 12);
+  else ctx.fillRect(50, 130, 700, 240);
+  ctx.fill();
+
+  ctx.textAlign='left';
+  ctx.font='bold 16px sans-serif';
+
+  // Left column
+  ctx.fillStyle='#fef3c7';
+  ctx.fillText('👤 Patient Name:', 75, 172);
+  ctx.fillStyle='#ffffff';
+  ctx.fillText(p.name, 235, 172);
+
+  ctx.fillStyle='#fef3c7';
+  ctx.fillText('🆔 Patient ID:', 75, 212);
+  ctx.fillStyle='#ffffff';
+  ctx.fillText('#' + p.id, 235, 212);
+
+  ctx.fillStyle='#fef3c7';
+  ctx.fillText('📅 Date:', 75, 252);
+  ctx.fillStyle='#ffffff';
+  ctx.fillText(fmtDate(a.date), 235, 252);
+
+  ctx.fillStyle='#fef3c7';
+  ctx.fillText('⏰ Time Slot:', 75, 292);
+  ctx.fillStyle='#ffffff';
+  ctx.fillText(fmtTime(a.start) + ' - ' + fmtTime(a.end), 235, 292);
+
+  ctx.fillStyle='#fef3c7';
+  ctx.fillText('📌 Status:', 75, 332);
+  ctx.fillStyle='#34d399';
+  ctx.fillText(a.status || 'Confirmed', 235, 332);
+
+  // Right column
+  const sym=currencyFor(p.country).sym;
+  ctx.fillStyle='#fef3c7';
+  ctx.fillText('💰 Total Fee:', 450, 172);
+  ctx.fillStyle='#ffffff';
+  ctx.fillText(sym + ' ' + (a.fee||0), 585, 172);
+
+  ctx.fillStyle='#fef3c7';
+  ctx.fillText('✅ Fee Paid:', 450, 212);
+  ctx.fillStyle='#34d399';
+  ctx.fillText(sym + ' ' + (a.paid||0), 585, 212);
+
+  const bal=apptBalance(a);
+  if(bal > 0){
+    ctx.fillStyle='#fef3c7';
+    ctx.fillText('⚠ Balance Due:', 450, 252);
+    ctx.fillStyle='#f87171';
+    ctx.fillText(sym + ' ' + bal, 585, 252);
   }
+
+  // Payment footer box
+  ctx.fillStyle='rgba(0,0,0,0.35)';
+  if(ctx.roundRect) ctx.roundRect(50, 385, 700, 75, 10);
+  else ctx.fillRect(50, 385, 700, 75);
+  ctx.fill();
+
+  ctx.fillStyle='#d4af37';
+  ctx.font='bold 14px sans-serif';
+  ctx.fillText('💳 Payment Accounts:', 70, 410);
+
+  ctx.font='13px monospace';
+  ctx.fillStyle='#ffffff';
+  ctx.fillText('• EasyPaisa: 0341-5919-404   • Askari Bank: 03010690004748', 70, 432);
+
+  ctx.font='bold 13px sans-serif';
+  ctx.fillStyle='#6ee7b7';
+  ctx.fillText('📞 Helpline: 0334 9996864 (+92 334 9996864)', 70, 450);
+
+  // Watermark
+  ctx.fillStyle='rgba(255,255,255,0.4)';
+  ctx.font='11px sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('Shifa-Ruqiyah Centre • src-online.com • Generated on ' + new Date().toLocaleDateString(), 400, 485);
+
+  canvas.toBlob(blob => {
+    if(!blob) return;
+    const file=new File([blob], 'SRC-Appointment-' + p.id + '.png', { type: 'image/png' });
+    const dataUrl=canvas.toDataURL('image/png');
+    setWaAttachedImage(file, dataUrl, file.name);
+    toast('Appointment Slip Card generated ✓');
+  }, 'image/png');
+}
+
+function removeWaAttachedImage(){
+  currentWaImageFile=null;
+  currentWaImageDataUrl=null;
+  currentWaImageName='';
+  currentWaUploadedUrl=null;
+  const box=$('waImagePreviewBox');
+  if(box) box.style.display='none';
+  const promptEl=$('waImagePrompt');
+  if(promptEl) promptEl.style.display='block';
+  const inp=$('waImageFileInput');
+  if(inp) inp.value='';
+  toast('Image removed');
+}
+
+function convertImageToPngBlob(dataUrl){
+  return new Promise((resolve, reject) => {
+    const img=new Image();
+    img.crossOrigin='anonymous';
+    img.onload=() => {
+      const c=document.createElement('canvas');
+      c.width=img.naturalWidth || img.width;
+      c.height=img.naturalHeight || img.height;
+      const ctx=c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      c.toBlob(b => {
+        if(b) resolve(b);
+        else reject(new Error('Canvas conversion failed'));
+      }, 'image/png');
+    };
+    img.onerror=() => reject(new Error('Failed to load image for conversion'));
+    img.src=dataUrl;
+  });
+}
+
+async function copyWaImageClipboard(){
+  if(!currentWaImageDataUrl){
+    toast('No image attached to copy', true);
+    return;
+  }
+  try {
+    const blob=await convertImageToPngBlob(currentWaImageDataUrl);
+    if(navigator.clipboard && window.ClipboardItem){
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+      toast('Image copied to clipboard ✓');
+    } else {
+      toast('Clipboard image copy not supported in this browser', true);
+    }
+  } catch(err){
+    console.error('Clipboard copy error:', err);
+    toast('Failed to copy image: ' + err.message, true);
+  }
+}
+
+function downloadWaImage(){
+  if(!currentWaImageDataUrl) return;
+  const a=document.createElement('a');
+  a.href=currentWaImageDataUrl;
+  a.download=currentWaImageName || 'whatsapp-image.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  toast('Downloading image...');
 }
 
 function updateWaNumPreview(pid){
@@ -7448,12 +7918,76 @@ function updateWaNumPreview(pid){
 
 function currentSendMsg(){ const t=$('sendMsgText'); return t?t.value:''; }
 
-function doSendWhatsApp(pid){
+async function doSendWhatsApp(pid){
   const p=patientById(pid); if(!p) return;
   if(!p.mobile){ toast('No mobile number for this patient',true); return; }
   const ov=$('waCountryInp')?$('waCountryInp').value:'';
   const num=waNumber(p.mobile, p.country, ov);
-  const url='https://wa.me/'+num+'?text='+encodeURIComponent(currentSendMsg());
+  let text=currentSendMsg();
+
+  // If image is attached
+  if(currentWaImageFile){
+    const btn=$('btnDoSendWa');
+    if(btn){ btn.disabled=true; btn.textContent='⏳ Preparing WhatsApp...'; }
+
+    // Upload to server if not uploaded yet
+    if(!currentWaUploadedUrl && currentWaImageDataUrl){
+      try {
+        const upRes=await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: currentWaImageName || 'appointment-card.png', data: currentWaImageDataUrl })
+        });
+        if(upRes.ok){
+          const upData=await upRes.json();
+          if(upData && upData.url){
+            currentWaUploadedUrl=window.location.origin + upData.url;
+          }
+        }
+      } catch(e){
+        console.warn('Upload error:', e);
+      }
+    }
+
+    const includeLinkChk=$('waIncludeLinkChk');
+    const shouldIncludeLink=includeLinkChk ? includeLinkChk.checked : true;
+    if(shouldIncludeLink && currentWaUploadedUrl && !text.includes(currentWaUploadedUrl)){
+      text=text + '\n\n📷 *Appointment Slip / Card:* ' + currentWaUploadedUrl;
+      const t=$('sendMsgText');
+      if(t) t.value=text;
+    }
+
+    if(btn){ btn.disabled=false; btn.textContent='🟢 Send via WhatsApp'; }
+
+    // Try Web Share API with files (Android / iOS native WhatsApp share)
+    if(navigator.canShare && navigator.canShare({ files: [currentWaImageFile] })){
+      try {
+        await navigator.share({
+          title: 'SRC Appointment - ' + p.name,
+          text: text,
+          files: [currentWaImageFile]
+        });
+        toast('Shared via WhatsApp ✓');
+        return;
+      } catch(shareErr){
+        if(shareErr.name === 'AbortError') return;
+        console.warn('Web Share failed, falling back to wa.me URL:', shareErr);
+      }
+    }
+
+    // Desktop fallback: copy image to clipboard automatically!
+    try {
+      const pngBlob=await convertImageToPngBlob(currentWaImageDataUrl);
+      if(navigator.clipboard && window.ClipboardItem){
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlob })]);
+        toast('📋 Image copied to clipboard! Paste (Ctrl+V) in WhatsApp ✓', false, 5000);
+      }
+    } catch(clipErr){
+      console.warn('Clipboard write image failed:', clipErr);
+    }
+  }
+
+  const url='https://wa.me/'+num+'?text='+encodeURIComponent(text);
   window.open(url,'_blank');
   toast('Opening WhatsApp...');
 }
