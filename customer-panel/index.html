@@ -99,6 +99,7 @@
  .brand-wrap {
  display: flex; align-items: center; gap: 14px;
  text-decoration: none; color: inherit;
+ white-space: nowrap;
  }
  .brand-logo-frame {
  width: 92px; height: 92px; border-radius: 50%;
@@ -118,8 +119,9 @@
  }
  .brand-titles h1 {
  font-family: 'Cinzel', serif;
- font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em;
+ font-size: 1.2rem; font-weight: 800; letter-spacing: 0.03em;
  color: var(--brown-dark); line-height: 1.15;
+ white-space: nowrap !important;
  }
  .brand-titles p {
  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
@@ -1078,11 +1080,11 @@
       border-width: 2.5px;
     }
     .brand-titles h1 {
-      font-size: 0.8rem;
-      letter-spacing: 0.02em;
-      white-space: normal;
-      line-height: 1.1;
-      font-weight: 800;
+      font-size: clamp(0.72rem, 3.4vw, 0.95rem) !important;
+      letter-spacing: 0.02em !important;
+      white-space: nowrap !important;
+      line-height: 1.15 !important;
+      font-weight: 800 !important;
     }
     .brand-titles p {
       font-size: 0.6rem;

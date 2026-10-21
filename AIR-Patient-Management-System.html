@@ -165,10 +165,10 @@
     -webkit-user-drag:none;
   }
   header.app-header .header-top-row{
-    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    display:flex;align-items:center;gap:10px;flex-wrap:nowrap;white-space:nowrap;
   }
   header.app-header h1{
-    font-size:20px;font-weight:800;color:var(--brown-dark);letter-spacing:.4px;line-height:1.2;
+    font-size:20px;font-weight:800;color:var(--brown-dark);letter-spacing:.4px;line-height:1.2;white-space:nowrap;
   }
   .admin-pill{
     display:inline-flex;align-items:center;gap:5px;
@@ -603,9 +603,10 @@
     }
     header.app-header .header-top-row {
       display: flex !important;
-      flex-direction: column !important;
-      align-items: flex-start !important;
-      gap: 2px !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 6px !important;
+      white-space: nowrap !important;
       min-width: 0 !important;
     }
     header.app-header h1 {
@@ -2260,7 +2261,7 @@
     .logo-smoke-container{width:64px;height:64px;flex:0 0 64px}
     .logo-orb{width:60px;height:60px}
     .smoke-canvas{width:160px;height:160px}
-    header.app-header h1{font-size:16px}
+    header.app-header h1{font-size:16px;white-space:nowrap}
     header.app-header .clock{display:none}
     nav.tabs{top:66px}
   }
