@@ -2479,8 +2479,9 @@ html[lang="ur"] .adhkar-filter-pill {
    if(!id) return false;
    const s = String(id).trim();
    const clean = s.replace(/^0+/, '') || '0';
-   const padded = s.padStart(4, '0');
-   return DELETED_PATIENT_IDS.has(s) || DELETED_PATIENT_IDS.has(clean) || DELETED_PATIENT_IDS.has(padded);
+   const padded4 = s.padStart(4, '0');
+   const padded3 = s.padStart(3, '0');
+   return DELETED_PATIENT_IDS.has(s) || DELETED_PATIENT_IDS.has(clean) || DELETED_PATIENT_IDS.has(padded4) || DELETED_PATIENT_IDS.has(padded3);
  }
 
  const DB = {
@@ -2488,6 +2489,13 @@ html[lang="ur"] .adhkar-filter-pill {
    appts: JSON.parse(localStorage.getItem('air_appts') || '[]').filter(a => !isPatientDeleted(a.patientId)),
    counter: parseInt(localStorage.getItem('air_counter') || '0', 10)
  };
+
+ // Reset counter to 001 if not yet reset on this client
+ if(!localStorage.getItem('air_counter_reset_001')){
+   localStorage.setItem('air_counter_reset_001', 'true');
+   localStorage.setItem('air_counter', '0');
+   DB.counter = 0;
+ }
 
  function saveDB() {
    localStorage.setItem('air_patients', JSON.stringify(DB.patients));
@@ -2526,7 +2534,14 @@ html[lang="ur"] .adhkar-filter-pill {
          if(Array.isArray(data.patients)) {
            DB.patients = data.patients.filter(p => !isPatientDeleted(p.id));
          }
-         if(data.counter > DB.counter) DB.counter = data.counter;
+         if(typeof data.counter === 'number'){
+           if(DB.patients.length === 0){
+             DB.counter = data.counter;
+           } else {
+             const maxId = DB.patients.reduce((m, p) => Math.max(m, parseInt(p.id, 10) || 0), 0);
+             DB.counter = Math.max(data.counter, maxId);
+           }
+         }
          localStorage.setItem('air_patients', JSON.stringify(DB.patients));
          localStorage.setItem('air_appts', JSON.stringify(DB.appts));
          localStorage.setItem('air_counter', String(DB.counter));
@@ -2552,7 +2567,14 @@ html[lang="ur"] .adhkar-filter-pill {
          if(Array.isArray(data.patients)) {
            DB.patients = data.patients.filter(p => !isPatientDeleted(p.id));
          }
-         if(data.counter > DB.counter) DB.counter = data.counter;
+         if(typeof data.counter === 'number'){
+           if(DB.patients.length === 0){
+             DB.counter = data.counter;
+           } else {
+             const maxId = DB.patients.reduce((m, p) => Math.max(m, parseInt(p.id, 10) || 0), 0);
+             DB.counter = Math.max(data.counter, maxId);
+           }
+         }
          localStorage.setItem('air_patients', JSON.stringify(DB.patients));
          localStorage.setItem('air_appts', JSON.stringify(DB.appts));
          localStorage.setItem('air_counter', String(DB.counter));
@@ -3535,7 +3557,7 @@ function initCountryComponents(){
  let p = DB.patients.find(x => x.mobile.replace(/\D/g,'') === mobile.replace(/\D/g,''));
  if(!p){
    DB.counter++;
-   const newId = String(DB.counter).padStart(4,'0');
+   const newId = String(DB.counter).padStart(3,'0');
    p = {
      id: newId,
      name: name,

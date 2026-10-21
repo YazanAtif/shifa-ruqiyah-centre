@@ -5269,7 +5269,8 @@ function isPatientDeleted(id){
   const s = String(id).trim();
   const clean = s.replace(/^0+/, '') || '0';
   const padded = s.padStart(4, '0');
-  return DELETED_PATIENT_IDS.has(s) || DELETED_PATIENT_IDS.has(clean) || DELETED_PATIENT_IDS.has(padded);
+  const padded3 = s.padStart(3, '0');
+  return DELETED_PATIENT_IDS.has(s) || DELETED_PATIENT_IDS.has(clean) || DELETED_PATIENT_IDS.has(padded) || DELETED_PATIENT_IDS.has(padded3);
 }
 
 const DB = {
@@ -5277,6 +5278,13 @@ const DB = {
   appts: JSON.parse(localStorage.getItem('air_appts') || '[]').filter(a => !isPatientDeleted(a.patientId)),
   counter: parseInt(localStorage.getItem('air_counter') || '0', 10)
 };
+
+// Reset counter to 001 if not yet reset on this client
+if(!localStorage.getItem('air_counter_reset_001')){
+  localStorage.setItem('air_counter_reset_001', 'true');
+  localStorage.setItem('air_counter', '0');
+  DB.counter = 0;
+}
 // Migrate older appointments (from before dates were removed) so ordering stays stable
 (function migrate(){
   let seq=1, changed=false;
@@ -5317,7 +5325,14 @@ async function syncDBWithServer(){
         if(Array.isArray(data.appts)){
           DB.appts = data.appts.filter(a => !isPatientDeleted(a.patientId));
         }
-        if(data.counter > DB.counter) DB.counter = data.counter;
+        if(typeof data.counter === 'number'){
+          if(DB.patients.length === 0){
+            DB.counter = data.counter;
+          } else {
+            const maxId = DB.patients.reduce((m, p) => Math.max(m, parseInt(p.id, 10) || 0), 0);
+            DB.counter = Math.max(data.counter, maxId);
+          }
+        }
         localStorage.setItem('air_patients', JSON.stringify(DB.patients));
         localStorage.setItem('air_appts', JSON.stringify(DB.appts));
         localStorage.setItem('air_counter', String(DB.counter));
@@ -5348,7 +5363,14 @@ async function loadDBFromServer(silent = false){
         }
         DB.patients = validPatients;
         DB.appts = validAppts;
-        DB.counter = Math.max(data.counter || 0, DB.counter || 0, DB.patients.length);
+        if(typeof data.counter === 'number'){
+          if(validPatients.length === 0){
+            DB.counter = data.counter;
+          } else {
+            const maxId = validPatients.reduce((m, p) => Math.max(m, parseInt(p.id, 10) || 0), 0);
+            DB.counter = Math.max(data.counter, maxId);
+          }
+        }
         localStorage.setItem('air_patients', JSON.stringify(DB.patients));
         localStorage.setItem('air_appts', JSON.stringify(DB.appts));
         localStorage.setItem('air_counter', String(DB.counter));
@@ -5384,13 +5406,14 @@ function todayISO(){ return dateToISO(new Date()); }
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function fmtDate(iso){ if(!iso) return ''; const p=iso.split('-'); if(p.length!==3) return iso; return parseInt(p[2])+' '+MONTHS[parseInt(p[1])-1]+' '+p[0]; }
 function fmtTime(t){ if(!t) return ''; let [h,m]=t.split(':').map(Number); const ap=h>=12?'PM':'AM'; h=h%12||12; return h+':'+String(m).padStart(2,'0')+' '+ap; }
-function nextId(){ DB.counter++; return String(DB.counter).padStart(4,'0'); }
+function nextId(){ DB.counter++; return String(DB.counter).padStart(3,'0'); }
 function patientById(id){
   if(id == null) return null;
   const s = String(id).trim();
   const clean = s.replace(/^0+/, '') || '0';
   const padded = s.padStart(4, '0');
-  return DB.patients.find(p => String(p.id) === s || String(p.id) === clean || String(p.id) === padded);
+  const padded3 = s.padStart(3, '0');
+  return DB.patients.find(p => String(p.id) === s || String(p.id) === clean || String(p.id) === padded || String(p.id) === padded3);
 }
 function badge(status){ const c={Pending:'b-pending','Pending Verification':'b-pending',Confirmed:'b-confirmed',Completed:'b-completed',Cancelled:'b-cancelled'}[status]||'b-pending'; return '<span class="badge '+c+'">'+esc(status)+'</span>'; }
 

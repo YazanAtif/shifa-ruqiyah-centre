@@ -224,6 +224,12 @@ const server = http.createServer(async (req, res) => {
       });
     }
 
+    // 0. RESET COUNTER ENDPOINT
+    if (req.method === 'POST' && pathname === '/api/reset-counter') {
+      await pool.query("INSERT INTO settings (key, value) VALUES ('counter', '0') ON CONFLICT (key) DO UPDATE SET value = '0'");
+      return sendJson(res, 200, { success: true, counter: 0 });
+    }
+
     // 1. GET FULL DATA
     if (req.method === 'GET' && (pathname === '/api/data' || pathname === '/api/sync')) {
       const pRes = await pool.query('SELECT id, name, mobile, country, dob, notes FROM patients ORDER BY id ASC');
@@ -235,12 +241,11 @@ const server = http.createServer(async (req, res) => {
       let counter = 0;
       if (cRes.rows.length > 0) {
         counter = parseInt(cRes.rows[0].value, 10) || 0;
-      } else {
-        pRes.rows.forEach(p => {
-          const num = parseInt(p.id, 10);
-          if (!isNaN(num) && num > counter) counter = num;
-        });
       }
+      pRes.rows.forEach(p => {
+        const num = parseInt(p.id, 10);
+        if (!isNaN(num) && num > counter) counter = num;
+      });
 
       return sendJson(res, 200, {
         success: true,
@@ -276,8 +281,9 @@ const server = http.createServer(async (req, res) => {
           updated_at = NOW()
         RETURNING id, name, mobile, country, dob, notes;
       `;
+      const pidStr = String(p.id).padStart(3, '0');
       const result = await pool.query(q, [
-        String(p.id).padStart(4, '0'),
+        pidStr,
         p.name,
         p.mobile || '',
         p.country || '92',
@@ -297,7 +303,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       // If re-registering an ID, remove from blacklist
-      await pool.query('DELETE FROM deleted_patients WHERE id = $1 OR id = $2', [String(p.id), String(p.id).padStart(4, '0')]);
+      await pool.query('DELETE FROM deleted_patients WHERE id = $1 OR id = $2 OR id = $3', [String(p.id), String(p.id).padStart(4, '0'), pidStr]);
 
       return sendJson(res, 200, { success: true, patient: result.rows[0] });
     }
@@ -416,7 +422,8 @@ const server = http.createServer(async (req, res) => {
           const pId = String(p.id).trim();
           const cleanId = pId.replace(/^0+/, '') || '0';
           const paddedId = pId.padStart(4, '0');
-          if (deletedSet.has(pId) || deletedSet.has(cleanId) || deletedSet.has(paddedId)) {
+          const padded3 = pId.padStart(3, '0');
+          if (deletedSet.has(pId) || deletedSet.has(cleanId) || deletedSet.has(paddedId) || deletedSet.has(padded3)) {
             continue; // Skip resurrecting deleted patient!
           }
 
@@ -430,14 +437,15 @@ const server = http.createServer(async (req, res) => {
               dob = EXCLUDED.dob,
               notes = EXCLUDED.notes,
               updated_at = NOW();
-          `, [paddedId, p.name, p.mobile || '', p.country || '92', p.dob || '', p.notes || '']);
+          `, [padded3, p.name, p.mobile || '', p.country || '92', p.dob || '', p.notes || '']);
         }
 
         for (const a of appts) {
           const aPid = String(a.patientId).trim();
           const aClean = aPid.replace(/^0+/, '') || '0';
           const aPadded = aPid.padStart(4, '0');
-          if (deletedSet.has(aPid) || deletedSet.has(aClean) || deletedSet.has(aPadded)) {
+          const aPadded3 = aPid.padStart(3, '0');
+          if (deletedSet.has(aPid) || deletedSet.has(aClean) || deletedSet.has(aPadded) || deletedSet.has(aPadded3)) {
             continue; // Skip resurrecting appointments of deleted patient!
           }
 
@@ -457,7 +465,7 @@ const server = http.createServer(async (req, res) => {
               updated_at = NOW();
           `, [
             a.id,
-            aPadded,
+            aPadded3,
             a.date,
             a.start || '10:00',
             a.end || '11:00',
@@ -470,13 +478,24 @@ const server = http.createServer(async (req, res) => {
           ]);
         }
 
-        if (counter > 0) {
+        let maxPid = 0;
+        for (const p of patients) {
+          const pId = String(p.id).trim();
+          const cleanId = pId.replace(/^0+/, '') || '0';
+          const paddedId = pId.padStart(4, '0');
+          const padded3 = pId.padStart(3, '0');
+          if (deletedSet.has(pId) || deletedSet.has(cleanId) || deletedSet.has(paddedId) || deletedSet.has(padded3)) continue;
+          const num = parseInt(p.id, 10);
+          if (!isNaN(num) && num > maxPid) maxPid = num;
+        }
+
+        if (maxPid > 0) {
           await client.query(`
             INSERT INTO settings (key, value)
             VALUES ('counter', $1)
             ON CONFLICT (key) DO UPDATE SET
               value = GREATEST(CAST(settings.value AS INTEGER), EXCLUDED.value::INTEGER)::TEXT;
-          `, [String(counter)]);
+          `, [String(maxPid)]);
         }
 
         await client.query('COMMIT');
@@ -491,11 +510,13 @@ const server = http.createServer(async (req, res) => {
       const pRes = await pool.query('SELECT id, name, mobile, country, dob, notes FROM patients ORDER BY id ASC');
       const aRes = await pool.query('SELECT id, patient_id as "patientId", date, start_time as start, end_time as "end", status, fee, paid, pay_method as "payMethod", notes, created FROM appointments ORDER BY created DESC, date DESC');
       const finalDRes = await pool.query('SELECT id FROM deleted_patients');
+      const cRes = await pool.query("SELECT value FROM settings WHERE key = 'counter'");
+      const finalCounter = cRes.rows.length > 0 ? (parseInt(cRes.rows[0].value, 10) || 0) : 0;
       return sendJson(res, 200, {
         success: true,
         patients: pRes.rows,
         appts: aRes.rows,
-        counter,
+        counter: finalCounter,
         deletedPatientIds: finalDRes.rows.map(r => r.id)
       });
     }
