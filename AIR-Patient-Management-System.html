@@ -1125,32 +1125,69 @@
   }
   .wa-country-row input:focus{outline:none;border-color:var(--brown);box-shadow:0 0 0 3px rgba(124,83,57,.14)}
 
-  /* Enhanced WhatsApp Send Controls */
-  .wa-ctrl-row{display:flex;justify-content:space-between;align-items:center;margin:12px 0 8px;flex-wrap:wrap;gap:8px}
-  .wa-lang-toggle{display:inline-flex;border:1.5px solid var(--border);border-radius:18px;padding:2px;background:var(--card-muted);font-size:12px;font-weight:600}
-  .wa-lang-pill{padding:4px 12px;border-radius:14px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s}
-  .wa-lang-pill.active{background:var(--green);color:#fff}
-  .wa-lang-pill:not(.active){background:transparent;color:var(--text)}
-  .btn-convert-trans{
-    display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg, #128c7e, #075e54);
-    color:#fff!important;border:none;border-radius:16px;padding:5px 12px;font-size:12px;font-weight:700;
-    cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.12);transition:all .2s;
+  /* Enhanced WhatsApp Send & Image Studio Controls */
+  .wa-panel-header{display:flex;justify-content:space-between;align-items:center;margin:12px 0 8px;flex-wrap:wrap;gap:8px}
+  .wa-tmpl-switch{display:inline-flex;align-items:center;gap:6px;background:var(--card-muted);padding:3px 6px;border-radius:20px;border:1.5px solid var(--border)}
+  .wa-tmpl-btn{padding:5px 12px;border-radius:15px;border:none;cursor:pointer;font-size:12px;font-weight:700;transition:all .18s;background:transparent;color:var(--text)}
+  .wa-tmpl-btn.active{background:var(--green);color:#ffffff;box-shadow:0 2px 6px rgba(46,125,50,0.25)}
+  .wa-trans-action-btn{
+    display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg, #059669, #047857);
+    color:#ffffff!important;border:none;border-radius:18px;padding:6px 14px;font-size:12px;font-weight:700;
+    cursor:pointer;box-shadow:0 2px 7px rgba(5,150,105,0.3);transition:all .2s;
   }
-  .btn-convert-trans:hover{background:linear-gradient(135deg, #075e54, #043d37);transform:translateY(-1px)}
-  .btn-convert-trans:active{transform:translateY(0)}
-  .btn-reset-tmpl{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:14px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer}
-  .btn-reset-tmpl:hover{color:var(--brown);border-color:var(--brown)}
+  .wa-trans-action-btn:hover{background:linear-gradient(135deg, #047857, #065f46);transform:translateY(-1px);box-shadow:0 4px 12px rgba(5,150,105,0.4)}
+  .wa-trans-action-btn:active{transform:translateY(0)}
+  .wa-spin-icon{display:inline-block;transition:transform 0.4s ease}
+  .wa-spinning{animation:waSpin 0.7s linear infinite}
+  @keyframes waSpin{100%{transform:rotate(360deg)}}
+
+  .send-textarea{
+    width:100%;min-height:190px;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;
+    font-family:inherit;font-size:13px;line-height:1.6;background:#ffffff;resize:vertical;color:var(--text);
+    box-sizing:border-box;transition:border-color .15s,box-shadow .15s,direction .15s,opacity .15s;
+  }
+  .send-textarea.is-urdu{
+    direction:rtl!important;text-align:right!important;
+    font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',Tahoma,sans-serif!important;
+    line-height:1.9!important;font-size:14px!important;
+  }
+  .send-textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(46,125,50,0.15)}
+
+  /* Drag & Drop Image Attachment Studio */
   .wa-attach-card{
-    margin:12px 0;padding:12px 14px;border:1.5px dashed var(--border);border-radius:12px;background:var(--card-muted);
+    margin:12px 0;padding:12px 14px;border:2px dashed var(--border);border-radius:12px;
+    background:#faf8f5;transition:all .2s;
   }
-  .wa-attach-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .wa-attach-card.dragover{
+    border-color:var(--green);background:#f0fdf4;box-shadow:0 0 0 4px rgba(34,197,94,0.15);
+  }
+  .wa-attach-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px}
   .wa-attach-actions{display:inline-flex;flex-wrap:wrap;gap:6px}
-  .wa-attach-btn{font-size:11px;padding:4px 9px;border-radius:12px;border:1px solid var(--border);background:#fff;cursor:pointer;color:var(--text);font-weight:600}
-  .wa-attach-btn:hover{background:#f5f0ea;border-color:var(--brown)}
-  .wa-preview-box{display:flex;align-items:center;gap:12px;background:#fff;padding:8px 12px;border-radius:8px;border:1px solid var(--border);margin-top:8px}
-  .wa-preview-thumb{width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(--border);background:#fafafa}
-  .wa-copy-badge{font-size:11px;color:#128c7e;font-weight:700;cursor:pointer;background:transparent;border:none;padding:0}
-  .wa-copy-badge:hover{text-decoration:underline}
+  .wa-btn-chip{
+    font-size:11.5px;padding:4px 10px;border-radius:12px;border:1px solid var(--border);
+    background:#ffffff;cursor:pointer;color:var(--text);font-weight:600;display:inline-flex;align-items:center;gap:4px;
+    transition:all .15s;
+  }
+  .wa-btn-chip:hover{background:#f4eee7;border-color:var(--brown);color:var(--brown-dark)}
+  .wa-btn-chip.primary{background:var(--green);color:#fff;border-color:var(--green)}
+  .wa-btn-chip.primary:hover{background:var(--green-dark);border-color:var(--green-dark);color:#fff}
+
+  .wa-preview-box{
+    display:flex;align-items:center;gap:12px;background:#ffffff;padding:10px 14px;
+    border-radius:10px;border:1.5px solid rgba(46,125,50,0.25);margin-top:8px;box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  }
+  .wa-preview-thumb{
+    width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid var(--border);
+    background:#f8fafc;box-shadow:0 2px 4px rgba(0,0,0,0.06);cursor:pointer;
+  }
+  .wa-badge-ready{
+    display:inline-flex;align-items:center;gap:4px;background:#ecfdf5;color:#047857;
+    font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:2px;
+  }
+  .wa-badge-default{
+    display:inline-flex;align-items:center;gap:4px;background:#fef3c7;color:#b45309;
+    font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:2px;
+  }
   /* ---------- Table ---------- */
   .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(61,40,29,.03)}
   table{width:100%;border-collapse:collapse;background:var(--card);font-size:13.5px}
@@ -7409,15 +7446,36 @@ function waNumber(mobile, country, override){
 }
 
 // Open the send options modal with English / Urdu toggle, conversion & image options
+let currentWaIsDefault = false;
+
 function sendAppt(id){
   const a=DB.appts.find(x=>x.id===id); if(!a) return;
   const p=patientById(a.patientId); if(!p){ toast('Patient not found',true); return; }
   currentSendApptId = id;
   currentSendLang = 'en';
+
   currentWaImageFile = null;
   currentWaImageDataUrl = null;
   currentWaImageName = '';
   currentWaUploadedUrl = null;
+  currentWaIsDefault = false;
+
+  // Restore saved default WhatsApp image if user previously marked one
+  const savedDef = localStorage.getItem('src_default_wa_image');
+  let hasDefault = false;
+  if(savedDef){
+    try {
+      const defObj = JSON.parse(savedDef);
+      if(defObj && defObj.dataUrl){
+        currentWaImageDataUrl = defObj.dataUrl;
+        currentWaImageName = defObj.name || 'default-whatsapp-image.png';
+        currentWaUploadedUrl = defObj.uploadedUrl || null;
+        currentWaIsDefault = true;
+        hasDefault = true;
+        fetch(defObj.dataUrl).then(r=>r.blob()).then(b=>{ currentWaImageFile=b; }).catch(e=>console.warn(e));
+      }
+    } catch(e){ console.warn(e); }
+  }
 
   const msg=buildApptMessage(a,p,currentSendLang);
   const dcode=codeFor(p.country);
@@ -7428,61 +7486,73 @@ function sendAppt(id){
     <div class="detail-row"><div class="k">Mobile</div><div class="v">${esc(p.mobile)||'-'}</div></div>
     <div class="detail-row"><div class="k">Country</div><div class="v">${esc(p.country||'Pakistan')}</div></div>
     
-    <div class="wa-ctrl-row">
-      <span class="send-preview-label" style="margin:0; font-weight:700;">Message preview:</span>
-      <div style="display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;">
-        <div class="wa-lang-toggle">
-          <button type="button" id="msgLangBtnEn" class="wa-lang-pill active" onclick="switchSendMsgLang('en')">🇬🇧 English</button>
-          <button type="button" id="msgLangBtnUr" class="wa-lang-pill" onclick="switchSendMsgLang('ur')">🇵🇰 اردو</button>
-        </div>
-        <button type="button" id="btnTranslateMsg" onclick="convertSendMsgText()" class="btn-convert-trans" title="Convert whatever you type between English and Urdu">
-          <span id="transIcon">🔄</span> <span id="transBtnText">Convert to اردو (Urdu)</span>
+    <div class="wa-panel-header">
+      <div class="wa-tmpl-switch">
+        <span style="font-size:11.5px; font-weight:700; color:var(--brown-dark); margin-right:2px;">Template:</span>
+        <button type="button" id="btnTmplEn" class="wa-tmpl-btn active" onclick="loadApptTemplate('en')" title="Load pristine English template">🇬🇧 English</button>
+        <button type="button" id="btnTmplUr" class="wa-tmpl-btn" onclick="loadApptTemplate('ur')" title="Load pristine authentic Urdu template">🇵🇰 اردو</button>
+      </div>
+
+      <div style="display:inline-flex; align-items:center; gap:6px;">
+        <button type="button" id="btnTransLive" class="wa-trans-action-btn" onclick="executeTranslation()" title="Convert whatever you type in English into Urdu, or vice versa">
+          <span id="transSpin" class="wa-spin-icon">🔄</span>
+          <span id="transText">Convert to اردو (Urdu)</span>
         </button>
-        <button type="button" onclick="resetSendTemplate()" class="btn-reset-tmpl" title="Restore standard appointment template">
-          ↺ Reset Template
-        </button>
+        <button type="button" class="wa-btn-chip" onclick="executeTranslationSwap()" title="Swap target language">⇄ Swap</button>
+        <button type="button" class="wa-btn-chip" onclick="resetCurrentSendTemplate()" title="Reset back to standard template">↺ Reset</button>
       </div>
     </div>
 
-    <textarea id="sendMsgText" class="send-textarea" style="min-height:175px;" oninput="handleSendMsgInput()">${esc(msg)}</textarea>
-    <p class="muted-note" style="margin-top:4px; font-size:11.5px;">Type in English or Urdu freely. Click <b>Convert (English ⇄ اردو)</b> to translate what you type back and forth!</p>
+    <textarea id="sendMsgText" class="send-textarea" style="min-height:175px;" oninput="handleSendMsgInput()" placeholder="Type or edit your WhatsApp appointment message here...">${esc(msg)}</textarea>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+      <span class="muted-note" style="font-size:11.5px;">Type in English or Urdu freely. Click <b>Convert to اردو</b> to translate instantly!</span>
+      <span id="transStatusIndicator" style="font-size:11px; font-weight:600; color:var(--muted);"></span>
+    </div>
 
-    <!-- WhatsApp Image Attachment Card -->
-    <div class="wa-attach-card">
+    <!-- WhatsApp Image Attachment Card / Drag & Drop Studio -->
+    <div class="wa-attach-card" id="waAttachCard">
       <div class="wa-attach-header">
         <span style="font-size:12.5px; font-weight:700; color:var(--brown-dark); display:inline-flex; align-items:center; gap:6px;">
-          🖼️ <span>Attach Image to WhatsApp (تصویر منسلک کریں)</span>
+          🖼️ <span>Attach WhatsApp Image (تصویر منسلک کریں)</span>
         </span>
         <div class="wa-attach-actions">
-          <button type="button" class="wa-attach-btn" onclick="useDefaultClinicImage()" title="Attach official SRC Clinic Logo">
+          <button type="button" class="wa-btn-chip" onclick="useDefaultClinicImage()" title="Attach official SRC Clinic Logo">
             🏥 Clinic Logo
           </button>
-          <button type="button" class="wa-attach-btn" onclick="generateAppointmentSlipCard()" title="Generate custom appointment slip card as image">
+          <button type="button" class="wa-btn-chip" onclick="generateAppointmentSlipCard()" title="Generate custom branded appointment slip voucher card as image">
             🏷️ Generate Slip Card
           </button>
-          <label for="waImageFileInput" class="wa-attach-btn" style="background:var(--green); color:#fff; border-color:var(--green); font-weight:700; cursor:pointer;">
-            📁 Upload Image
+          <label for="waImageFileInput" class="wa-btn-chip primary" style="cursor:pointer;" title="Choose an image file from your device">
+            📁 Choose Image
           </label>
-          <input type="file" id="waImageFileInput" accept="image/*" style="display:none;" onchange="handleWaImageFileInput(this.files)">
+          <input type="file" id="waImageFileInput" accept="image/*" style="display:none;" onclick="this.value=''" onchange="handleWaImageFileInput(this.files)">
         </div>
       </div>
 
-      <!-- Preview Box (hidden initially) -->
-      <div id="waImagePreviewBox" class="wa-preview-box" style="display:none;">
-        <img id="waImageThumb" class="wa-preview-thumb" src="" alt="Thumbnail">
+      <!-- Preview Box -->
+      <div id="waImagePreviewBox" class="wa-preview-box" style="${hasDefault ? 'display:flex;' : 'display:none;'}">
+        <img id="waImageThumb" class="wa-preview-thumb" src="${hasDefault ? esc(currentWaImageDataUrl) : ''}" alt="Thumbnail" onclick="window.open(this.src,'_blank')" title="Click to view full image">
         <div style="flex:1; min-width:0;">
-          <div id="waImageName" style="font-size:12px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">image.png</div>
-          <div id="waImageSize" style="font-size:11px; color:var(--muted); margin-bottom:4px;">0 KB</div>
-          <div style="display:flex; gap:10px;">
-            <button type="button" class="wa-copy-badge" onclick="copyWaImageClipboard()">📋 Copy Image</button>
-            <button type="button" class="wa-copy-badge" style="color:var(--text);" onclick="downloadWaImage()">⬇️ Download</button>
+          <div id="waImageName" style="font-size:12.5px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${hasDefault ? esc(currentWaImageName) : 'image.png'}</div>
+          <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">
+            <span id="waImageSize" style="font-size:11px; color:var(--muted);">${hasDefault ? 'Saved' : '0 KB'}</span>
+            <span id="waImageBadgeWrap">
+              ${hasDefault ? '<span class="wa-badge-default">⭐ Default WhatsApp Image</span>' : '<span class="wa-badge-ready">🟢 Ready to Send</span>'}
+            </span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; margin-top:6px; flex-wrap:wrap;">
+            <button type="button" class="wa-copy-badge" onclick="copyWaImageClipboard(false)" style="font-size:11px; color:#128c7e; font-weight:700; background:transparent; border:none; cursor:pointer; padding:0;">📋 Copy Image (Ctrl+V)</button>
+            <button type="button" class="wa-copy-badge" onclick="downloadWaImage()" style="font-size:11px; color:var(--text); font-weight:600; background:transparent; border:none; cursor:pointer; padding:0;">⬇️ Download</button>
+            <button type="button" id="btnToggleDefaultWa" onclick="toggleDefaultWaImage()" style="font-size:11px; color:#d97706; font-weight:700; background:transparent; border:none; cursor:pointer; padding:0;">
+              ${hasDefault ? '★ Remove as Default' : '⭐ Set as Default'}
+            </button>
           </div>
         </div>
-        <button type="button" onclick="removeWaAttachedImage()" style="background:#fee2e2; color:#b91c1c; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center;" title="Remove image">&times;</button>
+        <button type="button" onclick="removeWaAttachedImage()" style="background:#fee2e2; color:#b91c1c; border:none; border-radius:50%; width:26px; height:26px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center; flex-shrink:0;" title="Remove image">&times;</button>
       </div>
 
-      <div id="waImagePrompt" style="font-size:11.5px; color:var(--muted); margin-top:2px;">
-        Choose an image, clinic logo, or generate an appointment slip card to send alongside this WhatsApp message.
+      <div id="waImagePrompt" style="font-size:11.5px; color:var(--muted); margin-top:4px; ${hasDefault ? 'display:none;' : ''}">
+        💡 Tip: Choose an image, drag & drop here, paste with <kbd>Ctrl</kbd>+<kbd>V</kbd>, or click <b>Generate Slip Card</b>.
       </div>
 
       <label style="display:flex; align-items:center; gap:6px; font-size:11.5px; margin-top:8px; cursor:pointer; color:var(--text);">
@@ -7503,6 +7573,51 @@ function sendAppt(id){
   $('sendModalBody').innerHTML=body;
   openModal('sendModal');
   handleSendMsgInput();
+  setupWaModalDropPaste();
+}
+
+function loadApptTemplate(lang){
+  currentSendLang = lang;
+  if(!currentSendApptId) return;
+  const a=DB.appts.find(x=>x.id===currentSendApptId); if(!a) return;
+  const p=patientById(a.patientId); if(!p) return;
+
+  const t=$('sendMsgText');
+  if(!t) return;
+
+  t.value = buildApptMessage(a, p, lang);
+  applySendTextStyles(lang);
+  updateTmplBtnStates(lang);
+  handleSendMsgInput();
+  toast(lang === 'ur' ? 'اردو ٹیمپلیٹ لوڈ ہو گیا ✓' : 'English Template loaded ✓');
+}
+
+function resetCurrentSendTemplate(){
+  loadApptTemplate(currentSendLang || 'en');
+}
+
+function applySendTextStyles(lang){
+  const t=$('sendMsgText');
+  if(!t) return;
+  if(lang === 'ur'){
+    t.className = 'send-textarea is-urdu';
+  } else {
+    t.className = 'send-textarea';
+  }
+}
+
+function updateTmplBtnStates(lang){
+  const bEn=$('btnTmplEn');
+  const bUr=$('btnTmplUr');
+  if(bEn && bUr){
+    if(lang === 'ur'){
+      bUr.className = 'wa-tmpl-btn active';
+      bEn.className = 'wa-tmpl-btn';
+    } else {
+      bEn.className = 'wa-tmpl-btn active';
+      bUr.className = 'wa-tmpl-btn';
+    }
+  }
 }
 
 function handleSendMsgInput(){
@@ -7510,51 +7625,64 @@ function handleSendMsgInput(){
   if(!t) return;
   const text=t.value.trim();
   const hasUrdu=/[\u0600-\u06FF]/.test(text);
-  const lbl=$('transBtnText');
-  if(lbl){
+  const txt=$('transText');
+  if(txt){
     if(!text){
-      lbl.textContent='Convert (English ⇄ اردو)';
+      txt.textContent='Convert (English ⇄ اردو)';
     } else if(hasUrdu){
-      lbl.textContent='Convert to English (انگریزی میں)';
+      txt.textContent='Convert to English (انگریزی میں)';
     } else {
-      lbl.textContent='Convert to اردو (Urdu)';
+      txt.textContent='Convert to اردو (Urdu)';
     }
   }
 }
 
-async function convertSendMsgText(){
+function executeTranslationSwap(){
+  const t=$('sendMsgText');
+  if(!t) return;
+  const text=t.value.trim();
+  const hasUrdu=/[\u0600-\u06FF]/.test(text);
+  // Invert target
+  const target = hasUrdu ? 'ur' : 'en';
+  executeTranslation(target);
+}
+
+async function executeTranslation(explicitTarget){
   const t=$('sendMsgText');
   if(!t) return;
   const text=t.value.trim();
   if(!text){
-    toast('Please enter or edit your message first', true);
+    toast('Please enter or type some text first', true);
     return;
   }
   if(isTranslatingSendMsg) return;
 
   const hasUrdu=/[\u0600-\u06FF]/.test(text);
-  const targetLang=hasUrdu ? 'en' : 'ur';
-  const sourceLang=hasUrdu ? 'ur' : 'en';
+  const target = explicitTarget || (hasUrdu ? 'en' : 'ur');
+  const source = (target === 'ur') ? 'en' : 'ur';
 
-  const btn=$('btnTranslateMsg');
-  const lbl=$('transBtnText');
-  const icon=$('transIcon');
+  const btn=$('btnTransLive');
+  const spin=$('transSpin');
+  const txt=$('transText');
+  const statusEl=$('transStatusIndicator');
+
   if(btn){
     btn.disabled=true;
     btn.style.opacity='0.75';
-    if(lbl) lbl.textContent=(targetLang === 'ur') ? 'اردو میں ترجمہ ہو رہا ہے...' : 'Converting to English...';
-    if(icon) icon.textContent='⏳';
+    if(spin) spin.className='wa-spin-icon wa-spinning';
+    if(txt) txt.textContent = (target === 'ur') ? 'اردو میں ترجمہ جاری ہے...' : 'Converting to English...';
   }
+  if(statusEl) statusEl.textContent = 'Translating...';
   isTranslatingSendMsg=true;
 
   try {
     let translated='';
-    // 1. Try server proxy endpoint
+    // 1. Try server proxy endpoint POST /api/translate
     try {
       const res=await fetch('/api/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: text, to: targetLang, from: sourceLang })
+        body: JSON.stringify({ text: text, to: target, from: source })
       });
       if(res.ok){
         const d=await res.json();
@@ -7563,26 +7691,35 @@ async function convertSendMsgText(){
         }
       }
     } catch(err){
-      console.warn('Server translation failed, trying client fallback...', err);
+      console.warn('Backend translation failed, trying client fallback...', err);
     }
 
-    // 2. Client-side fallback if server was unreachable
+    // 2. Client fallback via Google dict-chrome-ex POST
     if(!translated){
-      const gtxUrl=`https://translate.googleapis.com/translate_a/single?client=dict-chrome-ex&sl=${encodeURIComponent(sourceLang)}&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(text)}`;
-      const res=await fetch(gtxUrl);
-      const json=await res.json();
-      translated=(json[0] || []).map(s => s[0]).join('');
+      try {
+        const gtxUrl=`https://translate.googleapis.com/translate_a/single?client=dict-chrome-ex&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`;
+        const res=await fetch(gtxUrl);
+        const json=await res.json();
+        translated=(json[0] || []).map(s => s[0]).join('');
+      } catch(e3){
+        console.warn('Client fallback failed:', e3);
+      }
     }
 
     if(translated){
-      t.value=translated;
-      currentSendLang=targetLang;
-      t.style.direction=(targetLang === 'ur') ? 'rtl' : 'ltr';
-      t.style.textAlign=(targetLang === 'ur') ? 'right' : 'left';
-      updateLangPillUI(targetLang);
-      toast(targetLang === 'ur' ? 'Converted to Urdu ✓ (اردو میں تبدیل ہوگیا)' : 'Converted to English ✓');
+      t.style.opacity='0.4';
+      setTimeout(()=>{
+        t.value=translated;
+        currentSendLang=target;
+        applySendTextStyles(target);
+        updateTmplBtnStates(target);
+        t.style.opacity='1';
+        if(statusEl) statusEl.textContent = (target === 'ur') ? 'اردو ✓' : 'English ✓';
+        handleSendMsgInput();
+        toast(target === 'ur' ? 'اردو میں تبدیل ہو گیا ✓ (Converted to Urdu)' : 'Converted to English ✓');
+      }, 120);
     } else {
-      toast('Could not convert text. Please check connection.', true);
+      toast('Translation failed, please check internet connection', true);
     }
   } catch(e){
     console.error('Translation error:', e);
@@ -7592,94 +7729,96 @@ async function convertSendMsgText(){
     if(btn){
       btn.disabled=false;
       btn.style.opacity='1';
-      if(icon) icon.textContent='🔄';
+      if(spin) spin.className='wa-spin-icon';
       handleSendMsgInput();
     }
   }
 }
 
-function updateLangPillUI(lang){
-  const btnEn=$('msgLangBtnEn');
-  const btnUr=$('msgLangBtnUr');
-  if(!btnEn || !btnUr) return;
-  if(lang === 'ur'){
-    btnUr.className='wa-lang-pill active';
-    btnEn.className='wa-lang-pill';
-  } else {
-    btnEn.className='wa-lang-pill active';
-    btnUr.className='wa-lang-pill';
-  }
-}
-
-function resetSendTemplate(){
-  if(!currentSendApptId) return;
-  const a=DB.appts.find(x=>x.id===currentSendApptId); if(!a) return;
-  const p=patientById(a.patientId); if(!p) return;
-  const t=$('sendMsgText');
-  if(t){
-    t.value=buildApptMessage(a, p, currentSendLang);
-    t.style.direction=(currentSendLang === 'ur') ? 'rtl' : 'ltr';
-    t.style.textAlign=(currentSendLang === 'ur') ? 'right' : 'left';
-    handleSendMsgInput();
-    toast('Template restored ✓');
-  }
-}
-
-function switchSendMsgLang(lang){
-  if(lang === currentSendLang) return;
-  if(!currentSendApptId) return;
-  const a=DB.appts.find(x=>x.id===currentSendApptId); if(!a) return;
-  const p=patientById(a.patientId); if(!p) return;
-  const t=$('sendMsgText');
-  if(!t) return;
-
-  const currentVal=t.value.trim();
-  const prevTemplate=buildApptMessage(a, p, currentSendLang).trim();
-
-  // If user typed custom text, auto-convert it to preserve their edits!
-  if(currentVal && currentVal !== prevTemplate){
-    convertSendMsgText();
-    return;
-  }
-
-  currentSendLang=lang;
-  t.value=buildApptMessage(a, p, lang);
-  t.style.direction=(lang === 'ur') ? 'rtl' : 'ltr';
-  t.style.textAlign=(lang === 'ur') ? 'right' : 'left';
-  updateLangPillUI(lang);
-  handleSendMsgInput();
-}
-
-function setWaAttachedImage(file, dataUrl, name){
+function setWaAttachedImage(file, dataUrl, name, isDefault=false){
   currentWaImageFile=file;
   currentWaImageDataUrl=dataUrl;
   currentWaImageName=name || 'image.png';
-  currentWaUploadedUrl=null;
+  currentWaIsDefault=isDefault;
 
+  showWaImagePreview(dataUrl, currentWaImageName, isDefault);
+  uploadAttachedImageAsync(currentWaImageName, dataUrl);
+}
+
+function showWaImagePreview(dataUrl, name, isDefault){
   const box=$('waImagePreviewBox');
   const thumb=$('waImageThumb');
   const nameEl=$('waImageName');
   const sizeEl=$('waImageSize');
+  const badgeWrap=$('waImageBadgeWrap');
+  const btnDef=$('btnToggleDefaultWa');
+
   if(box && thumb && nameEl && sizeEl){
     thumb.src=dataUrl;
-    nameEl.textContent=currentWaImageName;
-    const kb=file.size ? Math.round(file.size / 1024) : Math.round(dataUrl.length * 0.75 / 1024);
-    sizeEl.textContent=kb + ' KB';
+    nameEl.textContent=name;
+    const estKb=Math.round(dataUrl.length * 0.75 / 1024);
+    sizeEl.textContent=estKb + ' KB';
+    if(badgeWrap){
+      badgeWrap.innerHTML=isDefault
+        ? '<span class="wa-badge-default">⭐ Default WhatsApp Image</span>'
+        : '<span class="wa-badge-ready">🟢 Ready to Send</span>';
+    }
+    if(btnDef){
+      btnDef.textContent=isDefault ? '★ Remove as Default' : '⭐ Set as Default';
+    }
     box.style.display='flex';
   }
   const promptEl=$('waImagePrompt');
   if(promptEl) promptEl.style.display='none';
+}
 
-  // Background upload to /api/upload
-  fetch('/api/upload', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ filename: currentWaImageName, data: currentWaImageDataUrl })
-  }).then(r => r.json()).then(res => {
-    if(res && res.success && res.url){
-      currentWaUploadedUrl=window.location.origin + res.url;
+async function uploadAttachedImageAsync(filename, dataUrl){
+  try {
+    const res=await fetch('/api/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename, data: dataUrl })
+    });
+    if(res.ok){
+      const d=await res.json();
+      if(d && d.url){
+        currentWaUploadedUrl=window.location.origin + d.url;
+        const badgeWrap=$('waImageBadgeWrap');
+        if(badgeWrap && !currentWaIsDefault){
+          badgeWrap.innerHTML='<span class="wa-badge-ready">🟢 Uploaded & Ready</span>';
+        }
+      }
     }
-  }).catch(e => console.warn('Background upload:', e));
+  } catch(e){
+    console.warn('Image pre-upload error:', e);
+  }
+}
+
+function toggleDefaultWaImage(){
+  if(!currentWaImageDataUrl){
+    toast('No image attached to save as default', true);
+    return;
+  }
+  if(currentWaIsDefault){
+    localStorage.removeItem('src_default_wa_image');
+    currentWaIsDefault=false;
+    showWaImagePreview(currentWaImageDataUrl, currentWaImageName, false);
+    toast('Removed as default image');
+  } else {
+    const defObj={
+      name: currentWaImageName,
+      dataUrl: currentWaImageDataUrl,
+      uploadedUrl: currentWaUploadedUrl
+    };
+    try {
+      localStorage.setItem('src_default_wa_image', JSON.stringify(defObj));
+      currentWaIsDefault=true;
+      showWaImagePreview(currentWaImageDataUrl, currentWaImageName, true);
+      toast('Saved as Default WhatsApp Image! ⭐ Will auto-attach for all patients.');
+    } catch(e){
+      toast('Storage full: could not save default image', true);
+    }
+  }
 }
 
 function handleWaImageFileInput(files){
@@ -7698,11 +7837,10 @@ function useDefaultClinicImage(){
   fetch(imgUrl)
     .then(r => r.blob())
     .then(blob => {
-      const file=new File([blob], 'src-clinic-logo.png', { type: blob.type || 'image/png' });
       const reader=new FileReader();
       reader.onload=e => {
-        setWaAttachedImage(file, e.target.result, file.name);
-        toast('Clinic Logo attached ✓');
+        setWaAttachedImage(blob, e.target.result, 'src-clinic-logo.png');
+        toast('SRC Clinic Logo attached ✓');
       };
       reader.readAsDataURL(blob);
     })
@@ -7839,9 +7977,8 @@ function generateAppointmentSlipCard(){
 
   canvas.toBlob(blob => {
     if(!blob) return;
-    const file=new File([blob], 'SRC-Appointment-' + p.id + '.png', { type: 'image/png' });
     const dataUrl=canvas.toDataURL('image/png');
-    setWaAttachedImage(file, dataUrl, file.name);
+    setWaAttachedImage(blob, dataUrl, 'SRC-Appointment-' + p.id + '.png');
     toast('Appointment Slip Card generated ✓');
   }, 'image/png');
 }
@@ -7851,6 +7988,7 @@ function removeWaAttachedImage(){
   currentWaImageDataUrl=null;
   currentWaImageName='';
   currentWaUploadedUrl=null;
+  currentWaIsDefault=false;
   const box=$('waImagePreviewBox');
   if(box) box.style.display='none';
   const promptEl=$('waImagePrompt');
@@ -7858,6 +7996,56 @@ function removeWaAttachedImage(){
   const inp=$('waImageFileInput');
   if(inp) inp.value='';
   toast('Image removed');
+}
+
+function setupWaModalDropPaste(){
+  const dropZone=$('waAttachCard');
+  if(dropZone && !dropZone._hasDropListeners){
+    dropZone._hasDropListeners=true;
+    ['dragenter', 'dragover'].forEach(name => {
+      dropZone.addEventListener(name, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('dragover');
+      });
+    });
+    ['dragleave', 'drop'].forEach(name => {
+      dropZone.addEventListener(name, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('dragover');
+      });
+    });
+    dropZone.addEventListener('drop', e => {
+      const dt=e.dataTransfer;
+      if(dt && dt.files && dt.files.length > 0){
+        handleWaImageFileInput(dt.files);
+      }
+    });
+  }
+
+  const modal=$('sendModal');
+  if(modal && !modal._hasPasteListener){
+    modal._hasPasteListener=true;
+    modal.addEventListener('paste', e => {
+      const items=(e.clipboardData || (e.originalEvent && e.originalEvent.clipboardData)) ? (e.clipboardData || e.originalEvent.clipboardData).items : null;
+      if(!items) return;
+      for(let i=0; i<items.length; i++){
+        if(items[i].type && items[i].type.indexOf('image') !== -1){
+          const file=items[i].getAsFile();
+          if(file){
+            const reader=new FileReader();
+            reader.onload=ev => {
+              setWaAttachedImage(file, ev.target.result, 'pasted-screenshot.png');
+              toast('Image pasted from clipboard ✓');
+            };
+            reader.readAsDataURL(file);
+            break;
+          }
+        }
+      }
+    });
+  }
 }
 
 function convertImageToPngBlob(dataUrl){
@@ -7880,22 +8068,24 @@ function convertImageToPngBlob(dataUrl){
   });
 }
 
-async function copyWaImageClipboard(){
+async function copyWaImageClipboard(silent=false){
   if(!currentWaImageDataUrl){
-    toast('No image attached to copy', true);
+    if(!silent) toast('No image attached to copy', true);
     return;
   }
   try {
     const blob=await convertImageToPngBlob(currentWaImageDataUrl);
     if(navigator.clipboard && window.ClipboardItem){
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-      toast('Image copied to clipboard ✓');
-    } else {
-      toast('Clipboard image copy not supported in this browser', true);
+      if(silent){
+        toast('📋 Image copied! In WhatsApp, press Ctrl+V to paste the image.', false, 4500);
+      } else {
+        toast('Image copied to clipboard ✓ (Press Ctrl+V in WhatsApp to send)');
+      }
     }
   } catch(err){
-    console.error('Clipboard copy error:', err);
-    toast('Failed to copy image: ' + err.message, true);
+    console.warn('Clipboard write error:', err);
+    if(!silent) toast('Failed to copy image to clipboard: ' + err.message, true);
   }
 }
 
@@ -7918,77 +8108,51 @@ function updateWaNumPreview(pid){
 
 function currentSendMsg(){ const t=$('sendMsgText'); return t?t.value:''; }
 
-async function doSendWhatsApp(pid){
+function doSendWhatsApp(pid){
   const p=patientById(pid); if(!p) return;
   if(!p.mobile){ toast('No mobile number for this patient',true); return; }
   const ov=$('waCountryInp')?$('waCountryInp').value:'';
   const num=waNumber(p.mobile, p.country, ov);
   let text=currentSendMsg();
 
-  // If image is attached
-  if(currentWaImageFile){
-    const btn=$('btnDoSendWa');
-    if(btn){ btn.disabled=true; btn.textContent='⏳ Preparing WhatsApp...'; }
-
-    // Upload to server if not uploaded yet
-    if(!currentWaUploadedUrl && currentWaImageDataUrl){
-      try {
-        const upRes=await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ filename: currentWaImageName || 'appointment-card.png', data: currentWaImageDataUrl })
-        });
-        if(upRes.ok){
-          const upData=await upRes.json();
-          if(upData && upData.url){
-            currentWaUploadedUrl=window.location.origin + upData.url;
-          }
-        }
-      } catch(e){
-        console.warn('Upload error:', e);
-      }
-    }
-
+  // If an image is attached:
+  if(currentWaImageDataUrl){
     const includeLinkChk=$('waIncludeLinkChk');
     const shouldIncludeLink=includeLinkChk ? includeLinkChk.checked : true;
     if(shouldIncludeLink && currentWaUploadedUrl && !text.includes(currentWaUploadedUrl)){
-      text=text + '\n\n📷 *Appointment Slip / Card:* ' + currentWaUploadedUrl;
+      text=text + '\n\n📷 *Appointment Slip / Image:* ' + currentWaUploadedUrl;
       const t=$('sendMsgText');
       if(t) t.value=text;
     }
 
-    if(btn){ btn.disabled=false; btn.textContent='🟢 Send via WhatsApp'; }
-
-    // Try Web Share API with files (Android / iOS native WhatsApp share)
-    if(navigator.canShare && navigator.canShare({ files: [currentWaImageFile] })){
+    // Try native Web Share API with image file if supported
+    if(navigator.canShare && currentWaImageFile && navigator.canShare({ files: [currentWaImageFile] })){
       try {
-        await navigator.share({
+        navigator.share({
           title: 'SRC Appointment - ' + p.name,
           text: text,
           files: [currentWaImageFile]
+        }).then(()=>toast('Shared to WhatsApp ✓')).catch(e=>{
+          if(e.name !== 'AbortError') openWaUrlDirect(num, text);
         });
-        toast('Shared via WhatsApp ✓');
         return;
-      } catch(shareErr){
-        if(shareErr.name === 'AbortError') return;
-        console.warn('Web Share failed, falling back to wa.me URL:', shareErr);
-      }
+      } catch(e){}
     }
 
-    // Desktop fallback: copy image to clipboard automatically!
-    try {
-      const pngBlob=await convertImageToPngBlob(currentWaImageDataUrl);
-      if(navigator.clipboard && window.ClipboardItem){
-        await navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlob })]);
-        toast('📋 Image copied to clipboard! Paste (Ctrl+V) in WhatsApp ✓', false, 5000);
-      }
-    } catch(clipErr){
-      console.warn('Clipboard write image failed:', clipErr);
-    }
+    // Auto-copy image to clipboard synchronously for instant Ctrl+V pasting in WhatsApp Web
+    copyWaImageClipboard(true);
   }
 
+  // Open WhatsApp directly without async delay (100% bypasses popup blocker!)
+  openWaUrlDirect(num, text);
+}
+
+function openWaUrlDirect(num, text){
   const url='https://wa.me/'+num+'?text='+encodeURIComponent(text);
-  window.open(url,'_blank');
+  const win=window.open(url, '_blank');
+  if(!win || win.closed || typeof win.closed === 'undefined'){
+    window.location.href=url;
+  }
   toast('Opening WhatsApp...');
 }
 

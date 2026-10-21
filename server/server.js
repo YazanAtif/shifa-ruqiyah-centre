@@ -65,6 +65,37 @@ function fetchJson(url) {
   });
 }
 
+function postForm(url, postData) {
+  return new Promise((resolve, reject) => {
+    const req = https.request(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(postData),
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      },
+      timeout: 10000
+    }, (res) => {
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => {
+        try {
+          resolve(JSON.parse(data));
+        } catch (e) {
+          reject(new Error('Parse error: ' + data.slice(0, 100)));
+        }
+      });
+    });
+    req.on('timeout', () => {
+      req.destroy();
+      reject(new Error('Translation request timed out'));
+    });
+    req.on('error', reject);
+    req.write(postData);
+    req.end();
+  });
+}
+
 async function translateText(text, targetLang, sourceLang = 'auto') {
   if (!text || !text.trim()) {
     return { translated: '', detected: sourceLang, target: targetLang || 'en' };
@@ -73,20 +104,23 @@ async function translateText(text, targetLang, sourceLang = 'auto') {
   if (!targetLang) {
     targetLang = hasUrdu ? 'en' : 'ur';
   }
-  if (sourceLang === 'auto') {
-    sourceLang = hasUrdu ? 'ur' : 'en';
+  if (targetLang === 'ur') {
+    sourceLang = (sourceLang && sourceLang !== 'auto' && sourceLang !== 'ur') ? sourceLang : 'en';
+  } else if (targetLang === 'en') {
+    sourceLang = (sourceLang && sourceLang !== 'auto' && sourceLang !== 'en') ? sourceLang : 'ur';
   }
 
-  // Primary: Google dict-chrome-ex
+  // Primary: Google dict-chrome-ex using POST
   try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=dict-chrome-ex&sl=${encodeURIComponent(sourceLang)}&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(text)}`;
-    const json = await fetchJson(url);
+    const url = `https://translate.googleapis.com/translate_a/single?client=dict-chrome-ex&sl=${encodeURIComponent(sourceLang)}&tl=${encodeURIComponent(targetLang)}&dt=t`;
+    const postData = 'q=' + encodeURIComponent(text);
+    const json = await postForm(url, postData);
     const translated = (json[0] || []).map(s => s[0]).join('');
     return { translated, detected: json[2] || sourceLang, target: targetLang };
   } catch (err) {
-    console.warn('Google translation failed, trying MyMemory fallback:', err.message);
+    console.warn('Google POST translation failed, trying MyMemory fallback:', err.message);
     try {
-      const mmUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(sourceLang)}|${encodeURIComponent(targetLang)}`;
+      const mmUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0, 500))}&langpair=${encodeURIComponent(sourceLang)}|${encodeURIComponent(targetLang)}`;
       const mmJson = await fetchJson(mmUrl);
       if (mmJson && mmJson.responseData && mmJson.responseData.translatedText) {
         return { translated: mmJson.responseData.translatedText, detected: sourceLang, target: targetLang };

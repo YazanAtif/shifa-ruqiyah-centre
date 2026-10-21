@@ -2065,9 +2065,17 @@ html[lang="ur"] .adhkar-filter-pill {
  <span data-i18n="summary_mode">Consultation Mode:</span>
  <span data-i18n="summary_mode_val">In-Person / Online Audio Session</span>
  </div>
- <div class="fee-row total">
- <span data-i18n="summary_est">Estimated Session Fee:</span>
- <span id="summaryFeeAmount">Rs. 1,000</span>
+ <div class="fee-row" style="border-top:1px dashed var(--border); padding-top:8px;">
+ <span data-i18n="summary_cat_fee">Category Treatment Fee:</span>
+ <span id="summaryCategoryFeeAmount" style="font-weight:700; color:var(--brown-dark);">Rs. 1,500</span>
+ </div>
+ <div class="fee-row" style="font-size:0.75rem; color:var(--muted); margin-top:-4px; margin-bottom:4px;">
+ <span data-i18n="summary_cat_timing">Payment Timing:</span>
+ <span style="font-style:italic;" data-i18n="summary_cat_timing_val">Payable later when check-up is completed</span>
+ </div>
+ <div class="fee-row total" style="background:rgba(197,155,39,0.12); padding:10px 14px; border-radius:8px; border:1px solid var(--gold-border); margin-top:6px;">
+ <span data-i18n="summary_consult_now">Advance Consultation Fee (Pay Now to Book):</span>
+ <span id="summaryFeeAmount" style="font-size:1.15rem; font-weight:800; color:var(--gold-dark);">Rs. 1,000</span>
  </div>
  </div>
 
@@ -2075,13 +2083,13 @@ html[lang="ur"] .adhkar-filter-pill {
   <div class="payment-methods-card" style="background:var(--card); border:2px solid var(--gold); border-radius:var(--radius); padding:18px; margin:16px 0; box-shadow:0 4px 16px rgba(197,155,39,0.12);">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
       <div style="font-size:0.9rem; font-weight:800; color:var(--brown-dark); display:flex; align-items:center; gap:6px;">
-        <span>💳 Step 4: Pay Rs. 1,000 Consultation Fee</span>
+        <span data-i18n="pay_step_title">💳 Step 4: Pay Rs. 1,000 Advance Consultation Fee</span>
       </div>
-      <span style="font-size:0.72rem; background:#fee2e2; color:#b91c1c; padding:3px 10px; border-radius:12px; font-weight:700;">Mandatory to Book</span>
+      <span style="font-size:0.72rem; background:#fee2e2; color:#b91c1c; padding:3px 10px; border-radius:12px; font-weight:700;" data-i18n="pay_mandatory_badge">Mandatory to Book</span>
     </div>
 
-    <p style="font-size:0.8rem; color:var(--muted); margin-bottom:14px; line-height:1.5;">
-      To confirm your appointment slot and prevent unverified bookings, a consultation fee of <strong style="color:var(--text);">Rs. 1,000</strong> must be transferred to either official clinic account below. <b>Without this fee payment, no appointment will be booked.</b>
+    <p style="font-size:0.8rem; color:var(--muted); margin-bottom:14px; line-height:1.5;" data-i18n="pay_fee_notice">
+      To confirm your appointment slot and prevent unverified bookings, an advance consultation fee of <strong style="color:var(--text);">Rs. 1,000</strong> must be transferred to either official clinic account below. <b>The remaining category fee is payable later once your check-up is completed.</b> Without this advance consultation fee payment, no appointment will be booked.
     </p>
     
     <div class="pay-options-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-bottom:14px;">
@@ -2125,7 +2133,7 @@ html[lang="ur"] .adhkar-filter-pill {
     <!-- Mandatory Confirmation Checkbox -->
     <label style="display:flex; align-items:flex-start; gap:8px; font-size:0.78rem; color:var(--brown-dark); cursor:pointer; margin-top:10px; font-weight:600; background:rgba(197,155,39,0.08); padding:10px 12px; border-radius:var(--radius-sm); border:1px dashed var(--gold-border);">
       <input type="checkbox" id="custPaidCheck" required style="margin-top:2px; accent-color:var(--gold-dark); cursor:pointer;" />
-      <span>I have transferred the mandatory <b>Rs. 1,000</b> consultation fee to the selected account and will share my receipt screenshot on WhatsApp for instant activation.</span>
+      <span data-i18n="pay_confirm_checkbox">I have transferred the mandatory <b>Rs. 1,000</b> consultation fee to the selected account and will share my receipt screenshot on WhatsApp for instant activation. (Category amount will be paid later after the check-up is done).</span>
     </label>
   </div>
 
@@ -2378,8 +2386,9 @@ html[lang="ur"] .adhkar-filter-pill {
  <div style="background: var(--card-muted); border-radius: var(--radius-sm); padding: 14px; text-align: left; font-size: 0.82rem; margin-bottom: 16px; border-left: 3.5px solid #2e7d32;">
   <div>👤 <b>Patient:</b> <span id="succName">-</span> (ID: <span id="succPid">-</span>)</div>
   <div>📅 <b>Date &amp; Time:</b> <span id="succDateTime">-</span></div>
-  <div>🛡️ <b>Session:</b> <span id="succService">-</span></div>
-  <div>💰 <b>Consultation Fee:</b> <b style="color:#2e7d32;" id="succFee">Rs. 1,000 (PAID)</b></div>
+  <div>🛡️ <b>Session Category:</b> <span id="succService">-</span></div>
+  <div>💳 <b>Advance Consultation Fee:</b> <b style="color:#2e7d32;" id="succFee">Rs. 1,000 (PAID)</b></div>
+  <div>💰 <b>Category Treatment Fee:</b> <b style="color:var(--brown-dark);" id="succCatFee">-</b></div>
   <div>🧾 <b>Payment Ref (TRX):</b> <code style="font-size:0.85rem; font-weight:700;" id="succTrx">-</code></div>
   <div>⏳ <b>Status:</b> <span class="badge" style="background:#fef3c7; color:#b45309; padding:2px 8px; border-radius:8px; font-weight:700;">Pending Clinic Verification</span></div>
   <div style="margin-top:6px; font-weight:600; color:var(--green-dark);">💬 WhatsApp Helpline: 0334 9996864</div>
@@ -2570,10 +2579,10 @@ html[lang="ur"] .adhkar-filter-pill {
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
  desc: "Comprehensive diagnostic assessment for physical and spiritual afflictions according to the Sunnah.",
  descUr: "سنت نبوی کے مطابق جسمانی و روحانی تکالیف اور اثرات کی جامع تشخیصی جانچ۔",
- duration: "60 mins",
- durationUr: "۶۰ منٹ",
- feePKR: 1000,
- feeUSD: 10
+ duration: "30 mins",
+ durationUr: "۳۰ منٹ",
+ feePKR: 1500,
+ feeUSD: 15
  },
  {
  id: "sihr-jadu",
@@ -2582,10 +2591,10 @@ html[lang="ur"] .adhkar-filter-pill {
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
  desc: "Intensive spiritual treatment and Quranic neutralizing sessions for black magic and sorcery.",
  descUr: "کالے جادو، سفلی اور بندش کے خاتمے کے لیے قرآنی آیات سے خصوصی روحانی علاج۔",
- duration: "75 mins",
- durationUr: "۷۵ منٹ",
- feePKR: 1000,
- feeUSD: 10
+ duration: "60 mins",
+ durationUr: "۶۰ منٹ",
+ feePKR: 10000,
+ feeUSD: 100
  },
  {
  id: "nazar-hasad",
@@ -2594,34 +2603,34 @@ html[lang="ur"] .adhkar-filter-pill {
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
  desc: "Specific spiritual healing and Quranic recitation for severe evil eye, envy, and unexplained heavy blockages.",
  descUr: "شدید نظر بد، حسد اور غیر واضح رکاوٹوں سے نجات کے لیے مسنون دعاؤں سے شفاء۔",
- duration: "45 mins",
- durationUr: "۴۵ منٹ",
- feePKR: 1000,
- feeUSD: 10
+ duration: "20 mins",
+ durationUr: "۲۰ منٹ",
+ feePKR: 2500,
+ feeUSD: 25
  },
  {
  id: "jinn-possession",
  name: "Jinn & Waswas Relief",
  nameUr: "جنات و وسوسے کا علاج",
  icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>',
- desc: "Direct Quranic expulsion and psychological/spiritual stabilization for severe whisperings or touch.",
- descUr: "جنات کے اثرات، شیطانی وسوسوں اور خوف و وہم سے نجات کے لیے قرآنی دم۔",
- duration: "60 mins",
- durationUr: "۶۰ منٹ",
- feePKR: 1000,
- feeUSD: 10
+ desc: "Direct Quranic expulsion and psychological/spiritual stabilization (per session as per spiritual healer guides).",
+ descUr: "روحانی معالج کی رہنمائی کے مطابق فی سیشن۔ جنات کے اثرات، شیطانی وسوسوں اور خوف و وہم سے نجات کے لیے قرآنی دم۔",
+ duration: "20 mins",
+ durationUr: "۲۰ منٹ",
+ feePKR: 500,
+ feeUSD: 5
  },
  {
- id: "spiritual-numerology",
- name: "Spiritual Numerology Deep Session",
- nameUr: "علم الاعداد روحانی سیشن",
- icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><circle cx="16" cy="8" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="8" cy="16" r="1.5"/><circle cx="16" cy="16" r="1.5"/></svg>',
- desc: "Detailed personal numerology study analyzing Life Path, Destiny, and harmonic alignments.",
- descUr: "نام اور تاریخ پیدائش کے مطابق لائف پاتھ اور روحانی اعداد کا تفصیلی تجزیہ۔",
- duration: "45 mins",
- durationUr: "۴۵ منٹ",
- feePKR: 1000,
- feeUSD: 10
+ id: "dam-session",
+ name: "Dam Session",
+ nameUr: "دم سیشن",
+ icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/><path d="M12 3v6"/></svg>',
+ desc: "Focused Quranic Dam session as per spiritual healer guides.",
+ descUr: "روحانی معالج کی رہنمائی کے مطابق مسنون دعاؤں اور قرآنی آیات سے مخصوص دم سیشن۔",
+ duration: "15 mins",
+ durationUr: "۱۵ منٹ",
+ feePKR: 500,
+ feeUSD: 5
  },
  {
  id: "relationship-healing",
@@ -2632,10 +2641,21 @@ html[lang="ur"] .adhkar-filter-pill {
  descUr: "گھریلو ناچاقی، میاں بیوی میں ہم آہنگی اور سکون کے لیے استخارہ و روحانی رہنمائی۔",
  duration: "60 mins",
  durationUr: "۶۰ منٹ",
- feePKR: 1000,
- feeUSD: 10
+ feePKR: 3500,
+ feeUSD: 35
  }
  ];
+
+ function calcEndTime(startStr, durationStr){
+   if(!startStr) return '11:00';
+   const match = (durationStr || '').match(/(\d+)\s*mins?/);
+   const durMins = match ? parseInt(match[1]) : 60;
+   const parts = startStr.split(':').map(Number);
+   const totalM = (parts[0] || 0) * 60 + (parts[1] || 0) + durMins;
+   const endH = String(Math.floor(totalM / 60) % 24).padStart(2, '0');
+   const endM = String(totalM % 60).padStart(2, '0');
+   return `${endH}:${endM}`;
+ }
 
  /* ================= 3. NUMEROLOGY CORE ENGINE ================= */
  const NUM = (function(){
@@ -3197,7 +3217,8 @@ function initCountryComponents(){
  document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
  btn.classList.add('selected');
  $('selectedTimeStart').value = slot.start;
- $('selectedTimeEnd').value = slot.end;
+ const sObj = SERVICES.find(x => x.name === $('selectedService').value) || SERVICES[0];
+ $('selectedTimeEnd').value = calcEndTime(slot.start, sObj.duration);
  updateSummaryPreview();
  };
  }
@@ -3207,7 +3228,8 @@ function initCountryComponents(){
  // Default select first available if currently selected is booked
  if(bookedStarts.includes($('selectedTimeStart').value) && firstAvailable){
  $('selectedTimeStart').value = firstAvailable.start;
- $('selectedTimeEnd').value = firstAvailable.end;
+ const sObj = SERVICES.find(x => x.name === $('selectedService').value) || SERVICES[0];
+ $('selectedTimeEnd').value = calcEndTime(firstAvailable.start, sObj.duration);
  renderTimeSlots(dateIso);
  }
  }
@@ -3224,7 +3246,8 @@ function initCountryComponents(){
  const sTitle = (isUr && s.nameUr) ? s.nameUr : s.name;
  const sDesc = (isUr && s.descUr) ? s.descUr : s.desc;
  const sDur = (isUr && s.durationUr) ? s.durationUr : s.duration;
- const fee = ACTIVE_CURRENCY === 'USD' ? '$' + s.feeUSD : (isUr ? 'روپے ' : 'Rs. ') + s.feePKR.toLocaleString();
+ const catFee = ACTIVE_CURRENCY === 'USD' ? '$' + s.feeUSD : (isUr ? 'روپے ' : 'Rs. ') + s.feePKR.toLocaleString();
+ const consultFee = ACTIVE_CURRENCY === 'USD' ? '$10' : (isUr ? '1,000 روپے' : 'Rs. 1,000');
 
  box.innerHTML = `
  <div class="service-box-header">
@@ -3233,14 +3256,23 @@ function initCountryComponents(){
  </div>
  <div class="service-box-desc">${esc(sDesc)}</div>
  <div class="service-box-meta">
- <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${sDur}</span>
- <span style="display:inline-flex;align-items:center;gap:4px;font-weight:700;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> ${fee}</span>
+ <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:6px;">
+   <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${sDur}</span>
+   <span style="display:inline-flex;align-items:center;gap:4px;font-weight:700;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> ${catFee}</span>
+ </div>
+ <div style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-top:5px; font-size:0.68rem; color:var(--muted); border-top:1px dashed var(--border); padding-top:4px;">
+   <span>${isUr ? 'کیٹیگری فیس (چیک اپ کے بعد)' : 'Category Fee (After check-up)'}</span>
+   <span style="color:#2e7d32; font-weight:700;">${isUr ? 'بکنگ فیس: ' + consultFee : 'Advance: ' + consultFee}</span>
+ </div>
  </div>
  `;
  box.onclick = () => {
  document.querySelectorAll('.service-box').forEach(b => b.classList.remove('selected'));
  box.classList.add('selected');
  $('selectedService').value = s.name;
+ if($('selectedTimeStart') && $('selectedTimeStart').value){
+   $('selectedTimeEnd').value = calcEndTime($('selectedTimeStart').value, s.duration);
+ }
  updateSummaryPreview();
  };
  deck.appendChild(box);
@@ -3259,14 +3291,22 @@ function initCountryComponents(){
  function updateSummaryPreview(){
  const sName = $('selectedService').value;
  const sObj = SERVICES.find(x => x.name === sName) || SERVICES[0];
- $('summaryServiceName').textContent = sObj.name;
+ const isUr = (getAppLanguage() === 'ur');
 
- const timeStr = fmtTime($('selectedTimeStart').value);
+ $('summaryServiceName').textContent = (isUr && sObj.nameUr) ? sObj.nameUr : sObj.name;
+
+ const startVal = $('selectedTimeStart').value || '10:00';
+ const endVal = $('selectedTimeEnd').value || calcEndTime(startVal, sObj.duration);
+ const sDur = (isUr && sObj.durationUr) ? sObj.durationUr : sObj.duration;
+ const timeStr = fmtTime(startVal) + ' - ' + fmtTime(endVal) + ' (' + sDur + ')';
  const dateStr = fmtDate($('selectedDate').value || todayISO());
  $('summaryDateTime').textContent = dateStr + ' at ' + timeStr;
 
- const fee = ACTIVE_CURRENCY === 'USD' ? '$' + sObj.feeUSD : 'Rs. ' + sObj.feePKR.toLocaleString();
- $('summaryFeeAmount').textContent = fee;
+ const catFee = ACTIVE_CURRENCY === 'USD' ? '$' + sObj.feeUSD : (isUr ? 'روپے ' : 'Rs. ') + sObj.feePKR.toLocaleString();
+ const consultFee = ACTIVE_CURRENCY === 'USD' ? '$10' : (isUr ? 'روپے 1,000' : 'Rs. 1,000');
+
+ if($('summaryCategoryFeeAmount')) $('summaryCategoryFeeAmount').textContent = catFee;
+ if($('summaryFeeAmount')) $('summaryFeeAmount').textContent = consultFee;
  }
   function handleCountryInput(){
     const val = ($('custCountry').value || '').trim();
@@ -3403,9 +3443,14 @@ function initCountryComponents(){
  }
 
  // Create appointment record
- const fee = ACTIVE_CURRENCY === 'USD' ? sObj.feeUSD : sObj.feePKR;
+ const consultFee = ACTIVE_CURRENCY === 'USD' ? 10 : 1000;
+ const categoryFee = ACTIVE_CURRENCY === 'USD' ? sObj.feeUSD : sObj.feePKR;
+ const totalFee = consultFee + categoryFee;
  const newApptId = 'APT-' + Date.now().toString(36).toUpperCase();
  const chosenPayMethod = $('custPayMethod') ? $('custPayMethod').value : 'EasyPaisa (0341-5919-404)';
+ const consultFeeStr = (ACTIVE_CURRENCY === 'USD' ? '$' + consultFee : 'Rs. ' + consultFee.toLocaleString());
+ const catFeeStr = (ACTIVE_CURRENCY === 'USD' ? '$' + categoryFee : 'Rs. ' + categoryFee.toLocaleString());
+
  const newAppt = {
    id: newApptId,
    patientId: p.id,
@@ -3413,11 +3458,14 @@ function initCountryComponents(){
    start: start,
    end: end,
    status: 'Pending Verification',
-   fee: fee,
-   paid: fee,
+   fee: totalFee,
+   paid: consultFee,
    payMethod: chosenPayMethod,
    trxId: trxId,
-   notes: service + (notes ? ': ' + notes : '') + ' | Consultation Fee Paid: Rs. 1,000 (TRX: ' + trxId + ') via ' + chosenPayMethod,
+   service: service,
+   categoryFee: categoryFee,
+   consultFee: consultFee,
+   notes: service + (notes ? ': ' + notes : '') + ' | Advance Consultation Fee Paid: ' + consultFeeStr + ' (TRX: ' + trxId + ') via ' + chosenPayMethod + ' | Category Fee Due After Check-up: ' + catFeeStr,
    created: Date.now()
  };
  DB.appts.unshift(newAppt);
@@ -3435,48 +3483,53 @@ function initCountryComponents(){
  function buildBookingWaText(ctx, lang = 'en') {
    if(!ctx) return '';
    const p = ctx.patient;
-   const feeStr = ctx.currency === 'USD' ? '$' + ctx.fee : 'Rs. ' + ctx.fee;
+   const cFeeStr = ctx.currency === 'USD' ? '$' + (ctx.consultFee || 10) : 'Rs. ' + (ctx.consultFee || 1000).toLocaleString();
+   const kFeeStr = ctx.currency === 'USD' ? '$' + (ctx.categoryFee || 0) : 'Rs. ' + (ctx.categoryFee || 0).toLocaleString();
 
    if (lang === 'ur') {
      return (
        `*شفاء رقیہ سینٹر - اپائنٹمنٹ بکنگ*\n\n` +
-       `السلام علیکم ورحمۃ اللہ،\nمیں نے شفاء رقیہ سینٹر کے پورٹل پر 1,000 روپے فیس ادا کر کے مشاورت کا وقت بک کیا ہے:\n\n` +
+       `السلام علیکم ورحمۃ اللہ،\nمیں نے شفاء رقیہ سینٹر کے پورٹل پر ${cFeeStr} پیشگی کنسلٹیشن فیس ادا کر کے اپائنٹمنٹ بک کی ہے:\n\n` +
        `👤 *مریض:* ${p.name}\n` +
        `🆔 *مریض آئی ڈی:* #${p.id}\n` +
        `📞 *موبائل:* ${p.mobile}\n` +
-       `🛡️ *سروس:* ${ctx.service}\n` +
+       `🛡️ *سروس / کیٹیگری:* ${ctx.service}\n` +
        `📅 *تاریخ:* ${fmtDate(ctx.date)}\n` +
        `⏰ *مقررہ وقت:* ${fmtTime(ctx.start)} تا ${fmtTime(ctx.end)}\n` +
        `📍 *ملک:* ${ctx.country}\n` +
-       `💰 *کنسلٹیشن فیس:* ${feeStr} (ادا شدہ)\n` +
+       `💳 *پیشگی کنسلٹیشن فیس:* ${cFeeStr} (ادا شدہ)\n` +
+       `💰 *کیٹیگری فیس (چیک اپ کے بعد واجب الادا):* ${kFeeStr}\n` +
        (ctx.payMethod ? `💳 *طریقہ ادائیگی:* ${ctx.payMethod}\n` : '') +
        (ctx.trxId ? `🧾 *ٹرانزیکشن / ٹی آر ایکس آئی ڈی:* ${ctx.trxId}\n` : '') +
        (ctx.notes ? `📝 *مسئلہ:* ${ctx.notes}\n` : '') +
        `\n💳 *فیس ادائیگی کے اکاؤنٹس:*\n` +
        `• ایزی پیسہ: 0341-5919-404\n` +
        `• عسکری بینک اکاؤنٹ: 03010690004748\n\n` +
-       `میں نے 1000 روپے کنسلٹیشن فیس کی رسید / اسکرین شاٹ منسلک کر دی ہے۔ براہ کرم تصدیق فرما دیں۔ جزاکم اللہ خیراً۔`
+       `میں نے ${cFeeStr} پیشگی کنسلٹیشن فیس کی رسید / اسکرین شاٹ منسلک کر دی ہے۔ باقی کیٹیگری فیس (${kFeeStr}) چیک اپ مکمل ہونے پر ادا کی جائے گی۔ براہ کرم تصدیق فرما دیں۔ جزاکم اللہ خیراً۔`
      );
    }
 
    return (
      `*SHIFA-RUQIYAH CENTRE - APPOINTMENT BOOKING*\n\n` +
-     `Assalam-o-Alaikum,\nI have scheduled a consultation on the SRC Patient Portal with advance fee payment:\n\n` +
+     `Assalam-o-Alaikum,\nI have scheduled a consultation on the SRC Patient Portal with advance consultation fee payment:\n\n` +
      `👤 *Patient:* ${p.name}\n` +
      `🆔 *Patient ID:* #${p.id}\n` +
      `📞 *Mobile:* ${p.mobile}\n` +
-     `🛡️ *Service:* ${ctx.service}\n` +
+     `🛡️ *Service Category:* ${ctx.service}\n` +
      `📅 *Date:* ${fmtDate(ctx.date)}\n` +
      `⏰ *Time Slot:* ${fmtTime(ctx.start)} to ${fmtTime(ctx.end)}\n` +
      `📍 *Country:* ${ctx.country}\n` +
-     `💰 *Consultation Fee:* ${feeStr} (PAID)\n` +
+     `💳 *Advance Consultation Fee:* ${cFeeStr} (PAID)\n` +
+     `💰 *Category Fee (Payable after check-up):* ${kFeeStr}\n` +
      (ctx.payMethod ? `💳 *Paid To:* ${ctx.payMethod}\n` : '') +
      (ctx.trxId ? `🧾 *Transaction / TRX ID:* ${ctx.trxId}\n` : '') +
      (ctx.notes ? `📝 *Concern:* ${ctx.notes}\n` : '') +
-     `\n💳 *Official Clinic Accounts:*\n` +
-     `• EasyPaisa: 0341-5919-404\n` +
-     `• Askari Bank: 03010690004748\n\n` +
-     `I have transferred the Rs. 1,000 consultation fee and attached my payment receipt screenshot. Please confirm my appointment slot. (Clinic WhatsApp: 0334 9996864)\nJazakAllah Khair.`
+     `\n💳 *Official Clinic Accounts:*
+• EasyPaisa: 0341-5919-404
+• Askari Bank: 03010690004748
+
+I have transferred the ${cFeeStr} advance consultation fee and attached my payment receipt screenshot. The category fee of ${kFeeStr} will be paid once the check-up is completed. Please confirm my appointment slot. (Clinic WhatsApp: 0334 9996864)
+JazakAllah Khair.`
    );
  }
 
@@ -3520,13 +3573,16 @@ function initCountryComponents(){
 
  // Save booking context for bilingual WhatsApp dispatch
  LAST_BOOKING_CONTEXT = {
+   apptId: newApptId,
    patient: p,
    service: service,
    date: date,
    start: start,
    end: end,
    country: country,
-   fee: fee,
+   fee: totalFee,
+   consultFee: consultFee,
+   categoryFee: categoryFee,
    currency: ACTIVE_CURRENCY,
    payMethod: chosenPayMethod,
    trxId: trxId,
@@ -3536,10 +3592,11 @@ function initCountryComponents(){
  // Populate Success Modal
  $('succName').textContent = p.name;
  $('succPid').textContent = p.id;
- $('succDateTime').textContent = `${fmtDate(date)} at ${fmtTime(start)}`;
+ $('succDateTime').textContent = `${fmtDate(date)} at ${fmtTime(start)} - ${fmtTime(end)}`;
  $('succService').textContent = service;
- $('succFee').textContent = (ACTIVE_CURRENCY === 'USD' ? '$' + fee : 'Rs. ' + fee) + ' (PAID)';
- if($('succTrx')) $('succTrx').textContent = trxId;
+ $('succFee').textContent = consultFeeStr + ' (PAID)';
+ if($('succCatFee')) $('succCatFee').textContent = catFeeStr + ' (Payable after check-up)';
+ if($('succTrx')) $('succTrx').textContent = trxId + ' (' + chosenPayMethod + ')';
 
  const initialLang = (typeof CURRENT_LANG !== 'undefined' && CURRENT_LANG === 'ur') ? 'ur' : 'en';
  renderBookingSuccessWaLink(initialLang);
@@ -3681,13 +3738,13 @@ function initCountryComponents(){
  <span class="val">⏰ ${fmtTime(a.start)} - ${fmtTime(a.end)}</span>
  </div>
  <div class="appt-detail-item">
- <span class="lbl">Total Fee</span>
- <span class="val">${a.fee ? a.fee : 'Standard'}</span>
+ <span class="lbl">Advance Consultation Fee</span>
+ <span class="val" style="color:var(--green); font-weight:700;">Rs. ${(a.paid || 1000).toLocaleString()} (PAID ✓)</span>
  </div>
  <div class="appt-detail-item">
- <span class="lbl">Payment Status</span>
- <span class="val" style="color: ${bal === 0 ? 'var(--green)' : 'var(--gold-dark)'};">
- ${bal === 0 ? 'Paid ✓' : 'Due on Arrival'}
+ <span class="lbl">Category Fee (After Check-up)</span>
+ <span class="val" style="color: ${bal === 0 ? 'var(--green)' : 'var(--gold-dark)'}; font-weight:700;">
+ ${bal === 0 ? 'Paid ✓' : ('Rs. ' + bal.toLocaleString() + ' (Due)')}
  </span>
  </div>
  </div>
@@ -3891,13 +3948,14 @@ function initCountryComponents(){
  <div class="row"><span>Appointment ID:</span><b>${a.id}</b></div>
  <div class="row"><span>Patient Name:</span><b>${p ? p.name : '-'} (ID: #${a.patientId})</b></div>
  <div class="row"><span>Contact:</span><b>${p ? p.mobile : '-'}</b></div>
- <div class="row"><span>Session Type:</span><b>${a.notes || 'Ruqyah Consultation'}</b></div>
+ <div class="row"><span>Session Type:</span><b>${esc(a.notes || 'Ruqyah Consultation')}</b></div>
  <div class="row"><span>Date:</span><b>${fmtDate(a.date)}</b></div>
  <div class="row"><span>Time Slot:</span><b>${fmtTime(a.start)} to ${fmtTime(a.end)}</b></div>
  <div class="row"><span>Status:</span><b>${a.status}</b></div>
- <div class="row"><span>Session Fee:</span><b>${a.fee ? a.fee : 'Standard'}</b></div>
+ <div class="row"><span>Advance Consultation Fee:</span><b style="color:#2e7d32;">Rs. ${(a.paid || 1000).toLocaleString()} (PAID ✓)</b></div>
+ <div class="row"><span>Category Fee (Due After Check-up):</span><b style="color:#a87932;">Rs. ${Math.max(0, (a.fee||0) - (a.paid||0)).toLocaleString()}</b></div>
  <div class="note">
- <strong>Instructions:</strong> Please arrive or connect 10 minutes prior to your allocated time slot in a state of purity (Wudu). Punctuality is strictly enforced.
+ <strong>Instructions:</strong> Please arrive or connect 10 minutes prior to your allocated time slot in a state of purity (Wudu). Punctuality is strictly enforced. The Rs. 1,000 advance consultation fee has been recorded. The category fee is payable once your check-up / session is completed.
  </div>
  </div>
  <script>window.onload = function(){ window.print(); };<\/script>
@@ -4447,7 +4505,14 @@ const APP_I18N = {
       summary_sched: "Scheduled Date & Time:",
       summary_mode: "Consultation Mode:",
       summary_mode_val: "In-Person / Online Audio Session",
-      summary_est: "Estimated Session Fee:",
+      summary_cat_fee: "Category Treatment Fee:",
+      summary_cat_timing: "Payment Timing:",
+      summary_cat_timing_val: "Payable later when check-up is completed",
+      summary_consult_now: "Advance Consultation Fee (Pay Now to Book):",
+      pay_step_title: "💳 Step 4: Pay Rs. 1,000 Advance Consultation Fee",
+      pay_mandatory_badge: "Mandatory to Book",
+      pay_fee_notice: "To confirm your appointment slot and prevent unverified bookings, an advance consultation fee of <strong style=\"color:var(--text);\">Rs. 1,000</strong> must be transferred to either official clinic account below. <b>The remaining category fee is payable later once your check-up is completed.</b> Without this advance consultation fee payment, no appointment will be booked.",
+      pay_confirm_checkbox: "I have transferred the mandatory <b>Rs. 1,000</b> consultation fee to the selected account and will share my receipt screenshot on WhatsApp for instant activation. (Category amount will be paid later after the check-up is done).",
       btn_confirm_book: "Pay Rs. 1,000 & Confirm Booking",
       summary_disclaimer: "An instant WhatsApp confirmation message will be prepared for immediate dispatch to the clinic reception.",
 
@@ -4559,7 +4624,14 @@ const APP_I18N = {
       summary_sched: "مقررہ تاریخ و وقت:",
       summary_mode: "سیشن کا طریقہ:",
       summary_mode_val: "بالمشافہ / آن لائن آڈیو سیشن",
-      summary_est: "متوقع سیشن فیس:",
+      summary_cat_fee: "کیٹیگری علاج فیس:",
+      summary_cat_timing: "ادائیگی کا وقت:",
+      summary_cat_timing_val: "بعد میں چیک اپ مکمل ہونے پر ادا کی جائے گی",
+      summary_consult_now: "پیشگی کنسلٹیشن فیس (بکنگ کے لیے ابھی ادا کریں):",
+      pay_step_title: "💳 مرحلہ ۴: 1,000 روپے پیشگی کنسلٹیشن فیس ادا کریں",
+      pay_mandatory_badge: "بکنگ کے لیے لازمی",
+      pay_fee_notice: "اپائنٹمنٹ سلاٹ کو حتمی بنانے کے لیے <strong style=\"color:var(--text);\">1,000 روپے</strong> پیشگی کنسلٹیشن فیس نیچے دیے گئے آفیشل اکاؤنٹس میں منتقل کرنا لازمی ہے۔ <b>منتخب کیٹیگری کی فیس بعد میں چیک اپ مکمل ہونے پر ادا کی جائے گی۔</b> پیشگی فیس کی ادائیگی کے بغیر بکنگ نہیں ہوگی۔",
+      pay_confirm_checkbox: "میں نے لازمی <b>1,000 روپے</b> کنسلٹیشن فیس منتخب اکاؤنٹ میں بھیج دی ہے اور رسید کا اسکرین شاٹ واٹس ایپ پر ارسال کروں گا۔ (کیٹیگری کی رقم بعد میں چیک اپ مکمل ہونے پر ادا کی جائے گی)۔",
       btn_confirm_book: "1,000 روپے ادائیگی کے بعد بکنگ کریں",
       summary_disclaimer: "کلینک ریسپشن کو فوری ترسیل کے لیے واٹس ایپ پیغام تیار کیا جائے گا۔",
 
