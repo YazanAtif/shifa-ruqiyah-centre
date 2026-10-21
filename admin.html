@@ -7347,6 +7347,8 @@ let currentWaImageFile = null;
 let currentWaImageDataUrl = null;
 let currentWaImageName = '';
 let currentWaUploadedUrl = null;
+let currentWaUploadPromise = null;
+let currentWaPngBlob = null;
 let isTranslatingSendMsg = false;
 
 // Build the appointment message text for a given appointment (English or Urdu)
@@ -7472,7 +7474,15 @@ function sendAppt(id){
         currentWaUploadedUrl = defObj.uploadedUrl || null;
         currentWaIsDefault = true;
         hasDefault = true;
-        fetch(defObj.dataUrl).then(r=>r.blob()).then(b=>{ currentWaImageFile=b; }).catch(e=>console.warn(e));
+        convertImageToPngBlob(defObj.dataUrl).then(b => {
+          currentWaPngBlob = b;
+          try {
+            currentWaImageFile = new File([b], currentWaImageName, { type: 'image/png' });
+          } catch(e){}
+        }).catch(e => console.warn(e));
+        if(!currentWaUploadedUrl){
+          currentWaUploadPromise = uploadAttachedImageAsync(currentWaImageName, defObj.dataUrl);
+        }
       }
     } catch(e){ console.warn(e); }
   }
@@ -7556,8 +7566,15 @@ function sendAppt(id){
       </div>
 
       <label style="display:flex; align-items:center; gap:6px; font-size:11.5px; margin-top:8px; cursor:pointer; color:var(--text);">
-        <input type="checkbox" id="waIncludeLinkChk" checked> Include public image view/download link in WhatsApp text
+        <input type="checkbox" id="waIncludeLinkChk" checked onchange="handleWaIncludeLinkChange()"> Include public image view/download link in WhatsApp text
       </label>
+
+      <div style="background:rgba(18,140,126,0.08); border:1px solid rgba(18,140,126,0.25); border-radius:6px; padding:7px 10px; font-size:11.5px; color:#0f5132; margin-top:8px; line-height:1.45;">
+        💡 <b>How WhatsApp Image Sending Works:</b><br>
+        • <b>Image Link:</b> Public view/download link is automatically included in the WhatsApp message.<br>
+        • <b>WhatsApp Web (PC):</b> Image is pre-copied to your clipboard — in WhatsApp Web chat, simply press <kbd>Ctrl</kbd>+<kbd>V</kbd> to send the image directly!<br>
+        • <b>Mobile:</b> On supported mobile browsers, WhatsApp is launched with the image file attached via Native Share.
+      </div>
     </div>
 
     <div class="send-btn-row">
@@ -7574,6 +7591,9 @@ function sendAppt(id){
   openModal('sendModal');
   handleSendMsgInput();
   setupWaModalDropPaste();
+  if(hasDefault && currentWaUploadedUrl){
+    syncWaImageLinkToTextarea(true);
+  }
 }
 
 function loadApptTemplate(lang){
@@ -7586,6 +7606,10 @@ function loadApptTemplate(lang){
   if(!t) return;
 
   t.value = buildApptMessage(a, p, lang);
+  const chk = $('waIncludeLinkChk');
+  if((!chk || chk.checked) && currentWaUploadedUrl){
+    syncWaImageLinkToTextarea(true);
+  }
   applySendTextStyles(lang);
   updateTmplBtnStates(lang);
   handleSendMsgInput();
@@ -7736,13 +7760,33 @@ async function executeTranslation(explicitTarget){
 }
 
 function setWaAttachedImage(file, dataUrl, name, isDefault=false){
+  name = name || 'image.png';
+  if(file && !(file instanceof File)){
+    try {
+      file = new File([file], name, { type: (file && file.type) || 'image/png' });
+    } catch(e){}
+  }
   currentWaImageFile=file;
   currentWaImageDataUrl=dataUrl;
-  currentWaImageName=name || 'image.png';
+  currentWaImageName=name;
   currentWaIsDefault=isDefault;
+  currentWaPngBlob=null;
+
+  // Pre-cache PNG blob for instant synchronous clipboard writes
+  if(file && (file.type === 'image/png' || (file instanceof Blob && file.type.includes('png')))){
+    currentWaPngBlob = file;
+  } else {
+    convertImageToPngBlob(dataUrl).then(b => { currentWaPngBlob = b; }).catch(e => console.warn(e));
+  }
 
   showWaImagePreview(dataUrl, currentWaImageName, isDefault);
-  uploadAttachedImageAsync(currentWaImageName, dataUrl);
+
+  const badgeWrap=$('waImageBadgeWrap');
+  if(badgeWrap && !isDefault){
+    badgeWrap.innerHTML='<span class="wa-badge-ready" style="background:#fef3c7; color:#b45309;">⏳ Uploading link...</span>';
+  }
+
+  currentWaUploadPromise = uploadAttachedImageAsync(currentWaImageName, dataUrl);
 }
 
 function showWaImagePreview(dataUrl, name, isDefault){
@@ -7772,6 +7816,26 @@ function showWaImagePreview(dataUrl, name, isDefault){
   if(promptEl) promptEl.style.display='none';
 }
 
+function syncWaImageLinkToTextarea(include){
+  const t=$('sendMsgText');
+  if(!t) return;
+  let val = t.value;
+
+  // Remove any previously inserted image link line cleanly
+  val = val.replace(/(?:\r?\n)*📷\s*\*Appointment Slip \/ Image:\*\s*https?:\/\/[^\s]+/g, '').trimEnd();
+
+  if(include && currentWaUploadedUrl){
+    val = val + '\n\n📷 *Appointment Slip / Image:* ' + currentWaUploadedUrl;
+  }
+  t.value = val;
+  handleSendMsgInput();
+}
+
+function handleWaIncludeLinkChange(){
+  const chk=$('waIncludeLinkChk');
+  syncWaImageLinkToTextarea(chk ? chk.checked : true);
+}
+
 async function uploadAttachedImageAsync(filename, dataUrl){
   try {
     const res=await fetch('/api/upload', {
@@ -7782,16 +7846,31 @@ async function uploadAttachedImageAsync(filename, dataUrl){
     if(res.ok){
       const d=await res.json();
       if(d && d.url){
-        currentWaUploadedUrl=window.location.origin + d.url;
+        const origin = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+          ? window.location.origin
+          : 'https://src-online.com';
+        currentWaUploadedUrl = origin + d.url;
+
         const badgeWrap=$('waImageBadgeWrap');
         if(badgeWrap && !currentWaIsDefault){
           badgeWrap.innerHTML='<span class="wa-badge-ready">🟢 Uploaded & Ready</span>';
         }
+
+        const chk=$('waIncludeLinkChk');
+        if(!chk || chk.checked){
+          syncWaImageLinkToTextarea(true);
+        }
+        return currentWaUploadedUrl;
       }
     }
   } catch(e){
     console.warn('Image pre-upload error:', e);
+    const badgeWrap=$('waImageBadgeWrap');
+    if(badgeWrap && !currentWaIsDefault){
+      badgeWrap.innerHTML='<span class="wa-badge-ready" style="background:#fee2e2; color:#b91c1c;">⚠️ Link upload failed</span>';
+    }
   }
+  return null;
 }
 
 function toggleDefaultWaImage(){
@@ -7988,7 +8067,10 @@ function removeWaAttachedImage(){
   currentWaImageDataUrl=null;
   currentWaImageName='';
   currentWaUploadedUrl=null;
+  currentWaUploadPromise=null;
+  currentWaPngBlob=null;
   currentWaIsDefault=false;
+  syncWaImageLinkToTextarea(false);
   const box=$('waImagePreviewBox');
   if(box) box.style.display='none';
   const promptEl=$('waImagePrompt');
@@ -8071,21 +8153,27 @@ function convertImageToPngBlob(dataUrl){
 async function copyWaImageClipboard(silent=false){
   if(!currentWaImageDataUrl){
     if(!silent) toast('No image attached to copy', true);
-    return;
+    return false;
   }
   try {
-    const blob=await convertImageToPngBlob(currentWaImageDataUrl);
-    if(navigator.clipboard && window.ClipboardItem){
+    let blob = currentWaPngBlob;
+    if(!blob){
+      blob = await convertImageToPngBlob(currentWaImageDataUrl);
+      currentWaPngBlob = blob;
+    }
+    if(navigator.clipboard && window.ClipboardItem && blob){
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
       if(silent){
-        toast('📋 Image copied! In WhatsApp, press Ctrl+V to paste the image.', false, 4500);
+        toast('📋 Image copied! In WhatsApp Web, press Ctrl+V to paste.', false, 4500);
       } else {
         toast('Image copied to clipboard ✓ (Press Ctrl+V in WhatsApp to send)');
       }
+      return true;
     }
   } catch(err){
     console.warn('Clipboard write error:', err);
-    if(!silent) toast('Failed to copy image to clipboard: ' + err.message, true);
+    if(!silent) toast('Failed to copy image to clipboard: ' + (err.message || err), true);
+    return false;
   }
 }
 
@@ -8108,42 +8196,66 @@ function updateWaNumPreview(pid){
 
 function currentSendMsg(){ const t=$('sendMsgText'); return t?t.value:''; }
 
-function doSendWhatsApp(pid){
+async function doSendWhatsApp(pid){
   const p=patientById(pid); if(!p) return;
   if(!p.mobile){ toast('No mobile number for this patient',true); return; }
   const ov=$('waCountryInp')?$('waCountryInp').value:'';
   const num=waNumber(p.mobile, p.country, ov);
+
+  // If upload of image is still in progress, wait briefly for it to complete
+  if(currentWaImageDataUrl && currentWaUploadPromise && !currentWaUploadedUrl){
+    const btn=$('btnDoSendWa');
+    if(btn){ btn.disabled=true; btn.textContent='⏳ Preparing Image Link...'; }
+    try {
+      await Promise.race([
+        currentWaUploadPromise,
+        new Promise(res => setTimeout(res, 2000))
+      ]);
+    } catch(e){}
+    if(btn){ btn.disabled=false; btn.textContent='🟢 Send via WhatsApp'; }
+  }
+
+  // Ensure textarea has the image link if attached and enabled
+  const includeLinkChk=$('waIncludeLinkChk');
+  const shouldIncludeLink=includeLinkChk ? includeLinkChk.checked : true;
+  if(currentWaImageDataUrl && shouldIncludeLink && currentWaUploadedUrl){
+    syncWaImageLinkToTextarea(true);
+  }
+
   let text=currentSendMsg();
 
   // If an image is attached:
   if(currentWaImageDataUrl){
-    const includeLinkChk=$('waIncludeLinkChk');
-    const shouldIncludeLink=includeLinkChk ? includeLinkChk.checked : true;
-    if(shouldIncludeLink && currentWaUploadedUrl && !text.includes(currentWaUploadedUrl)){
-      text=text + '\n\n📷 *Appointment Slip / Image:* ' + currentWaUploadedUrl;
-      const t=$('sendMsgText');
-      if(t) t.value=text;
-    }
-
-    // Try native Web Share API with image file if supported
-    if(navigator.canShare && currentWaImageFile && navigator.canShare({ files: [currentWaImageFile] })){
+    // 1. Try native Web Share API with image file if supported (Mobile Chrome, Safari)
+    if(navigator.canShare && currentWaImageFile){
       try {
-        navigator.share({
-          title: 'SRC Appointment - ' + p.name,
-          text: text,
-          files: [currentWaImageFile]
-        }).then(()=>toast('Shared to WhatsApp ✓')).catch(e=>{
-          if(e.name !== 'AbortError') openWaUrlDirect(num, text);
-        });
-        return;
-      } catch(e){}
+        if(navigator.canShare({ files: [currentWaImageFile] })){
+          await navigator.share({
+            title: 'SRC Appointment - ' + p.name,
+            text: text,
+            files: [currentWaImageFile]
+          });
+          toast('Shared to WhatsApp ✓');
+          return;
+        }
+      } catch(e){
+        if(e && e.name === 'AbortError') return; // User closed share sheet
+      }
     }
 
-    // Auto-copy image to clipboard synchronously for instant Ctrl+V pasting in WhatsApp Web
-    copyWaImageClipboard(true);
+    // 2. Pre-copy image to clipboard synchronously for WhatsApp Web (Ctrl+V)
+    if(currentWaPngBlob && navigator.clipboard && window.ClipboardItem){
+      try {
+        navigator.clipboard.write([new ClipboardItem({ 'image/png': currentWaPngBlob })]).then(()=>{
+          toast('📋 Image copied! In WhatsApp Web, press Ctrl+V to paste.', false, 4500);
+        }).catch(e => console.warn('Clipboard write warning:', e));
+      } catch(e){}
+    } else {
+      copyWaImageClipboard(true);
+    }
   }
 
-  // Open WhatsApp directly without async delay (100% bypasses popup blocker!)
+  // Open WhatsApp directly without async delay (100% bypasses popup blocker)
   openWaUrlDirect(num, text);
 }
 
