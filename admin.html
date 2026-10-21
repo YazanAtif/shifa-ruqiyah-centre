@@ -4144,7 +4144,7 @@ html[lang="ur"] .auth-input-wrapper input {
       </div>
     </div>
     <div class="auth-logo-badge">
-      <img src="logo/src-logo.webp" onerror="this.onerror=null;this.src='logo/src-logo-256.png'" alt="Shifa-Ruqiyah Centre" class="auth-logo-img">
+      <img src="logo/src-logo.webp?v=5" onerror="this.onerror=null;this.src='logo/src%20new%20logo.jpeg?v=5'" alt="Shifa-Ruqiyah Centre" class="auth-logo-img">
     </div>
     <h2 class="auth-title" data-i18n="auth_title">SHIFA-RUQIYAH CENTRE</h2>
     <div class="auth-badge" data-i18n="auth_badge">ADMIN CONSOLE</div>
@@ -4218,14 +4218,14 @@ html[lang="ur"] .auth-input-wrapper input {
 </div>
 
 <!-- Full-Screen UHD Page Loader with BIG Center Logo & White UHD Smoke -->
-<div id="pageLoader" class="page-loader" onclick="dismissLoaderNow()" aria-label="Loading Shifa-Ruqiyah Centre">
+<div id="pageLoader" class="page-loader" onclick="dismissLoaderNow()" ontouchstart="dismissLoaderNow()" role="button" tabindex="0" aria-label="Loading Shifa-Ruqiyah Centre - Click to enter">
   <div class="loader-bg-overlay"></div>
   <div class="loader-content">
     <div class="loader-smoke-wrapper" id="loaderSmokeWrapper" title="Shifa-Ruqiyah Centre - Click to Enter">
       <canvas id="loaderSmokeCanvas" class="loader-smoke-canvas" width="480" height="480" aria-hidden="true"></canvas>
       <div class="loader-aura" aria-hidden="true"></div>
       <div class="loader-logo-orb" id="loaderLogoOrb">
-        <img src="logo/src-logo.webp" onerror="this.onerror=null;this.src='logo/src-logo-512.png'" alt="Shifa-Ruqiyah Centre Emblem" class="loader-logo-img">
+        <img src="logo/src-logo.webp?v=5" onerror="this.onerror=null;this.src='logo/src%20new%20logo.jpeg?v=5'" alt="Shifa-Ruqiyah Centre Emblem" class="loader-logo-img">
       </div>
     </div>
     <div class="loader-text-group">
@@ -4239,6 +4239,16 @@ html[lang="ur"] .auth-input-wrapper input {
     </div>
   </div>
 </div>
+<script>
+  // Failsafe auto-dismiss: guarantees admin loader never blocks the portal
+  setTimeout(function(){
+    var l = document.getElementById('pageLoader');
+    if (l) {
+      l.classList.add('loaded');
+      setTimeout(function(){ if(l && l.parentNode) l.remove(); }, 200);
+    }
+  }, 750);
+</script>
 
 <header class="app-header">
   <div class="brand-header-wrap">
@@ -4246,7 +4256,7 @@ html[lang="ur"] .auth-input-wrapper input {
       <canvas id="smokeCanvas" class="smoke-canvas" width="150" height="150" aria-hidden="true"></canvas>
       <div class="logo-aura" aria-hidden="true"></div>
       <div class="logo-orb" id="logoOrb">
-        <img src="logo/src-logo.webp" onerror="this.onerror=null;this.src='logo/src-logo-256.png'" alt="Shifa-Ruqiyah Centre Logo" class="brand-logo-img">
+        <img src="logo/src-logo.webp?v=5" onerror="this.onerror=null;this.src='logo/src%20new%20logo.jpeg?v=5'" alt="Shifa-Ruqiyah Centre Logo" class="brand-logo-img">
       </div>
     </div>
     <div class="brand-group">
@@ -10132,11 +10142,11 @@ let dismissLoaderNow = function(){};
   });
 
   wrapper.addEventListener('click', e => {
-    e.stopPropagation();
-    for(let i = 0; i < 18; i++){
-      particles.push(new WhiteSmokeParticle(cx, cy, true));
-    }
+    dismiss();
   });
+  wrapper.addEventListener('touchstart', e => {
+    dismiss();
+  }, { passive: true });
 
   let animRunning = true;
   function renderLoader(){
@@ -10168,9 +10178,9 @@ let dismissLoaderNow = function(){};
   dismissLoaderNow = dismiss;
 
   let progress = 0;
-  const statuses = ['Loading Core System...', 'Calibrating Clinical Portal...', 'Connecting Database...', 'Admin Ready'];
+  const statuses = ['Loading Core System...', 'Calibrating Clinical Portal...', 'Admin Ready'];
   const interval = setInterval(() => {
-    progress += Math.floor(Math.random() * 16) + 12;
+    progress += 35;
     if(progress > 100) progress = 100;
     if(pBar) pBar.style.width = progress + '%';
     const statusIdx = Math.min(Math.floor((progress / 100) * (statuses.length - 1)), statuses.length - 1);
@@ -10178,11 +10188,13 @@ let dismissLoaderNow = function(){};
 
     if(progress >= 100){
       clearInterval(interval);
-      setTimeout(dismiss, 320);
+      setTimeout(dismiss, 100);
     }
-  }, 110);
+  }, 60);
 
-  setTimeout(dismiss, 2800);
+  setTimeout(dismiss, 650);
+  loader.addEventListener('click', dismiss);
+  loader.addEventListener('touchstart', dismiss, { passive: true });
 })();
 
 
@@ -10236,6 +10248,16 @@ function triggerPwaInstall() {
       alert("To install on your device:\n\n1. Tap your browser menu (⋮) in the top-right.\n2. Select 'Install app' or 'Add to Home screen'.");
     }
   }
+}
+
+
+// Client cache cleaner for updated branding
+if ('caches' in window) {
+  caches.keys().then(function(keys) {
+    keys.forEach(function(k) {
+      if (k !== 'src-pwa-v2.0.0') caches.delete(k);
+    });
+  });
 }
 
 </script>

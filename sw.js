@@ -4,7 +4,7 @@
    Strategy: Network-First for HTML/APIs, Stale-While-Revalidate for Assets
    ===================================================================== */
 
-const CACHE_NAME = 'src-pwa-v1.0.8';
+const CACHE_NAME = 'src-pwa-v2.0.0';
 
 const PRECACHE_ASSETS = [
   '/',
@@ -79,6 +79,20 @@ self.addEventListener('fetch', event => {
             return caches.match('/') || caches.match('/index.html');
           });
         })
+    );
+    return;
+  }
+
+  // Logo assets - ALWAYS Network-First with cache update to prevent stale branding
+  if (url.pathname.includes('/logo/') || url.pathname.includes('logo')) {
+    event.respondWith(
+      fetch(req).then(res => {
+        if (res && res.status === 200) {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+        }
+        return res;
+      }).catch(() => caches.match(req))
     );
     return;
   }
