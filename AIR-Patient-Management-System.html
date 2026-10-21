@@ -102,12 +102,12 @@
   /* UHD Reactive Smoke & Emblem Aura */
   .logo-smoke-container{
     position:relative;
-    width:72px;
-    height:72px;
+    width:96px;
+    height:96px;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex:0 0 72px;
+    flex:0 0 96px;
     user-select:none;
     cursor:pointer;
   }
@@ -116,17 +116,17 @@
     top:50%;
     left:50%;
     transform:translate(-50%, -50%);
-    width:180px;
-    height:180px;
+    width:220px;
+    height:220px;
     pointer-events:none;
     z-index:1;
   }
   .logo-aura{
     position:absolute;
-    inset:-7px;
+    inset:-9px;
     border-radius:50%;
     background:radial-gradient(circle, rgba(255,255,255,.3) 0%, rgba(212,175,55,.25) 45%, transparent 70%);
-    filter:blur(8px);
+    filter:blur(10px);
     pointer-events:none;
     z-index:0;
     animation:auraPulse 3.5s ease-in-out infinite alternate;
@@ -137,12 +137,12 @@
   }
   .logo-orb{
     position:relative;
-    width:68px;
-    height:68px;
+    width:90px;
+    height:90px;
     border-radius:50%;
     overflow:hidden;
-    border:2.5px solid rgba(224,195,130,.92);
-    box-shadow:0 6px 18px rgba(61,40,29,.25), 0 0 16px rgba(212,175,55,.45);
+    border:3px solid rgba(224,195,130,.95);
+    box-shadow:0 8px 26px rgba(61,40,29,.28), 0 0 22px rgba(212,175,55,.5);
     z-index:2;
     transition:transform .2s cubic-bezier(.2,.8,.3,1), box-shadow .25s ease, border-color .25s ease;
     transform-style:preserve-3d;
@@ -589,14 +589,14 @@
       flex: 1 !important;
     }
     .logo-smoke-container {
-      width: 52px !important;
-      height: 52px !important;
-      flex: 0 0 52px !important;
+      width: 64px !important;
+      height: 64px !important;
+      flex: 0 0 64px !important;
     }
     .logo-orb {
-      width: 50px !important;
-      height: 50px !important;
-      border-width: 2px !important;
+      width: 60px !important;
+      height: 60px !important;
+      border-width: 2.5px !important;
     }
     .smoke-canvas {
       display: none !important;
@@ -2257,9 +2257,9 @@
   @media(max-width:600px){
     header.app-header{padding:10px 14px}
     .brand-header-wrap{gap:12px}
-    .logo-smoke-container{width:52px;height:52px;flex:0 0 52px}
-    .logo-orb{width:50px;height:50px}
-    .smoke-canvas{width:140px;height:140px}
+    .logo-smoke-container{width:64px;height:64px;flex:0 0 64px}
+    .logo-orb{width:60px;height:60px}
+    .smoke-canvas{width:160px;height:160px}
     header.app-header h1{font-size:16px}
     header.app-header .clock{display:none}
     nav.tabs{top:66px}
