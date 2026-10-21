@@ -3948,25 +3948,41 @@
     text-decoration: underline;
   }
 
+  /* Green header tabs matching the theme */
+  a.header-timer-btn,
+  a.header-timer-btn:visited,
+  a.header-timer-btn:hover,
+  a.header-timer-btn:active,
+  .nav-portal-label {
+    color: #ffffff !important;
+  }
+
   .header-user-btn {
-    background: rgba(124, 83, 57, 0.22);
-    border: 1.5px solid rgba(171, 125, 88, 0.45);
-    color: #ffffff;
+    background: #1e6b37 !important;
+    border: 1.5px solid #144e26 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(30,107,55,.3) !important;
   }
   .header-user-btn:hover {
-    background: rgba(124, 83, 57, 0.45);
-    border-color: #d4af37;
+    background: #144e26 !important;
+    border-color: #0f3d1d !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20,78,38,.4) !important;
   }
 
   .header-logout-btn {
-    background: rgba(190, 40, 40, 0.22);
-    border: 1.5px solid rgba(220, 60, 60, 0.45);
-    color: #ffb4b4;
+    background: #1e6b37 !important;
+    border: 1.5px solid #144e26 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(30,107,55,.3) !important;
   }
   .header-logout-btn:hover {
-    background: rgba(220, 50, 50, 0.45);
-    color: #ffffff;
-    border-color: #ff6b6b;
+    background: #144e26 !important;
+    border-color: #0f3d1d !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20,78,38,.4) !important;
   }
 
 
@@ -4274,9 +4290,9 @@ html[lang="ur"] .auth-input-wrapper input {
       <button type="button" class="admin-lang-btn active" id="adminLangEn" data-lang="en" onclick="setAdminLanguage('en')" title="Switch to English">EN</button>
       <button type="button" class="admin-lang-btn" id="adminLangUr" data-lang="ur" onclick="setAdminLanguage('ur')" title="اردو میں تبدیل کریں">اردو</button>
     </div>
-    <a href="/" class="header-timer-btn" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 5px;" title="Open Customer & Patient Portal">
+    <a href="/" class="header-timer-btn" style="text-decoration: none; color: #ffffff !important; display: inline-flex; align-items: center; gap: 5px;" title="Open Customer & Patient Portal">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      <span class="nav-portal-label" data-i18n="nav_portal">Portal</span>
+      <span class="nav-portal-label" data-i18n="nav_portal" style="color: #ffffff !important;">Portal</span>
     </a>
     <button type="button" class="header-timer-btn" id="headerTimerBtn" onclick="openTimerModal()" title="Open Session Timer" style="display: inline-flex; align-items: center; gap: 5px;">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
