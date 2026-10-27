@@ -59,6 +59,9 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
   if (!url.protocol.startsWith('http')) return;
 
+  // Let browser native media element handle audio streaming directly (avoids ERR_FAILED on range requests)
+  if (req.destination === 'audio' || req.destination === 'video' || url.pathname.endsWith('.mp3') || url.pathname.includes('/media/audio/')) return;
+
   // HTML Navigation - Network First, fallback to cache
   if (req.mode === 'navigate' || req.headers.get('accept')?.includes('text/html')) {
     event.respondWith(

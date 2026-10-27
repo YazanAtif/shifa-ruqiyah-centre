@@ -437,7 +437,413 @@
  font-size: 0.72rem; color: var(--gold-dark); font-weight: 600;
  }
 
- /* Interactive Calendar in Booking */
+ 
+/* ================= ISLAMIC HIJRI CALENDAR & LIVE DATE-TIME SYSTEM ================= */
+.header-datetime-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1.5px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  box-shadow: 0 2px 8px rgba(48, 31, 22, 0.05);
+  user-select: none;
+}
+.header-datetime-badge:hover {
+  background: #ffffff;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(197, 155, 39, 0.18);
+}
+.hdt-hijri {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--brown-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.hdt-icon {
+  font-size: 0.95rem;
+  filter: drop-shadow(0 0 3px rgba(197, 155, 39, 0.45));
+}
+.hdt-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--border);
+}
+.hdt-greg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.73rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.hdt-live-time {
+  font-weight: 800;
+  color: var(--gold-dark);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 900px) {
+  .header-datetime-badge .hdt-greg {
+    display: none;
+  }
+  .header-datetime-badge .hdt-divider {
+    display: none;
+  }
+}
+@media (max-width: 580px) {
+  .header-datetime-badge {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+  .header-datetime-badge .hdt-hijri span:not(.hdt-icon) {
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Overview Live Islamic Bar */
+.islamic-live-bar {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 246, 240, 0.96) 100%);
+  border: 1.5px solid rgba(197, 155, 39, 0.38);
+  border-radius: var(--radius);
+  padding: 12px 18px;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 18px rgba(48, 31, 22, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+.islamic-live-bar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0; width: 4px;
+  background: linear-gradient(180deg, var(--gold), var(--brown));
+}
+.ilb-date-cluster {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ilb-hijri-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #fbf2d8 0%, #faeac0 100%);
+  border: 1px solid var(--gold);
+  color: var(--brown-dark);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(197, 155, 39, 0.15);
+}
+.ilb-hijri-pill:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+}
+.ilb-tag {
+  background: #2d7a4d;
+  color: #ffffff;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.ilb-greg-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.ilb-clock-cluster {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ilb-time-badge {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--brown-dark);
+  font-variant-numeric: tabular-nums;
+  background: var(--card);
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  letter-spacing: 0.03em;
+  box-shadow: 0 1px 4px rgba(48, 31, 22, 0.03);
+}
+.ilb-cal-btn {
+  background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown) 100%);
+  color: #fff;
+  border: 1px solid var(--brown-dark);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(48, 31, 22, 0.15);
+}
+.ilb-cal-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Booking Calendar Hijri Styling */
+.cal-month-wrap {
+  text-align: center;
+}
+.cal-hijri-subtitle {
+  font-size: 0.76rem;
+  color: var(--gold-dark);
+  font-weight: 700;
+  margin-top: 3px;
+  font-family: 'Cinzel', serif;
+}
+.cal-day-cell {
+  min-height: 52px;
+  aspect-ratio: auto;
+  padding: 4px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.cal-greg-num {
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.cal-hijri-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  font-family: 'Amiri', serif;
+  line-height: 1;
+}
+.cal-day-cell.selected .cal-hijri-num {
+  color: #ffe6a3 !important;
+}
+.cal-day-cell.today .cal-hijri-num {
+  color: var(--gold);
+}
+.cal-day-cell.ayyam-beed {
+  border-color: rgba(197, 155, 39, 0.45);
+  background: rgba(247, 238, 207, 0.15);
+}
+.cal-day-cell.ayyam-beed::after {
+  content: '🌙';
+  font-size: 8px;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  line-height: 1;
+}
+.cal-day-cell.is-friday {
+  background: rgba(45, 122, 77, 0.04);
+}
+.sel-hijri-tag {
+  display: inline-block;
+  background: #f7eecf;
+  color: var(--gold-dark);
+  padding: 2px 9px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  margin-left: 6px;
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  font-weight: 700;
+}
+
+/* Hijri Modal */
+.hijri-modal-card {
+  max-width: 680px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+.hijri-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0;
+  padding: 10px 14px;
+  background: var(--cream);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.hijri-month-header {
+  text-align: center;
+}
+.hijri-month-ar {
+  font-family: 'Amiri', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--brown-dark);
+  line-height: 1.2;
+}
+.hijri-month-en {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  font-family: 'Cinzel', serif;
+}
+.hijri-greg-span {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.hijri-offset-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--card-muted);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  font-size: 0.74rem;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.offset-btns {
+  display: flex;
+  gap: 4px;
+}
+.offset-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--brown-dark);
+}
+.offset-btn.active {
+  background: var(--gold);
+  color: #ffffff;
+  border-color: var(--gold-dark);
+}
+.hijri-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.hijri-weekday {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding-bottom: 4px;
+  text-transform: uppercase;
+}
+.hijri-day-tile {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 3px;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.hijri-day-tile:hover {
+  background: var(--cream);
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+.hijri-day-tile.today {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(197, 155, 39, 0.12), rgba(247, 238, 207, 0.4));
+  box-shadow: 0 0 0 1px var(--gold);
+}
+.hijri-day-tile.selected {
+  background: var(--brown-dark) !important;
+  color: #ffffff !important;
+  border-color: var(--brown-dark) !important;
+}
+.hijri-day-tile.selected .h-tile-hday,
+.hijri-day-tile.selected .h-tile-greg {
+  color: #ffffff !important;
+}
+.hijri-day-tile.ayyam-beed {
+  border-color: rgba(197, 155, 39, 0.55);
+  background: rgba(247, 238, 207, 0.25);
+}
+.hijri-day-tile.is-friday {
+  border-bottom: 2.5px solid var(--green);
+}
+.h-tile-hday {
+  font-family: 'Amiri', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--brown-dark);
+}
+.h-tile-greg {
+  font-size: 0.65rem;
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1;
+}
+.h-tile-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 9px;
+  line-height: 1;
+}
+.hijri-selected-detail-card {
+  background: var(--card-muted);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+html[lang="ur"] .hdt-live-time { direction: ltr; display: inline-block; }
+html[lang="ur"] .ilb-time-badge { direction: ltr; display: inline-block; }
+
+/* Interactive Calendar in Booking */
  .calendar-container {
  background: var(--card); border: 1px solid var(--border);
  border-radius: var(--radius); padding: 20px; margin-bottom: 24px;
@@ -1855,6 +2261,8 @@ html[lang="ur"] .adhkar-filter-pill {
   }
 
 </style>
+  <link rel="stylesheet" href="/media/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="/media/skiper-hijri.css" />
 </head>
 <body>
 <!-- Full-Screen UHD Page Loader with BIG Center Logo & White UHD Smoke -->
@@ -1914,18 +2322,31 @@ html[lang="ur"] .adhkar-filter-pill {
  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> <span data-i18n="tab_overview">Overview</span>
  </button>
  <button class="tab-btn" id="tab-btn-book" onclick="switchTab('book')">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span data-i18n="tab_book">Book Session</span>
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span data-i18n="tab_book">Book</span>
+ </button>
+ <button class="tab-btn" id="tab-btn-names" onclick="switchTab('names')">
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span data-i18n="tab_names">99 Names</span>
+ </button>
+ <button class="tab-btn" id="tab-btn-calendar" onclick="switchTab('calendar')">
+ <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> <span data-i18n="tab_calendar">Hijri Cal</span>
  </button>
  <button class="tab-btn" id="tab-btn-tracker" onclick="switchTab('tracker')">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span data-i18n="tab_tracker">My Appointments</span>
+ <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span data-i18n="tab_tracker">Appointments</span>
  </button>
  <button class="tab-btn" id="tab-btn-profile" onclick="switchTab('profile')">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> <span data-i18n="tab_profile">Spiritual &amp; Adhkar</span>
+ <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 2px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> <span data-i18n="tab_profile">Adhkar</span>
  </button>
  </nav>
 
  <!-- Right Header Actions -->
  <div class="header-actions">
+ <div class="header-datetime-badge" id="headerDateTimeBadge" onclick="switchTab('calendar')" title="View Islamic Hijri Calendar">
+   <div class="hdt-hijri">
+     <span class="hdt-icon">🌙</span>
+     <span class="hdt-hijri-date" id="headerHijriDate">Loading...</span>
+   </div>
+ </div>
+
  <div class="lang-switcher-pill" role="group" aria-label="Language Selector">
    <button type="button" class="lang-switcher-btn active" id="btnLangEn" data-lang="en" onclick="setAppLanguage('en')" title="Switch to English">EN</button>
    <button type="button" class="lang-switcher-btn" id="btnLangUr" data-lang="ur" onclick="setAppLanguage('ur')" title="اردو میں تبدیل کریں">اردو</button>
@@ -1947,6 +2368,57 @@ html[lang="ur"] .adhkar-filter-pill {
 
  <!-- ================= VIEW 1: HOME / PORTAL OVERVIEW ================= -->
  <section class="view-panel active" id="view-home">
+
+ <!-- Live Islamic Hijri & Prayer Date Bar -->
+ <div class="islamic-live-bar" id="islamicLiveBar">
+   <div class="ilb-left">
+     <div class="ilb-hijri-pill" onclick="switchTab('calendar')" title="View Full Islamic Calendar">
+       <span style="font-size: 1.1rem;">🌙</span>
+       <div>
+         <div class="ilb-hijri-main" id="ilbHijriMain">Loading Hijri Date...</div>
+         <div class="ilb-greg-sub" id="ilbGregSub">--</div>
+       </div>
+     </div>
+     <div class="ilb-sunnah-badge" id="ilbSunnahBadge">
+       <span>✨</span> <span id="ilbSunnahText">Sacred Islamic Month</span>
+     </div>
+   </div>
+   <div class="ilb-right">
+     <div class="ilb-time-badge" id="liveTimeClock" style="font-size:0.86rem; font-weight:700; color:var(--brown-dark); font-variant-numeric:tabular-nums; background:var(--card); border:1px solid var(--border); padding:5px 12px; border-radius:20px;">--:--:-- --</div>
+     <button type="button" class="ilb-cal-btn" onclick="switchTab('calendar')">
+       <span>📅</span> <span data-i18n="btn_view_hijri_cal">Hijri Calendar</span>
+     </button>
+     <button type="button" class="ilb-cal-btn" style="background:var(--gold-dark);" onclick="switchTab('names')">
+       <span>⭐</span> <span data-i18n="btn_view_99_names">99 Names of Allah</span>
+     </button>
+   </div>
+ </div>
+
+ <!-- Quick Feature Launchers Grid -->
+ <div class="quick-action-cards-grid">
+   <div class="quick-feature-card" onclick="switchTab('names')">
+     <div class="qfc-icon-wrap">⭐</div>
+     <div class="qfc-info">
+       <h4 data-i18n="qfc_names_title">99 Names of Allah</h4>
+       <p data-i18n="qfc_names_sub">@skiper-ui/skiper48 3D swipe cards with authentic voice-overs, bilingual reflections &amp; Tasbeeh.</p>
+     </div>
+   </div>
+   <div class="quick-feature-card" onclick="switchTab('calendar')">
+     <div class="qfc-icon-wrap">🌙</div>
+     <div class="qfc-info">
+       <h4 data-i18n="qfc_cal_title">Islamic Hijri Calendar</h4>
+       <p data-i18n="qfc_cal_sub">Umm al-Qura moon phases, Ayyam al-Beed Sunnah fast days &amp; instant session booking.</p>
+     </div>
+   </div>
+   <div class="quick-feature-card" onclick="switchTab('book')">
+     <div class="qfc-icon-wrap">📅</div>
+     <div class="qfc-info">
+       <h4 data-i18n="qfc_book_title">Book Ruqyah Shari'ah</h4>
+       <p data-i18n="qfc_book_sub">Schedule 1-on-1 direct appointment with Islamic Hijri &amp; Gregorian alignment.</p>
+     </div>
+   </div>
+ </div>
+
  <!-- Hero Banner -->
  <div class="hero-banner">
  <div class="hero-bg-arabic" aria-hidden="true">شفاء</div>
@@ -2134,13 +2606,21 @@ html[lang="ur"] .adhkar-filter-pill {
  <div class="calendar-container">
  <div class="cal-header">
  <button type="button" class="cal-nav-btn" onclick="prevMonth()">‹</button>
- <div class="cal-month-title" id="calMonthTitle">October 2026</div>
+ <div class="cal-month-wrap">
+   <div class="cal-month-title" id="calMonthTitle">October 2026</div>
+   <div class="cal-hijri-subtitle" id="calHijriSubTitle">🌙 Hijri Month</div>
+ </div>
  <button type="button" class="cal-nav-btn" onclick="nextMonth()">›</button>
  </div>
  <div class="cal-grid-weekdays">
  <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
  </div>
  <div class="cal-grid-days" id="calDaysGrid"></div>
+<div class="cal-legend" style="display: flex; justify-content: center; gap: 14px; margin-top: 12px; font-size: 0.72rem; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 8px;">
+  <span><span style="color:var(--gold-dark); font-weight:700;">15</span> = Hijri Date</span>
+  <span>🌙 = Ayyam al-Beed (13,14,15)</span>
+  <span style="color:var(--green); font-weight:700;">Fr = Jumu'ah</span>
+</div>
  </div>
 
  <!-- Time Slots Component -->
@@ -2468,6 +2948,133 @@ html[lang="ur"] .adhkar-filter-pill {
  </div>
  </section>
 
+ 
+ <!-- ================= VIEW 5: 99 NAMES OF ALLAH (@skiper-ui/skiper48 CARD SWIPE CAROUSEL) ================= -->
+ <section class="view-panel" id="view-names">
+   <div class="sec-head">
+     <div>
+       <h2 data-i18n="names_view_title">الأَسْمَاءُ الْحُسْنَىٰ • 99 Beautiful Names of Allah</h2>
+       <p data-i18n="names_view_sub">Swipe through the divine attributes in @skiper-ui/skiper48 3D stack format. Listen to authentic voice-overs, study bilingual translations, and recite with integrated Tasbeeh.</p>
+     </div>
+   </div>
+
+   <div class="skiper-showcase-container">
+     <!-- Controls Bar -->
+     <div class="skiper-controls-bar">
+       <div class="skiper-ctrl-group">
+         <select class="skiper-select" id="skiperJumpSelect" onchange="jumpToSkiperSlide(parseInt(this.value, 10))" title="Jump directly to any Name">
+           <option value="0">Loading Names...</option>
+         </select>
+         <button type="button" class="skiper-pill-btn" onclick="pickRandomSkiperSlide()" title="Pick random Name for daily contemplation">
+           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+           <span data-i18n="skiper_random">Random Name</span>
+         </button>
+       </div>
+
+       <div class="skiper-ctrl-group">
+         <button type="button" class="skiper-pill-btn" id="skiperAutoVoiceBtn" onclick="toggleAutoVoiceOver()" title="Automatically recite voice-over when slide changes">
+           <span id="skiperAutoVoiceIcon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg></span>
+           <span id="skiperAutoVoiceText" data-i18n="skiper_auto_voice">Auto Voice: OFF</span>
+         </button>
+         <button type="button" class="skiper-pill-btn" id="skiperAutoplayBtn" onclick="toggleSkiperAutoplay()" title="Start automatic slideshow">
+           <span id="skiperAutoplayIcon"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></span>
+           <span id="skiperAutoplayText" data-i18n="skiper_autoplay">Auto-Play</span>
+         </button>
+         <button type="button" class="skiper-pill-btn" id="skiperSpeedBtn" onclick="toggleAudioSpeed()" title="Recitation playback speed">
+           <span id="skiperSpeedLabel">1.0x</span>
+         </button>
+         <div class="skiper-counter-badge" id="skiperCounterBadge">
+           <span id="skiperCurrentIndex">01</span> / <span id="skiperTotalIndex">99</span>
+         </div>
+       </div>
+     </div>
+
+     <!-- 3D Card Stack Viewport (@skiper-ui/skiper48 Swiper) -->
+     <div class="skiper48-stage-container" id="skiperStageViewport">
+       <!-- Left/Right Chevrons -->
+       <button type="button" class="skiper-chevron-btn skiper-chevron-prev" onclick="prevSkiperSlide()" aria-label="Previous Name">‹</button>
+       <button type="button" class="skiper-chevron-btn skiper-chevron-next" onclick="nextSkiperSlide()" aria-label="Next Name">›</button>
+
+       <!-- Swiper 3D Cards Stack -->
+       <div class="swiper skiper48-swiper">
+         <div class="swiper-wrapper" id="skiperCardDeck">
+           <!-- Slides dynamically injected by skiper-hijri.js -->
+         </div>
+       </div>
+     </div>
+
+     <!-- Progress Track -->
+     <div class="skiper-progress-track">
+       <div class="skiper-progress-fill" id="skiperProgressFill" style="width: 1%;"></div>
+     </div>
+     <div class="skiper-swipe-hint">
+       <span>👈 Swipe Left / Right or Drag cards to navigate • Keyboard [← / →] supported 👉</span>
+     </div>
+   </div>
+ </section>
+
+ <!-- ================= VIEW 6: DEDICATED IN-PAGE ISLAMIC HIJRI CALENDAR ================= -->
+ <section class="view-panel" id="view-calendar">
+   <div class="sec-head">
+     <div>
+       <h2 data-i18n="cal_view_title">التقويم الهجري الإسلامي • Islamic Hijri Calendar</h2>
+       <p data-i18n="cal_view_sub">Explore Sunnah fasting days (Ayyam al-Beed), moon sighting adjustments, and sacred Islamic months with direct appointment scheduling.</p>
+     </div>
+   </div>
+
+   <div class="inpage-hijri-card">
+     <!-- In-Page Calendar Header -->
+     <div class="inpage-hijri-hero">
+       <div class="inpage-hijri-titles">
+         <h2 id="inpageHijriMonthAr">جُمَادَى الأُولَى 1448 هـ</h2>
+         <p id="inpageHijriMonthEn">Jumada al-Awwal 1448 AH • <span id="inpageHijriGregRange">October – November 2026</span></p>
+       </div>
+       <div class="inpage-moon-phase-badge" id="inpageMoonPhaseBadge">
+         <span id="inpageMoonIcon">🌙</span> <span id="inpageMoonPhaseText">Waxing Gibbous</span>
+       </div>
+     </div>
+
+     <!-- Navigation Bar -->
+     <div class="inpage-hijri-nav">
+       <button type="button" class="inpage-nav-pill-btn" onclick="inpageNavHijriMonth(-1)" title="Previous Month">‹ Previous</button>
+       <div class="inpage-month-center">
+         <span style="font-size:0.8rem; color:var(--muted); font-weight:600;" data-i18n="lbl_current_view">Viewing Month:</span>
+         <strong id="inpageNavMonthTitle" style="color:var(--brown-dark); font-size:1.02rem; margin-left:6px;">Jumada al-Awwal 1448</strong>
+       </div>
+       <div style="display:flex; gap:8px;">
+         <button type="button" class="inpage-nav-pill-btn" onclick="inpageResetHijriMonth()" title="Jump to Today">Today</button>
+         <button type="button" class="inpage-nav-pill-btn" onclick="inpageNavHijriMonth(1)" title="Next Month">Next ›</button>
+       </div>
+     </div>
+
+     <!-- Moon Sighting Offset Bar -->
+     <div class="inpage-offset-bar">
+       <span data-i18n="lbl_moon_adjust">Moon Sighting Adjustment:</span>
+       <button type="button" class="inpage-offset-btn" id="inpageOffset_m2" onclick="inpageSetOffset(-2)">-2</button>
+       <button type="button" class="inpage-offset-btn" id="inpageOffset_m1" onclick="inpageSetOffset(-1)">-1</button>
+       <button type="button" class="inpage-offset-btn active" id="inpageOffset_0" onclick="inpageSetOffset(0)">Standard (0)</button>
+       <button type="button" class="inpage-offset-btn" id="inpageOffset_p1" onclick="inpageSetOffset(1)">+1</button>
+       <button type="button" class="inpage-offset-btn" id="inpageOffset_p2" onclick="inpageSetOffset(2)">+2</button>
+     </div>
+
+     <!-- Calendar Days Grid -->
+     <div class="inpage-cal-grid" id="inpageCalGrid">
+       <!-- Weekday headers + day tiles dynamically rendered -->
+     </div>
+
+     <!-- Selected Date Detail & Action Card -->
+     <div class="inpage-selected-detail-card" id="inpageSelectedDetailCard">
+       <div class="inpage-detail-info">
+         <h4 id="inpageSelHijriTitle">Loading Islamic Date...</h4>
+         <p id="inpageSelGregSubtitle">Click any day tile above to inspect Sunnah fasts and book Ruqyah</p>
+       </div>
+       <button type="button" class="inpage-book-action-btn" id="inpageBookBtn" onclick="bookFromInpageCalendar()">
+         <span>📅</span> <span data-i18n="btn_book_on_this_date">Book Ruqyah on this Date →</span>
+       </button>
+     </div>
+   </div>
+ </section>
+
  <footer class="portal-footer" style="text-align: center; padding: 28px 16px 20px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border-light); margin-top: 48px;">
  <p style="margin-bottom: 10px; font-weight: 500;">&copy; 2026 Shifa-Ruqiyah Centre &middot; Ruqyah Shari'ah &amp; Spiritual Healing</p>
  <div style="display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap;">
@@ -2487,6 +3094,88 @@ html[lang="ur"] .adhkar-filter-pill {
  <!-- ================= FLOATING / MODAL COMPONENTS ================= -->
 
  <!-- 1. Digital Tasbeeh Counter Modal -->
+ 
+ <!-- ================= 4. INTERACTIVE ISLAMIC HIJRI CALENDAR MODAL ================= -->
+ <div class="modal-overlay" id="hijriCalendarModal" onclick="if(event.target===this) closeHijriModal()">
+   <div class="modal-card hijri-modal-card">
+     <button class="modal-close-btn" onclick="closeHijriModal()" title="Close Calendar">✕</button>
+     
+     <div style="text-align: center; margin-bottom: 12px;">
+       <div style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: #f7eecf; color: var(--gold-dark); font-size: 22px; margin-bottom: 6px; box-shadow: 0 2px 8px rgba(197, 155, 39, 0.25);">
+         🌙
+       </div>
+       <h3 style="font-family: 'Cinzel', 'Playfair Display', serif; font-size: 1.45rem; color: var(--brown-dark);" data-i18n="hijri_modal_title">
+         Islamic Hijri Calendar
+       </h3>
+       <p style="font-size: 0.78rem; color: var(--muted);" data-i18n="hijri_modal_sub">
+         Umm al-Qura System • Sunnah Fasting Days (Ayyam al-Beed) &amp; Blessed Dates
+       </p>
+     </div>
+
+     <div class="hijri-nav-bar">
+       <button type="button" class="cal-nav-btn" onclick="navHijriMonth(-1)" title="Previous Hijri Month">‹</button>
+       <div class="hijri-month-header">
+         <div class="hijri-month-ar" id="hijriMonthAr">جُمَادَى الأُولَى 1448 هـ</div>
+         <div class="hijri-month-en" id="hijriMonthEn">Jumada al-Awwal 1448 AH</div>
+         <div class="hijri-greg-span" id="hijriGregSpan">October – November 2026</div>
+       </div>
+       <button type="button" class="cal-nav-btn" onclick="navHijriMonth(1)" title="Next Hijri Month">›</button>
+     </div>
+
+     <div class="hijri-offset-bar">
+       <span><span data-i18n="hijri_offset_lbl">Moon Sighting Adjustment:</span></span>
+       <div class="offset-btns">
+         <button type="button" class="offset-btn" onclick="setHijriOffset(-2)" id="offsetBtnM2">-2</button>
+         <button type="button" class="offset-btn" onclick="setHijriOffset(-1)" id="offsetBtnM1">-1</button>
+         <button type="button" class="offset-btn active" onclick="setHijriOffset(0)" id="offsetBtn0">Standard (0)</button>
+         <button type="button" class="offset-btn" onclick="setHijriOffset(1)" id="offsetBtnP1">+1</button>
+         <button type="button" class="offset-btn" onclick="setHijriOffset(2)" id="offsetBtnP2">+2</button>
+       </div>
+       <button type="button" class="btn btn-outline-white btn-sm" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; color: var(--brown-dark); border-color: var(--border);" onclick="goToCurrentHijriMonth()" data-i18n="btn_today">Today</button>
+     </div>
+
+     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 12px; font-size: 0.7rem; color: var(--muted);">
+       <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--gold);"></span> Today</span>
+       <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="color: var(--gold-dark); font-weight: 700;">🌙</span> Ayyam al-Beed (13, 14, 15 Sunnah Fast)</span>
+       <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 3px; background: var(--green);"></span> Friday (Jumu'ah)</span>
+       <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="font-size: 9px;">✨</span> Blessed Event</span>
+     </div>
+
+     <div class="hijri-cal-grid" style="margin-bottom: 6px;">
+       <div class="hijri-weekday">Sun<br><small>الأحد</small></div>
+       <div class="hijri-weekday">Mon<br><small>الإثنين</small></div>
+       <div class="hijri-weekday">Tue<br><small>الثلاثاء</small></div>
+       <div class="hijri-weekday">Wed<br><small>الأربعاء</small></div>
+       <div class="hijri-weekday">Thu<br><small>الخميس</small></div>
+       <div class="hijri-weekday" style="color: var(--green); font-weight: 800;">Fri<br><small>الجمعة</small></div>
+       <div class="hijri-weekday">Sat<br><small>السبت</small></div>
+     </div>
+
+     <div class="hijri-cal-grid" id="hijriDaysGrid"></div>
+
+     <div class="hijri-selected-detail-card" id="hijriSelectedDetailCard">
+       <div>
+         <div style="font-size: 0.72rem; font-weight: 700; color: var(--gold-dark); text-transform: uppercase;" id="hSelCategory">
+           Selected Date Overview
+         </div>
+         <div style="font-size: 1.05rem; font-weight: 800; color: var(--brown-dark); margin-top: 2px;" id="hSelHijriTitle">
+           --
+         </div>
+         <div style="font-size: 0.8rem; color: var(--muted); margin-top: 2px;" id="hSelGregSub">
+           --
+         </div>
+         <div style="font-size: 0.75rem; color: var(--green); font-weight: 700; margin-top: 4px;" id="hSelEventBadge">
+           --
+         </div>
+       </div>
+       <button type="button" class="btn btn-gold btn-sm" id="hSelBookBtn" onclick="bookFromHijriModal()" style="white-space: nowrap;">
+         📅 <span data-i18n="btn_book_this_day">Book Session on this Day</span>
+       </button>
+     </div>
+
+   </div>
+ </div>
+
  <div class="modal-overlay" id="tasbeehModal" onclick="if(event.target===this) closeTasbeehModal()">
  <div class="modal-card">
  <button class="modal-close-btn" onclick="closeTasbeehModal()">✕</button>
@@ -2641,6 +3330,14 @@ html[lang="ur"] .adhkar-filter-pill {
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
  <span data-i18n="m_tab_book">Book</span>
  </button>
+ <button class="m-nav-item" id="m-nav-names" onclick="switchTab('names')">
+ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+ <span data-i18n="m_tab_names">99 Names</span>
+ </button>
+ <button class="m-nav-item" id="m-nav-calendar" onclick="switchTab('calendar')">
+ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+ <span data-i18n="m_tab_calendar">Hijri</span>
+ </button>
  <button class="m-nav-item" id="m-nav-tracker" onclick="switchTab('tracker')">
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
  <span data-i18n="m_tab_tracker">Tracker</span>
@@ -2660,6 +3357,344 @@ html[lang="ur"] .adhkar-filter-pill {
 
  <!-- ================= JAVASCRIPT LOGIC ================= -->
  <script>
+ 
+ /* ================= ISLAMIC HIJRI CALENDAR & REAL-TIME CLOCK ENGINE ================= */
+ const HIJRI_MONTHS = [
+   { en: "Muharram", ar: "مُحَرَّم", ur: "محرم الحرام", sacred: true },
+   { en: "Safar", ar: "صَفَر", ur: "صفر المظفر", sacred: false },
+   { en: "Rabi' al-Awwal", ar: "رَبِيع الأَوَّل", ur: "ربیع الاول", sacred: false },
+   { en: "Rabi' al-Thani", ar: "رَبِيع الآخِر", ur: "ربیع الثانی", sacred: false },
+   { en: "Jumada al-Awwal", ar: "جُمَادَى الأُولَى", ur: "جمادی الاول", sacred: false },
+   { en: "Jumada al-Thani", ar: "جُمَادَى الآخِرَة", ur: "جمادی الثانی", sacred: false },
+   { en: "Rajab", ar: "رَجَب", ur: "رجب المرجب", sacred: true },
+   { en: "Sha'ban", ar: "شَعْبَان", ur: "شعبان المعظم", sacred: false },
+   { en: "Ramadan", ar: "رَمَضَان", ur: "رمضان المبارک", sacred: false },
+   { en: "Shawwal", ar: "شَوَّال", ur: "شوال المکرم", sacred: false },
+   { en: "Dhu al-Qi'dah", ar: "ذُو القَعْدَة", ur: "ذو القعدہ", sacred: true },
+   { en: "Dhu al-Hijjah", ar: "ذُو الحِجَّة", ur: "ذو الحجہ", sacred: true }
+ ];
+
+ let HIJRI_OFFSET = parseInt(localStorage.getItem('src_hijri_offset') || '0', 10);
+ let VIEW_HIJRI_YEAR = null;
+ let VIEW_HIJRI_MONTH = null; // 1-12
+ let SELECTED_HIJRI_DATE_ISO = null;
+
+ function getHijriDetails(dateInput, offset = HIJRI_OFFSET, lang = getAppLanguage()){
+   const d = new Date(dateInput);
+   if(offset !== 0){
+     d.setDate(d.getDate() + offset);
+   }
+
+   let day = 1, month = 1, year = 1448;
+   try {
+     const locale = (lang === 'ur') ? 'ur-PK-u-ca-islamic-umalqura' : 'en-u-ca-islamic-umalqura';
+     const parts = new Intl.DateTimeFormat(locale, {
+       day: 'numeric', month: 'numeric', year: 'numeric'
+     }).formatToParts(d);
+     for(const p of parts){
+       if(p.type === 'day') day = parseInt(p.value.replace(/[^0-9]/g, '')) || 1;
+       if(p.type === 'month') month = parseInt(p.value.replace(/[^0-9]/g, '')) || 1;
+       if(p.type === 'year') year = parseInt(p.value.replace(/[^0-9]/g, '')) || 1448;
+     }
+   } catch(e){
+     // Fallback kuwaiti calculation
+     const m = d.getMonth() + 1, y = d.getFullYear(), dt = d.getDate();
+     const jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + dt - 1524;
+     const z = jd - 1948084;
+     const cyc = Math.floor(z / 10631);
+     const j = Math.floor((z - 10631 * cyc) / 354.366);
+     year = 30 * cyc + j;
+     month = Math.min(12, Math.floor((z - Math.floor(j * 354.366)) / 29.5) + 1);
+     day = Math.min(30, (dt % 30) + 1);
+   }
+
+   const mMeta = HIJRI_MONTHS[month - 1] || HIJRI_MONTHS[0];
+   const isWhiteDay = (day === 13 || day === 14 || day === 15);
+   const dow = d.getDay();
+   const isFriday = (dow === 5);
+   const isSunnahFast = isWhiteDay || (dow === 1 || dow === 4);
+
+   let eventEn = '', eventUr = '';
+   if(month === 1 && day === 1){ eventEn = 'Islamic New Year'; eventUr = 'نیا اسلامی سال'; }
+   else if(month === 1 && (day === 9 || day === 10)){ eventEn = 'Ashura (Sunnah Fast)'; eventUr = 'عاشوراء (مسنون روزہ)'; }
+   else if(month === 3 && day === 12){ eventEn = 'Mawlid an-Nabi (PBUH)'; eventUr = 'میلاد النبی ﷺ'; }
+   else if(month === 7 && day === 27){ eventEn = "Isra & Mi'raj"; eventUr = 'معراج النبی ﷺ'; }
+   else if(month === 8 && day === 15){ eventEn = "Shab-e-Barat (15 Sha'ban)"; eventUr = 'شب برأت'; }
+   else if(month === 9){ eventEn = 'Ramadan Mubarak (Fasting)'; eventUr = 'رمضان المبارک (ماہِ صیام)'; }
+   else if(month === 10 && day === 1){ eventEn = 'Eid ul-Fitr'; eventUr = 'عید الفطر مبارک'; }
+   else if(month === 12 && day === 9){ eventEn = 'Day of Arafah (Sunnah Fast)'; eventUr = 'یوم عرفہ (مسنون روزہ)'; }
+   else if(month === 12 && day === 10){ eventEn = 'Eid ul-Adha'; eventUr = 'عید الاضحیٰ مبارک'; }
+   else if(isWhiteDay){ eventEn = 'Ayyam al-Beed (Sunnah Fast)'; eventUr = 'ایام بیض (مسنون روزہ)'; }
+   else if(isFriday){ eventEn = "Jumu'ah Mubarak"; eventUr = 'جمعہ مبارک'; }
+   else if(dow === 1 || dow === 4){ eventEn = 'Sunnah Fasting Day'; eventUr = 'مسنون روزے کا دن'; }
+
+   return {
+     day, month, year,
+     monthNameEn: mMeta.en,
+     monthNameAr: mMeta.ar,
+     monthNameUr: mMeta.ur,
+     sacred: mMeta.sacred,
+     isWhiteDay, isFriday, isSunnahFast,
+     eventEn, eventUr,
+     formattedEn: `${day} ${mMeta.en} ${year} AH`,
+     formattedUr: `${day} ${mMeta.ur}، ${year} ہجری`
+   };
+ }
+
+ function formatHijriDateString(dateInput){
+   const h = getHijriDetails(dateInput, HIJRI_OFFSET, getAppLanguage());
+   return (getAppLanguage() === 'ur') ? h.formattedUr : h.formattedEn;
+ }
+
+ function updateLiveClockAndDate(){
+   const now = new Date();
+   const lang = getAppLanguage();
+   const isUr = (lang === 'ur');
+
+   const timeStr = now.toLocaleTimeString(isUr ? 'en-US' : 'en-US', {
+     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+   });
+
+   const gregStr = now.toLocaleDateString(isUr ? 'ur-PK' : 'en-GB', {
+     weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+   });
+
+   const gregFullStr = now.toLocaleDateString(isUr ? 'ur-PK' : 'en-GB', {
+     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+   });
+
+   const hInfo = getHijriDetails(now, HIJRI_OFFSET, lang);
+   const hijriStr = isUr ? hInfo.formattedUr : hInfo.formattedEn;
+
+   // Update Header elements
+   const hHDate = $('headerHijriDate');
+   if(hHDate) hHDate.textContent = hijriStr;
+   const hGDate = $('headerGregDate');
+   if(hGDate) hGDate.textContent = gregStr;
+   const hTime = $('headerLiveTime');
+   if(hTime) hTime.textContent = timeStr;
+
+   // Update Overview Banner elements
+   const lHText = $('liveHijriDateText');
+   if(lHText) lHText.textContent = hijriStr;
+   const lGText = $('liveGregDateText');
+   if(lGText) lGText.textContent = gregFullStr;
+   const lTime = $('liveTimeClock');
+   if(lTime) lTime.textContent = timeStr;
+
+   const lTag = $('liveHijriEventTag');
+   if(lTag){
+     const ev = isUr ? hInfo.eventUr : hInfo.eventEn;
+     if(ev){
+       lTag.textContent = ev;
+       lTag.style.display = 'inline-block';
+     } else {
+       lTag.style.display = 'none';
+     }
+   }
+ }
+
+ function openHijriModal(){
+   const modal = $('hijriCalendarModal');
+   if(!modal) return;
+   modal.classList.add('active');
+   if(VIEW_HIJRI_YEAR === null || VIEW_HIJRI_MONTH === null){
+     const currentH = getHijriDetails(new Date(), HIJRI_OFFSET, getAppLanguage());
+     VIEW_HIJRI_YEAR = currentH.year;
+     VIEW_HIJRI_MONTH = currentH.month;
+   }
+   updateOffsetBtnUI();
+   renderHijriModalCalendar();
+ }
+
+ function closeHijriModal(){
+   const modal = $('hijriCalendarModal');
+   if(modal) modal.classList.remove('active');
+ }
+
+ function setHijriOffset(val){
+   HIJRI_OFFSET = val;
+   try { localStorage.setItem('src_hijri_offset', String(val)); } catch(e){}
+   updateOffsetBtnUI();
+   const cur = getHijriDetails(new Date(), HIJRI_OFFSET, getAppLanguage());
+   VIEW_HIJRI_YEAR = cur.year;
+   VIEW_HIJRI_MONTH = cur.month;
+   renderHijriModalCalendar();
+   updateLiveClockAndDate();
+   renderCalendar();
+ }
+
+ function updateOffsetBtnUI(){
+   [-2, -1, 0, 1, 2].forEach(v => {
+     const id = v < 0 ? 'offsetBtnM' + Math.abs(v) : (v > 0 ? 'offsetBtnP' + v : 'offsetBtn0');
+     const btn = $(id);
+     if(btn) btn.classList.toggle('active', HIJRI_OFFSET === v);
+   });
+ }
+
+ function goToCurrentHijriMonth(){
+   const cur = getHijriDetails(new Date(), HIJRI_OFFSET, getAppLanguage());
+   VIEW_HIJRI_YEAR = cur.year;
+   VIEW_HIJRI_MONTH = cur.month;
+   renderHijriModalCalendar();
+ }
+
+ function navHijriMonth(dir){
+   VIEW_HIJRI_MONTH += dir;
+   if(VIEW_HIJRI_MONTH > 12){
+     VIEW_HIJRI_MONTH = 1;
+     VIEW_HIJRI_YEAR++;
+   } else if(VIEW_HIJRI_MONTH < 1){
+     VIEW_HIJRI_MONTH = 12;
+     VIEW_HIJRI_YEAR--;
+   }
+   renderHijriModalCalendar();
+ }
+
+ function findHijriMonthDaysList(targetHYear, targetHMonth, offset = HIJRI_OFFSET){
+   const totalHMonths = (targetHYear - 1) * 12 + (targetHMonth - 1);
+   const totalDaysFromEpoch = totalHMonths * 29.530588;
+   const epochMs = new Date(Date.UTC(622, 6, 16)).getTime();
+   const approxMs = epochMs + totalDaysFromEpoch * 86400000;
+
+   let cur = new Date(approxMs);
+   cur.setHours(12, 0, 0, 0);
+
+   let guard = 0;
+   while(guard++ < 50){
+     const info = getHijriDetails(cur, offset, 'en');
+     if(info.year === targetHYear && info.month === targetHMonth && info.day === 1){
+       break;
+     }
+     const diffMonths = (info.year - targetHYear) * 12 + (info.month - targetHMonth);
+     if(diffMonths !== 0){
+       cur.setDate(cur.getDate() - diffMonths * 29);
+     } else {
+       cur.setDate(cur.getDate() - (info.day - 1));
+     }
+   }
+
+   const days = [];
+   while(true){
+     const info = getHijriDetails(cur, offset, getAppLanguage());
+     if(info.year !== targetHYear || info.month !== targetHMonth) break;
+     days.push({
+       hDay: info.day,
+       hMonth: info.month,
+       hYear: info.year,
+       hMeta: info,
+       gregDate: new Date(cur),
+       iso: cur.toISOString().slice(0, 10),
+       dow: cur.getDay()
+     });
+     cur.setDate(cur.getDate() + 1);
+   }
+   return days;
+ }
+
+ function renderHijriModalCalendar(){
+   const mMeta = HIJRI_MONTHS[VIEW_HIJRI_MONTH - 1] || HIJRI_MONTHS[0];
+   const isUr = (getAppLanguage() === 'ur');
+
+   const mAr = $('hijriMonthAr');
+   if(mAr) mAr.textContent = `${mMeta.ar} ${VIEW_HIJRI_YEAR} هـ` + (mMeta.sacred ? ' (شهرٌ حرام)' : '');
+
+   const mEn = $('hijriMonthEn');
+   if(mEn) mEn.textContent = (isUr ? `${mMeta.ur} ${VIEW_HIJRI_YEAR} ہجری` : `${mMeta.en} ${VIEW_HIJRI_YEAR} AH`) + (mMeta.sacred ? ' • Sacred Month' : '');
+
+   const days = findHijriMonthDaysList(VIEW_HIJRI_YEAR, VIEW_HIJRI_MONTH, HIJRI_OFFSET);
+   const spanEl = $('hijriGregSpan');
+   if(spanEl && days.length > 0){
+     const d1 = days[0].gregDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+     const d2 = days[days.length-1].gregDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+     spanEl.textContent = `${d1} – ${d2} (${days.length} Days)`;
+   }
+
+   const grid = $('hijriDaysGrid');
+   if(!grid) return;
+   grid.innerHTML = '';
+
+   if(days.length === 0) return;
+   const firstDayDow = days[0].dow; // 0=Sun..6=Sat
+   for(let i=0; i<firstDayDow; i++){
+     const empty = document.createElement('div');
+     empty.className = 'cal-day-cell empty';
+     grid.appendChild(empty);
+   }
+
+   const today = todayISO();
+   let defaultSelectDay = null;
+
+   days.forEach(item => {
+     const tile = document.createElement('div');
+     tile.className = 'hijri-day-tile';
+     if(item.iso === today) { tile.classList.add('today'); defaultSelectDay = item; }
+     if(item.hMeta.isWhiteDay) tile.classList.add('ayyam-beed');
+     if(item.hMeta.isFriday) tile.classList.add('is-friday');
+     if(SELECTED_HIJRI_DATE_ISO === item.iso) tile.classList.add('selected');
+
+     const gregShort = item.gregDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+     let badge = '';
+     if(item.hMeta.isWhiteDay) badge = '<span class="h-tile-badge" title="Ayyam al-Beed Sunnah Fast">🌙</span>';
+     else if(item.hMeta.eventEn && !item.hMeta.isFriday) badge = '<span class="h-tile-badge" title="' + item.hMeta.eventEn + '">✨</span>';
+
+     tile.innerHTML = `
+       ${badge}
+       <span class="h-tile-hday">${item.hDay}</span>
+       <span class="h-tile-greg">${gregShort}</span>
+     `;
+
+     tile.onclick = () => selectHijriDay(item);
+     grid.appendChild(tile);
+   });
+
+   if(!SELECTED_HIJRI_DATE_ISO && (defaultSelectDay || days[0])){
+     selectHijriDay(defaultSelectDay || days[0]);
+   } else if(SELECTED_HIJRI_DATE_ISO){
+     const matched = days.find(x => x.iso === SELECTED_HIJRI_DATE_ISO);
+     if(matched) selectHijriDay(matched);
+     else selectHijriDay(defaultSelectDay || days[0]);
+   }
+ }
+
+ function selectHijriDay(item){
+   SELECTED_HIJRI_DATE_ISO = item.iso;
+   document.querySelectorAll('.hijri-day-tile').forEach(t => t.classList.remove('selected'));
+   event && event.currentTarget && event.currentTarget.classList.add('selected');
+
+   const isUr = (getAppLanguage() === 'ur');
+   const titleEl = $('hSelHijriTitle');
+   if(titleEl){
+     titleEl.textContent = isUr ? item.hMeta.formattedUr : item.hMeta.formattedEn;
+   }
+   const gregEl = $('hSelGregSub');
+   if(gregEl){
+     const gFull = item.gregDate.toLocaleDateString(isUr ? 'ur-PK' : 'en-GB', {
+       weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+     });
+     gregEl.textContent = `Gregorian: ${gFull}`;
+   }
+   const badgeEl = $('hSelEventBadge');
+   if(badgeEl){
+     const ev = isUr ? item.hMeta.eventUr : item.hMeta.eventEn;
+     if(ev){
+       badgeEl.textContent = `★ ${ev}`;
+       badgeEl.style.display = 'block';
+     } else {
+       badgeEl.style.display = 'none';
+     }
+   }
+ }
+
+ function bookFromHijriModal(){
+   if(!SELECTED_HIJRI_DATE_ISO) return;
+   closeHijriModal();
+   switchTab('book');
+   selectDate(SELECTED_HIJRI_DATE_ISO);
+   const container = document.querySelector('.calendar-container');
+   if(container) container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+ }
+
  /* ================= 1. DATABASE & STORAGE INTEGRATION ================= */
  // Deletion Blacklist in customer portal to eliminate resurrecting deleted records
  let DELETED_PATIENT_IDS = new Set(JSON.parse(localStorage.getItem('air_deleted_patients') || '[]'));
@@ -3368,11 +4403,27 @@ function initCountryComponents(){
 
  function renderCalendar(){
  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
- $('calMonthTitle').textContent = months[CAL_MONTH] + ' ' + CAL_YEAR;
+ const title = $('calMonthTitle');
+ if(title) title.textContent = months[CAL_MONTH] + ' ' + CAL_YEAR;
 
- const firstDay = new Date(CAL_YEAR, CAL_MONTH, 1).getDay();
+ // Compute Hijri Month Range for this Gregorian Month
+ const firstD = new Date(CAL_YEAR, CAL_MONTH, 1);
  const totalDays = new Date(CAL_YEAR, CAL_MONTH + 1, 0).getDate();
+ const lastD = new Date(CAL_YEAR, CAL_MONTH, totalDays);
+ const hFirst = getHijriDetails(firstD, HIJRI_OFFSET, getAppLanguage());
+ const hLast = getHijriDetails(lastD, HIJRI_OFFSET, getAppLanguage());
+ const subTitle = $('calHijriSubTitle');
+ if(subTitle){
+   if(hFirst.month === hLast.month){
+     subTitle.textContent = '🌙 ' + (getAppLanguage() === 'ur' ? hFirst.monthNameUr : hFirst.monthNameEn) + ' ' + hFirst.year + (getAppLanguage() === 'ur' ? ' ہجری' : ' AH');
+   } else {
+     subTitle.textContent = '🌙 ' + (getAppLanguage() === 'ur' ? (hFirst.monthNameUr + ' / ' + hLast.monthNameUr) : (hFirst.monthNameEn + ' – ' + hLast.monthNameEn)) + ' ' + hLast.year + (getAppLanguage() === 'ur' ? ' ہجری' : ' AH');
+   }
+ }
+
+ const firstDay = firstD.getDay();
  const grid = $('calDaysGrid');
+ if(!grid) return;
  grid.innerHTML = '';
 
  for(let i=0; i<firstDay; i++){
@@ -3386,11 +4437,21 @@ function initCountryComponents(){
  for(let d=1; d<=totalDays; d++){
  const cell = document.createElement('div');
  const iso = CAL_YEAR + '-' + String(CAL_MONTH+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+ const cellDate = new Date(CAL_YEAR, CAL_MONTH, d);
+ const hInfo = getHijriDetails(cellDate, HIJRI_OFFSET, getAppLanguage());
+
  cell.className = 'cal-day-cell';
- cell.textContent = d;
+ if(hInfo.isWhiteDay) cell.classList.add('ayyam-beed');
+ if(hInfo.isFriday) cell.classList.add('is-friday');
+
+ cell.innerHTML = `
+   <span class="cal-greg-num">${d}</span>
+   <span class="cal-hijri-num" title="${hInfo.formattedEn}">${hInfo.day}</span>
+ `;
 
  if(iso < today){
  cell.classList.add('disabled');
+ cell.title = 'Past date';
  } else {
  if(iso === today) cell.classList.add('today');
  if(iso === SELECTED_DATE) cell.classList.add('selected');
@@ -3404,7 +4465,14 @@ function initCountryComponents(){
  SELECTED_DATE = iso;
  $('selectedDate').value = iso;
  const dObj = new Date(iso + 'T00:00:00');
- $('selectedDateDisplay').textContent = dObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+ const hInfo = getHijriDetails(dObj, HIJRI_OFFSET, getAppLanguage());
+ const gregFmt = dObj.toLocaleDateString(getAppLanguage() === 'ur' ? 'ur-PK' : 'en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+ const hijriFmt = (getAppLanguage() === 'ur') ? hInfo.formattedUr : hInfo.formattedEn;
+
+ const disp = $('selectedDateDisplay');
+ if(disp){
+   disp.innerHTML = `${gregFmt} <span class="sel-hijri-tag">🌙 ${hijriFmt}</span>`;
+ }
  renderCalendar();
  renderTimeSlots(iso);
  updateSummaryPreview();
@@ -3971,7 +5039,7 @@ function initCountryComponents(){
  <div class="appt-details-grid">
  <div class="appt-detail-item">
  <span class="lbl">Date</span>
- <span class="val">📅 ${fmtDate(a.date)}</span>
+ <span class="val">📅 ${fmtDate(a.date)} &nbsp;·&nbsp; 🌙 ${formatHijriDateString(a.date)}</span>
  </div>
  <div class="appt-detail-item">
  <span class="lbl">Time Slot</span>
@@ -4189,7 +5257,7 @@ function initCountryComponents(){
  <div class="row"><span>Patient Name:</span><b>${p ? p.name : '-'} (ID: #${a.patientId})</b></div>
  <div class="row"><span>Contact:</span><b>${p ? p.mobile : '-'}</b></div>
  <div class="row"><span>Session Type:</span><b>${esc(a.notes || 'Ruqyah Consultation')}</b></div>
- <div class="row"><span>Date:</span><b>${fmtDate(a.date)}</b></div>
+ <div class="row"><span>Date:</span><b>${fmtDate(a.date)} &nbsp;·&nbsp; 🌙 ${formatHijriDateString(a.date)}</b></div>
  <div class="row"><span>Time Slot:</span><b>${fmtTime(a.start)} to ${fmtTime(a.end)}</b></div>
  <div class="row"><span>Status:</span><b>${a.status}</b></div>
  <div class="row"><span>Advance Consultation Fee:</span><b style="color:#2e7d32;">Rs. ${(a.paid || 1000).toLocaleString()} (PAID ✓)</b></div>
@@ -4675,9 +5743,9 @@ const APP_I18N = {
       brand_sub: "Al-Qur'an & Sunnah",
       brand_pill: "Patient Portal",
       tab_overview: "Overview",
-      tab_book: "Book Session",
-      tab_tracker: "My Appointments",
-      tab_profile: "Spiritual & Adhkar",
+      tab_book: "Book",
+      tab_tracker: "Appointments",
+      tab_profile: "Adhkar",
       m_tab_home: "Home",
       m_tab_book: "Book",
       m_tab_tracker: "Tracker",
@@ -4784,6 +5852,12 @@ const APP_I18N = {
       tasbeeh_btn_reset: "Reset Counter",
       tasbeeh_btn_done: "Done & Close",
 
+            btn_view_hijri: "Hijri Calendar",
+      hijri_modal_title: "Islamic Hijri Calendar",
+      hijri_modal_sub: "Umm al-Qura System • Sunnah Fasting Days (Ayyam al-Beed) & Blessed Dates",
+      hijri_offset_lbl: "Moon Sighting Adjustment:",
+      btn_today: "Today",
+      btn_book_this_day: "Book Session on this Day",
       success_modal_title: "Consultation Request Confirmed!",
       success_modal_desc: "Your consultation booking has been saved. Please dispatch your details to our WhatsApp coordinator to lock in your time slot.",
       btn_send_whatsapp: "Send to Clinic WhatsApp",
@@ -4794,9 +5868,9 @@ const APP_I18N = {
       brand_sub: "قرآن و سنت کی روشنی میں",
       brand_pill: "کسٹمر پورٹل",
       tab_overview: "جائزہ (ہوم)",
-      tab_book: "اپائنٹمنٹ بک کریں",
-      tab_tracker: "میری اپائنٹمنٹس",
-      tab_profile: "روحانی علاج و اذکار",
+      tab_book: "بکنگ",
+      tab_tracker: "اپائنٹمنٹس",
+      tab_profile: "اذکار",
       m_tab_home: "ہوم",
       m_tab_book: "بکنگ",
       m_tab_tracker: "ٹریکر",
@@ -4903,6 +5977,12 @@ const APP_I18N = {
       tasbeeh_btn_reset: "کاؤنٹر صفر کریں",
       tasbeeh_btn_done: "مکمل / بند کریں",
 
+            btn_view_hijri: "ہجری کیلنڈر",
+      hijri_modal_title: "اسلامی ہجری کیلنڈر",
+      hijri_modal_sub: "تقویم ام القریٰ • ایامِ بیض کے مسنون روزے اور متبرک ایام",
+      hijri_offset_lbl: "رویت ہلال مطابقت (چاند کا فرق):",
+      btn_today: "آج",
+      btn_book_this_day: "اس تاریخ کو اپائنٹمنٹ لیں",
       success_modal_title: "اپائنٹمنٹ کی درخواست موصول ہوگئی!",
       success_modal_desc: "آپ کی بکنگ محفوظ کر لی گئی ہے۔ وقت کو حتمی شکل دینے کے لیے واٹس ایپ کوآرڈینیٹر کو تفصیلات ارسال فرمائیں۔",
       btn_send_whatsapp: "کلینک واٹس ایپ پر بھیجیں",
@@ -4967,6 +6047,8 @@ function setAppLanguage(lang){
   if(typeof renderServicesDeck === 'function'){
     renderServicesDeck();
   }
+  if(typeof updateLiveClockAndDate === 'function'){ updateLiveClockAndDate(); }
+  if(typeof renderHijriModalCalendar === 'function' && $('hijriCalendarModal')?.classList.contains('active')){ renderHijriModalCalendar(); }
   if(typeof renderCalendar === 'function'){
     renderCalendar();
   }
@@ -5193,7 +6275,12 @@ let dismissLoaderNow = function(){};
 })();
 
 
-// Client cache cleaner for updated branding
+
+ // Initialize Islamic Hijri Calendar & Live Clock
+ updateLiveClockAndDate();
+ setInterval(updateLiveClockAndDate, 1000);
+
+ // Client cache cleaner for updated branding
 if ('caches' in window) {
   caches.keys().then(function(keys) {
     keys.forEach(function(k) {
@@ -5203,5 +6290,9 @@ if ('caches' in window) {
 }
 
 </script>
+
+<script src="/media/swiper-bundle.min.js"></script>
+<script src="/media/asmaul-husna.js"></script>
+<script src="/media/skiper-hijri.js"></script>
 </body>
 </html>

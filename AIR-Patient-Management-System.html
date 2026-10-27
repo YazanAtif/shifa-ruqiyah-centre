@@ -2725,6 +2725,31 @@
     }
   }
   }
+  
+  .ras-day-cell {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1px !important;
+    min-height: 44px !important;
+  }
+  .ras-hijri-num {
+    font-size: 9.5px;
+    color: var(--gold-dark);
+    font-weight: 700;
+    font-family: 'Amiri', Georgia, serif;
+    line-height: 1;
+  }
+  .ras-day-cell.selected .ras-hijri-num {
+    color: #ffd978 !important;
+  }
+  header.app-header .clock {
+    text-align: center !important;
+    padding: 5px 12px !important;
+    min-width: 140px !important;
+  }
+
   /* ================= REGISTRATION CALENDAR & APPOINTMENT SCHEDULER ================= */
   .reg-appt-scheduler-card {
     margin-top: 24px;
@@ -5913,10 +5938,25 @@ function triggerImportPrompt(){
 }
 
 /* ---------- Clock ---------- */
+function getAdminHijriDate(d, lang){
+  try {
+    const isUr = (document.documentElement.lang === 'ur');
+    const locale = isUr ? 'ur-PK-u-ca-islamic-umalqura' : 'en-u-ca-islamic-umalqura';
+    return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+  } catch(e) {
+    return '';
+  }
+}
+
 function tick(){
-  const d=new Date();
-  $('clock').innerHTML = d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})
-    +'<br>'+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  const d = new Date();
+  const hijri = getAdminHijriDate(d);
+  const isUr = (document.documentElement.lang === 'ur');
+  const clockEl = $('clock');
+  if(!clockEl) return;
+  clockEl.innerHTML = '<div style="font-size:12.5px; font-weight:800; color:var(--gold-dark); letter-spacing:0.02em;">' + d.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', second:'2-digit'}) + '</div>'
+    + '<div style="font-size:11px; color:var(--brown-dark); font-weight:600;">' + d.toLocaleDateString(isUr ? 'ur-PK' : 'en-GB', {weekday:'short', day:'numeric', month:'short', year:'numeric'}) + '</div>'
+    + (hijri ? '<div style="font-size:11px; color:var(--gold-dark); font-weight:700;">🌙 ' + hijri + '</div>' : '');
 }
 setInterval(tick,1000); tick();
 $('year').textContent = new Date().getFullYear();
@@ -5970,12 +6010,23 @@ function renderRegCalendar(){
   if(!title || !grid) return;
 
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  title.textContent = monthNames[REG_CAL_MONTH] + ' ' + REG_CAL_YEAR;
+  const firstD = new Date(REG_CAL_YEAR, REG_CAL_MONTH, 1);
+  const totalDays = new Date(REG_CAL_YEAR, REG_CAL_MONTH + 1, 0).getDate();
+  const lastD = new Date(REG_CAL_YEAR, REG_CAL_MONTH, totalDays);
+  let hSub = '';
+  try {
+    const isUr = (document.documentElement.lang === 'ur');
+    const loc = isUr ? 'ur-PK-u-ca-islamic-umalqura' : 'en-u-ca-islamic-umalqura';
+    const h1 = new Intl.DateTimeFormat(loc, { month: 'long', year: 'numeric' }).format(firstD);
+    const h2 = new Intl.DateTimeFormat(loc, { month: 'long', year: 'numeric' }).format(lastD);
+    hSub = (h1 === h2) ? h1 : (h1.split(' ')[0] + ' / ' + h2);
+  } catch(e){}
+
+  title.innerHTML = `${monthNames[REG_CAL_MONTH]} ${REG_CAL_YEAR}` + (hSub ? `<div style="font-size:11px; color:#8c6a11; font-weight:700; margin-top:2px;">🌙 ${hSub}</div>` : '');
 
   // First day of month (Monday=0..Sunday=6)
   const firstDay = new Date(REG_CAL_YEAR, REG_CAL_MONTH, 1).getDay();
   const dayOffset = (firstDay === 0 ? 6 : firstDay - 1);
-  const totalDays = new Date(REG_CAL_YEAR, REG_CAL_MONTH + 1, 0).getDate();
 
   const todayStr = todayISO();
   let html = '';
@@ -6006,6 +6057,13 @@ function renderRegCalendar(){
                   onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectRegCalendarDate('${isoDate}', this);}"
                   title="${fmtDate(isoDate)}${hasAppts ? ' (' + apptsOnDate.length + ' booked)' : ''}">
       <span class="ras-day-num">${d}</span>
+      ${(() => {
+        try {
+          const cd = new Date(REG_CAL_YEAR, REG_CAL_MONTH, d);
+          const p = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', { day: 'numeric' }).formatToParts(cd).find(x => x.type === 'day');
+          return p ? `<span class="ras-hijri-num">${p.value}</span>` : '';
+        } catch(e){ return ''; }
+      })()}
       ${hasAppts ? '<span class="ras-day-dot"></span>' : ''}
     </div>`;
   }
